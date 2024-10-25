@@ -1,16 +1,22 @@
-import { Link, usePage } from '@inertiajs/react';
+import {
+    Link,
+    usePage,
+    // Button,
+} from '@inertiajs/react';
 import React from 'react';
 import {
     Container,
     Nav,
+    NavLink,
     Navbar,
     NavDropdown,
 } from 'react-bootstrap';
-import fav from "../../../../images/eniyi-logo-b.png"
+import logo from "../../../../images/eniyi-logo-b.png"
 import "./Style.css"
 
 export default function Navigation() {
-    const { auth } = usePage().props;
+    const { auth, is_user_verified } = usePage().props;
+    // console.log("header++++", is_user_verified)
 
     // Function to get the user's initials
     const getInitials = (name) => {
@@ -24,65 +30,81 @@ export default function Navigation() {
         <>
             <Navbar collapseOnSelect expand="sm" className="bg-dark">
                 <Container fluid="lg">
-                    <Navbar.Brand ><Link href={route('home')}><img src={fav} alt="logo" style={{height:"35px"}}/></Link></Navbar.Brand>
+                    <Navbar.Brand ><Link href={route('home')}><img src={logo} alt="logo" style={{height:"2.2rem"}}/></Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" className="bg-white"/>
-                    <Nav className="d-none d-sm-flex">
+
+                    <Navbar.Collapse id="responsive-navbar-nav " className="">
+                        <div className="list-unstyled sm:hidden block">
+                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
+                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
+                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > About us</Link>
+                            <hr className="hr text-white" />
+                            {auth && auth.user ? (
+                                <>
+                                    <Link href="#" disabled className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > {auth.user.name}</Link>
+                                    <Link href={route('profile')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Profile</Link>
+                                    <Link href={route('logout')} as="button" method="post" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Logout</Link>
+                                </>
+                            ):(
+                                <>
+                                    <Link href={route('login')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue"> Login </Link>
+                                    <Link href={route('register')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Register </Link>
+                                </>
+                            )}
+                        </div>
+
+                    </Navbar.Collapse>
+
+                    <Nav className="d-none d-sm-flex justify-content-center align-items-center">
+                        <NavLink href={route('home')} className="butn" > Write a review </NavLink>
+                        <NavLink href={route('home')} className="butn" > Categories </NavLink>
+                        <NavLink href={route('home')} className="butn" > About us </NavLink>
+
                         {auth && auth.user ? (
                             <>
                                 <NavDropdown
                                     title={
                                         auth.user.avatar_url ? (
-                                            <div
-                                                className="bg-gray-200 text-green-500 rounded-circle d-flex justify-content-center align-items-center"
-                                                style={{ height: '40px', width: '40px' }}
-                                            >
-                                                {getInitials(auth.user.name)}
-                                            </div>
-                                        ) : (
                                             <img
                                                 src="/img/avatar/user.png"
                                                 alt="avatar"
-                                                className="avatar"
-                                                style={{ height: '40px', borderRadius: '50%' }}
+                                                className="avatar p-0"
+                                                style={{ height: '2.2rem', borderRadius: '50%' }}
                                             />
+                                        ) : (
+                                            <div
+                                                className="bg-gray-200 text-green-500 rounded-circle d-flex justify-content-center align-items-center p-0"
+                                                style={{ height: '2.2rem', width: '2.2rem', padding: '0' }}
+                                            >
+                                                {getInitials(auth.user.name)}
+                                            </div>
                                         )
                                     }
                                     id="user-dropdown"
                                     align="end"
                                     autoClose='outside'
+                                    style={{ marginLeft: '3rem'}}
                                 >
                                     <NavDropdown.Item disabled>{auth.user.name}</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item as={Link} href={route('profile')}>Profile</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={()=>console.log("logout")}>Logout</NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link
+                                            href={route('logout')}
+                                            method="post"
+                                            as="button"
+                                            className="w-full text-left"
+                                        >Logout</Link>
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                             </>
                         ) : (
                             <>
-                                <Link href={route('login')} className="butn" > Login </Link>
+                                <Link href={route('login')} className="butn" style={{ marginLeft: '3rem'}}> Login </Link>
                                 <Link href={route('register')} className="butn" > Register </Link>
                             </>
                         )}
                     </Nav>
-                    {/* <Navbar.Collapse id="responsive-navbar-nav">
-
-                        <>
-                            <Link
-                                href={route('login')}
-                                className="butn"
-                            >
-                                Log in
-                            </Link>
-
-                            <Link
-                                href={route('register')}
-                                className="butn"
-                            >
-                                Register
-                            </Link>
-                        </>
-
-                    </Navbar.Collapse> */}
                 </Container>
             </Navbar>
         </>

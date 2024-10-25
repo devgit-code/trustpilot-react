@@ -32,6 +32,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            // 'is_user_verified' => $request->user()->hasVerifiedEmail(),
             'auth' => [
                 'user' => $request->user(),
             ],
