@@ -38,17 +38,22 @@ img {
     padding: 0;
     border-radius: 0.3rem;
     color: white;
-    font-weight: 600;
+    font-weight: 500;
     margin: 0 0.6rem;
     transition: all 0.3s ease-in-out;
 
 }
 .butn:hover{
     text-decoration: underline;
+    color: gray;
     transition: all 0.3s ease-in-out;
 }
 
 
 #user-dropdown::after {
     display: none;
+}
+
+#user-dropdown{
+    padding: 0;
 }

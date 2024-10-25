@@ -56,6 +56,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
+                        disabled
                         autoComplete="username"
                     />
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Navigation from './header';
+import Footer from '../../Components/Footer';
 
 
 const FrontendLayout = ({ children }) => {
@@ -8,6 +9,7 @@ const FrontendLayout = ({ children }) => {
             <Navigation />
 
             <main className="">{children}</main>
+            <Footer />
         </>
     )
 }

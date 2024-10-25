@@ -6,6 +6,7 @@ use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 /*
@@ -40,11 +41,16 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/test', function (Request $request) {
+            return $request->user()->hasVerifiedEmail();
+
+})->name('test');
+
 // Route::get('/home', function () {
 //     return Inertia::render('Frontend/Index');
 // })->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
