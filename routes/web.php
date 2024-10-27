@@ -2,7 +2,6 @@
 
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -46,17 +45,12 @@ Route::get('/test', function (Request $request) {
 
 })->name('test');
 
-// Route::get('/home', function () {
-//     return Inertia::render('Frontend/Index');
-// })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 });
 
 

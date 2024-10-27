@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
 // use App\Http\Controllers\Admin\StateController;
 // use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -54,6 +55,13 @@ Route::group([
 
     Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     Route::resource('permissions', PermissionController::class);
+
+
+
+
+
+    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
+    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 
     // Route::resource('cities', CityController::class);
     // Route::get('/states/{state}/cities', [StateController::class, 'show'])->name('state.cities');
