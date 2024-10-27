@@ -3,7 +3,10 @@ import {
     usePage,
     // Button,
 } from '@inertiajs/react';
-import React from 'react';
+import {
+    React,
+    useEffect,
+} from 'react';
 import {
     Container,
     Nav,
@@ -11,12 +14,10 @@ import {
     Navbar,
     NavDropdown,
 } from 'react-bootstrap';
-import logo from "../../../../images/eniyi-logo-b.png"
+import logo from "../../../images/eniyi-logo-b.png"
 import "./Style.css"
 
-export default function Navigation() {
-    const { auth, is_user_verified } = usePage().props;
-    // console.log("header++++", is_user_verified)
+export default function Navigation({auth}) {
 
     // Function to get the user's initials
     const getInitials = (name) => {
@@ -25,6 +26,19 @@ export default function Navigation() {
         const initials = parts.map(part => part.charAt(0).toUpperCase()).join('');
         return initials.slice(0, 2); // Return first two initials
     };
+
+    const doLogin = () => {
+        console.log("login++++", auth)
+        // if(auth.is_verified == undefined || auth.is_verified == null || !auth.is_verified)
+            // window.location.href = `${process.env.APP_URL}/verify-email`;
+
+        // window.location.href = "http://127.0.0.1:8000/login";
+    }
+
+    useEffect(() => {
+        console.log("init+++++++++", auth)
+
+    }, []);
 
     return (
         <>
@@ -59,7 +73,6 @@ export default function Navigation() {
                         <NavLink href={route('home')} className="butn" > Write a review </NavLink>
                         <NavLink href={route('home')} className="butn" > Categories </NavLink>
                         <NavLink href={route('home')} className="butn" > About us </NavLink>
-
                         {auth && auth.user ? (
                             <>
                                 <NavDropdown

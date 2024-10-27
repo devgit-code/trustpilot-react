@@ -31,12 +31,13 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+        $request->session()->regenerate();
+
         if(!$request->user()->hasVerifiedEmail()){
             // Auth::guard('web')->logout();
             return redirect()->route('verification.notice');
         }
 
-        $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

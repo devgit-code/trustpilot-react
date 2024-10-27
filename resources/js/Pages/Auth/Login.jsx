@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
-import FrontendLayoout from '@/Layouts/FrontendLayoout';
+import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -27,82 +27,80 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <FrontendLayoout>
+        <GuestLayout>
             <Head title="Log in" />
 
-            <div className="py-5 flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-                <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                    {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-                    <div className="mb-4 block">Not register?
-                        <Link
-                            href={route('register')}
-                            className="ml-3 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Click Here
-                        </Link>
-                    </div>
-                    <form onSubmit={submit}>
-                        <div>
-                            <InputLabel htmlFor="email" value="Email" />
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
-                            <TextInput
-                                id="email"
-                                type="email"
-                                name="email"
-                                value={data.email}
-                                className="mt-1 block w-full"
-                                autoComplete="username"
-                                isFocused={true}
-                                onChange={(e) => setData('email', e.target.value)}
-                            />
-
-                            <InputError message={errors.email} className="mt-2" />
-                        </div>
-
-                        <div className="mt-4">
-                            <InputLabel htmlFor="password" value="Password" />
-
-                            <TextInput
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={data.password}
-                                className="mt-1 block w-full"
-                                autoComplete="current-password"
-                                onChange={(e) => setData('password', e.target.value)}
-                            />
-
-                            <InputError message={errors.password} className="mt-2" />
-                        </div>
-
-                        {/* <div className="block mt-4">
-                            <label className="flex items-center">
-                                <Checkbox
-                                    name="remember"
-                                    checked={data.remember}
-                                    onChange={(e) => setData('remember', e.target.checked)}
-                                />
-                                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                            </label>
-                        </div> */}
-
-                        <div className="flex items-center justify-between mt-4">
-                            {canResetPassword && (
-                                <Link
-                                    href={route('password.request')}
-                                    className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Forgot your password?
-                                </Link>
-                            )}
-
-                            <PrimaryButton className="ml-4" disabled={processing}>
-                                Log in
-                            </PrimaryButton>
-                        </div>
-                    </form>
-                </div>
+            <div className="mb-4 block">Not register?
+                <Link
+                    href={route('register')}
+                    className="ml-3 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Click Here
+                </Link>
             </div>
-        </FrontendLayoout>
+
+            <form onSubmit={submit}>
+                <div>
+                    <InputLabel htmlFor="email" value="Email" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 block w-full"
+                        autoComplete="username"
+                        isFocused={true}
+                        onChange={(e) => setData('email', e.target.value)}
+                    />
+
+                    <InputError message={errors.email} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        autoComplete="current-password"
+                        onChange={(e) => setData('password', e.target.value)}
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                {/* <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) => setData('remember', e.target.checked)}
+                        />
+                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                    </label>
+                </div> */}
+
+                <div className="flex items-center justify-between mt-4">
+                    {canResetPassword && (
+                        <Link
+                            href={route('password.request')}
+                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Forgot your password?
+                        </Link>
+                    )}
+
+                    <PrimaryButton className="ml-4" disabled={processing}>
+                        Log in
+                    </PrimaryButton>
+                </div>
+            </form>
+        </GuestLayout>
     );
 }
