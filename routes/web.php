@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -32,13 +33,37 @@ Route::get('/clear-cache', function () {
 });
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Welcome/Index', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
+Route::get('/categories', function(){
+    return Inertia::render('Category/Index');
+});
+
+Route::get('/categories/{category_name}', function(){
+    return Inertia::render('Category/Detail');
+});
+
+Route::get('/categories/{category_name}/{sub_cat}', function(){
+    return Inertia::render('Category/SubCat');
+});
+
+Route::get('/writeareview', function(){
+    return Inertia::render('Review/Index');
+});
+
+Route::get('/evaluate/{company_name}', function(){
+    return Inertia::render('Review/Evaluate');
+});
+
+Route::get('/review/{company_name}', function(){
+    return Inertia::render('Review/Reviews');
+});
 
 Route::get('/test', function (Request $request) {
             return $request->user()->hasVerifiedEmail();
@@ -51,6 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
+    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 });
 
 
