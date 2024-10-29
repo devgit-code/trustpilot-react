@@ -2,6 +2,7 @@ import React from 'react';
 
 import fifthbanner from '../../../images/favicon.png'
 import SearchInput from '@/Components/Frontend/SearchInput';
+import SearchSection from '@/Components/Frontend/SearchSection';
 
 const LandingArea = () => {
     return (
@@ -15,7 +16,7 @@ const LandingArea = () => {
         //     </div>
         // </section>
         <>
-            <SearchInput />
+            <SearchSection />
 
             <div className="mt-5 h-32 bg-blue-600">
                 Recommend Category
