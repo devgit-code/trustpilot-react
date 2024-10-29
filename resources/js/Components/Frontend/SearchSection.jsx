@@ -8,22 +8,34 @@ function SearchSection() {
             <div className="absolute md:-bottom-[55%] md:-left-[8%] w-1/3 aspect-[1/1] bg-[#FFE400] rounded-[40px] rotate-45 animate-spin-reverse"></div>
             {/* <div className="absolute bottom-0 right-0 w-[300px] h-[200px] bg-green-500 rounded-[40px]"></div> */}
 
-    {/* Rotating Triangle with Rounded Corners */}
-      <svg
-        width="200"
-        height="200"
-        viewBox="0 0 200 200"
+<div
+        className="absolute w-1/3 aspect-[1/1] bg-green-500 animate-spin -right-[10%] -bottom-[10%]"
+        style={{
+          clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+          borderRadius: '15%', // Adjust this value to control corner roundness
+          animationDuration: '30s', // Adjust duration for rotation speed
+        }}
+      ></div>
+
+<svg
+        width="150"
+        height="130"
+        viewBox="0 0 100 100"
         className="animate-spin"
-        style={{ animationDuration: '4s' }}
+        style={{ animationDuration: '4s' }} // Adjust rotation speed as desired
       >
         <defs>
           <filter id="rounded-corners">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+            <feComponentTransfer>
+              <feFuncA type="table" tableValues="1 0" />
+            </feComponentTransfer>
+            <feComposite in2="SourceAlpha" operator="in" />
           </filter>
         </defs>
         <polygon
-          points="100,10 40,190 160,190"
-          fill="#4CAF50"
+          points="50,5 5,95 95,95"
+          fill="#4CAF50" // Green color
           filter="url(#rounded-corners)"
         />
       </svg>
