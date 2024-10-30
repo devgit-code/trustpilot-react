@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import firstbanner from '../../../../images/firstbanner.jpg'
 import image1 from '../../../../images/Sir1.jpg'
 import image2 from '../../../../images/Sir2.jpg'
 import image3 from '../../../../images/sir3.jpg'
@@ -15,67 +16,33 @@ const images = [
     image6,
 ];
 
-const ImageFlipGrid = () => {
-    const [currentImages, setCurrentImages] = useState([0, 1, 2]); // Index of images displayed in each column
-    const columnCount = 3; // Number of columns
-    const animationDelay = 1000; // 1 second delay between each column flip
-
-    useEffect(() => {
-        const intervals = [];
-
-        // Loop through each column and set a staggered interval for the image flip
-        for (let i = 0; i < columnCount; i++) {
-            intervals.push(
-                setInterval(() => {
-                    setCurrentImages((prev) => {
-                        // Update only the current column index to show the next image
-                        const newImages = [...prev];
-                        newImages[i] = (newImages[i] + columnCount) % images.length;
-                        return newImages;
-                    });
-                }, animationDelay * (i + 1)) // Stagger the delay for each column
-            );
-        }
-
-        return () => intervals.forEach(clearInterval); // Clear intervals on cleanup
-    }, []);
+const AnimatedComponent = () => {
 
     return (
-        <div className="bg-[#f5e0d7] p-8 rounded-lg flex space-x-4">
-            <div className="flex flex-col space-y-4">
-                <h2 className="text-2xl font-bold">Help millions make the right choice</h2>
-                <p className="text-lg">Share your experience on Trustpilot, where real reviews make a difference.</p>
-                <button className="bg-black text-white py-2 px-4 rounded-lg mt-4">Login or Sign Up</button>
+        <div className="bg-[#F0D2BB] rounded-2xl mt-5 p-6 grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-between container-md mx-auto shadow-lg">
+            {/* Text Section */}
+            <div className="flex-1 mr-4 p-4">
+                <h2 className="text-3xl font-bold mb-3">Help millions make the right choice</h2>
+                <p className="text-md text-black mb-4">Share your experience on Trustpilot, where real reviews make a difference.</p>
+                {/* Buttons */}
+                <div className="flex items-center gap-4">
+                    <button className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition duration-200">
+                        Login or sign up
+                    </button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 flex-grow">
-                {Array.from({ length: columnCount }).map((_, colIndex) => (
-                    <div
-                        key={colIndex}
-                        className="relative w-3/4 aspect-[3/4] overflow-hidden rounded-lg"
-                        style={{ animation: `flip 1s ease-in-out ${animationDelay * colIndex}ms forwards` }}
-                    >
-                        <img
-                            src={images[currentImages[colIndex]]}
-                            alt=""
-                            className="absolute w-full h-full object-cover rounded-lg transition-opacity duration-1000 ease-in-out"
-                            style={{
-                                opacity: currentImages[colIndex] % 2 === 0 ? 1 : 0,
-                            }}
-                        />
-                        <img
-                            src={images[(currentImages[colIndex] + 1) % images.length]}
-                            alt=""
-                            className="absolute w-full h-full object-cover rounded-lg transition-opacity duration-1000 ease-in-out"
-                            style={{
-                                opacity: currentImages[colIndex] % 2 === 0 ? 0 : 1,
-                            }}
-                        />
-                    </div>
-                ))}
+
+            <div className="flex-grow image rounded-lg">
+                <img
+                    src={firstbanner}
+                    alt="ad banner"
+                    className="w-full aspect-[4/2] rounded-lg shadow"
+                />
             </div>
+
         </div>
     );
 };
 
-export default ImageFlipGrid;
+export default AnimatedComponent;
