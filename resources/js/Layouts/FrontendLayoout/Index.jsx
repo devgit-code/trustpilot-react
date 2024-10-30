@@ -11,7 +11,7 @@ const FrontendLayout = ({ children }) => {
         <>
             <Navigation auth = {auth}/>
 
-            <main className="">{children}</main>
+            <main>{children}</main>
             <Footer />
         </>
     )

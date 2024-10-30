@@ -10,11 +10,12 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
 // use App\Http\Controllers\Admin\StateController;
 // use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+use App\Http\Controllers\UserProfileController;
 
 
 Route::group([
@@ -59,26 +60,28 @@ Route::group([
 
 
 
+    Route::resource('cities', CityController::class);
+    Route::get('/states/{state}/cities', [StateController::class, 'show'])->name('state.cities');
+    Route::resource('states', StateController::class);
+
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::resource('classifiedAds', ClassifiedAdController::class);
+    Route::get('/sub_categories/category/{id}', [SubCategoryController::class, 'index'])->name('sub_categories.index');
+    Route::get('/sub_categories/category/{id}/create', [SubCategoryController::class, 'create'])->name('sub_categories.create');
+    Route::post('/sub_categories', [SubCategoryController::class, 'store'])->name('sub_categories.store');
+    Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
+    Route::put('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
+    Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
+
+
+
 
     Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
     Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
-
-    // Route::resource('cities', CityController::class);
-    // Route::get('/states/{state}/cities', [StateController::class, 'show'])->name('state.cities');
-    // Route::resource('states', StateController::class);
-
-    // Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    // Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    // Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    // Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    // Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    // Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
-    // Route::resource('classifiedAds', ClassifiedAdController::class);
-    // Route::get('/sub_categories/category/{id}', [SubCategoryController::class, 'index'])->name('sub_categories.index');
-    // Route::get('/sub_categories/category/{id}/create', [SubCategoryController::class, 'create'])->name('sub_categories.create');
-    // Route::post('/sub_categories', [SubCategoryController::class, 'store'])->name('sub_categories.store');
-    // Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
-    // Route::put('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
-    // Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
 });
