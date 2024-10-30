@@ -2,4 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .overflow-hidden-important {
+    overflow: hidden;
+  }
+}
 
+@layer utilities {
+  .overflow-x-scroll-important {
+    overflow-x: scroll;
+  }
+}

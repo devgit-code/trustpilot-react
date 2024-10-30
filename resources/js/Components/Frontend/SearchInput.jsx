@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Style.css"
 
-export default function DangerButton() {
+export default function SearchInput() {
     return (
         <div className="relative w-full py-48 overflow-hidden bg-[#FCFBF3]">
             {/* Rotating Circle */}

@@ -2,27 +2,25 @@ import React, { useRef, useEffect, useState } from 'react';
 
 function SearchSection() {
     return (
-        <div className="relative flex items-center justify-center h-[80vh] bg-[#FCFBF3] overflow-hidden">
+        <div className="relative flex items-center justify-center h-[70vh] bg-[#FCFBF3] overflow-hidden">
             {/* Background shapes */}
-            <div className="absolute w-1/2 aspect-[1/1] inset-1/4 -top-[40%] md:-top-[90%] bg-[#FD791A] rounded-full animate-horizontal"></div>
-            <div className="absolute md:-bottom-[55%] md:-left-[8%] w-1/3 aspect-[1/1] bg-[#FFE400] rounded-[40px] rotate-45 animate-spin-reverse"></div>
+            <div className="absolute w-1/2 aspect-[1/1] inset-1/4 -top-[40%] md:-top-[110%] bg-[#FD791A] rounded-full animate-horizontal"></div>
+            <div className="absolute -left-[8%] -bottom-[25%] md:-bottom-[70%] md:-left-[20%] w-1/3 aspect-[1/1] bg-[#FFE400] rounded-[40px] rotate-45 animate-spin-reverse"></div>
             {/* <div className="absolute bottom-0 right-0 w-[300px] h-[200px] bg-green-500 rounded-[40px]"></div> */}
 
-<div
+{/* <div
         className="absolute w-1/3 aspect-[1/1] bg-green-500 animate-spin -right-[10%] -bottom-[10%]"
         style={{
           clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
           borderRadius: '15%', // Adjust this value to control corner roundness
           animationDuration: '30s', // Adjust duration for rotation speed
         }}
-      ></div>
+      ></div> */}
 
 <svg
-        width="150"
-        height="130"
         viewBox="0 0 100 100"
-        className="animate-spin"
-        style={{ animationDuration: '4s' }} // Adjust rotation speed as desired
+        className="animate-spin absolute -right-[10%] -bottom-[20%] md:-right-[20%] md:-bottom-[50%] w-1/3 aspect-[1/1]"
+        style={{ animationDuration: '40s' }} // Adjust rotation speed as desired
       >
         <defs>
           <filter id="rounded-corners">
