@@ -41,7 +41,7 @@ const CategoryGridItems = () => {
     };
 
     return (
-        <div className="px-4 md:px-8 mt-5 py-6 bg-white">
+        <div className="mt-5 py-6 bg-white container-md">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
                 <h2 className="text-center text-xl font-bold mb-6">What are you looking for?</h2>

@@ -4,10 +4,14 @@ import fifthbanner from '../../../images/favicon.png'
 import SearchInput from '@/Components/Frontend/SearchInput';
 import SearchSection from '@/Components/Frontend/SearchSection';
 import CategoryGridItems from './Partial/Category';
-import AnimatedImages from './Partial/Ad1';
+import BestBankItems from './Partial/BestBank';
+import AdPart1 from './Partial/Ad1';
+import AdPart2 from './Partial/Ad2';
+import RecentReviews from './Partial/RecentReview';
+import AdPart3 from './Partial/Ad3';
+// import AdPart3 from '@/Components/Frontend/Ad';
 
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-
 
 
 const LandingArea = () => {
@@ -24,7 +28,7 @@ const LandingArea = () => {
         <>
             <SearchSection />
 
-            <div className="container mx-auto mt-20 relative flex w-full items-center justify-center">
+            <div className="container-md mx-auto mt-20 relative flex w-full items-center justify-center">
                 <hr className="absolute h-px my-8 w-full bg-gray-500 border-0" />
                 <button className="absolute z-10 flex items-center px-4 py-3 border border-blue-500 group text-sm rounded-full bg-slate-50/90 hover:bg-gray-100 transition duration-300 ease-in-out">
                 Bought something recently?
@@ -37,19 +41,25 @@ const LandingArea = () => {
 
             <CategoryGridItems />
 
-            <AnimatedImages />
+            <AdPart1 />
 
-            <div className="mt-5 h-32 bg-blue-600">
-                Best in Bank
-            </div>
+            <BestBankItems />
 
-            <div className="mt-5 h-32 bg-red-600">
-                Ad
-            </div>
+            <AdPart2 />
 
-            <div className="mt-5 h-32 bg-blue-600">
-                Recent review Component
-            </div>
+            <RecentReviews />
+
+            <AdPart3 />
+
+            {/* <AdPart3
+                bgColor="#234F3F"
+                headTitle="Are you a business?"
+                bodyText="Join Trustpilot and inspire customer confidence with real reviews."
+                imgSrc={ad3}
+                imgClassName="w-1/2 right-0 float-right"
+                imgAspect="1/1"
+                btnText="Contact us"
+                /> */}
         </>
     );
 };
