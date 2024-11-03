@@ -13,7 +13,7 @@ const data = [
         image: "https://placekitten.com/64/64",
         title: "EECU Credit Union",
         link: "https://eecu.org",
-        rating: 4.8,
+        rating: 3.8,
         reviews: 1502
     },
     {
@@ -27,7 +27,7 @@ const data = [
         image: "https://placekitten.com/66/66",
         title: "RISLA",
         link: "https://risla.com",
-        rating: 4.8,
+        rating: 1.8,
         reviews: 3981
     },
     {

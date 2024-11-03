@@ -7,7 +7,7 @@ import CategoryGridItems from './Partial/Category';
 import CompanyList from './Partial/CompanyList';
 import AdPart1 from './Partial/Ad1';
 import AdPart2 from './Partial/Ad2';
-import RecentReviews from './Partial/RecentReview';
+import RecentReviews from './Partial/RecentReviewList';
 import AdPart3 from './Partial/Ad3';
 // import AdPart3 from '@/Components/Frontend/Ad';
 

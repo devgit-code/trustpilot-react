@@ -4,7 +4,7 @@ import secondbanner from '../../../../images/secondbanner.jpg'
 const AnimatedComponent = () => {
 
     return (
-        <div className="bg-[#9AE9C9] rounded-2xl mt-5 p-16 grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-between container-md mx-auto shadow-lg">
+        <div className="bg-[#9AE9C9] rounded-2xl mt-5 p-8 grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-between container-md mx-auto shadow-lg">
             {/* Text Section */}
             <div className="flex-1 mr-4 p-4">
                 <h2 className="text-3xl font-bold mb-3">We’re Trustpilot</h2>
