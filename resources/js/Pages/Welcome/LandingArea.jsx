@@ -14,6 +14,76 @@ import AdPart3 from './Partial/Ad3';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
 
+const data = [
+    {
+        image: "https://placekitten.com/64/64",
+        title: "EECU Credit Union",
+        link: "https://eecu.org",
+        rating: 3.8,
+        is_verified: true,
+        reviews: 1502
+    },
+    {
+        image: "https://placekitten.com/65/65",
+        title: "Wainscoting America",
+        link: "https://wainscotingamerica.com",
+        is_verified: false,
+        rating: 5.0,
+        reviews: 930
+    },
+    {
+        image: "https://placekitten.com/66/66",
+        title: "RISLA",
+        link: "https://risla.com",
+        is_verified: false,
+        rating: 1.8,
+        reviews: 3981
+    },
+    {
+        image: "https://placekitten.com/67/67",
+        title: "Wade Caves - Astrologer",
+        link: "https://wadecaves.com",
+        is_verified: true,
+        rating: 4.9,
+        reviews: 92
+    },
+];
+
+const data2 = [
+    {
+        image: "https://placekitten.com/64/64",
+        title: "EECU Credit Union",
+        link: "https://eecu.org",
+        rating: 4.2,
+        is_verified: true,
+        reviews: 1502
+    },
+    {
+        image: "https://placekitten.com/65/65",
+        title: "Wainscoting America",
+        link: "https://wainscotingamerica.com",
+        is_verified: false,
+        rating: 2.7,
+        reviews: 930
+    },
+    {
+        image: "https://placekitten.com/66/66",
+        title: "RISLA",
+        link: "https://risla.com",
+        is_verified: false,
+        rating: 1.0,
+        reviews: 3981
+    },
+    {
+        image: "https://placekitten.com/67/67",
+        title: "Wade Caves - Astrologer",
+        link: "https://wadecaves.com",
+        is_verified: true,
+        rating: 0.6,
+        reviews: 92
+    },
+];
+
 const LandingArea = () => {
     return (
         // <section className="Landing position-relative">
@@ -43,9 +113,9 @@ const LandingArea = () => {
 
             <AdPart1 />
 
-            <CompanyList title="Best in Banks"/>
+            <CompanyList title="Best in Banks" data={data}/>
 
-            <CompanyList title="Latest Companies"/>
+            <CompanyList title="Latest Companies" data={data2}/>
 
             <AdPart2 />
 
