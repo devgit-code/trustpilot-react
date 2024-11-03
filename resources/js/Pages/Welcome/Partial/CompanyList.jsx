@@ -43,7 +43,7 @@ const data = [
     },
 ];
 
-const BestBank = ({title}) => {
+const CompanyList = ({title}) => {
 
     return (
         <div className="container-md bg-white">
@@ -78,4 +78,4 @@ const BestBank = ({title}) => {
     );
 };
 
-export default BestBank;
+export default CompanyList;

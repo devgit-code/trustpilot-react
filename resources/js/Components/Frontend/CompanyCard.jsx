@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../../../images/company-logo.png"
 import Rating from '@/Components/Rating';
 
-function Card({ image, title, link, rating, reviews, is_verified=false }) {
+function CompanyCard({ title, link, rating, reviews, is_verified}) {
     return (
         <a href={link} className="no-underline">
             <div className="bg-white rounded-lg p-4 mb-5 mx-3 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '280px'}}>
@@ -19,11 +19,14 @@ function Card({ image, title, link, rating, reviews, is_verified=false }) {
                 <p className="text-sm text-gray-500 mb-1">
                     {link.replace("https://", "").replace("www.", "")}
                 </p>
-
-                <Rating rating={rating} reviews={reviews}/>
+                <div className="flex items-center">
+                    <Rating className="inline-flex" rating={rating}/>
+                    <span className="text-sm font-semibold text-gray-700 ml-1">{rating}</span>
+                    <span className="text-xs ml-2 text-gray-500">({reviews})</span>
+                </div>
             </div>
         </a>
     );
 }
 
-export default Card;
+export default CompanyCard;
