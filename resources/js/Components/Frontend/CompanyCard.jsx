@@ -1,45 +1,28 @@
 import React from "react";
 import logo from "../../../images/company-logo.png"
-import { Badge, Button } from "@material-tailwind/react";
-import {CheckIcon} from "@heroicons/react/24/outline";
+import Rating from '@/Components/Rating';
 
 function Card({ image, title, link, rating, reviews, is_verified=false }) {
     return (
-        <div className="bg-white rounded-lg p-4 m-2 flex flex-col group border border-gray-200 hover:shadow-2xl" style={{minWidth: '280px', boxShadow: '0 .125rem .25rem rgba(0, 0, 0, .075)'}}>
-            <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                <img src={logo} alt={title} className="w-20 object-cover rounded border-2 border-white" />
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    className="absolute -top-2 -right-2">
-                    <path fill={`${is_verified ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
-                    <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
-                </svg>
+        <a href={link} className="no-underline">
+            <div className="bg-white rounded-lg p-4 mb-5 mx-3 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '280px'}}>
+                <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
+                    <img src={logo} alt={title} className="w-20 object-cover rounded border-2 border-white" />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        className="absolute -top-2 -right-2">
+                        <path fill={`${is_verified ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                        <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
+                    </svg>
+                </div>
+
+                <h3 className="mt-2 text-black text-lg font-semibold mb-0">{title}</h3>
+                <p className="text-sm text-gray-500 mb-1">
+                    {link.replace("https://", "").replace("www.", "")}
+                </p>
+
+                <Rating rating={rating} reviews={reviews}/>
             </div>
-
-            <h3 className="text-lg font-semibold">{title}</h3>
-            <a href={link} className="text-sm text-gray-500">
-                {link.replace("https://", "").replace("www.", "")}
-            </a>
-
-
-            {/* Rating Section */}
-            <div className="flex items-center mt-4 space-x-1">
-                {[...Array(5)].map((_, index) => (
-                <svg
-                    key={index}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`w-4 h-4 ${
-                    index < rating ? 'text-yellow-500' : 'text-gray-300'
-                    }`}
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M12 .587l3.668 7.431L24 9.748l-6 5.848 1.417 8.258L12 18.9l-7.417 4.955L6 15.596 0 9.748l8.332-1.73L12 .587z" />
-                </svg>
-                ))}
-                <span className="text-sm font-semibold text-gray-700 ml-1">{rating}</span>
-                <span className="text-xs text-gray-500">({reviews})</span>
-            </div>
-        </div>
+        </a>
     );
 }
 

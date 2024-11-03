@@ -1,0 +1,26 @@
+import React from "react";
+
+function Rating({ rating, reviews }) {
+    return (
+
+        <div className="flex items-center space-x-1">
+            {[...Array(5)].map((_, index) => (
+            <svg
+                key={index}
+                xmlns="http://www.w3.org/2000/svg"
+                className={`w-4 h-4 ${
+                index < rating ? 'text-yellow-500' : 'text-gray-300'
+                }`}
+                fill="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path d="M12 .587l3.668 7.431L24 9.748l-6 5.848 1.417 8.258L12 18.9l-7.417 4.955L6 15.596 0 9.748l8.332-1.73L12 .587z" />
+            </svg>
+            ))}
+            <span className="text-sm font-semibold text-gray-700 ml-1">{rating}</span>
+            <span className="text-xs text-gray-500">({reviews})</span>
+        </div>
+    );
+}
+
+export default Rating;
