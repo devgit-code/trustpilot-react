@@ -4,7 +4,7 @@ function SearchSection() {
     return (
         <div className="relative flex items-center justify-center h-[70vh] bg-[#FCFBF3] overflow-hidden">
             {/* Background shapes */}
-            <div className="absolute w-1/2 aspect-[1/1] inset-1/4 md:-top-[140%] -top-[40%] bg-[#FD791A] rounded-full animate-horizontal"
+            <div className="absolute w-1/2 aspect-[1/1] top-0 bg-[#FD791A] rounded-full animate-horizontal"
                 style={{}}></div>
             <div className="absolute -left-[8%] -bottom-[25%] md:-bottom-[70%] md:-left-[20%] w-1/3 aspect-[1/1] bg-[#FFE400] rounded-[40px] rotate-45 animate-spin-reverse"></div>
             {/* <div className="absolute bottom-0 right-0 w-[300px] h-[200px] bg-green-500 rounded-[40px]"></div> */}

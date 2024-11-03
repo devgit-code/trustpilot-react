@@ -1,47 +1,44 @@
-import React from "react";
+import React from 'react';
+import UserAvatar from '@/Components/UserAvatar';
+import Rating from '@/Components/Rating';
 import logo from "../../../images/company-logo.png"
-import { Badge, Button } from "@material-tailwind/react";
-import {CheckIcon} from "@heroicons/react/24/outline";
 
-function Card({ image, title, link, rating, reviews }) {
-    return (
-        <div className="bg-white shadow-sm rounded-lg p-4 flex flex-col group border border-gray-200 hover:bg-blue-100" style={{minWidth: '240px'}}>
-            <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                <img src={logo} alt={title} className="w-20 object-cover rounded border-2 border-white" />
-                <span class="w-4 h-4 rounded-full bg-green-500 border-2 border-white absolute -top-1 -right-1"></span>
-            </div>
-<span width="50" height="50"><i class="fa-thin fa-shield-check"></i></span>
-<svg width="50" height="50" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fill="#4CAF50" d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
-  <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
-</svg>
-
-
-    <Badge
-      content={<CheckIcon className="h-4 w-4 text-white" strokeWidth={2.5} />}
-      className="bg-gradient-to-tr from-green-400 to-green-600 border-2 border-white shadow-lg shadow-black/20"
-    >
-      <Button>Notifications</Button>
-    </Badge>
-
-            <h3 className="text-lg font-semibold">{title}</h3>
-            <a href={link} className="text-sm text-gray-500">
-                {link.replace("https://", "").replace("www.", "")}
-            </a>
-            <div className="flex items-center mt-3 space-x-1">
-                <div className="flex space-x-1">
-                    {/* Add star icons or other rating symbols as needed */}
-                    <span className="text-green-500">★</span>
-                    <span className="text-green-500">★</span>
-                    <span className="text-green-500">★</span>
-                    <span className="text-green-500">★</span>
-                    <span className="text-green-500">★</span>
+const ReviewCard = ({ review_id, user, rating, comment, company }) => {
+  return (
+    <a className="no-underline">
+        <div className="bg-white text-black rounded-lg mb-5 mx-3 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '280px'}}>
+            {/* User Avatar, Name, and Rating */}
+            <div className="flex items-center gap-2 px-4 mt-3">
+                <div className="flex items-center justify-center">
+                    <UserAvatar user={user}/>
                 </div>
-                <span className="text-gray-700 font-semibold">{rating}</span>
-                <span className="text-gray-400">({reviews})</span>
+                <div className="ml-3 ">
+                    <h3 className="text-lg font-semibold mb-0">{user.name}</h3>
+                    <div className="flex space-x-1">
+                        <Rating rating={rating}/>
+                    </div>
+                </div>
+            </div>
+
+            {/* Comment Section */}
+            <p className="text-gray-700 px-4 mt-3 min-h-[112px]">
+                {comment.length > 100 ? `${comment.slice(0, 100)}...` : comment}
+            </p>
+
+            {/* Company Logo and Name */}
+            <div className="flex items-center gap-2 border-t rounded-b text-black px-4 py-2 hover:bg-gray-100" onClick={()=>console.log('navigate===')}>
+                <div className="relative inline-flex items-center w-12 h-12 border-2 bordered rounded">
+                    <img src={logo} alt={company.name} className="w-12 object-cover rounded border-2 border-white" />
+                </div>
+                <div>
+                    <h4 className="pt-1 text-sm font-semibold">{company.name}</h4>
+                    <p className="text-xs text-gray-500 mb-0">{company.website}</p>
+                </div>
             </div>
         </div>
-    );
-}
+    </a>
 
-export default Card;
+  );
+};
+
+export default ReviewCard;

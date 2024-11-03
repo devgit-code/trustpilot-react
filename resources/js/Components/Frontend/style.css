@@ -13,17 +13,17 @@
 
 @keyframes horizontalMove {
     0% {
-        transform: translateX(-40%);
+        transform: translateX(-40%) translateY(-90%);
     }
     50% {
-        transform: translateX(40%);
+        transform: translateX(40%) translateY(-90%);
     }
     100% {
-        transform: translateX(-40%);
+        transform: translateX(-40%) translateY(-90%);
     }
 }
 
-.animate-horizontal {
+ .animate-horizontal {
     animation: horizontalMove 60s ease-in-out infinite;
 }
 

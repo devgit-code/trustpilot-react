@@ -14,8 +14,10 @@ import {
     Navbar,
     NavDropdown,
 } from 'react-bootstrap';
+
 import logo from "../../../images/eniyi-logo-b.png"
 import "./Style.css"
+import UserAvatar from '@/Components/UserAvatar';
 
 export default function Navigation({auth}) {
 
@@ -77,21 +79,7 @@ export default function Navigation({auth}) {
                             <>
                                 <NavDropdown
                                     title={
-                                        auth.user.avatar_url ? (
-                                            <img
-                                                src="/img/avatar/user.png"
-                                                alt="avatar"
-                                                className="avatar p-0"
-                                                style={{ height: '2.2rem', borderRadius: '50%' }}
-                                            />
-                                        ) : (
-                                            <div
-                                                className="bg-gray-200 text-green-500 rounded-circle d-flex justify-content-center align-items-center p-0"
-                                                style={{ height: '2.2rem', width: '2.2rem', padding: '0' }}
-                                            >
-                                                {getInitials(auth.user.name)}
-                                            </div>
-                                        )
+                                        <UserAvatar user={auth.user}/>
                                     }
                                     id="user-dropdown"
                                     align="end"
