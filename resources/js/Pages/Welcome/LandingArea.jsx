@@ -4,7 +4,7 @@ import fifthbanner from '../../../images/favicon.png'
 import SearchInput from '@/Components/Frontend/SearchInput';
 import SearchSection from '@/Components/Frontend/SearchSection';
 import CategoryGridItems from './Partial/Category';
-import BestBankItems from './Partial/BestBank';
+import CompanyList from './Partial/CompanyList';
 import AdPart1 from './Partial/Ad1';
 import AdPart2 from './Partial/Ad2';
 import RecentReviews from './Partial/RecentReview';
@@ -43,7 +43,9 @@ const LandingArea = () => {
 
             <AdPart1 />
 
-            <BestBankItems />
+            <CompanyList title="Best in Banks"/>
+
+            <CompanyList title="Latest Companies"/>
 
             <AdPart2 />
 

@@ -39,13 +39,13 @@ const data = [
     },
 ];
 
-const BestBank = () => {
+const BestBank = ({title}) => {
 
     return (
         <div className="container-md mt-5 py-6 bg-white">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
-                <h2 className="text-center text-2xl font-bold mb-6">Best in Banks</h2>
+                <h2 className="text-center text-2xl font-bold mb-6">{title}</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
                     <button className="inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
@@ -56,7 +56,7 @@ const BestBank = () => {
 
             <div className="relative flex items-center pt-3">
                 {/* flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth */}
-                <div className="grid grid-cols-4 gap-4">
+                <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                     {data.map((item, index) => (
                         <CompanyCard
                             key={index}
