@@ -23,7 +23,7 @@
     }
 }
 
-.animate-horizontal {
+ .animate-horizontal {
     animation: horizontalMove 60s ease-in-out infinite;
 }
 
