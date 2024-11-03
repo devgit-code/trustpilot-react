@@ -79,6 +79,20 @@ span a {
   position: relative;
 }
 
+.image {
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.image img {
+    transition: all 0.3s ease-in-out;
+}
+
+.image img:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
 /* layout start */
 
 .sidebar {

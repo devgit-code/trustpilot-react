@@ -19,20 +19,6 @@ p {
     font-size: 1rem;
 }
 
-.image {
-    overflow: hidden;
-    cursor: pointer;
-}
-
-img {
-    transition: all 0.3s ease-in-out;
-}
-
-.image img:hover {
-    transform: scale(1.1);
-    transition: all 0.3s ease-in-out;
-}
-
 .butn{
     text-decoration: none;
     padding: 0;

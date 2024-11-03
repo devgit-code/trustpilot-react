@@ -23,22 +23,6 @@ const categories = [
   // Add more items as needed
 ];
 
-const items = [
-  { id: 1, label: 'Item 1' },
-  { id: 2, label: 'Item 2' },
-  { id: 3, label: 'Item 3' },
-  { id: 4, label: 'Item 4' },
-  { id: 5, label: 'Item 5' },
-  { id: 6, label: 'Item 6' },
-  { id: 7, label: 'Item 7' },
-  { id: 8, label: 'Item 8' },
-  { id: 9, label: 'Item 1' },
-  { id: 10, label: 'Item 2' },
-  { id: 11, label: 'Item 3' },
-  { id: 20, label: 'Item 4' },
-  // Add more items as needed
-];
-
 const CategoryGridItems = () => {
     const containerRef = useRef(null);
 
@@ -57,7 +41,7 @@ const CategoryGridItems = () => {
     };
 
     return (
-        <div className="px-4 md:px-8 mt-5 py-6 bg-white">
+        <div className="mt-5 py-6 bg-white container-md">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
                 <h2 className="text-center text-xl font-bold mb-6">What are you looking for?</h2>
@@ -85,9 +69,9 @@ const CategoryGridItems = () => {
                 {/* Icon Grid - Horizontal Scroll on Mobile */}
                 <div ref={containerRef} className="flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth">
                     {categories.map((category, index) => (
-                        <div key={index} className="flex flex-shrink-0 flex-col items-center justify-center pr-4 text-center">
+                        <div key={index} className="flex flex-shrink-0 flex-col items-center group justify-center pr-4 text-center hover:cursor-pointer">
                             <div className="flex items-center justify-center w-6 h-6">{category.icon}</div>
-                            <Link href="/#" className="block text-center p-2 no-underline text-black text-sm hover:underline" > {category.label}</Link>
+                            <Link href="/#" className="block text-center p-2 no-underline text-black text-sm group-hover:underline" > {category.label}</Link>
                         </div>
                     ))}
                 </div>

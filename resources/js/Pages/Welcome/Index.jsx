@@ -17,7 +17,7 @@ export default function Welcome() {
                 {/* <!-- \landingarea --> */}
 
                 {/* <!-- About section --> */}
-                <About />
+                {/* <About /> */}
                 {/* <!-- \About section --> */}
 
                 {/* <Footer /> */}
