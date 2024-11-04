@@ -15,7 +15,7 @@ const CompanyList = ({title, data}) => {
         <div className="container-md bg-white">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
-                <h2 className="text-center text-2xl font-bold my-2">{title}</h2>
+                <h2 className="text-center text-2xl font-extrabold my-2">{title}</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
                     <button className="inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">

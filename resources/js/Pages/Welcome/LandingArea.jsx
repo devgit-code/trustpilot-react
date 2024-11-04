@@ -4,7 +4,7 @@ import fifthbanner from '../../../images/favicon.png'
 import SearchInput from '@/Components/Frontend/SearchInput';
 import SearchSection from '@/Components/Frontend/SearchSection';
 import CategoryGridItems from './Partial/CategoryList';
-import CompanyList from './Partial/CompanyList';
+import CompanyList from '@/Components/Frontend/CompanyList';
 import AdPart1 from './Partial/Ad1';
 import AdPart2 from './Partial/Ad2';
 import RecentReviews from './Partial/RecentReviewList';
