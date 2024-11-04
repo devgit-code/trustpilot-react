@@ -7,7 +7,9 @@ export default function Index() {
     return (
         <>
             <FrontendLayout>
-                <Head title="Write" />
+                <Head title="Write a Review" />
+
+                <SearchSection />
 
                 <div>Write</div>
             </FrontendLayout>

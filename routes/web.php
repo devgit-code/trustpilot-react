@@ -43,7 +43,7 @@ Route::get('/', function () {
 
 Route::get('/categories', function(){
     return Inertia::render('Category/Index');
-})->name('home');
+})->name('categories');
 
 Route::get('/categories/{category_name}', function(){
     return Inertia::render('Category/Detail');

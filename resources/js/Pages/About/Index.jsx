@@ -1,20 +1,16 @@
 import { Head } from '@inertiajs/react';
 import React from 'react';
 
-import LandingArea from './LandingArea';
-import About from './About';
-
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 
 
-export default function About() {
+export default function AboutUs() {
     return (
         <>
             <FrontendLayout>
-                <Head title="About" />
+                <Head title="About Us" />
                 {/* <!-- landingarea --> */}
-                <LandingArea />
-                <div>About</div>
+                <div>About Us</div>
             </FrontendLayout>
         </>
     );
