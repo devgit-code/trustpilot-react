@@ -20,15 +20,6 @@ import "./Style.css"
 import UserAvatar from '@/Components/UserAvatar';
 
 export default function Navigation({auth}) {
-
-    // Function to get the user's initials
-    const getInitials = (name) => {
-        if (!name) return '';
-        const parts = name.split(' ');
-        const initials = parts.map(part => part.charAt(0).toUpperCase()).join('');
-        return initials.slice(0, 2); // Return first two initials
-    };
-
     const doLogin = () => {
         console.log("login++++", auth)
         // if(auth.is_verified == undefined || auth.is_verified == null || !auth.is_verified)
@@ -51,9 +42,9 @@ export default function Navigation({auth}) {
 
                     <Navbar.Collapse id="responsive-navbar-nav " className="">
                         <div className="list-unstyled sm:hidden block">
-                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
-                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
-                            <Link href="#" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > About us</Link>
+                            <Link href={route('writeareview')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
+                            <Link href={route('categories')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
+                            <Link href={route('aboutus')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > About us</Link>
                             <hr className="hr text-white" />
                             {auth && auth.user ? (
                                 <>
@@ -71,10 +62,12 @@ export default function Navigation({auth}) {
 
                     </Navbar.Collapse>
 
-                    <Nav className="d-none d-sm-flex justify-content-center align-items-center">
-                        <NavLink href={route('home')} className="butn" > Write a review </NavLink>
-                        <NavLink href={route('home')} className="butn" > Categories </NavLink>
-                        <NavLink href={route('home')} className="butn" > About us </NavLink>
+                    <Nav className="d-none d-sm-flex justify-content-center h-full">
+                        <div className="flex h-full">
+                            <NavLink href={route('writeareview')} active={route().current('writeareview')} className="butn" > Write a review </NavLink>
+                            <NavLink href={route('categories')} active={route().current('categories')} className="butn" > Categories </NavLink>
+                            <NavLink href={route('aboutus')} active={route().current('aboutus')} className="butn" > About us </NavLink>
+                        </div>
                         {auth && auth.user ? (
                             <>
                                 <NavDropdown

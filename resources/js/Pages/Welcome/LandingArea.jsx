@@ -3,8 +3,8 @@ import React from 'react';
 import fifthbanner from '../../../images/favicon.png'
 import SearchInput from '@/Components/Frontend/SearchInput';
 import SearchSection from '@/Components/Frontend/SearchSection';
-import CategoryGridItems from './Partial/Category';
-import CompanyList from './Partial/CompanyList';
+import CategoryGridItems from './Partial/CategoryList';
+import CompanyList from '@/Components/Frontend/CompanyList';
 import AdPart1 from './Partial/Ad1';
 import AdPart2 from './Partial/Ad2';
 import RecentReviews from './Partial/RecentReviewList';
@@ -13,6 +13,76 @@ import AdPart3 from './Partial/Ad3';
 
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
+
+const data = [
+    {
+        image: "https://placekitten.com/64/64",
+        title: "EECU Credit Union",
+        link: "https://eecu.org",
+        rating: 3.8,
+        is_verified: true,
+        reviews: 1502
+    },
+    {
+        image: "https://placekitten.com/65/65",
+        title: "Wainscoting America",
+        link: "https://wainscotingamerica.com",
+        is_verified: false,
+        rating: 5.0,
+        reviews: 930
+    },
+    {
+        image: "https://placekitten.com/66/66",
+        title: "RISLA",
+        link: "https://risla.com",
+        is_verified: false,
+        rating: 1.8,
+        reviews: 3981
+    },
+    {
+        image: "https://placekitten.com/67/67",
+        title: "Wade Caves - Astrologer",
+        link: "https://wadecaves.com",
+        is_verified: true,
+        rating: 4.9,
+        reviews: 92
+    },
+];
+
+const data2 = [
+    {
+        image: "https://placekitten.com/64/64",
+        title: "EECU Credit Union",
+        link: "https://eecu.org",
+        rating: 4.2,
+        is_verified: true,
+        reviews: 1502
+    },
+    {
+        image: "https://placekitten.com/65/65",
+        title: "Wainscoting America",
+        link: "https://wainscotingamerica.com",
+        is_verified: false,
+        rating: 2.7,
+        reviews: 930
+    },
+    {
+        image: "https://placekitten.com/66/66",
+        title: "RISLA",
+        link: "https://risla.com",
+        is_verified: false,
+        rating: 1.0,
+        reviews: 3981
+    },
+    {
+        image: "https://placekitten.com/67/67",
+        title: "Wade Caves - Astrologer",
+        link: "https://wadecaves.com",
+        is_verified: true,
+        rating: 0.6,
+        reviews: 92
+    },
+];
 
 const LandingArea = () => {
     return (
@@ -43,9 +113,9 @@ const LandingArea = () => {
 
             <AdPart1 />
 
-            <CompanyList title="Best in Banks"/>
+            <CompanyList title="Best in Banks" data={data}/>
 
-            <CompanyList title="Latest Companies"/>
+            <CompanyList title="Latest Companies" data={data2}/>
 
             <AdPart2 />
 

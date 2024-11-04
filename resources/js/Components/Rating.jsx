@@ -8,8 +8,18 @@ function Rating({ className, rating }) {
             <svg
                 key={index}
                 xmlns="http://www.w3.org/2000/svg"
-                className={`w-4 h-4 ${
-                index < rating ? 'text-yellow-500' : 'text-gray-300'
+                className={`w-5 h-5 p-1 text-white ${
+                    index < rating
+                        ? rating <= 1
+                            ? 'bg-red-500'
+                            : rating <= 2
+                            ? 'bg-orange-400'
+                            : rating <= 3
+                            ? 'bg-yellow-500'
+                            : rating <= 4
+                            ? 'bg-lime-500'
+                            : 'bg-green-500'
+                        : 'bg-gray-300'
                 }`}
                 fill="currentColor"
                 viewBox="0 0 24 24"

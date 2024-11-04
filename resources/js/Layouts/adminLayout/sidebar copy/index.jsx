@@ -35,7 +35,7 @@ export default function Sidebar() {
         </div>
         <div className="ps-3">
           <NavLink style={{ borderBottom: 'none', }}
-            href={route('admin.dashboard')} active={route().current('admin.dashboard')}
+            href={route('admin.dashboard')} active={route().current('admin.dashboard')} activeClassName="text-red"
           >
             <span className="text-info fs-4">
               DASHBOARD</span>
