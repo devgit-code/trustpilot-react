@@ -35,9 +35,9 @@ export default function Navigation({auth}) {
 
     return (
         <>
-            <Navbar collapseOnSelect expand="sm" className="bg-dark">
+            <Navbar collapseOnSelect expand="sm" className="bg-dark p-0">
                 <Container fluid="lg">
-                    <Navbar.Brand ><Link href={route('home')}><img src={logo} alt="logo" style={{height:"2.2rem"}}/></Link></Navbar.Brand>
+                    <Navbar.Brand ><Link href={route('home')}><img src={logo} alt="logo" className="my-1" style={{height:"2.2rem"}}/></Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" className="bg-white"/>
 
                     <Navbar.Collapse id="responsive-navbar-nav " className="">
@@ -78,6 +78,7 @@ export default function Navigation({auth}) {
                                     align="end"
                                     autoClose='outside'
                                     style={{ marginLeft: '3rem'}}
+                                    className="flex items-center"
                                 >
                                     <NavDropdown.Item disabled>{auth.user.name}</NavDropdown.Item>
                                     <NavDropdown.Divider />

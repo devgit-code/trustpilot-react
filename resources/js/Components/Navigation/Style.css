@@ -25,7 +25,8 @@ p {
     color: white;
     font-weight: 500;
     margin: 0 0.6rem;
-    padding-bottom: 0.6rem;
+    padding-bottom: 1.2rem;
+    padding-top: 1.2rem;
     transition: all 0.3s ease-in-out;
     border-bottom: 3px solid rgb(33, 37, 41);
 
@@ -47,4 +48,8 @@ p {
 
 #user-dropdown{
     padding: 0;
+}
+
+.dropdown-menu[data-bs-popper] {
+    top: 90%;
 }
