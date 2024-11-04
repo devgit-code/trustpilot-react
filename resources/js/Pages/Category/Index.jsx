@@ -2,6 +2,8 @@ import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React from 'react';
 
+import SearchCategorySection from './Partial/SearchCategorySection';
+import CategoryList from './Partial/CategoryList'
 
 export default function Category() {
     return (
@@ -9,15 +11,14 @@ export default function Category() {
             <FrontendLayout>
                 <Head title="Category" />
 
+                <SearchCategorySection />
 
-                <div className="mt-5 h-32 bg-red-600">
-                    Search Company with limit search count
+                <div className="bg-[#FCFBF3] min-h-screen py-5">
+                    <div className="container-lg">
+                        <h2 className="font-bold text-2xl mb-5">Explore companies by category</h2>
+                        <CategoryList />
+                    </div>
                 </div>
-
-                <div className="mt-5 h-32 bg-blue-600">
-                    All tag
-                </div>
-
             </FrontendLayout>
         </>
     );

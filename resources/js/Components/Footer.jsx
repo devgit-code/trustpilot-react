@@ -13,7 +13,7 @@ import fav from '../../images/favicon.png'
 const Footer = () => {
     return (
         <>
-            <footer className="bg-dark pt-5 mt-5 text-white">
+            <footer className="bg-dark pt-5 text-white">
                 <Container fluid="lg">
                     <div className="py-5">
                         <a href={route('home')} className="sm:inline-block sm:justify-start flex justify-center p-1">
