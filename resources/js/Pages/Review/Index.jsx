@@ -9,15 +9,7 @@ export default function Index() {
             <FrontendLayout>
                 <Head title="Write" />
 
-
-                <div className="mt-5 h-32 bg-red-600">
-
-                    search
-                </div>
-
-                <div className="mt-5 h-32 bg-cyan-600">Recent
-                </div>
-
+                <div>Write</div>
             </FrontendLayout>
         </>
     );

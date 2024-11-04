@@ -20,15 +20,6 @@ import "./Style.css"
 import UserAvatar from '@/Components/UserAvatar';
 
 export default function Navigation({auth}) {
-
-    // Function to get the user's initials
-    const getInitials = (name) => {
-        if (!name) return '';
-        const parts = name.split(' ');
-        const initials = parts.map(part => part.charAt(0).toUpperCase()).join('');
-        return initials.slice(0, 2); // Return first two initials
-    };
-
     const doLogin = () => {
         console.log("login++++", auth)
         // if(auth.is_verified == undefined || auth.is_verified == null || !auth.is_verified)

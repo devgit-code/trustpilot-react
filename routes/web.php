@@ -43,7 +43,7 @@ Route::get('/', function () {
 
 Route::get('/categories', function(){
     return Inertia::render('Category/Index');
-});
+})->name('home');
 
 Route::get('/categories/{category_name}', function(){
     return Inertia::render('Category/Detail');
@@ -55,7 +55,7 @@ Route::get('/categories/{category_name}/{sub_cat}', function(){
 
 Route::get('/writeareview', function(){
     return Inertia::render('Review/Index');
-});
+})->name('writeareview');
 
 Route::get('/evaluate/{company_name}', function(){
     return Inertia::render('Review/Evaluate');
@@ -64,6 +64,14 @@ Route::get('/evaluate/{company_name}', function(){
 Route::get('/review/{company_name}', function(){
     return Inertia::render('Review/Reviews');
 });
+
+Route::get('/aboutus', function(){
+    return Inertia::render('About/Index');
+})->name('aboutus');
+
+Route::get('/contactus', function(){
+    return Inertia::render('Contact/Index');
+})->name('contactus');
 
 Route::get('/test', function (Request $request) {
             return $request->user()->hasVerifiedEmail();
