@@ -5,10 +5,10 @@ import logo from "@/../images/company-logo.png"
 
 const ReviewCard = ({ review_id, user, rating, comment, company, sub_cats }) => {
   return (
-    <a href="#" className="no-underline">
-        <div className="bg-white text-black rounded-lg mb-5 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '220px'}}>
+    <a href="#" className="no-underline m-2">
+        <div className="bg-white text-black rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '220px'}}>
             {/* Company Logo and Name */}
-            <div className="text-black m-2 px-2 min-h-[110px]" >
+            <div className="text-black m-2 px-2 min-h-[120px]" >
                 <h4 className="pt-1 text-lg font-semibold">{company.name}</h4>
                 <div className="flex items-center space-x-1">
                     <Rating rating={rating}/>
@@ -16,7 +16,7 @@ const ReviewCard = ({ review_id, user, rating, comment, company, sub_cats }) => 
                 </div>
 
                 <p className="text-gray-700 text-sm mt-2 mb-0">
-                    {sub_cats.length > 50 ? `${sub_cats.slice(0, 50)}...` : sub_cats}
+                    {sub_cats.length > 40 ? `${sub_cats.slice(0, 40)}...` : sub_cats}
                 </p>
             </div>
 

@@ -1,12 +1,13 @@
 import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
-import React from 'react';
+import React, {useState} from 'react';
 
 import Header from './Partial/Header.jsx'
 import Rating from './Partial/Rating.jsx'
 import Status from './Partial/CompanyStatus.jsx'
 import RelatedCategory from './Partial/RelatedCategory.jsx'
 import RecentCompanyReviews from './Partial/RecentCompanyReviews.jsx'
+import PaginationList from './Partial/PaginationList.jsx'
 
 const sel_cat = {
     title: 'Events & Entertainment',
@@ -26,7 +27,9 @@ const sel_cat = {
     ]
 };
 
-export default function Detail() {
+export default function Detail({page=1, count=327}) {
+    const [sortBy, setSortBy] = useState("relevant");
+
     return (
         <>
             <FrontendLayout>
@@ -48,8 +51,9 @@ export default function Detail() {
                                 <RelatedCategory />
                             </div>
                         </div>
-                        <div className="col-lg-8 px-3">
-                            <div className='bg-white border rounded mb-4 h-32'>
+                        <div className="col-lg-8 px-3 mt-3">
+                            <div className='mb-4'>
+                                <PaginationList page={page} count={count}/>
                             </div>
                             <div className='mb-4'>
                                 {/* Popular searches */}
