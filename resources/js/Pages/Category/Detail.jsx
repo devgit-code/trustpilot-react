@@ -2,37 +2,59 @@ import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React from 'react';
 
+import Header from './Partial/Header.jsx'
+import Rating from './Partial/Rating.jsx'
+import Status from './Partial/CompanyStatus.jsx'
+import RelatedCategory from './Partial/RelatedCategory.jsx'
+import RecentCompanyReviews from './Partial/RecentCompanyReviews.jsx'
 
-export default function Detail({sel_cat}) {
+const sel_cat = {
+    title: 'Events & Entertainment',
+    slug: 'events_entertainment',
+    icon: '🎤',
+    items: [
+        'Adult Entertainment',
+        'Children’s Entertainment',
+        'Clubbing & Nightlife',
+        'Events & Venues',
+        'Gambling',
+        'Gaming',
+        'Museums & Exhibits',
+        'Music & Movies',
+        'Theater & Opera',
+        'Wedding & Party'
+    ]
+};
+
+export default function Detail() {
     return (
         <>
             <FrontendLayout>
-                <Head title={sel_cat} />
+                <Head title={sel_cat.title} />
 
+                <Header />
 
-                <div className="mt-5 h-32 bg-red-600">
-                    cat/subcat/cat_name
+                <div className='bg-[#FCFBF3] pt-5'>
+                    <div className='container-lg mx-auto row'>
+                        <div className="col-lg-4 px-3 mb-5">
+                            <div className='bg-white border rounded mb-4 p-4'>
+                                <Rating />
 
-                    title
-                </div>
+                                <Status />
 
-                <div className="mt-5 h-32 bg-blue-600">
-                    <div className="col-md-3 h-32">
-                        <div className="mt-5 h-32 bg-cyan-600">Info
+                                {/* subcategories */}
+                            </div>
+                            <div className='bg-white border rounded p-4 mb-4'>
+                                <RelatedCategory />
+                            </div>
                         </div>
-
-                        <div className="mt-5 h-64 bg-red-600">Related cat
-                        </div>
-                    </div>
-
-                    <div className="col-md-9 h-64">
-                        <div className="mt-5 h-64 bg-red-600">table with pagination
-                        </div>
-
-                        <div className="mt-5 h-32 bg-cyan-600">Recetnly viewed
-                        </div>
-
-                        <div className="mt-5 h-32 bg-cyan-600">newest company
+                        <div className="col-lg-8 px-3">
+                            <div className='bg-white border rounded mb-4 h-32'>
+                            </div>
+                            <div className='mb-4'>
+                                {/* Popular searches */}
+                                <RecentCompanyReviews />
+                            </div>
                         </div>
                     </div>
                 </div>
