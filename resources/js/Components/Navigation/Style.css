@@ -37,7 +37,7 @@ p {
     border-bottom: 3px solid white;
 }
 
-.active {
+.butn.active {
   color: white !important;
   border-bottom: 3px solid white;
 }

@@ -69,6 +69,22 @@ Route::get('/aboutus', function(){
     return Inertia::render('About/Index');
 })->name('aboutus');
 
+Route::get('/aboutus/trends-in-trust', function(){
+    return Inertia::render('About/BlogCategory', [
+        'title' => "Trends in Trust"
+    ]);
+})->name('aboutus.trends');
+
+Route::get('/aboutus/reviews-matter', function(){
+    return Inertia::render('About/BlogCategory' ,[
+        'title' => "Reviews Matter"
+    ]);
+})->name('aboutus.reviews');
+
+Route::get('/aboutus/{detail}', function(){
+    return Inertia::render('About/Detail');
+})->name('aboutus.detail');
+
 Route::get('/contactus', function(){
     return Inertia::render('Contact/Index');
 })->name('contactus');
@@ -84,8 +100,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
+    Route::get('/profile/setting', function(){
+        return Inertia::render('Profile/Edit');
+    })->name('profile.setting');
+
+    Route::get('/profile/password', function(){
+        return Inertia::render('Profile/Edit');
+    })->name('profile.password');
+
+    Route::get('/profile/account', function(){
+        return Inertia::render('Profile/Edit');
+    })->name('profile.account');
+
+    // Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
+    // Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 });
 
 
