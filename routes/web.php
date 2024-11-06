@@ -114,7 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('profile.setting');
 
     Route::get('/profile/password', function(){
-        return Inertia::render('Profile/Edit');
+        return Inertia::render('Profile/Password');
     })->name('profile.password');
 
     Route::get('/profile/account', function(){

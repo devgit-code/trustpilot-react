@@ -16,7 +16,7 @@ export default function Header(){
                     <div className='ml-5 flex'>
                         {route().current('aboutus.detail') ?
 
-                        <Link className="text-gray-700 font-bold text-sm py-4 border-b-[3px] border-[#FCECE3] no-underline mx-3"
+                        <Link className="text-gray-700 font-bold text-sm py-3 border-b-[3px] border-[#FCECE3] no-underline mx-3"
                             href={route('aboutus')}
                             >
                             <div className='flex items-center border-l pl-5 border-gray-300 py-2'>
