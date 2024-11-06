@@ -23,7 +23,7 @@ const BlogList = ({title, link, blogs}) => {
                     {blogs.map((item, index) => (
                         <BlogCard
                             key={index}
-                            title={title}
+                            title={'Trends in Trust'}
                             {...item}
                         />
                     ))}

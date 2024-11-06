@@ -58,11 +58,11 @@ export default function BlogCategory({title}) {
 
                     <div className="relative flex items-center pt-3">
                         {/* flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth */}
-                        <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-4 pb-5 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
+                        <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-2 pb-5 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                             {blogs.map((item, index) => (
                                 <BlogCard
                                     key={index}
-                                    title={title}
+                                    title={'Trends in Trust'}
                                     {...item}
                                 />
                             ))}
