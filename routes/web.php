@@ -46,24 +46,33 @@ Route::get('/categories', function(){
 })->name('categories');
 
 Route::get('/categories/{category_name}', function(){
-    return Inertia::render('Category/Detail');
-});
+    return Inertia::render('Category/Detail', [
+        'category_name' => "Animals & Pets"
+    ]);
+})->name('categories.detail');
 
 Route::get('/categories/{category_name}/{sub_cat}', function(){
-    return Inertia::render('Category/SubCat');
-});
+    return Inertia::render('Category/Detail', [
+        'category_name' => "Animals & Pets",
+        'sub_cat' => 'Cats & Dogs'
+    ]);
+})->name('categories.subcat');
 
-Route::get('/writeareview', function(){
+Route::get('/reviews', function(){
     return Inertia::render('Review/Index');
-})->name('writeareview');
+})->name('reviews');
 
-Route::get('/evaluate/{company_name}', function(){
+Route::get('/reviews/evaluate/{company_name}', function(){
     return Inertia::render('Review/Evaluate');
-});
+})->name('reviews.evaluate');
 
-Route::get('/review/{company_name}', function(){
+Route::get('/reviews/{company_name}', function(){
     return Inertia::render('Review/Reviews');
-});
+})->name('reviews.company');
+
+Route::get('/reviews/{id}', function(){
+    return Inertia::render('Review/Detail');
+})->name('reviews.detail');
 
 Route::get('/aboutus', function(){
     return Inertia::render('About/Index');

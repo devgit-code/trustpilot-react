@@ -26,9 +26,9 @@ const AnimatedComponent = () => {
                 <p className="text-md text-black mb-4">Share your experience on Trustpilot, where real reviews make a difference.</p>
                 {/* Buttons */}
                 <div className="flex items-center gap-4">
-                    <button className="bg-orange-950 text-white px-4 py-2 rounded-full hover:bg-orange-700 hover:text-black">
+                    <a href={route('login')} className="no-underline bg-orange-950 text-white px-4 py-2 rounded-full hover:bg-orange-700 hover:text-black">
                         Login or sign up
-                    </button>
+                    </a>
                 </div>
             </div>
 

@@ -13,9 +13,9 @@ const AnimatedComponent = () => {
 </p>
                 {/* Buttons */}
                 <div className="flex items-center gap-4">
-                    <button className="bg-green-950 text-white px-4 py-2 rounded-full hover:bg-green-700 transition duration-200">
+                    <a href={route('aboutus')} className="no-underline bg-green-950 text-white px-4 py-2 rounded-full hover:bg-green-700 transition duration-200">
                         What we do
-                    </button>
+                    </a>
                 </div>
             </div>
 

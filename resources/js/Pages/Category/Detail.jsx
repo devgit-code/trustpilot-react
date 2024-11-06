@@ -27,7 +27,7 @@ const sel_cat = {
     ]
 };
 
-export default function Detail({page=1, count=327}) {
+export default function Detail({page=1, count=327, category_name, sub_cat}) {
     const [sortBy, setSortBy] = useState("relevant");
 
     return (

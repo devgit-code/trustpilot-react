@@ -3,7 +3,7 @@ import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React from 'react';
 
 
-export default function Evaluate({company_name}) {
+export default function Evaluate({company_name='ADD'}) {
     return (
         <>
             <FrontendLayout>
@@ -16,7 +16,7 @@ export default function Evaluate({company_name}) {
 
 
                 <div className="mt-5 h-32 bg-red-600">
-                    form
+                    evaluate
                 </div>
 
             </FrontendLayout>
