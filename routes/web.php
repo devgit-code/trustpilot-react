@@ -60,19 +60,19 @@ Route::get('/categories/{category_name}/{sub_cat}', function(){
     ]);
 })->name('categories.subcat');
 
-Route::get('/reviews', function(){
+Route::get('/writeareview', function(){
     return Inertia::render('Review/Index');
-})->name('reviews');
+})->name('reviews.write');
 
 Route::get('/reviews/evaluate/{company_name}', function(){
     return Inertia::render('Review/Evaluate');
 })->name('reviews.evaluate');
 
 Route::get('/reviews/{company_name}', function(){
-    return Inertia::render('Review/Reviews');
+    return Inertia::render('Review/Company');
 })->name('reviews.company');
 
-Route::get('/reviews/{id}', function(){
+Route::get('/review/{id}', function(){
     return Inertia::render('Review/Detail');
 })->name('reviews.detail');
 

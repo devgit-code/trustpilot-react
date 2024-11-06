@@ -42,7 +42,7 @@ const data = [
     },
 ];
 
-export default function Index() {
+export default function Write() {
     return (
         <>
             <FrontendLayout>

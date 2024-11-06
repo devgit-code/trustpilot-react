@@ -3,7 +3,7 @@ import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React from 'react';
 
 
-export default function Reviews({company_name}) {
+export default function CompanyReviews({company_name}) {
     return (
         <>
             <FrontendLayout>
