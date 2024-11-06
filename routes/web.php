@@ -19,7 +19,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/admin', function () {
+    return Inertia::render('Admin/Auth/Login');
+})->name('admin');
 
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
@@ -98,6 +100,9 @@ Route::get('/contactus', function(){
     return Inertia::render('Contact/Index');
 })->name('contactus');
 
+
+
+
 Route::get('/test', function (Request $request) {
             return $request->user()->hasVerifiedEmail();
 
@@ -121,8 +126,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('Profile/Edit');
     })->name('profile.account');
 
-    // Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    // Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 });
 
 

@@ -17,7 +17,7 @@ export default function Sidebar() {
           </div>
 
 
-          <Link href={route("user_profile.show")}> <img
+          <Link href={route("admin.user_profile.show")}> <img
             src={`/storage/images/${userProfileImage}`}
             alt="user"
             className="rounded-circle mx-auto border border-white"

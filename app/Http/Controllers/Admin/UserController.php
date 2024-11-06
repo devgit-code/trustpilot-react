@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 
     public function destroy(String $id)
@@ -107,7 +107,7 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user) {
             $user->delete();
-            return to_route('users.index');
+            return to_route('admin.users.index');
         }
     }
 }

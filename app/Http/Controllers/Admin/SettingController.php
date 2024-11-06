@@ -62,6 +62,6 @@ class SettingController extends Controller
             }
         }
 
-        return to_route('settings.index');
+        return to_route('admin.settings.index');
     }
 }

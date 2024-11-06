@@ -32,7 +32,7 @@ const SlideSorting = ({ items }) => {
                                 <h3 className="m-0 text-center text-lg-start">Slide sorting</h3>
                             </div>
                             <div className="col-lg-6 col-md-12 text-center text-md-end">
-                                <Link href={route('slides.index')} className="btn btn-primary" as="button">
+                                <Link href={route('admin.slides.index')} className="btn btn-primary" as="button">
                                     Back
                                 </Link>
                             </div>

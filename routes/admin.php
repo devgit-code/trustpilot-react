@@ -26,7 +26,7 @@ Route::group([
 ], function () {
 
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -58,6 +58,9 @@ Route::group([
     Route::resource('permissions', PermissionController::class);
 
 
+    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
+    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
+
 
 
     Route::resource('cities', CityController::class);
@@ -82,6 +85,4 @@ Route::group([
 
 
 
-    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 });

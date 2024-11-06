@@ -59,7 +59,7 @@ class SliderController extends Controller
         if ($request->croppedImage != null) {
             $extension = explode('/', mime_content_type($request->croppedImage))[1];
             $imageName = "slider-" . now()->timestamp . "." . $extension;
-            //Image::make(file_get_contents($request->croppedImage))->save($path); 
+            //Image::make(file_get_contents($request->croppedImage))->save($path);
             Storage::disk('public')->put(
                 $imageName,
                 file_get_contents($request->croppedImage)
@@ -71,7 +71,7 @@ class SliderController extends Controller
             $creationData["order"] = $lastRecord->order + 1;
         }
         Slider::create($creationData);
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 
     /**
@@ -122,7 +122,7 @@ class SliderController extends Controller
 
             $item->update($updateData);
         }
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 
     /**
@@ -135,6 +135,6 @@ class SliderController extends Controller
             Storage::disk('public')->delete($item->image);
         }
         $item->delete();
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 }

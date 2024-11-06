@@ -17,7 +17,7 @@ export default function Sidebar() {
           </div>
 
 
-          <Link href={route("user_profile.show")}> <img
+          <Link href={route("admin.user_profile.show")}> <img
             src={`/storage/images/${userProfileImage}`}
             alt="user"
             className="rounded-circle mx-auto border border-white"
@@ -35,7 +35,7 @@ export default function Sidebar() {
         </div>
         <div className="ps-3">
           <NavLink style={{ borderBottom: 'none', }}
-            href={route('dashboard')} active={route().current('dashboard')}
+            href={route('admin.dashboard')} active={route().current('admin.dashboard')}
           >
             <span className="text-info fs-4">
               DASHBOARD</span>
@@ -45,7 +45,7 @@ export default function Sidebar() {
           <ul className="list-unstyled text-white mt-3">
             <li>
               <NavLink
-                href={route('users.index')} active={route().current('users.index')}
+                href={route('admin.users.index')} active={route().current('admin.users.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -54,7 +54,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('slides.index')} active={route().current('slides.index')}
+                href={route('admin.slides.index')} active={route().current('admin.slides.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -64,7 +64,7 @@ export default function Sidebar() {
 
             <li>
               <NavLink
-                href={route('settings.index')} active={route().current('settings.index')}
+                href={route('admin.settings.index')} active={route().current('admin.settings.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -74,7 +74,7 @@ export default function Sidebar() {
 
             <li>
               <NavLink
-                href={route('testimonials.index')} active={route().current('testimonials.index')}
+                href={route('admin.testimonials.index')} active={route().current('admin.testimonials.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -83,7 +83,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('sponsors.index')} active={route().current('sponsors.index') || route().current('sponsors.edit') || route().current('sponsors.create')}
+                href={route('admin.sponsors.index')} active={route().current('admin.sponsors.index') || route().current('admin.sponsors.edit') || route().current('admin.sponsors.create')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -92,7 +92,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('roles.index')} active={route().current('roles.index')}
+                href={route('admin.roles.index')} active={route().current('admin.roles.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -101,7 +101,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('permissions.index')} active={route().current('permissions.index')}
+                href={route('admin.permissions.index')} active={route().current('admin.permissions.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -110,7 +110,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('cities.index')} active={route().current('cities.index')}
+                href={route('admin.cities.index')} active={route().current('admin.cities.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -119,7 +119,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('states.index')} active={route().current('states.index')}
+                href={route('admin.states.index')} active={route().current('admin.states.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>
@@ -128,7 +128,7 @@ export default function Sidebar() {
             </li>
             <li>
               <NavLink
-                href={route('categories.index')} active={route().current('categories.index')}
+                href={route('admin.categories.index')} active={route().current('admin.categories.index')}
                 className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
               >
                 <i className="bi bi-kanban fs-5"></i>

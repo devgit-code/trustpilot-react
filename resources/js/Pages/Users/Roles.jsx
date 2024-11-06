@@ -80,7 +80,7 @@ const UserRoleForm = ({ roles, user, id }) => {
                 >
                   {processing ? 'Submitting...' : 'Submit'}
                 </button>
-                <a className="btn btn-danger me-3" href={route('users.index')}>
+                <a className="btn btn-danger me-3" href={route('admin.users.index')}>
                   Cancel
                 </a>
               </div>
