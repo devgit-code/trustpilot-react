@@ -111,7 +111,7 @@ const Index = ({ categories }) => {
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                         <li className="view">
-                                                            <Link href={route('sub_categories.index', category.id)}>
+                                                            <Link href={route('admin.sub_categories.index', category.id)}>
                                                                 <FaFolderOpen className='fs-3 me-2 text-success' />
                                                             </Link>
                                                         </li>

@@ -16,30 +16,30 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return Inertia::render('Permissions/Index', ['permissions' => $permissions]);
+        return Inertia::render('Admin/Permissions/Index', ['permissions' => $permissions]);
     }
     public function create()
     {
-        return Inertia::render('Roles/Permissions');
+        return Inertia::render('Admin/Roles/Permissions');
     }
 
     public function edit(Permission $permission)
     {
-        return Inertia::render('Permissions/Edit', ['permission' => $permission]);
+        return Inertia::render('Admin/Permissions/Edit', ['permission' => $permission]);
     }
 
 
     public function update(Request $request, Permission $permission)
     {
         $permission->update(['name' => $request->name]);
-        return redirect()->route('permissions.index');
+        return redirect()->route('admin.permissions.index');
     }
 
     public function store(Request $request)
     {
         $permission = Permission::create(['name' => $request->name]);
 
-        return redirect()->route('permissions.index')->with('success', 'Permission created successfully.');
+        return redirect()->route('admin.permissions.index')->with('success', 'Permission created successfully.');
     }
 
     public function destroy(Permission $permission)

@@ -15,7 +15,7 @@ class TestimonialController extends Controller
     public function index()
     {
         $items = Testimonial::orderBy('order')->get();
-        return Inertia::render('Testimonial/Index', [
+        return Inertia::render('Admin/Testimonial/Index', [
             'items' => $items
         ]);
     }
@@ -23,7 +23,7 @@ class TestimonialController extends Controller
 
     public function create()
     {
-        return Inertia::render('Testimonial/Create');
+        return Inertia::render('Admin/Testimonial/Create');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class TestimonialController extends Controller
             $creationData["order"] = $lastRecord->order + 1;
         }
         Testimonial::create($creationData);
-        return redirect()->route('testimonials.index');
+        return redirect()->route('admin.testimonials.index');
     }
 
 
@@ -63,7 +63,7 @@ class TestimonialController extends Controller
     public function sort()
     {
         $items = Testimonial::orderBy('order')->get();
-        return Inertia::render('Testimonial/Sortable', [
+        return Inertia::render('Admin/Testimonial/Sortable', [
             'items' => $items
         ]);
     }
@@ -79,7 +79,7 @@ class TestimonialController extends Controller
     public function edit(string $id)
     {
         $item = Testimonial::find($id);
-        return Inertia::render('Testimonial/Edit', [
+        return Inertia::render('Admin/Testimonial/Edit', [
             'item' => $item
         ]);
     }
@@ -111,7 +111,7 @@ class TestimonialController extends Controller
 
             $item->update($updateData);
         }
-        return redirect()->route('testimonials.index');
+        return redirect()->route('admin.testimonials.index');
     }
 
 
@@ -123,6 +123,6 @@ class TestimonialController extends Controller
             Storage::disk('public')->delete($item->image);
         }
         $item->delete();
-        return redirect()->route('testimonials.index');
+        return redirect()->route('admin.testimonials.index');
     }
 }

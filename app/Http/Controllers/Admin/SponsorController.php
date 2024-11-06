@@ -14,7 +14,7 @@ class SponsorController extends Controller
     public function index()
     {
         $items = Sponsor::orderBy('order')->get();
-        return Inertia::render('Sponsor/Index', [
+        return Inertia::render('Admin/Sponsor/Index', [
             'items' => $items
         ]);
     }
@@ -24,7 +24,7 @@ class SponsorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Sponsor/Create');
+        return Inertia::render('Admin/Sponsor/Create');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class SponsorController extends Controller
             $creationData["order"] = $lastRecord->order + 1;
         }
         Sponsor::create($creationData);
-        return redirect()->route('sponsors.index');
+        return redirect()->route('admin.sponsors.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class SponsorController extends Controller
     public function sort()
     {
         $items = Sponsor::orderBy('order')->get();
-        return Inertia::render('Sponsor/Sortable', [
+        return Inertia::render('Admin/Sponsor/Sortable', [
             'items' => $items
         ]);
     }
@@ -79,7 +79,7 @@ class SponsorController extends Controller
     public function edit(string $id)
     {
         $item = Sponsor::find($id);
-        return Inertia::render('Sponsor/Edit', [
+        return Inertia::render('Admin/Sponsor/Edit', [
             'item' => $item
         ]);
     }
@@ -109,7 +109,7 @@ class SponsorController extends Controller
 
             $item->update($updateData);
         }
-        return redirect()->route('sponsors.index');
+        return redirect()->route('admin.sponsors.index');
     }
 
 
@@ -121,6 +121,6 @@ class SponsorController extends Controller
             Storage::disk('public')->delete($item->image);
         }
         $item->delete();
-        return redirect()->route('sponsors.index');
+        return redirect()->route('admin.sponsors.index');
     }
 }

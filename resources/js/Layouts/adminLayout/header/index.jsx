@@ -4,8 +4,15 @@ import us from "../../../../images/united-states-of-america.png";
 import Dropdown from "@/Components/Dropdown";
 import { usePage } from "@inertiajs/react";
 
+const auth = {
+    user:{
+        name:'admin',
+        email:'admin@test.com'
+    }
+};
+
 export default function Header({ user }) {
-  const { auth } = usePage().props
+//   const { auth } = usePage().props
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
   const activesidebar = () => {
@@ -31,7 +38,7 @@ export default function Header({ user }) {
           <button onClick={showsearch} className="icons">
             <i className="bi bi-search fs-5 me-4"></i>
           </button>
-          <div className="btn-group dropstart me-4">
+          {/* <div className="btn-group dropstart me-4">
             <button
               className="dropdown-toggle"
               type="button"
@@ -57,7 +64,7 @@ export default function Header({ user }) {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
           <Dropdown>
             <Dropdown.Trigger>
               <span className="inline-flex rounded-md">

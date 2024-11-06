@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useForm } from '@inertiajs/react';
-import profileEditImg from '../../../images/profile2.jpg';
+import profileEditImg from '@/../images/profile2.jpg';
 import "cropperjs/dist/cropper.css";
 import ImageCropper from "../../ImageCropper";
 

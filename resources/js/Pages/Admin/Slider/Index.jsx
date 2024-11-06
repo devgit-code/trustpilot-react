@@ -20,7 +20,7 @@ const Slider = ({ items }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('slides.destroy', { id }));
+                        router.delete(route('admin.slides.destroy', { id }));
                     }
                 },
                 {
@@ -56,9 +56,9 @@ const Slider = ({ items }) => {
                                 <div className="d-flex align-items-center justify-content-end">
                                     <button className='btn btn-success d-flex align-items-center border-0 me-2'>
                                         <BsPlusCircleFill className='fs-5' />
-                                        <Link href={route('slides.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
+                                        <Link href={route('admin.slides.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
                                     </button>
-                                    <Link href={route('slides.sort')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><BsArrowDownShort className='fs-4' /> slides</Link>
+                                    <Link href={route('admin.slides.sort')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><BsArrowDownShort className='fs-4' /> slides</Link>
                                 </div >
                             </div >
 
@@ -93,11 +93,11 @@ const Slider = ({ items }) => {
                                             <td>{item.order}</td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
-                                              
-                                                
+
+
                                                     <li className='edit'>
 
-                                                        <Link href={route('slides.edit', item.id)}>
+                                                        <Link href={route('admin.slides.edit', item.id)}>
                                                             <FontAwesomeIcon icon={faPenToSquare} className="fs-4 me-2 text-danger" />
                                                         </Link>
                                                     </li>
