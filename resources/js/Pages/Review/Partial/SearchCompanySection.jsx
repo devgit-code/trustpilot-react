@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 function SearchSection() {
     return (
-        <div className="relative flex items-center justify-center h-[45vh] bg-[#9FF6D3] overflow-hidden">
+        <div className="relative flex items-center justify-center h-[45vh] min-h-[331px] bg-[#9FF6D3] overflow-hidden">
             {/* Central text and input */}
             <div className="text-center z-10 px-8">
                 <h2 className="text-4xl font-extrabold text-gray-900 select-none">Share your experience</h2>

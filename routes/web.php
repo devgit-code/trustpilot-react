@@ -62,17 +62,21 @@ Route::get('/categories/{category_name}/{sub_cat}', function(){
 
 Route::get('/writeareview', function(){
     return Inertia::render('Review/Index');
-})->name('reviews.write');
+})->name('reviews');
 
 Route::get('/reviews/evaluate/{company_name}', function(){
     return Inertia::render('Review/Evaluate');
 })->name('reviews.evaluate');
 
-Route::get('/reviews/{company_name}', function(){
+Route::get('/reviews/company/{id}', function(){
     return Inertia::render('Review/Company');
 })->name('reviews.company');
 
-Route::get('/review/{id}', function(){
+Route::get('/reviews/user/{id}', function(){
+    return Inertia::render('Review/User');
+})->name('reviews.user');
+
+Route::get('/reviews/review/{id}', function(){
     return Inertia::render('Review/Detail');
 })->name('reviews.detail');
 

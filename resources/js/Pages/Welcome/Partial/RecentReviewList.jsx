@@ -133,9 +133,9 @@ const RecentReviewList = () => {
                 <h2 className="text-center text-2xl font-bold my-2">Recent Reviews</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
-                    <button className="inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                    <a href="/reviews/review/latest" className="no-underline inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
                     See more
-                    </button>
+                    </a>
                 </div>
             </div>
 

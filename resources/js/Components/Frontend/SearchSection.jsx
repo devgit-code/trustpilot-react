@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 
 function SearchSection() {
     return (
-        <div className="relative flex items-center justify-center h-[70vh] bg-[#FCFBF3] overflow-hidden">
+        <div className="relative flex items-center justify-center h-[70vh] min-h-[516px] bg-[#FCFBF3] overflow-hidden">
             {/* Background shapes */}
             <div className="absolute w-1/2 aspect-[1/1] top-0 bg-[#FD791A] rounded-full animate-horizontal"
                 style={{}}></div>
