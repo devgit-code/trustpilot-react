@@ -46,7 +46,7 @@ export default function Detail() {
                 <Head title="Write a Review" />
 
                 <div className="p-2 bg-[#FCFBF3]">
-                    <div className='container-sm pb-5'>
+                    <div className='container-sm'>
                         <div className='max-w-screen-sm my-5 lg:ml-32 mb-5'>
                             <p className='p-2 text-sm text-gray-700'>Review of
                                 <a href="#" className='ml-2 hover:no-underline'>{review.company.name}</a>

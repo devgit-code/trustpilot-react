@@ -1,6 +1,6 @@
 import React from "react";
 
-function Rating({ className, rating }) {
+function Rating({ className, rating, width='w-5', height='w-5' }) {
     return (
 
         <div className={`${className} flex items-center space-x-1`}>
@@ -8,15 +8,15 @@ function Rating({ className, rating }) {
             <svg
                 key={index}
                 xmlns="http://www.w3.org/2000/svg"
-                className={`w-5 h-5 p-1 text-white ${
-                    index < rating
-                        ? rating <= 1
+                className={`${width} ${height} p-1 text-white ${
+                    index < (Math.floor(rating + 0.5))
+                        ? rating < 1.5
                             ? 'bg-red-500'
-                            : rating <= 2
+                            : rating < 2.5
                             ? 'bg-orange-400'
-                            : rating <= 3
+                            : rating < 3.5
                             ? 'bg-yellow-500'
-                            : rating <= 4
+                            : rating < 4.5
                             ? 'bg-lime-500'
                             : 'bg-green-500'
                         : 'bg-gray-300'

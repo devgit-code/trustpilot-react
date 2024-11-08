@@ -1,31 +1,42 @@
+import React, { useState, useEffect } from 'react';
 import { Head } from '@inertiajs/react';
-import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
-import React from 'react';
 
+import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
+import Header from './Partial/Header.jsx'
+import SpinBar from './Partial/SpinBar.jsx'
+
+const company = {
+    logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
+    name: 'Liquid Expat Mortgages',
+    website: 'liquidexpatmortgages.com',
+    is_verified: true,
+    rating_statistic:{
+        avg: 4.2,
+        total: 340,
+        stars: {
+            '5' : 221,
+            '4' : 114,
+            '3' : 1,
+            '2' : 32,
+            '1' : 2,
+        }
+    }
+}
 
 export default function CompanyReviews({company_name}) {
+
     return (
         <>
             <FrontendLayout>
                 <Head title="Reviews" />
 
+                <SpinBar {...company}/>
 
-                <div className="mt-5 h-32 bg-red-600">
-{company_name}
-                    title
-                </div>
+                <Header {...company}/>
 
-                <div className="mt-5 h-32 bg-blue-600">
-                    <div className="col-md-9 h-64">
-                        <div className="mt-5 h-32 bg-cyan-600">Statistic
-                        </div>
-
-                        <div className="mt-5 h-64 bg-red-600">table with pagination
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 h-32">
-                        <div className="mt-5 h-32 bg-cyan-600">info
+                <div className="p-2 bg-[#FCFBF3]">
+                    <div className='container-sm pb-5'>
+                        <div className='min-h-screen bg-black'>
                         </div>
                     </div>
                 </div>
