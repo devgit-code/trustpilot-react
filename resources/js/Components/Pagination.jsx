@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Pagination({ totalPages = 10, currentPage = 1, onPageChange }) {
+export default function Pagination({ className, totalPages = 10, currentPage = 1, onPageChange }) {
     const [page, setPage] = useState(currentPage);
 
     const handlePageClick = (pageNum) => {
@@ -21,12 +21,12 @@ export default function Pagination({ totalPages = 10, currentPage = 1, onPageCha
     };
 
     return (
-        <div className="flex items-center">
+        <div className={`${className} `}>
             {/* Previous Button */}
             <button
                 onClick={handlePreviousClick}
                 disabled={page === 1}
-                className={`py-2 px-4 text-sm rounded-l-md border ${page === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+                className={`py-2 px-4 text-sm rounded-l-md border bg-gray-50 ${page === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
             >
                 Previous
             </button>
@@ -36,7 +36,7 @@ export default function Pagination({ totalPages = 10, currentPage = 1, onPageCha
                 <button
                 key={pageNum}
                 onClick={() => handlePageClick(pageNum)}
-                className={`p-2 px-3 text-sm border ${page === pageNum ? 'bg-blue-100 text-blue-600' : 'text-gray-700 hover:bg-gray-100'}`}
+                className={`p-2 px-3 text-sm border bg-gray-50 ${page === pageNum ? 'bg-blue-100 text-blue-600' : 'text-gray-700 hover:bg-gray-100'}`}
                 >
                 {pageNum}
                 </button>
@@ -46,7 +46,7 @@ export default function Pagination({ totalPages = 10, currentPage = 1, onPageCha
             <button
                 onClick={handleNextClick}
                 disabled={page === totalPages}
-                className={`py-2 px-4 text-sm rounded-r-md border ${page === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+                className={`py-2 px-4 text-sm rounded-r-md border bg-gray-50 ${page === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
             >
                 Next page
             </button>

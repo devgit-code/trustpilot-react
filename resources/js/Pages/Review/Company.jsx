@@ -6,6 +6,8 @@ import Header from './Partial/Header.jsx'
 import SpinBar from './Partial/SpinBar.jsx'
 import ClickableWrite from './Partial/ClickableWrite.jsx'
 import Filter from './Partial/Filter.jsx'
+import PaginationList from './Partial/PaginationList.jsx'
+import CompanyInfo from './Partial/CompanyInfo.jsx'
 
 const company = {
     logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
@@ -38,12 +40,19 @@ export default function CompanyReviews({company_name}) {
 
                 <div className="p-2 bg-[#FCFBF3]">
                     <div className='container-sm my-2'>
-                        <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 min-h-screen">
-                            <div className="col-span-2 bg-blue-500">
+                        <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
+                            <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
                                     <ClickableWrite />
+
                                     <Filter />
+
+                                    <PaginationList />
                                 </div>
+                            </div>
+
+                            <div className=''>
+                                <CompanyInfo />
                             </div>
                         </div>
                     </div>

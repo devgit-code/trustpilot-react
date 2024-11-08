@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Pagination from './Pagination';
+import Pagination from '@/Components/Pagination';
 import CompanyItem from './CompanyItem';
 
 // Dummy data for companies
@@ -55,18 +55,17 @@ export default function PaginationList({ page, count }) {
 
             <div className='mb-2'>
                 {/* Company List */}
-                {companies.map((company, index) => (
+                {companies.map((_, index) => (
                     <CompanyItem key={index} index={index} company={company} />
                 ))}
             </div>
 
-            <div className='mb-2 flex justify-center'>
-                <Pagination
-                    totalPages={10}
-                    currentPage={currentPage}
-                    onPageChange={(page) => setCurrentPage(page)}
-                    />
-            </div>
+            <Pagination
+                className='mb-2 flex justify-center itmes-center'
+                totalPages={10}
+                    ={currentPage}
+                onPageChange={(page) => setCurrentPage(page)}
+                />
         </div>
     );
 }
