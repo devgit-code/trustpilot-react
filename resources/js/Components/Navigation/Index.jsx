@@ -44,7 +44,7 @@ export default function Navigation({auth}) {
                         <div className="list-unstyled sm:hidden block">
                             <Link href={route('reviews')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
                             <Link href={route('categories')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
-                            <Link href={route('aboutus')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > About us</Link>
+                            <Link href={route('aboutus')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Blog</Link>
                             <hr className="hr text-white" />
                             {auth && auth.user ? (
                                 <>

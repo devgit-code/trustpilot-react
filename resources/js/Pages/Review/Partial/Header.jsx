@@ -36,13 +36,13 @@ export default function Header({name, website, is_verified, rating_statistic}) {
                     </div>
                     <span className='ml-2 text-gray-700 font-bold text-sm'>{name}</span>
                 </div>
-                <div className='mt-3 flex'>
-                    <div className="w-2/3 p-2">
+                <div className='mt-3 grid md:grid-cols-[2fr_1fr] gap-4 grid-cols-1'>
+                    <div className="p-2">
                         <div className='flex gap-16'>
-                            <div className="inline-flex items-center w-36 h-36 border rounded">
+                            <div className="hidden sm:inline-flex items-center w-36 h-36 border rounded">
                                 <img src={logo} alt={name} className="w-36 object-cover" />
                             </div>
-                            <div className="mt-2">
+                            <div className="mt-2 flex-1">
                                 <p className='text-3xl text-gray-800 font-black mb-0'>{name}</p>
                                 <div className='flex items-center mt-2'>
                                     <p className='text-gray-600 mb-0'>Reviews
@@ -66,7 +66,7 @@ export default function Header({name, website, is_verified, rating_statistic}) {
                             </div>
                         </div>
                     </div>
-                    <div className="w-1/3 px-3 mb-5">
+                    <div className="px-3 mb-5">
                         <div className='flex w-full'>
                             <a href="#" className='no-underline w-full p-3 border border-blue-400 rounded group hover:bg-blue-200 hover:border-blue-200'>
                                 <div className='flex items-center justify-between text-sm'>

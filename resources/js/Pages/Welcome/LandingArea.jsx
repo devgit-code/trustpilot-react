@@ -113,7 +113,7 @@ const LandingArea = () => {
 
             <AdPart1 />
 
-            <CompanyList title="Best in Banks" link="/categories/bank" data={data}/>
+            {/* <CompanyList title="Best in Banks" link="/categories/bank" data={data}/> */}
 
             <CompanyList title="Latest Companies" link="/categories/latest" data={data2}/>
 

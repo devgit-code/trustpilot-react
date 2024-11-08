@@ -4,6 +4,8 @@ import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import Header from './Partial/Header.jsx'
 import SpinBar from './Partial/SpinBar.jsx'
+import ClickableWrite from './Partial/ClickableWrite.jsx'
+import Filter from './Partial/Filter.jsx'
 
 const company = {
     logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
@@ -35,8 +37,14 @@ export default function CompanyReviews({company_name}) {
                 <Header {...company}/>
 
                 <div className="p-2 bg-[#FCFBF3]">
-                    <div className='container-sm pb-5'>
-                        <div className='min-h-screen bg-black'>
+                    <div className='container-sm my-2'>
+                        <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 min-h-screen">
+                            <div className="col-span-2 bg-blue-500">
+                                <div className='flex flex-col gap-4'>
+                                    <ClickableWrite />
+                                    <Filter />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

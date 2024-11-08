@@ -24,7 +24,7 @@ export default function SpinBar({name, website, is_verified, rating_statistic })
         {isVisible && (
             <div className={`sticky top-0 z-10 bg-gray-50 p-1 border-b text-white shadow-md transition-all duration-500 ease-out`}>
                 <div className='container-lg '>
-                    <div className='my-1 flex justify-between'>
+                    <div className='my-1 grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div className="p-2">
                             <div className='flex gap-4'>
                                 <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
