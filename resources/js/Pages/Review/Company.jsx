@@ -8,6 +8,8 @@ import ClickableWrite from './Partial/ClickableWrite.jsx'
 import Filter from './Partial/Filter.jsx'
 import PaginationList from './Partial/PaginationList.jsx'
 import CompanyInfo from './Partial/CompanyInfo.jsx'
+import CompanyActivity from './Partial/CompanyActivity.jsx'
+import CompanyRelated from './Partial/CompanyRelated.jsx'
 
 const company = {
     logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
@@ -51,8 +53,12 @@ export default function CompanyReviews({company_name}) {
                                 </div>
                             </div>
 
-                            <div className=''>
+                            <div className='flex flex-col gap-4'>
+                                <CompanyActivity />
+
                                 <CompanyInfo />
+
+                                <CompanyRelated />
                             </div>
                         </div>
                     </div>
