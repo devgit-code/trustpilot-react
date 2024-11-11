@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/react';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React from 'react';
 
-import CompanyList from '@/Components/Frontend/CompanyList';
+import WriteCompanyList from '@/Pages/Category/Partial/WriteCompanyList';
 import SearchCompanySection from './Partial/SearchCompanySection';
 import AddCompanySection from './Partial/AddCompanySection';
 
@@ -52,7 +52,7 @@ export default function Write() {
 
                 <div className="py-4"></div>
 
-                <CompanyList title="Ready to write your review?" data={data}/>
+                <WriteCompanyList title="Ready to write your review?" data={data}/>
 
                 <AddCompanySection />
 

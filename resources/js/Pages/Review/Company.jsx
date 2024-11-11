@@ -45,7 +45,7 @@ export default function CompanyReviews({company_name}) {
                         <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
-                                    <ClickableWrite />
+                                    <ClickableWrite company_name={company.name}/>
 
                                     <Filter />
 

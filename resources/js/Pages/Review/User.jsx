@@ -58,6 +58,7 @@ export default function Detail() {
                         </div>
                     </div>
                 </div>
+
                 <div className="p-2 bg-[#FCFBF3]">
                     <div className='container-sm flex justify-center'>
                         <div className='mt-3 grid gap-5 mb-5'>

@@ -1,12 +1,18 @@
 import React, { useState, } from "react";
+import { useEffect } from "react";
 
-export default function RatingClick({ className, onClick }) {
+export default function RatingClick({ className, star='0', onClick }) {
     const [rating, setRating] = useState(0);
+
+    useEffect(() => {
+        setRating(parseInt(star))
+    }, [star])
+
 
     return (
 
-        <div className={`${className} flex items-center space-x-1`}
-            onMouseLeave={()=>setRating(0)}>
+        <div className={`${className} inline-flex items-center space-x-1`}
+            onMouseLeave={()=>setRating(parseInt(star))}>
             {[...Array(5)].map((_, index) => (
             <svg
                 key={index}
