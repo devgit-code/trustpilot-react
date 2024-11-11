@@ -66,7 +66,7 @@ const RecentCompanyReviews = () => {
             </div>
 
             <div className="relative flex items-center pt-3 mb-5">
-                <div className="flex lg:grid lg:grid-cols-3 lg:w-full gap-1 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth pb-5">
+                <div className="flex lg:grid lg:grid-cols-3 lg:w-full gap-3 px-3 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth pb-5">
                     {reviews.map((item, index) => (
                         <ReviewCard
                             key={index}

@@ -6,7 +6,7 @@ import Header from './Partial/Header.jsx'
 import Rating from './Partial/Rating.jsx'
 import Status from './Partial/CompanyStatus.jsx'
 import RelatedCategory from './Partial/RelatedCategory.jsx'
-import RecentCompanyReviews from './Partial/RecentCompanyReviews.jsx'
+import RecentlyReviewedCompany from './Partial/RecentCompanyReviews.jsx'
 import PaginationList from './Partial/PaginationList.jsx'
 
 const sel_cat = {
@@ -57,7 +57,7 @@ export default function Detail({page=1, count=327, category_name, sub_cat}) {
                             </div>
                             <div className='mb-4'>
                                 {/* Popular searches */}
-                                <RecentCompanyReviews />
+                                <RecentlyReviewedCompany />
                             </div>
                         </div>
                     </div>

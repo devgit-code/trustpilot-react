@@ -7,17 +7,17 @@ import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCirc
 export default function ReviewCard({review}) {
     return (
         <div className='p-4 bg-white border rounded'>
-            <div className='py-3 border-b border-b-2 flex items-center'>
+            <div className=' pb-3 border-b border-b-2 flex items-center'>
                 <UserAvatar user={review.user} width='3rem' height='3rem'/>
-                <div className='ml-3'>
-                    <a href="#" className='no-underline text-gray-800 text-sm font-bold'>
+                <a href={"/reviews/user/" + review.user.name} className='no-underline ml-3'>
+                    <p className='text-gray-800 text-sm font-bold mb-0'>
                         {review.user.name}
-                    </a>
+                    </p>
                     <div className='flex items-center mt-1'>
                         <p className='mb-0 text-gray-700 text-sm'>{review.user.reviews} review</p>
                         <p className='mb-0 text-gray-700 ml-4 flex items-center'><FaMapMarkerAlt className='inline mr-2'/>{review.user.location}</p>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div className='py-2 border-b border-b-2'>
@@ -52,7 +52,7 @@ export default function ReviewCard({review}) {
                 <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
             </div>
             {
-                review.reply.length ? (
+                review.reply?.length ? (
                 <div className='mt-3 bg-[#F1F1E8] rounded-lg border-l-4 p-3 border-blue-500 flex'>
                     <div><FaReply className='text-gray-700 mt-1'/></div>
                     <div className='ml-3 flex-grow'>

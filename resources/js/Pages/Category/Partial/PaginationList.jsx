@@ -55,7 +55,7 @@ export default function PaginationList({ page, count }) {
 
             <div className='mb-2'>
                 {/* Company List */}
-                {companies.map((_, index) => (
+                {companies.map((company, index) => (
                     <CompanyItem key={index} index={index} company={company} />
                 ))}
             </div>
@@ -63,7 +63,7 @@ export default function PaginationList({ page, count }) {
             <Pagination
                 className='mb-2 flex justify-center itmes-center'
                 totalPages={10}
-                    ={currentPage}
+                currentPage={currentPage}
                 onPageChange={(page) => setCurrentPage(page)}
                 />
         </div>
