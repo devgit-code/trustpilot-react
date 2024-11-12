@@ -1,7 +1,7 @@
 import React from 'react';
 
 import fifthbanner from '../../../images/favicon.png'
-import SearchSection from '@/Components/Frontend/SearchSection';
+import SearchSection from './Partial/SearchSection';
 import CategoryGridItems from './Partial/CategoryList';
 import CompanyList from '@/Components/Frontend/CompanyList';
 import AdPart1 from './Partial/Ad1';

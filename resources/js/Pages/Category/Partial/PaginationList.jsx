@@ -29,30 +29,11 @@ const companies = [
     },
 ];
 
-export default function PaginationList({ page, count }) {
+export default function PaginationList({ page }) {
     const [currentPage, setCurrentPage] = useState(1);
 
     return (
         <div className="p-2">
-            <div className='mb-4 flex items center justify-between'>
-                <div className='flex items-center'>
-                    <p className='text-black text-sm'>{((page-1)*20+1)} - {page*20} of {count} results</p>
-                </div>
-                <div className='flex items-center p-2 w-96'>
-                    <label className='w-16'>Sort by</label>
-                    <select
-                        // value={sortBy}
-                        // onChange={(e) => setData('category_id', e.target.value)}
-                        className="form-control ml-2"
-                        style={{display:'inline-block'}}
-                    >
-                        <option value="relevant">Most relevant</option>
-                        <option value="highest">Highest number of reviews</option>
-                        <option value="recent">Most recent reviews</option>
-                    </select>
-                </div>
-            </div>
-
             <div className='mb-2'>
                 {/* Company List */}
                 {companies.map((company, index) => (

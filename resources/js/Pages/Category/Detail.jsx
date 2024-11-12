@@ -53,7 +53,26 @@ export default function Detail({page=1, count=327, category_name, sub_cat}) {
                         </div>
                         <div className="col-lg-8 px-3 mt-3">
                             <div className='mb-4'>
-                                <PaginationList page={page} count={count}/>
+
+                                <div className='mb-4 ml-2 flex items center justify-between'>
+                                    <div className='flex items-center'>
+                                        <p className='text-black text-sm'>{((page-1)*20+1)} - {page*20} of {count} results</p>
+                                    </div>
+                                    <div className='flex items-center p-2 w-96'>
+                                        <label className='w-16'>Sort by</label>
+                                        <select
+                                            // value={sortBy}
+                                            // onChange={(e) => setData('category_id', e.target.value)}
+                                            className="form-control ml-2"
+                                            style={{display:'inline-block'}}
+                                        >
+                                            <option value="relevant">Most relevant</option>
+                                            <option value="highest">Highest number of reviews</option>
+                                            <option value="recent">Most recent reviews</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <PaginationList page={page}/>
                             </div>
                             <div className='mb-4'>
                                 {/* Popular searches */}

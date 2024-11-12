@@ -90,7 +90,6 @@ function SearchSection() {
         const value = e.target.value;
         setQuery(value);
 
-console.log('herer+++++', results);
         if (value) {
             // Filter items based on the query
             const filteredResults = companies.filter((item) =>

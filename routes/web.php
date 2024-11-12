@@ -47,6 +47,10 @@ Route::get('/categories', function(){
     return Inertia::render('Category/Index');
 })->name('categories');
 
+Route::get('/search', function(){
+    return Inertia::render('Category/Search');
+})->name('search');
+
 Route::get('/categories/{category_name}', function(){
     return Inertia::render('Category/Detail', [
         'category_name' => "Animals & Pets"
