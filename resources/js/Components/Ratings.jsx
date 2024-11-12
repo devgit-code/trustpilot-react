@@ -1,6 +1,6 @@
 import React from "react";
 
-function Rating({ className, rating, width='w-5', height='w-5' }) {
+function Ratings({ className, rating, width='w-5', height='w-5' }) {
     return (
 
         <div className={`${className} flex items-center space-x-1`}>
@@ -31,4 +31,4 @@ function Rating({ className, rating, width='w-5', height='w-5' }) {
     );
 }
 
-export default Rating;
+export default Ratings;

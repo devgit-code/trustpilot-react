@@ -42,10 +42,10 @@ function SearchSection() {
 
             {/* Central text and input */}
             <div className="text-center z-10 px-8">
-                <h2 className="text-4xl font-bold text-gray-900 select-none">Find a company you can trust</h2>
+                <h2 className="text-4xl font-bold text-gray-900 md:px-24 select-none">Find a company you can trust</h2>
                 <p className="text-lg text-gray-600 mt-2 select-none">Real reviews by real people.</p>
 
-                <div className="relative mt-6 max-w-lg mx-auto">
+                <div className="relative max-w-lg md:max-w-xl mx-auto">
                     <input
                         type="text"
                         placeholder="Search company or category"

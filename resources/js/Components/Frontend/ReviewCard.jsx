@@ -1,6 +1,6 @@
 import React from 'react';
 import UserAvatar from '@/Components/UserAvatar';
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 import logo from "../../../images/company-logo.png"
 
 const ReviewCard = ({ review_id, user, rating, comment, company }) => {

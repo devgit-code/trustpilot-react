@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "@/../images/company-logo.png"
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 
 function EvaluateCard({ link, title, rating, reviews, is_verified}) {
     return (

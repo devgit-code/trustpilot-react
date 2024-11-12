@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../../images/company-logo.png"
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 
 function CompanyCard({ name, link, rating, reviews, is_verified}) {
     return (

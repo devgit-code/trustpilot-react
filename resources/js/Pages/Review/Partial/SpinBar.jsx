@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 import logo from '@/../images/company-logo.png';
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 
 
 export default function SpinBar({name, website, is_verified, rating_statistic }) {
@@ -54,7 +54,7 @@ export default function SpinBar({name, website, is_verified, rating_statistic })
                                         </p>
                                     </div>
                                 </a>
-                                <a href="#" className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
+                                <a href={'/reviews/company/' + name} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
                                     <span className='text-sm font-bold text-gray-100 group-hover:text-gray-700 '>Write a review</span>
                                 </a>
                             </div>

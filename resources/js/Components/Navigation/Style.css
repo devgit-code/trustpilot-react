@@ -32,9 +32,13 @@ p {
 
 }
 .butn:hover{
-    color: white;
+    color: white!important;
     transition: all 0.3s ease-in-out;
     border-bottom: 3px solid white;
+}
+.butn:focus{
+    color: white!important;
+    transition: all 0.3s ease-in-out;
 }
 
 .butn.active {

@@ -19,7 +19,6 @@ function SearchSection() {
     const [results, setResults] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-
     const handleInputChange = (e) => {
         const value = e.target.value;
         setQuery(value);
@@ -46,7 +45,7 @@ function SearchSection() {
         <div className="relative flex items-center justify-center h-[45vh] min-h-[331px] bg-[#F1F1E8] p-2">
             {/* Central text and input */}
             <div className="text-center z-10">
-                <h2 className="text-4xl font-bold text-gray-900 px-16 pb-3">What are you looking for?</h2>
+                <h2 className="text-4xl font-bold text-gray-900 md:px-16 pb-3">What are you looking for?</h2>
 
                 {/* Modal-like Overlay */}
                 {isDropdownVisible && (

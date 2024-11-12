@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Rating from '@/Components/Rating'
+import Rating from '@/Components/Ratings'
 import logo from '@/../images/company-logo.png'
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -47,7 +47,7 @@ export default function CompanyRelated() {
                                 <img src={logo} alt={'People who loo'} className="w-20 object-cover rounded border-2 border-white" />
                             </div>
                             <div className="ml-3 ">
-                                <a href="/reviews/company/name" className="pt-1 font-semibold">{'People who loo'}</a>
+                                <a href="/reviews/company/name" className="no-underline pt-1 font-semibold">{'People who look ' + index}</a>
                                 <div className="mt-2 flex">
                                     <Rating rating={4.8} />
                                     <span className="ml-2 text-sm">1245</span>

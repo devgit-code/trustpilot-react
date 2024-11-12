@@ -3,7 +3,7 @@ import React from 'react';
 import { FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
 
 import logo from '@/../images/company-logo.png';
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 
 function Status({className, rating}) {
     return (

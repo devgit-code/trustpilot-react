@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UserAvatar from '@/Components/UserAvatar';
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCircle } from 'react-icons/fa';
 
 export default function ReviewCard({review}) {

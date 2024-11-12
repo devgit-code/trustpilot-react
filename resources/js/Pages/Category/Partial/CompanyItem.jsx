@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 import UserAvatar from '@/Components/UserAvatar';
 import logo from '@/../images/company-logo.png';
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';

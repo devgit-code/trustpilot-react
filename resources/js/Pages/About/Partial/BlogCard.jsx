@@ -1,5 +1,5 @@
 import React from "react";
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 
 function BlogCard({ title, name, date}) {
     return (
