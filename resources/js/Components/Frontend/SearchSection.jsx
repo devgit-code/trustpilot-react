@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { IoSearchOutline, IoClose } from "react-icons/io5";
 
 function SearchSection() {
     return (
@@ -51,20 +52,7 @@ function SearchSection() {
                         className="w-full py-3 px-5 rounded-full shadow-lg text-gray-700 focus:outline-none"
                     />
                     <button className="absolute top-1/2 right-3 transform -translate-y-1/2 bg-blue-500 text-white rounded-full p-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
-                            />
-                        </svg>
+                        <IoSearchOutline className='text-xl'/>
                     </button>
                 </div>
             </div>

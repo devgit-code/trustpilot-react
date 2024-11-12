@@ -117,64 +117,69 @@ export default function Evaluate() {
                                     </p>
                                     <RatingClick star={star} onClick={setStar}/>
                                 </div>
-                                <div className='mt-2'>
-                                    <p className='text-gray-800 text-lg font-bold'>
-                                        Tell us more about your experience
-                                    </p>
-                                    <textarea
-                                        placeholder="What made your experience great? What is this company doing well? Remember to be honest, helpful, and constructive!"
-                                        className="w-full border rounded p-3 h-48"
-                                        name="postContent"
-                                        value={reviewText}
-                                        onChange={handleTextareaChange}
-                                        />
-                                </div>
+                                {star && (
+                                    <>
+                                        <div className='mt-2'>
+                                            <p className='text-gray-800 text-lg font-bold'>
+                                                Tell us more about your experience
+                                            </p>
+                                            <textarea
+                                                placeholder="What made your experience great? What is this company doing well? Remember to be honest, helpful, and constructive!"
+                                                className="w-full border rounded p-3 h-48"
+                                                name="postContent"
+                                                value={reviewText}
+                                                onChange={handleTextareaChange}
+                                                />
+                                        </div>
 
-                                <div className="mt-3 relative w-full">
-                                    <input
-                                        type="text"
-                                        ref={inputRef}
-                                        value={reviewTitle}
-                                        onChange={handleTitleChange}
-                                        placeholder="What's important for people to know?"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500"
-                                    />
-                                    <button
-                                        onClick={focusOnTitleInput}
-                                        className="absolute top-0 bottom-0 right-0 bg-gray-100 aspect-[1/1] border border-l-0 border-gray-300 rounded-r-md px-3 flex items-center justify-center hover:bg-gray-200 focus:ring focus:ring-blue-300 focus:outline-none"
-                                    >
-                                        <MdOutlineEdit className='text-2xl'/>
-                                    </button>
-                                </div>
+                                        <div className="mt-3 relative w-full">
+                                            <input
+                                                type="text"
+                                                ref={inputRef}
+                                                value={reviewTitle}
+                                                onChange={handleTitleChange}
+                                                placeholder="What's important for people to know?"
+                                                className="w-full border border-gray-300 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:ring focus:ring-blue-300 focus:border-blue-500"
+                                            />
+                                            <button
+                                                onClick={focusOnTitleInput}
+                                                className="absolute top-0 bottom-0 right-0 bg-gray-100 aspect-[1/1] border border-l-0 border-gray-300 rounded-r-md px-3 flex items-center justify-center hover:bg-gray-200 focus:ring focus:ring-blue-300 focus:outline-none"
+                                            >
+                                                <MdOutlineEdit className='text-2xl'/>
+                                            </button>
+                                        </div>
 
-                                <div className='mt-2'>
-                                    <p className='text-gray-800 text-lg font-bold'>
-                                        Date of experience
-                                    </p>
-                                    <input
-                                        type="date"
-                                        className="w-full border rounded p-3 text-lg"
-                                        placeholder="mm/dd/yyyy"
-                                        max={today}
-                                        />
-                                </div>
+                                        <div className='mt-2'>
+                                            <p className='text-gray-800 text-lg font-bold'>
+                                                Date of experience
+                                            </p>
+                                            <input
+                                                type="date"
+                                                className="w-full border rounded p-3 text-lg"
+                                                placeholder="mm/dd/yyyy"
+                                                max={today}
+                                                />
+                                        </div>
 
-                                <div className='mt-5'>
-                                    <p className="text-sm text-gray-600 mb-6">
-                                        By submitting this review, you confirm it’s{" "}
-                                        <a href="#" className="text-blue-600 underline hover:text-blue-800">
-                                        based on a genuine experience
-                                        </a>{" "}
-                                        and you haven’t received an incentive to write it.
-                                    </p>
+                                        <div className='mt-5'>
+                                            <p className="text-sm text-gray-600 mb-6">
+                                                By submitting this review, you confirm it’s{" "}
+                                                <a href="#" className="text-blue-600 underline hover:text-blue-800">
+                                                based on a genuine experience
+                                                </a>{" "}
+                                                and you haven’t received an incentive to write it.
+                                            </p>
 
-                                    {/* Submit Button */}
-                                    <div className='mx-6 '>
-                                        <button className="bg-blue-600 text-white text-lg font-bold py-2 rounded-full w-full hover:bg-blue-700 transition">
-                                            Submit review
-                                        </button>
-                                    </div>
-                                </div>
+                                            {/* Submit Button */}
+                                            <div className='mx-6 '>
+                                                <button className="bg-blue-600 text-white text-lg font-bold py-2 rounded-full w-full hover:bg-blue-700 transition">
+                                                    Submit review
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
