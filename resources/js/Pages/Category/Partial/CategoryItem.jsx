@@ -38,7 +38,7 @@ function CategoryItem({ title, icon, color, items }) {
 
             {/*focus  */}
             <div className="rounded-lg border-1 bg-white hidden md:block">
-                <a href="#" className='no-underline text-gray-800'>
+                <a href="/categories/category_name" className='no-underline text-gray-800'>
                     <div className={`rounded-t-lg text-center p-4 ${colorClasses[color]}`}>
                         <span className="text-2xl">{icon}</span>
                         <h2 className="text-lg font-semibold">{title}</h2>
@@ -47,7 +47,7 @@ function CategoryItem({ title, icon, color, items }) {
                 <ul className="text-gray-700 text-sm px-4 mt-2">
                     {items.map((item, index) => (
                     <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                        <a href="#" className="pl-2 no-underline text-gray-700 hover:underline">{item}</a>
+                        <a href="/categories/category_name/sub_cat" className="pl-2 no-underline text-gray-700 hover:underline">{item}</a>
                     </li>
                     ))}
                 </ul>

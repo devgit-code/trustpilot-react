@@ -19,7 +19,7 @@ class SliderController extends Controller
             $item['serialNumber'] = $index + 1;
             return $item;
         });
-        return Inertia::render('Slider/Index', [
+        return Inertia::render('Admin/Slider/Index', [
             'items' => $items, "Index"
         ]);
     }
@@ -28,7 +28,7 @@ class SliderController extends Controller
     {
         $items = Slider::orderBy('order')->get();
 
-        return Inertia::render('Slider/Sortable', ['items' => $items]);
+        return Inertia::render('Admin/Slider/Sortable', ['items' => $items]);
     }
 
 
@@ -44,7 +44,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Slider/Create');
+        return Inertia::render('Admin/Slider/Create');
     }
 
     public function store(Request $request)
@@ -59,7 +59,7 @@ class SliderController extends Controller
         if ($request->croppedImage != null) {
             $extension = explode('/', mime_content_type($request->croppedImage))[1];
             $imageName = "slider-" . now()->timestamp . "." . $extension;
-            //Image::make(file_get_contents($request->croppedImage))->save($path); 
+            //Image::make(file_get_contents($request->croppedImage))->save($path);
             Storage::disk('public')->put(
                 $imageName,
                 file_get_contents($request->croppedImage)
@@ -71,7 +71,7 @@ class SliderController extends Controller
             $creationData["order"] = $lastRecord->order + 1;
         }
         Slider::create($creationData);
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 
     /**
@@ -88,7 +88,7 @@ class SliderController extends Controller
     public function edit(string $id)
     {
         $item = Slider::find($id);
-        return Inertia::render('Slider/Edit', [
+        return Inertia::render('Admin/Slider/Edit', [
             'item' => $item
         ]);
     }
@@ -122,7 +122,7 @@ class SliderController extends Controller
 
             $item->update($updateData);
         }
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 
     /**
@@ -135,6 +135,6 @@ class SliderController extends Controller
             Storage::disk('public')->delete($item->image);
         }
         $item->delete();
-        return redirect()->route('slides.index');
+        return redirect()->route('admin.slides.index');
     }
 }

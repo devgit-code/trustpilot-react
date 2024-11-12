@@ -17,7 +17,7 @@ class RoleController extends Controller
     {
         $roles = Role::with('permissions')->get();
 
-        return Inertia::render('Roles/Index', [
+        return Inertia::render('Admin/Roles/Index', [
             'roles' => $roles,
         ]);
     }
@@ -27,7 +27,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
 
-        return inertia('Roles/Create', [
+        return inertia('Admin/Roles/Create', [
             'permissions' => $permissions,
         ]);
     }
@@ -39,7 +39,7 @@ class RoleController extends Controller
         $permissions = Permission::whereIn('id', $request->input('permissions', []))->get();
         $role->syncPermissions($permissions);
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        return redirect()->route('admin.roles.index')->with('success', 'Role created successfully.');
     }
 
 
@@ -47,7 +47,7 @@ class RoleController extends Controller
     {
         $role = Role::with('permissions')->find($role->id);
         $permissions = Permission::with('roles')->get();
-        return Inertia::render('Roles/Edit', compact('role', 'permissions'));
+        return Inertia::render('Admin/Roles/Edit', compact('role', 'permissions'));
     }
 
 
@@ -60,7 +60,7 @@ class RoleController extends Controller
         $permissions = Permission::whereIn('id', $request->input('permissions', []))->get();
         $role->syncPermissions($permissions);
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+        return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully.');
     }
 
 
@@ -68,17 +68,17 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully.');
     }
 
-  
+
     public function assignRole(Request $request, User $user)
     {
         $role = Role::find($request->role_id);
 
         if ($role) {
             $user->assignRole($role);
-            return redirect()->route('roles.index')->with('success', 'Role assigned successfully.');
+            return redirect()->route('admin.roles.index')->with('success', 'Role assigned successfully.');
         }
 
         return redirect()->back()->with('error', 'Role not found.');
@@ -94,7 +94,7 @@ class RoleController extends Controller
 
         if ($role) {
             $user->removeRole($role);
-            return redirect()->route('roles.index')->with('success', 'Role removed successfully.');
+            return redirect()->route('admin.roles.index')->with('success', 'Role removed successfully.');
         }
 
         return redirect()->back()->with('error', 'Role not found.');

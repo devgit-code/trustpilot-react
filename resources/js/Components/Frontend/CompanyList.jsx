@@ -9,7 +9,7 @@ import {
 } from '@inertiajs/react';
 
 
-const CompanyList = ({title, data}) => {
+const CompanyList = ({title, link, data}) => {
 
     return (
         <div className="container-md bg-white">
@@ -18,9 +18,9 @@ const CompanyList = ({title, data}) => {
                 <h2 className="text-center text-2xl font-extrabold my-2">{title}</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
-                    <button className="inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                    <a href={link} className="no-underline inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
                     See more
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -30,12 +30,7 @@ const CompanyList = ({title, data}) => {
                     {data.map((item, index) => (
                         <CompanyCard
                             key={index}
-                            is_verified={item.is_verified}
-                            image={item.image}
-                            title={item.title}
-                            link={item.link}
-                            rating={item.rating}
-                            reviews={item.reviews}
+                            {...item}
                         />
                     ))}
                 </div>

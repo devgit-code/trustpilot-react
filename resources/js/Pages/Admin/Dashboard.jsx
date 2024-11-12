@@ -11,7 +11,7 @@ export default function Dashboard({ auth }) {
                         <div className="col-lg-3">
                             <div className="card p-4 rounded rounded-4">
                                 <div className="card-title d-flex justify-content-between">
-                                    <h4>Summary</h4>
+                                    <h4>Total</h4>
                                     <div className="dropdown">
                                         <button
                                             className="dropdown-toggle"
@@ -22,13 +22,7 @@ export default function Dashboard({ auth }) {
                                             <i className="bi bi-three-dots-vertical"></i>
                                         </button>
                                         <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Another action</a>
-                                            </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                            </li>
+                                            <li><a className="dropdown-item" href="#">View</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -44,7 +38,7 @@ export default function Dashboard({ auth }) {
                         <div className="col-lg-3">
                             <div className="card p-4 rounded rounded-4">
                                 <div className="card-title d-flex justify-content-between">
-                                    <h4>Summary</h4>
+                                    <h4>Average</h4>
                                     <div className="dropdown">
                                         <button
                                             className="dropdown-toggle"
@@ -74,80 +68,14 @@ export default function Dashboard({ auth }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-3">
-                            <div className="card p-4 rounded rounded-4">
-                                <div className="card-title d-flex justify-content-between">
-                                    <h4>Summary</h4>
-                                    <div className="dropdown">
-                                        <button
-                                            className="dropdown-toggle"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <i className="bi bi-three-dots-vertical"></i>
-                                        </button>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Another action</a>
-                                            </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div className="text-center">
-                                    <span className="fw-bold mb-0" style={{ color: "#f59e0b" }}>24</span>
-                                    <h6 className="mt-0" style={{ color: "#f59e0b" }}>Open</h6>
-
-                                    <h5 className="fw-light fs-7">Completed: <span>19</span></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-3">
-                            <div className="card p-4 rounded rounded-4">
-                                <div className="card-title d-flex justify-content-between">
-                                    <h4>Summary</h4>
-                                    <div className="dropdown">
-                                        <button
-                                            className="dropdown-toggle"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                        >
-                                            <i className="bi bi-three-dots-vertical"></i>
-                                        </button>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Another action</a>
-                                            </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div className="text-center">
-                                    <span className="fw-bold mb-0" style={{ color: "#22c55e" }}>38</span>
-                                    <h6 className="mt-0" style={{ color: "#22c55e" }}>Proposals</h6>
-
-                                    <h5 className="fw-light fs-7">Completed: <span>16</span></h5>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
             {/* Management section */}
 
-            <Management />
+            {/* <Management /> */}
             {/* Schedule section */}
-            <Schedule />
+            {/* <Schedule /> */}
         </AdminLayout>
     );
 }

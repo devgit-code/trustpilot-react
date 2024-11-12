@@ -10,7 +10,7 @@ const EditPermission = ({ permission }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('permissions.update', permission.id), data);
+        put(route('admin.permissions.update', permission.id), data);
     };
 
     return (
@@ -40,7 +40,7 @@ const EditPermission = ({ permission }) => {
                             <button type="submit" className="btn btn-primary">
                                 Update
                             </button>
-                            <Link href={route('permissions.index')} className="btn btn-danger" type="button">
+                            <Link href={route('admin.permissions.index')} className="btn btn-danger" type="button">
                                 Back
                             </Link>
                         </form>

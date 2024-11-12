@@ -22,7 +22,7 @@ const RolesIndex = () => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('roles.destroy', id));
+                        router.delete(route('admin.roles.destroy', id));
                     },
                 },
                 {
@@ -40,7 +40,7 @@ const RolesIndex = () => {
                     <div className="card-body">
                         <div className="d-flex">
                             <h4 className="card-title m-0 fw-bold fs-4">Roles</h4>
-                            <Link href={route('roles.create')} className="btn btn-primary mb-3 ms-auto">
+                            <Link href={route('admin.roles.create')} className="btn btn-primary mb-3 ms-auto">
                                 Create Role
                             </Link>
                         </div>
@@ -74,7 +74,7 @@ const RolesIndex = () => {
                                         </td>
                                         <td>
                                             <div className="d-flex justify-content-center">
-                                                <Link href={route('roles.edit', role.id)} className="fs-4 me-2 text-primary">
+                                                <Link href={route('admin.roles.edit', role.id)} className="fs-4 me-2 text-primary">
                                                     <FaEdit />
                                                 </Link>
 

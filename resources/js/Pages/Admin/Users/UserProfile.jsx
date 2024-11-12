@@ -3,7 +3,7 @@ import { usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/adminLayout';
 import UserProfileEdit from './UserProfileEdit';
 import UserPasswordChange from './UserPasswordChange';
-import show from '../../../images/profile1.png'
+import show from '@/../images/profile1.png'
 
 
 const UserProfileShow = ({ user, userProfile }) => {
@@ -91,39 +91,39 @@ const UserProfileShow = ({ user, userProfile }) => {
               <div className="row g-3">
                 <h3 className="pro_heading">Profile</h3>
                 <div className="col-lg-6 mt-5">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0 fw-bold text-dark fs-5">Name</p>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0 fw-bold text-dark fs-5">Name</p>
                     </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">{userProfile?.name}</p>
-                    </div>
-                  </div>
-                  <hr />
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0 fw-bold text-dark fs-5">Email</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">{userProfile?.email}</p>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{userProfile?.name}</p>
                     </div>
                   </div>
                   <hr />
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0 fw-bold text-dark fs-5">Phone</p>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0 fw-bold text-dark fs-5">Email</p>
                     </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">{userProfile?.phone}</p>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{userProfile?.email}</p>
                     </div>
                   </div>
                   <hr />
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0 fw-bold text-dark fs-5">Address</p>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0 fw-bold text-dark fs-5">Phone</p>
                     </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">{userProfile?.address}</p>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{userProfile?.phone}</p>
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <p className="mb-0 fw-bold text-dark fs-5">Address</p>
+                    </div>
+                    <div className="col-sm-9">
+                      <p className="text-muted mb-0">{userProfile?.address}</p>
                     </div>
                   </div>
                 </div>

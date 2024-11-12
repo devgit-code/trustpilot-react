@@ -1,0 +1,5 @@
+.header.active{
+  border-bottom: 3px solid #1f2937;
+  background-color: transparent;
+  color: #1f2937 !important;
+}

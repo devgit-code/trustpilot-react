@@ -15,7 +15,7 @@ class UserProfileController extends Controller
     {
         $user = auth()->user();
         $userProfile = $user->profile;
-        return Inertia::render('Users/UserProfile', compact('user', 'userProfile'));
+        return Inertia::render('Admin/Users/UserProfile', compact('user', 'userProfile'));
     }
 
     public function update(Request $request)
@@ -82,6 +82,6 @@ class UserProfileController extends Controller
             }
         }
 
-        return redirect()->route('user_profile.show')->with('status', 'Profile information updated successfully');
+        return redirect()->route('admin.user_profile.show')->with('status', 'Profile information updated successfully');
     }
 }

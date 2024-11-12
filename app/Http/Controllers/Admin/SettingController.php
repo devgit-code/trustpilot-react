@@ -14,7 +14,7 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::all();
-        return Inertia::render('Setting/Index', [
+        return Inertia::render('Admin/Setting/Index', [
             'settings' => $settings,
         ]);
     }
@@ -62,6 +62,6 @@ class SettingController extends Controller
             }
         }
 
-        return to_route('settings.index');
+        return to_route('admin.settings.index');
     }
 }

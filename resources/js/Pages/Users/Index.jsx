@@ -103,15 +103,15 @@ const Index = ({ users }) => {
                                                     View Detail
                                                 </a>
                                             </li>
-                                            <li class="edit">
-                                                <a className="dropdown-item" href={route('users.roles', user.id)}>
+                                            <li className="edit">
+                                                <a className="dropdown-item" href={route('admin.users.roles', user.id)}>
                                                     Roles
                                                 </a>
                                             </li>
                                             <li>
                                                 <Link
                                                     as="button"
-                                                    href={route('users.destroy', user.id)}
+                                                    href={route('admin.users.destroy', user.id)}
                                                     className="dropdown-item"
                                                     method="delete"
                                                 >

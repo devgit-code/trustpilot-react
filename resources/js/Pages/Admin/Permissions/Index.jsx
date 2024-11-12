@@ -19,7 +19,7 @@ const PermissionList = ({ permissions }) => {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                Inertia.delete(route('permissions.destroy', permissionId));
+                Inertia.delete(route('admin.permissions.destroy', permissionId));
             }
         });
     };
@@ -35,7 +35,7 @@ const PermissionList = ({ permissions }) => {
                             </div>
                             <div className="col-lg-6 col-md-12">
                                 <div className="text-center text-lg-end">
-                                    <Link href={route('permissions.create')} className="btn btn-success" type="button">
+                                    <Link href={route('admin.permissions.create')} className="btn btn-success" type="button">
                                         <i className="fa-solid fa-plus"></i> Add
                                     </Link>
                                 </div>
@@ -58,18 +58,18 @@ const PermissionList = ({ permissions }) => {
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
-                                                        <Link href={route('permissions.edit', item.id)}>
+                                                        <Link href={route('admin.permissions.edit', item.id)}>
                                                             <FaEdit className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>
                                                     <form
-                                                        action={route('permissions.destroy', item.id)}
+                                                        action={route('admin.permissions.destroy', item.id)}
                                                         onSubmit={(e) => handleDelete(e, item.id)}
                                                         method="POST"
                                                     >
                                                         <input type="hidden" name="_method" value="DELETE" />
                                                         <li className="delete d-flex align-items-center">
-                                                        
+
                                                             <button type="submit" className="border-0 bg-transparent">
                                                                 <BsTrashFill className="text-danger fs-4" />
 

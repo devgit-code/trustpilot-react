@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Rating from '@/Components/Rating';
+import Rating from '@/Components/Ratings';
 import UserAvatar from '@/Components/UserAvatar';
 import logo from '@/../images/company-logo.png';
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
@@ -18,7 +18,7 @@ export default function CompanyItem({index, company}){
 
     return (
         <div className="bg-white border rounded-lg mb-4 hover:shadow-md">
-            <a href="#" className='no-underline'>
+            <a href={"/reviews/company/" + company.name} className='no-underline'>
                 <div className="flex p-3 gap-4">
                     <div className="inline-flex items-center w-20 h-20">
                         <img src={logo} alt={company.name} className="w-20 object-cover" />
@@ -57,28 +57,28 @@ export default function CompanyItem({index, company}){
             <div className="p-4 flex lg:grid lg:grid-cols-3 lg:w-full gap-2 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                 {company.latestReviews.map((review, reviewIndex) => (
                 <div key={reviewIndex} className="mt-1 border rounded hover:shadow">
-
-                    <div className='px-4 mt-2'>
-                        <p className="text-gray-700 text-sm">
-                            5 hours ago
-                        </p>
-                        <div className="flex items-center">
-                            <div className="flex items-center justify-center">
-                                <UserAvatar user={review.user}/>
-                            </div>
-                            <div className="ml-3 ">
-                                <div className="flex space-x-1">
-                                    <Rating rating={review.rating}/>
-                                    <span></span>
+                    <a href={"/reviews/review/" + review.review_id}  className='no-underline'>
+                        <div className='px-4 mt-2'>
+                            <p className="text-gray-700 text-sm">
+                                5 hours ago
+                            </p>
+                            <div className="flex items-center">
+                                <div className="flex items-center justify-center">
+                                    <UserAvatar user={review.user}/>
+                                </div>
+                                <div className="ml-3 ">
+                                    <div className="flex space-x-1">
+                                        <Rating rating={review.rating}/>
+                                        <span></span>
+                                    </div>
                                 </div>
                             </div>
+
+                            <p className="text-gray-700 text-sm px-4 mt-3 min-h-[60px]">
+                                {review.text.length > 60 ? `${review.text.slice(0, 60)}...` : review.text}
+                            </p>
                         </div>
-
-                        <p className="text-gray-700 text-sm px-4 mt-3 min-h-[60px]">
-                            {review.text.length > 60 ? `${review.text.slice(0, 60)}...` : review.text}
-                        </p>
-                    </div>
-
+                    </a>
                 </div>
                 ))}
             </div>

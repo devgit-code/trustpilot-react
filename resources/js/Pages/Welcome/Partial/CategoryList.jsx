@@ -59,9 +59,9 @@ const CategoryGridItems = () => {
                             <FiArrowRight size={20} />
                         </button>
                     </div>
-                    <button className="inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                    <a href={route('categories')} className="no-underline inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
                     See more
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@ const CategoryGridItems = () => {
                     {categories.map((category, index) => (
                         <div key={index} className="flex flex-shrink-0 flex-col items-center group justify-center pr-4 text-center hover:cursor-pointer">
                             <div className="flex items-center justify-center w-6 h-6">{category.icon}</div>
-                            <Link href="/#" className="block text-center p-2 no-underline text-black text-sm group-hover:underline" > {category.label}</Link>
+                            <Link href="/categories/category_name" className="block text-center p-2 no-underline text-black text-sm group-hover:underline" > {category.label}</Link>
                         </div>
                     ))}
                 </div>

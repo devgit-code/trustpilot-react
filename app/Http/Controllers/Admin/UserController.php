@@ -19,7 +19,7 @@ class UserController extends Controller
             $user['serialNumber'] = $index + 1;
             return $user;
         });
-        return Inertia::render('Users/Index', [
+        return Inertia::render('Admin/Users/Index', [
             'users' => $users, 'Index'
         ]);
     }
@@ -39,12 +39,12 @@ class UserController extends Controller
 
         User::create($validatedData);
 
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 
     public function show(User $user)
     {
-        return Inertia::render('Users/Show', [
+        return Inertia::render('Admin/Users/Show', [
             'user' => $user,
         ]);
     }
@@ -52,7 +52,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return Inertia::render('Users/Edit', [
+        return Inertia::render('Admin/Users/Edit', [
             'user' => $user,
         ]);
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user = User::with('roles')->findOrFail($id);
         $roles = Role::all();
 
-        return Inertia::render('Users/Roles', ['roles' => $roles, 'id' => $id, 'user' => $user]);
+        return Inertia::render('Admin/Users/Roles', ['roles' => $roles, 'id' => $id, 'user' => $user]);
     }
 
     public function saveRole(Request $request)
@@ -85,7 +85,7 @@ class UserController extends Controller
             }
         }
 
-        return redirect()->route('users.roles', $user->id);
+        return redirect()->route('admin.users.roles', $user->id);
     }
 
 
@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 
     public function destroy(String $id)
@@ -107,7 +107,7 @@ class UserController extends Controller
         $user = User::find($id);
         if ($user) {
             $user->delete();
-            return to_route('users.index');
+            return to_route('admin.users.index');
         }
     }
 }

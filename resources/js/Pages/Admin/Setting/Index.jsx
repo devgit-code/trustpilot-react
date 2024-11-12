@@ -566,7 +566,7 @@ const SettingsForm = ({ settings }) => {
                                 </div>
                                 <div className="tab-content" id="icon-tabContent">
                                     <div
-                                        class="tab-pane fade" id="contact-icon" role="tabpanel" aria-labelledby="contact-icon-tab"
+                                        className="tab-pane fade" id="contact-icon" role="tabpanel" aria-labelledby="contact-icon-tab"
                                     >
                                         <div className="row">
                                             <div className="col-sm-12">

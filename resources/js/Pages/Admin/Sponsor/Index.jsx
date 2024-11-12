@@ -22,7 +22,7 @@ const Slider = ({ items }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('sponsors.destroy', { id }));
+                        router.delete(route('admin.sponsors.destroy', { id }));
                     }
                 },
                 {
@@ -53,10 +53,10 @@ const Slider = ({ items }) => {
                                 <div className="d-flex align-items-center justify-content-end">
                                     <button className='btn btn-success d-flex align-items-center border-0 me-2'>
                                         <BsPlusCircleFill className='fs-5' />
-                                        <Link href={route('sponsors.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
+                                        <Link href={route('admin.sponsors.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
                                     </button>
                                     <a href="#" className="btn btn-primary d-flex align-items-center border-0" type="button"><BsArrowDownShort className='fs-4' /> Sort</a>
-                                    <a href={route('sponsors.sort')} className="btn btn-primary d-flex align-items-center border-0" type="button"><BsArrowDownShort className='fs-4' /> slides</a>
+                                    <a href={route('admin.sponsors.sort')} className="btn btn-primary d-flex align-items-center border-0" type="button"><BsArrowDownShort className='fs-4' /> slides</a>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ const Slider = ({ items }) => {
                         <div className="table-responsive text-center">
                             <table className="table">
                                 <thead>
-                                    <tr class="border-bottom-primary ">
+                                    <tr className="border-bottom-primary ">
                                         <th scope="col">S.No.</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
@@ -89,7 +89,7 @@ const Slider = ({ items }) => {
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                     <li className="edit">
-                                                        <Link href={route('sponsors.edit', item.id)}>
+                                                        <Link href={route('admin.sponsors.edit', item.id)}>
                                                             <FontAwesomeIcon icon={faPenToSquare} className="fs-4 me-2 text-primary" />
                                                         </Link>
                                                     </li>

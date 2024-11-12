@@ -148,7 +148,7 @@ const SlideEdit = ({ item }) => {
                       </div>
                       <Link
                         className="btn btn-danger me-3"
-                        href={route('slides.index')}
+                        href={route('admin.slides.index')}
                       >
                         Cancel
                       </Link>
