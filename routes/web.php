@@ -1,8 +1,5 @@
 <?php
 
-
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -19,6 +16,7 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/admin', function () {
     return Inertia::render('Admin/Auth/Login');
 })->name('admin');
@@ -43,13 +41,15 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/categories', function(){
-    return Inertia::render('Category/Index');
-})->name('categories');
-
 Route::get('/search', function(){
     return Inertia::render('Category/Search');
 })->name('search');
+
+
+// category
+Route::get('/categories', function(){
+    return Inertia::render('Category/Index');
+})->name('categories');
 
 Route::get('/categories/{category_name}', function(){
     return Inertia::render('Category/Detail', [
@@ -64,6 +64,8 @@ Route::get('/categories/{category_name}/{sub_cat}', function(){
     ]);
 })->name('categories.subcat');
 
+
+// reviews
 Route::get('/writeareview', function(){
     return Inertia::render('Review/Index');
 })->name('reviews');
@@ -84,6 +86,8 @@ Route::get('/reviews/review/{id}', function(){
     return Inertia::render('Review/Detail');
 })->name('reviews.detail');
 
+
+// blog
 Route::get('/aboutus', function(){
     return Inertia::render('About/Index');
 })->name('aboutus');
@@ -104,31 +108,13 @@ Route::get('/aboutus/{detail}', function(){
     return Inertia::render('About/Detail');
 })->name('aboutus.detail');
 
+
+// business
 Route::get('/contactus', function(){
     return Inertia::render('Contact/Index');
 })->name('contactus');
 
 
-
-
-Route::get('/test', function (Request $request) {
-            return $request->user()->hasVerifiedEmail();
-
-})->name('test');
-
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/profile/setting', function(){
-        return Inertia::render('Profile/Edit');
-    })->name('profile.setting');
-
-});
-
-
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/user.php';
