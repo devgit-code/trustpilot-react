@@ -1,15 +1,15 @@
 <?php
 
-// use App\Http\Controllers\Admin\CategoryController;
-// use App\Http\Controllers\Admin\CityController;
-// use App\Http\Controllers\Admin\ClassifiedAdController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ClassifiedAdController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
-// use App\Http\Controllers\Admin\StateController;
-// use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +18,11 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserProfileController;
 
 
+
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middlware' => ['auth', 'verified', 'role:Admin'],
+    'middleware' => ['auth', 'verified', 'role:Admin|Owner'],
     'as' => 'admin.'
 ], function () {
 
@@ -81,8 +82,5 @@ Route::group([
     Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
     Route::put('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
     Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
-
-
-
 
 });

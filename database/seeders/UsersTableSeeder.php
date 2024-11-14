@@ -20,9 +20,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         if (User::get()->count() == 0) {
-            User::create(array('name' => 'Administrator', 'email' => 'admin@topntech.com', 'email_verified_at' => Carbon::now(), 'password' => Hash::make('root1234'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()));
+            User::create(array('name' => 'Administrator', 'email' => 'admin@test.com', 'email_verified_at' => Carbon::now(), 'password' => Hash::make('root1234'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()));
 
-            $adminRole = Role::create(['name' => 'Admin']);
             $permission = Permission::create(['name' => 'Post access']);
             $permission = Permission::create(['name' => 'Post edit']);
             $permission = Permission::create(['name' => 'Post create']);
@@ -42,7 +41,15 @@ class UsersTableSeeder extends Seeder
             $permission = Permission::create(['name' => 'Permission edit']);
             $permission = Permission::create(['name' => 'Permission create']);
             $permission = Permission::create(['name' => 'Permission delete']);
+
+            $adminRole = Role::create(['name' => 'Admin']);
             $adminRole->syncPermissions(Permission::all());
+
+            $ownerRole = Role::create(['name' => 'Owner']);
+            $ownerRole->syncPermissions(Permission::where('name', 'LIKE', 'Post%')->get());
+
+            $userRole = Role::create(['name' => 'User']);
+
             $user = User::first();
             $user->assignRole($adminRole);
         } else {

@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,17 +18,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/admin', function () {
-    return Inertia::render('Admin/Auth/Login');
-})->name('admin');
+Route::get('/test', function (Request $request) {
+    $url = 'https://www.trustpilot.com';
+    return $url;
+})->name('test');
 
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
 	Artisan::call('config:clear');
-	Artisan::call('config:cache');
 	Artisan::call('view:clear');
 	Artisan::call('route:clear');
-	Artisan::call('optimize');
 
 	return "Cache is cleared";
 });

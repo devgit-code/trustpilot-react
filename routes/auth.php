@@ -15,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
+// business
+    Route::get('/contactus', function(){
+        return Inertia::render('Contact/Index');
+    })->name('contactus');
+
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Auth/Login');
+    })->name('admin.login');
+
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 

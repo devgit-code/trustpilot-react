@@ -9,14 +9,14 @@ function Status({className, rating}) {
     return (
         <p className={`${className} `}>
             {
-                rating < 1.5
-                    ? 'Very Bad'
-                    : rating < 2.5
-                    ? 'Bad '
-                    : rating < 3.5
-                    ? 'Neutral'
-                    : rating < 4.5
-                    ? 'Good '
+                rating < 1.8
+                    ? 'Bad'
+                    : rating < 2.8
+                    ? 'Poor'
+                    : rating < 3.8
+                    ? 'Average'
+                    : rating < 4.3
+                    ? 'Great'
                     : 'Excellent '
             }
         </p>
