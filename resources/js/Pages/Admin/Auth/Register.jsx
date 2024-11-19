@@ -2,14 +2,21 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import React, {useState, useEffect} from 'react';
 
 import AdminGuestLayout from '@/Layouts/AdminGuestLayout';
+import InputError from '@/Components/InputError';
 import fav from '@/../images/favicon.png'
 import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
+import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 
 export default function Contact() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        website: '',
+        company_name: '',
+        first_name: '',
+        last_name: '',
+        job_title: '',
+        domain: '',
+        work_email: '',
         password: '',
         remember: false,
     });
@@ -32,33 +39,137 @@ export default function Contact() {
                 <Head title="Business Register" />
 
                 <div className="p-8 bg-gray-50 rounded-3xl">
-                    <h3 className='text-center'>Register Business</h3>
-
-                    <div className="flex justify-center ">
+                    <div className="flex justify-center mt-3">
                         <Link href={route('home')} className="mt-2"><img src={fav} alt="logo" style={{height:"8rem"}}/></Link>
                     </div>
-                    <form className="mt-5 space-y-4">
-                        <div className="flex flex-col gap-4">
+                    <h3 className='text-center my-4'>Register Business</h3>
 
-                            <input
-                                type="url" placeholder="Website URL" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="text" placeholder="Company Name" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="text" placeholder="First name" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="text" placeholder="Last name" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="text" placeholder="Job title" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="email" placeholder="Business Email" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
-                            <input type="text" placeholder="Phone Number" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300" />
+                    <form className="space-y-4 mt-4">
+                        <div  className="mt-4">
+                            <TextInput
+                                id="website"
+                                type="text"
+                                name="website"
+                                value={data.website}
+                                className="mt-1 block w-full"
+                                autoComplete="website"
+                                placeholder="Website"
+                                isFocused={true}
+                                onChange={(e) => setData('website', e.target.value)}
+                            />
+
+                            <InputError message={errors.website} className="mt-2" />
                         </div>
-                        <textarea placeholder="Message" className="p-2 border rounded-lg w-full focus:outline-none focus:ring focus:ring-blue-300 h-32"></textarea>
-                        <button type="submit" className="w-full p-2 bg-black text-white rounded-lg">Submit</button>
-                        <p className="text-sm text-gray-600 mt-4">
-                            By clicking above you accept our <a href="#" className="text-blue-600">Privacy Policy</a> and agree to receive emails or calls from us.
-                            You can unsubscribe at any time. Trustpilot's calls may be recorded for training and quality purposes.
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            This site is protected by reCAPTCHA and the Google <a href="#" className="text-blue-600">Privacy Policy</a> and
-                            <a href="#" className="text-blue-600"> Terms of Service</a> apply.
-                        </p>
+
+                        <div className="mt-4">
+                            <TextInput
+                                id="company_name"
+                                type="text"
+                                name="company_name"
+                                value={data.company_name}
+                                placeholder="Company Name"
+                                className="mt-1 block w-full"
+                                autoComplete="company name"
+                                onChange={(e) => setData('company_name', e.target.value)}
+                            />
+
+                            <InputError message={errors.company_name} className="mt-2" />
+                        </div>
+
+                        <div className='grid grid-cols-2 gap-3'>
+                            <div className="">
+                                <TextInput
+                                    id="first_name"
+                                    type="text"
+                                    name="first_name"
+                                    value={data.first_name}
+                                    placeholder="First Name"
+                                    className="mt-1 block w-full"
+                                    autoComplete="first name"
+                                    onChange={(e) => setData('first_name', e.target.value)}
+                                />
+
+                                <InputError message={errors.first_name} className="mt-2" />
+                            </div>
+
+                            <div className="">
+                                <TextInput
+                                    id="last_name"
+                                    type="text"
+                                    name="last_name"
+                                    value={data.last_name}
+                                    placeholder="Last Name"
+                                    className="mt-1 block w-full"
+                                    autoComplete="last name"
+                                    onChange={(e) => setData('last_name', e.target.value)}
+                                />
+
+                                <InputError message={errors.last_name} className="mt-2" />
+                            </div>
+                        </div>
+
+                        <div className="">
+                            <TextInput
+                                id="job_title"
+                                type="text"
+                                name="job_title"
+                                value={data.job_title}
+                                placeholder="Job Title"
+                                className="mt-1 block w-full"
+                                autoComplete="job title"
+                                onChange={(e) => setData('job_title', e.target.value)}
+                            />
+
+                            <InputError message={errors.job_title} className="mt-2" />
+                        </div>
+
+                        <div className="">
+                            <div className='flex items-center'>
+                                <TextInput
+                                    id="work_email"
+                                    type="text"
+                                    name="work_email"
+                                    value={data.work_email}
+                                    placeholder="Work Email"
+                                    className="mt-1 block w-full"
+                                    autoComplete="work email"
+                                    onChange={(e) => setData('work_email', e.target.value)}
+                                />
+
+                                <span className="text-gray-500 px-2">
+                                    {data.domain}
+                                </span>
+                            </div>
+
+                            <InputError message={errors.work_email} className="mt-2" />
+                        </div>
+
+                        <div className="">
+                            <TextInput
+                                id="password"
+                                type="password"
+                                name="password"
+                                value={data.password}
+                                placeholder="Password"
+                                className="mt-1 block w-full"
+                                onChange={(e) => setData('password', e.target.value)}
+                            />
+
+                            <InputError message={errors.password} className="mt-2" />
+                        </div>
+
+                        <button disabled={processing} type="submit" className="w-full p-2 bg-black text-white rounded-lg">Submit</button>
+
+                        <div>
+                            <p className="text-sm text-gray-600 mt-4">
+                                By clicking above you accept our <a href="#" className="text-blue-600">Privacy Policy</a> and agree to receive emails or calls from us.
+                                You can unsubscribe at any time. Trustpilot's calls may be recorded for training and quality purposes.
+                            </p>
+                            <p className="text-sm text-gray-600">
+                                This site is protected by reCAPTCHA and the Google <a href="#" className="text-blue-600">Privacy Policy</a> and
+                                <a href="#" className="text-blue-600"> Terms of Service</a> apply.
+                            </p>
+                        </div>
                     </form>
                 </div>
             </AdminGuestLayout>

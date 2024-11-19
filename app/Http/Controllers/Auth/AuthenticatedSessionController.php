@@ -58,4 +58,16 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+
+    /**
+     * Display the Business login view.
+     */
+    public function admin_create(): Response
+    {
+        return Inertia::render('Admin/Auth/Login', [
+            'canResetPassword' => Route::has('admin.password.request'),
+            'status' => session('status'),
+        ]);
+    }
 }

@@ -35,13 +35,18 @@ export default function Login({ status, canResetPassword  }) {
 
             <div className='p-8 bg-gray-50 rounded-3xl'>
                 {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+                <div className="flex justify-center">
+                    <Link href={route('home')} className="mt-2"><img src={fav} alt="logo" style={{height:"8rem"}}/></Link>
+                </div>
+                <h3 className='text-center my-4'>Login Business</h3>
 
-                <div className='mb-5'>
-                    <h3 className='text-center'>Login Business</h3>
-
-                    <div className="flex justify-center ">
-                        <Link href={route('home')} className="mt-2"><img src={fav} alt="logo" style={{height:"8rem"}}/></Link>
-                    </div>
+                <div className="flex items-center justify-end mb-4">
+                    <Link
+                        href={route('admin.register')}
+                        className="mr-3 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Not Register yet?
+                    </Link>
                 </div>
 
                 <form onSubmit={submit}>

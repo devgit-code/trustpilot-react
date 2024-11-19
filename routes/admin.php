@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClassifiedAdController;
@@ -12,10 +15,10 @@ use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-use App\Http\Controllers\UserProfileController;
 
 // business
 Route::group([
@@ -28,9 +31,11 @@ Route::group([
         return Inertia::render('Admin/Auth/Register');
     })->name('register');
 
-    Route::get('/login', function () {
-        return Inertia::render('Admin/Auth/Login');
-    })->name('login');
+    Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
+
+    Route::get('forgot-password', function () {
+        return Inertia::render('Admin/Auth/ForgotPassword');
+    })->name('password.request');
 });
 
 

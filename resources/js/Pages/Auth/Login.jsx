@@ -35,12 +35,11 @@ export default function Login({ status, canResetPassword }) {
             <div className="mb-4 block">
                 <div className='flex items-center justify-between'>
                     <div>
-                        Not register?
                         <Link
                             href={route('register')}
                             className="ml-3 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Click Here
+                            Not Register yet?
                         </Link>
                     </div>
                     <Link

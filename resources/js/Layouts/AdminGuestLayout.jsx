@@ -15,7 +15,7 @@ export default function Guest({ children }) {
     return (
         <>
 
-            <Navbar collapseOnSelect expand="sm" className="bg-dark p-0">
+            <Navbar collapseOnSelect expand="sm" className="bg-dark h-[65px]">
                 <Container fluid="lg">
                     <Navbar.Brand ><Link href={route('home')}><img src={logo} alt="logo" className="my-1" style={{height:"2.2rem"}}/></Link></Navbar.Brand>
                 </Container>
