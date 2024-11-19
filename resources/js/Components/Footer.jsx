@@ -64,7 +64,7 @@ const Footer = () => {
                                 <h6 className="text-lg-start text-center text-lg fw-bold text-zinc-400">Businesses</h6>
                                 <ul className="list-unstyled">
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href={route('contactus')} className="no-underline text-white hover:underline" >Register Business</Link>
+                                        <Link href={route('admin.register')} className="no-underline text-white hover:underline" >Register Business</Link>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
                                         <Link href="#" className="no-underline text-white hover:underline" > Products</Link>

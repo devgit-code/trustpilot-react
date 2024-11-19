@@ -19,8 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/test', function (Request $request) {
-    $url = 'https://www.trustpilot.com';
-    return $url;
+    return Inertia::render('Auth/Test');
 })->name('test');
 
 Route::get('/clear-cache', function () {
@@ -32,88 +31,87 @@ Route::get('/clear-cache', function () {
 	return "Cache is cleared";
 });
 
-Route::get('/', function () {
-    return Inertia::render('Welcome/Index', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('home');
+Route::group([
+    'middleware' => ['onlyuser'],
+], function(){
 
-Route::get('/search', function(){
-    return Inertia::render('Category/Search');
-})->name('search');
+    Route::get('/', function () {
+        return Inertia::render('Welcome/Index', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    })->name('home');
 
-
-// category
-Route::get('/categories', function(){
-    return Inertia::render('Category/Index');
-})->name('categories');
-
-Route::get('/categories/{category_name}', function(){
-    return Inertia::render('Category/Detail', [
-        'category_name' => "Animals & Pets"
-    ]);
-})->name('categories.detail');
-
-Route::get('/categories/{category_name}/{sub_cat}', function(){
-    return Inertia::render('Category/Detail', [
-        'category_name' => "Animals & Pets",
-        'sub_cat' => 'Cats & Dogs'
-    ]);
-})->name('categories.subcat');
+    Route::get('/search', function(){
+        return Inertia::render('Category/Search');
+    })->name('search');
 
 
-// reviews
-Route::get('/writeareview', function(){
-    return Inertia::render('Review/Index');
-})->name('reviews');
+    // category
+    Route::get('/categories', function(){
+        return Inertia::render('Category/Index');
+    })->name('categories');
 
-Route::get('/reviews/evaluate/{company_name}', function(){
-    return Inertia::render('Review/Evaluate');
-})->name('reviews.evaluate');
+    Route::get('/categories/{category_name}', function(){
+        return Inertia::render('Category/Detail', [
+            'category_name' => "Animals & Pets"
+        ]);
+    })->name('categories.detail');
 
-Route::get('/reviews/company/{id}', function(){
-    return Inertia::render('Review/Company');
-})->name('reviews.company');
-
-Route::get('/reviews/user/{id}', function(){
-    return Inertia::render('Review/User');
-})->name('reviews.user');
-
-Route::get('/reviews/review/{id}', function(){
-    return Inertia::render('Review/Detail');
-})->name('reviews.detail');
+    Route::get('/categories/{category_name}/{sub_cat}', function(){
+        return Inertia::render('Category/Detail', [
+            'category_name' => "Animals & Pets",
+            'sub_cat' => 'Cats & Dogs'
+        ]);
+    })->name('categories.subcat');
 
 
-// blog
-Route::get('/aboutus', function(){
-    return Inertia::render('About/Index');
-})->name('aboutus');
+    // reviews
+    Route::get('/writeareview', function(){
+        return Inertia::render('Review/Index');
+    })->name('reviews');
 
-Route::get('/aboutus/trends-in-trust', function(){
-    return Inertia::render('About/BlogCategory', [
-        'title' => "Trends in Trust"
-    ]);
-})->name('aboutus.trends');
+    Route::get('/reviews/evaluate/{company_name}', function(){
+        return Inertia::render('Review/Evaluate');
+    })->name('reviews.evaluate');
 
-Route::get('/aboutus/reviews-matter', function(){
-    return Inertia::render('About/BlogCategory' ,[
-        'title' => "Reviews Matter"
-    ]);
-})->name('aboutus.reviews');
+    Route::get('/reviews/company/{id}', function(){
+        return Inertia::render('Review/Company');
+    })->name('reviews.company');
 
-Route::get('/aboutus/{detail}', function(){
-    return Inertia::render('About/Detail');
-})->name('aboutus.detail');
+    Route::get('/reviews/user/{id}', function(){
+        return Inertia::render('Review/User');
+    })->name('reviews.user');
+
+    Route::get('/reviews/review/{id}', function(){
+        return Inertia::render('Review/Detail');
+    })->name('reviews.detail');
 
 
-// business
-Route::get('/contactus', function(){
-    return Inertia::render('Contact/Index');
-})->name('contactus');
+    // blog
+    Route::get('/aboutus', function(){
+        return Inertia::render('About/Index');
+    })->name('aboutus');
 
+    Route::get('/aboutus/trends-in-trust', function(){
+        return Inertia::render('About/BlogCategory', [
+            'title' => "Trends in Trust"
+        ]);
+    })->name('aboutus.trends');
+
+    Route::get('/aboutus/reviews-matter', function(){
+        return Inertia::render('About/BlogCategory' ,[
+            'title' => "Reviews Matter"
+        ]);
+    })->name('aboutus.reviews');
+
+    Route::get('/aboutus/{detail}', function(){
+        return Inertia::render('About/Detail');
+    })->name('aboutus.detail');
+
+});
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

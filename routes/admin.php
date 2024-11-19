@@ -17,6 +17,21 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\UserProfileController;
 
+// business
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['admin-guest'],
+    'as' => 'admin.'
+], function () {
+
+    Route::get('/register', function(){
+        return Inertia::render('Admin/Auth/Register');
+    })->name('register');
+
+    Route::get('/login', function () {
+        return Inertia::render('Admin/Auth/Login');
+    })->name('login');
+});
 
 
 Route::group([
@@ -27,7 +42,7 @@ Route::group([
 ], function () {
 
     Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('onlyuser');
     })->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

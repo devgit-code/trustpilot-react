@@ -35,9 +35,7 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
-                'role' => $request->user()? $request->user()->getRoleNames()->toArray() : [],
-                'is_verified' => $request->user()?->hasVerifiedEmail(),
-                'avatar' => $request->user() ? UserProfile::where('user_id', $request->user()->id)->first() : null,
+                'user_profile' => $request->user() ? UserProfile::where('user_id', $request->user()->id)->first() : null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

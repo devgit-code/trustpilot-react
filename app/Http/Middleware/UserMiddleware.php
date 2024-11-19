@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfNotVerified
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class RedirectIfNotVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user() && $request->user()->hasRole(['Owner'])){
-
-            return redirect()->route('admin.dashboard');
+        // Check if the user is logged in and has the 'admin' role
+        if ($request->user() && !$request->user()->hasRole('User')) {
+            return redirect()->route('admin.dashboard')->with('message', "you can't access this page!"); // Redirect admins to the admin dashboard
         }
 
         return $next($request);

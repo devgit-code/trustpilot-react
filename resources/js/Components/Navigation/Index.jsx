@@ -20,17 +20,6 @@ import "./Style.css"
 import UserAvatar from '@/Components/UserAvatar';
 
 export default function Navigation({auth}) {
-    const isAdmin = auth.role && auth.role.includes('Admin');
-    const isOverOwner = auth.role && (auth.role.includes('Admin') || auth.role.includes('Owner'));
-
-    const doLogin = () => {
-        console.log("login++++", auth)
-        // if(auth.is_verified == undefined || auth.is_verified == null || !auth.is_verified)
-            // window.location.href = `${process.env.APP_URL}/verify-email`;
-
-        // window.location.href = "http://127.0.0.1:8000/login";
-    }
-
     useEffect(() => {
         console.log("init+++++++++", auth)
 
@@ -84,13 +73,7 @@ export default function Navigation({auth}) {
                                     className="flex items-center"
                                 >
                                     <NavDropdown.Item disabled>{auth.user.name}</NavDropdown.Item>
-                                    {isOverOwner && (
-                                        <NavDropdown.Item as={Link} className='font-bold' href={route('admin.dashboard')}>Dashboard</NavDropdown.Item>
-                                    )}
-                                    <NavDropdown.Divider />
-                                    {!isAdmin && (
-                                        <NavDropdown.Item as={Link} href={route('profile')}>Profile</NavDropdown.Item>
-                                    )}
+                                    <NavDropdown.Item as={Link} href={route('profile')}>Profile</NavDropdown.Item>
                                     <NavDropdown.Item>
                                         <Link
                                             href={route('logout')}

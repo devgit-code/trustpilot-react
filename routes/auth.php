@@ -15,15 +15,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
-// business
-    Route::get('/contactus', function(){
-        return Inertia::render('Contact/Index');
-    })->name('contactus');
-
-    Route::get('/admin', function () {
-        return Inertia::render('Admin/Auth/Login');
-    })->name('admin.login');
-
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -47,19 +38,25 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
 // profile before verify
-    Route::get('/profile', function(){
-        return Inertia::render('Profile/Edit');
-    })->name('profile');
+    Route::group([
+        'middleware' => ['auth', 'onlyuser']
+    ], function(){
 
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/profile', function(){
+            return Inertia::render('Profile/Edit');
+        })->name('profile');
 
-    Route::get('/profile/password', function(){
-        return Inertia::render('Profile/Password');
-    })->name('profile.password');
+        // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/profile/password', function(){
+            return Inertia::render('Profile/Password');
+        })->name('profile.password');
+
+    });
 
 
 /******************************************************************************** */
