@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-Route::middleware(['auth', 'verified', 'business-guest'])->group(function () {
+Route::middleware(['auth', 'verified', 'business.guest'])->group(function () {
 //set user personal info
     Route::get('/profile/setting', function(){
         return Inertia::render('Profile/Setting');

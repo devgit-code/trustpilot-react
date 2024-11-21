@@ -67,7 +67,7 @@ class RegisteredUserController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.Business::class,
+            'company_email' => 'required|string|email|max:255|unique:'.Business::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -77,14 +77,14 @@ class RegisteredUserController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'job_title' => $request->job_title,
-            'email' => $request->email,
+            'company_email' => $request->company_email,
             'password' => Hash::make($request->password),
         ]);
 
-        $business->assignRole('Owner');
-
         // event(new Registered($business));
         Auth::guard('business')->login($business);
+
+        $business->sendEmailVerificationNotification();
 
         // return redirect(RouteServiceProvider::HOME);
         return redirect()->route('admin.verification.notice');

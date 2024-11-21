@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
 
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -24,7 +26,7 @@ use Inertia\Inertia;
 // business
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['user-guest', 'business-guest'],
+    'middleware' => ['user-guest', 'business.guest'],
     'as' => 'admin.'
 ], function () {
 
@@ -40,21 +42,31 @@ Route::group([
     Route::get('/forgot-password', function () {
         return Inertia::render('Admin/Auth/ForgotPassword');
     })->name('password.request');
-
-    Route::get('verify-email', function(){
-        return Inertia::render('Admin/Auth/VerifyEmail', [
-            'email' => session('email'),
-        ]);
-    })->name('verification.notice');
 });
 
-    Route::post('admin/logout', [AuthenticatedSessionController::class, 'admin_destroy'])
-                ->name('admin.logout');
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['user-guest'],
+    'as' => 'admin.'
+], function () {
+
+    Route::get('verify-email', [EmailVerificationPromptController::class, 'admin_create'])->name('verification.notice');
+
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'admin_store'])
+                ->middleware('throttle:6,1')
+                ->name('verification.send');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'admin_destroy'])
+                ->name('logout');
+
+});
+
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middleware' => ['user-guest', 'business-authed'],
+    'middleware' => ['user-guest', 'business.authed', 'business.verified'],
     'as' => 'admin.'
 ], function () {
     Route::get('/', function(){

@@ -17,7 +17,7 @@ export default function VerifyEmail({ status, email }) {
 
             <div className='p-8 bg-gray-50 rounded-3xl'>
 
-                <div className="mb-4 text-sm text-gray-600">
+                <div className="mb-4 text-gray-600">
                     Thanks for signing up! Before getting started, could you verify your email address by clicking on the
                     link we just emailed to you? If you didn't receive the email, we will gladly send you another.
                 </div>
@@ -33,7 +33,7 @@ export default function VerifyEmail({ status, email }) {
                         <PrimaryButton disabled={processing}>Resend Verification Email</PrimaryButton>
 
                         <Link
-                            href={route('logout')}
+                            href={route('admin.logout')}
                             method="post"
                             as="button"
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

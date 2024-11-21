@@ -15,6 +15,7 @@ class RedirectIfNotVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
+        dd($request->user());
         if($request->user() && $request->user()->hasRole(['Owner'])){
 
             return redirect()->route('admin.dashboard');

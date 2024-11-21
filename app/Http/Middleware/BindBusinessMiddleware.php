@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class UserMiddleware
+class BindBusinessMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,10 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the user is logged in and has the 'admin' role
-        if (!Auth::guard('web')->check()) {
-            return redirect()->back()->with('status', "you can't access this page!"); // Redirect admins to the admin dashboard
+        if(!Auth::guard('business')->user()->email_verified_at){
+            $email = Auth::guard('business')->user()->company_email;
+
+            return redirect()->route('admin.verification.notice')->with('email', $email);
         }
 
         return $next($request);

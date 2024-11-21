@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\BusinessVerifyEmail;
 
 class Business extends Authenticatable implements MustVerifyEmail
 {
@@ -48,4 +49,9 @@ class Business extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new BusinessVerifyEmail);
+    }
 }

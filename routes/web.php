@@ -32,7 +32,7 @@ Route::get('/clear-cache', function () {
 });
 
 Route::group([
-    'middleware' => ['business-guest'],
+    'middleware' => ['business.guest'],
 ], function(){
 
     Route::get('/', function () {
