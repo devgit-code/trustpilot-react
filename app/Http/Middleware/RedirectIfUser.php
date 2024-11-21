@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuthenticate
+class RedirectIfUser
 {
     /**
      * Handle an incoming request
@@ -15,9 +15,8 @@ class AdminAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user() && $request->user()->hasAnyRole(['Admin', 'Owner'])){
-
-            return redirect()->route('admin.dashboard');
+        if($request->user()){
+            return redirect()->back()->with('status', "You don't have permission!");
         }
 
         return $next($request);

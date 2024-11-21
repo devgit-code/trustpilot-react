@@ -10,7 +10,7 @@ import fav from '@/../images/favicon.png'
 
 export default function Login({ status, canResetPassword  }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
+        company_email: '',
         password: '',
         remember: false,
     });
@@ -54,12 +54,12 @@ export default function Login({ status, canResetPassword  }) {
                             id="work_email"
                             type="email"
                             name="work_email"
-                            value={data.email}
+                            value={data.company_email}
                             className="mt-1 block w-full"
                             autoComplete="work email"
                             placeholder="Company Email"
                             isFocused={true}
-                            onChange={(e) => setData('email', e.target.value)}
+                            onChange={(e) => setData('company_email', e.target.value)}
                         />
 
                         <InputError message={errors.email} className="mt-2" />

@@ -77,7 +77,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate(true);
         $request->session()->regenerate();
         if(!Auth()->guard('business')->user()->email_verified_at){
-            $email = Auth()->guard('business')->user()->email;
+            $email = Auth()->guard('business')->user()->company_email;
 
         // Auth()->guard('business')->user()->sendEmailVerificationNotification();
 

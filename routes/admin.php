@@ -24,7 +24,7 @@ use Inertia\Inertia;
 // business
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['admin-guest'],
+    'middleware' => ['user-guest', 'business-guest'],
     'as' => 'admin.'
 ], function () {
 
@@ -54,9 +54,12 @@ Route::group([
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middleware' => [],
+    'middleware' => ['user-guest', 'business-authed'],
     'as' => 'admin.'
 ], function () {
+    Route::get('/', function(){
+        return redirect()->route('admin.login');
+    });
 
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');

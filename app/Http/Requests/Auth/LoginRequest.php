@@ -28,6 +28,13 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (request()->is('admin/*')) { // If the request is for business-related routes
+            return [
+                'company_email' => ['required', 'string', 'email'],
+                'password' => ['required', 'string'],
+            ];
+        }
+
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
@@ -45,7 +52,7 @@ class LoginRequest extends FormRequest
 
         if($is_admin){
             // dd($this->only('email', 'password'));
-            if ( !Auth::guard('business')->attempt($this->only('email', 'password'), $this->boolean('remember')) ) {
+            if ( !Auth::guard('business')->attempt($this->only('company_email', 'password'), $this->boolean('remember')) ) {
                 RateLimiter::hit($this->throttleKey());
 
                 throw ValidationException::withMessages([

@@ -14,7 +14,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::middleware(['guest', 'business-guard'])->group(function () {
+Route::middleware(['guest', 'business-guest'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -38,7 +38,7 @@ Route::middleware(['guest', 'business-guard'])->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware(['auth', 'business-guard'])->group(function () {
+Route::middleware(['auth', 'business-guest'])->group(function () {
 // profile before verify
     Route::group([
         'middleware' => ['auth']

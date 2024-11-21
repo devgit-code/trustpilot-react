@@ -16,7 +16,7 @@ export default function Contact() {
         last_name: '',
         job_title: '',
         domain: '',
-        email: '',
+        company_email: '',
         password: '',
         password_confirmation: '',
         remember: false,
@@ -134,12 +134,12 @@ export default function Contact() {
                                 <TextInput
                                     id="email"
                                     type="email"
-                                    name="email"
-                                    value={data.email}
+                                    name="company_email"
+                                    value={data.company_email}
                                     placeholder="Work Email"
                                     className="mt-1 block w-full"
                                     autoComplete="work email"
-                                    onChange={(e) => setData('email', e.target.value)}
+                                    onChange={(e) => setData('company_email', e.target.value)}
                                     required
                                 />
 
