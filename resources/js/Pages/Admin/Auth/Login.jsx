@@ -9,7 +9,6 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import fav from '@/../images/favicon.png'
 
 export default function Login({ status, canResetPassword  }) {
-    const { auth } = usePage().props
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -52,12 +51,12 @@ export default function Login({ status, canResetPassword  }) {
                 <form onSubmit={submit}>
                     <div>
                         <TextInput
-                            id="email"
+                            id="work_email"
                             type="email"
-                            name="email"
+                            name="work_email"
                             value={data.email}
                             className="mt-1 block w-full"
-                            autoComplete="username"
+                            autoComplete="work email"
                             placeholder="Company Email"
                             isFocused={true}
                             onChange={(e) => setData('email', e.target.value)}

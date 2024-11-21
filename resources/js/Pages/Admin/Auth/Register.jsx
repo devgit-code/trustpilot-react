@@ -16,22 +16,23 @@ export default function Contact() {
         last_name: '',
         job_title: '',
         domain: '',
-        work_email: '',
+        email: '',
         password: '',
+        password_confirmation: '',
         remember: false,
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset('password', 'password_confirmation');
         };
     }, []);
 
-    // const submit = (e) => {
-    //     e.preventDefault();
+    const submit = (e) => {
+        e.preventDefault();
 
-    //     post(route('login'));
-    // };
+        post(route('admin.register'));
+    };
 
     return (
         <>
@@ -44,7 +45,7 @@ export default function Contact() {
                     </div>
                     <h3 className='text-center my-4'>Register Business</h3>
 
-                    <form className="space-y-4 mt-4">
+                    <form onSubmit={submit} className="space-y-4 mt-4">
                         <div  className="mt-4">
                             <TextInput
                                 id="website"
@@ -56,6 +57,7 @@ export default function Contact() {
                                 placeholder="Website"
                                 isFocused={true}
                                 onChange={(e) => setData('website', e.target.value)}
+                                required
                             />
 
                             <InputError message={errors.website} className="mt-2" />
@@ -71,6 +73,7 @@ export default function Contact() {
                                 className="mt-1 block w-full"
                                 autoComplete="company name"
                                 onChange={(e) => setData('company_name', e.target.value)}
+                                required
                             />
 
                             <InputError message={errors.company_name} className="mt-2" />
@@ -87,6 +90,7 @@ export default function Contact() {
                                     className="mt-1 block w-full"
                                     autoComplete="first name"
                                     onChange={(e) => setData('first_name', e.target.value)}
+                                    required
                                 />
 
                                 <InputError message={errors.first_name} className="mt-2" />
@@ -102,6 +106,7 @@ export default function Contact() {
                                     className="mt-1 block w-full"
                                     autoComplete="last name"
                                     onChange={(e) => setData('last_name', e.target.value)}
+                                    required
                                 />
 
                                 <InputError message={errors.last_name} className="mt-2" />
@@ -118,6 +123,7 @@ export default function Contact() {
                                 className="mt-1 block w-full"
                                 autoComplete="job title"
                                 onChange={(e) => setData('job_title', e.target.value)}
+                                required
                             />
 
                             <InputError message={errors.job_title} className="mt-2" />
@@ -126,22 +132,23 @@ export default function Contact() {
                         <div className="">
                             <div className='flex items-center'>
                                 <TextInput
-                                    id="work_email"
-                                    type="text"
-                                    name="work_email"
-                                    value={data.work_email}
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={data.email}
                                     placeholder="Work Email"
                                     className="mt-1 block w-full"
                                     autoComplete="work email"
-                                    onChange={(e) => setData('work_email', e.target.value)}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    required
                                 />
 
-                                <span className="text-gray-500 px-2">
+                                {/* <span className="text-gray-500 px-2">
                                     {data.domain}
-                                </span>
+                                </span> */}
                             </div>
 
-                            <InputError message={errors.work_email} className="mt-2" />
+                            <InputError message={errors.email} className="mt-2" />
                         </div>
 
                         <div className="">
@@ -153,12 +160,29 @@ export default function Contact() {
                                 placeholder="Password"
                                 className="mt-1 block w-full"
                                 onChange={(e) => setData('password', e.target.value)}
+                                required
                             />
 
                             <InputError message={errors.password} className="mt-2" />
                         </div>
 
-                        <button disabled={processing} type="submit" className="w-full p-2 bg-black text-white rounded-lg">Submit</button>
+                        <div className="">
+                            <TextInput
+                                id="password_confirmation"
+                                type="password"
+                                name="password_confirmation"
+                                value={data.password_confirmation}
+                                className="mt-1 block w-full"
+                                placeholder="Confirm Password"
+                                autoComplete="new-password"
+                                onChange={(e) => setData('password_confirmation', e.target.value)}
+                                required
+                            />
+
+                            <InputError message={errors.password_confirmation} className="mt-2" />
+                        </div>
+
+                        <button disabled={processing} type="submit" className="w-full mt-4 p-2 bg-black text-white rounded-lg">Submit</button>
 
                         <div>
                             <p className="text-sm text-gray-600 mt-4">

@@ -80,16 +80,15 @@ export default function Header({ auth }) {
               </span>
             </Dropdown.Trigger>
             <Dropdown.Content>
-              <Dropdown.Link
+              {/* <Dropdown.Link
                 href={route("home")}
                 method="get"
                 as="button"
               >
                 Visit Homepage
-              </Dropdown.Link>
-              <hr className="my-px"/>
+              </Dropdown.Link> */}
               <Dropdown.Link
-                href={route("logout")}
+                href={route("admin.logout")}
                 method="post"
                 as="button"
               >

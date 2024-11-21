@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('job_title');
-            $table->string('work_email')->unique();
+            $table->string('role')->default('owner');
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password'); // Password for authentication
+            $table->string('password');
             $table->rememberToken(); // Token for "remember me" functionality
             $table->timestamps();
         });

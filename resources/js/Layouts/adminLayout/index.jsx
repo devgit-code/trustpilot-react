@@ -7,6 +7,8 @@ import { Head, usePage } from "@inertiajs/react";
 
 const AdminLayout = ({ children }) => {
     const { auth } = usePage().props
+console.log('here++++', auth)
+
   return (
     <>
       <Head>

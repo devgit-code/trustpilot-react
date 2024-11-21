@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -27,27 +28,36 @@ Route::group([
     'as' => 'admin.'
 ], function () {
 
-    Route::get('/register', function(){
-        return Inertia::render('Admin/Auth/Register');
-    })->name('register');
+    Route::get('/register', [RegisteredUserController::class, 'admin_create'])
+            ->name('register');
+
+    Route::post('/register', [RegisteredUserController::class, 'admin_store']);
 
     Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
 
-    Route::get('forgot-password', function () {
+    Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
+
+    Route::get('/forgot-password', function () {
         return Inertia::render('Admin/Auth/ForgotPassword');
     })->name('password.request');
+
+    Route::get('verify-email', function(){
+        return Inertia::render('Admin/Auth/VerifyEmail', [
+            'email' => session('email'),
+        ]);
+    })->name('verification.notice');
 });
 
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middleware' => ['auth', 'verified', 'role:Admin|Owner'],
+    'middleware' => [],
     'as' => 'admin.'
 ], function () {
 
     Route::get('/dashboard', function () {
-        return Inertia::render('onlyuser');
+        return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

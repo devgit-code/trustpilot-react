@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -69,5 +70,21 @@ class AuthenticatedSessionController extends Controller
             'canResetPassword' => Route::has('admin.password.request'),
             'status' => session('status'),
         ]);
+    }
+
+    public function admin_store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate(true);
+        $request->session()->regenerate();
+        if(!Auth()->guard('business')->user()->email_verified_at){
+            $email = Auth()->guard('business')->user()->email;
+
+        // Auth()->guard('business')->user()->sendEmailVerificationNotification();
+
+
+            return redirect()->route('admin.verification.notice')->with('email', $email);
+        }
+
+        return redirect()->route('admin.dashboard');
     }
 }
