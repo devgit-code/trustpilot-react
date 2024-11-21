@@ -87,4 +87,15 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->route('admin.dashboard');
     }
+
+    public function admin_destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('business')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login');
+    }
 }

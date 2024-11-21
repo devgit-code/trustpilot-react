@@ -48,6 +48,8 @@ Route::group([
     })->name('verification.notice');
 });
 
+    Route::post('admin/logout', [AuthenticatedSessionController::class, 'admin_destroy'])
+                ->name('admin.logout');
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',

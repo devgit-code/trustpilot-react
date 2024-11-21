@@ -35,14 +35,14 @@ class HandleInertiaRequests extends Middleware
             ? auth('web')->user() // Default 'web' guard
             : (auth('business')->check() ? auth('business')->user() : null); // 'business' guard
 
-        $profile = auth('web')->check()
-            ? UserProfile::where('user_id', $request->user()->id)->first() // Default 'web' guard
-            : (auth('business')->check() ? UserProfile::where('user_id', $request->user()->id)->first() : null);
+        // $profile = auth('web')->check()
+        //     ? UserProfile::where('user_id', $request->user()->id)->first() // Default 'web' guard
+        //     : (auth('business')->check() ? UserProfile::where('user_id', $request->user()->id)->first() : null);
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $authenticated,
-                'user_profile' => $request->user() ? UserProfile::where('user_id', $request->user()->id)->first() : null,
+                'profile' => $request->user() ? UserProfile::where('user_id', $request->user()->id)->first() : null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

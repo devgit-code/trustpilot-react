@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'admin-guest' => \App\Http\Middleware\AdminAuthenticate::class,
         'notverified' => \App\Http\Middleware\RedirectIfNotVerified::class,
+        'business-guard' => \App\Http\Middleware\RedirectIfBusiness::class,
         'onlyuser' => \App\Http\Middleware\UserMiddleware::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
