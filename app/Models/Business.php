@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Auth\CanResetPassword;
 // use App\Notifications\BusinessVerifyEmail;
 use App\Mail\BusinessVerificationMail;
 use Illuminate\Support\Facades\Hash;
@@ -65,7 +66,16 @@ class Business extends Authenticatable implements MustVerifyEmail
             now()->addMinutes(60),
             ['id' => $this->id, 'hash' => sha1($this->company_email)]
         );
+// Mail::raw('Test email', function ($message) {
+//     $message->to('admin@eniyi.co')
+//             ->subject('Test Email');
+// });
+        try {
+            Mail::to($this->company_email)->send(new BusinessVerificationMail($verificationUrl));
+            logger('Email sent successfully to @eniyi.co');
+        } catch (\Exception $e) {
+            logger('Email failed: ' . $e->getMessage());
+        }
 
-        Mail::to($this->company_email)->send(new BusinessVerificationMail($verificationUrl));
     }
 }

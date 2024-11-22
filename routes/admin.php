@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -40,9 +41,11 @@ Route::group([
 
     Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
 
-    Route::get('/forgot-password', function () {
-        return Inertia::render('Admin/Auth/ForgotPassword');
-    })->name('password.request');
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])
+                ->name('password.request');
+
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])
+                ->name('password.email');
 });
 
 Route::group([

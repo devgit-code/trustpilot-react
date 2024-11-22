@@ -40,12 +40,12 @@ export default function Login({ status, canResetPassword  }) {
                 <h3 className='text-center my-4'>Login Business</h3>
 
                 <div className="flex items-center justify-end mb-4">
-                    <Link
+                    {/* <Link
                         href={route('admin.register')}
                         className="mr-3 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Not Register yet?
-                    </Link>
+                    </Link> */}
                 </div>
 
                 <form onSubmit={submit}>
@@ -85,10 +85,10 @@ export default function Login({ status, canResetPassword  }) {
                     <div className="flex items-center justify-between mt-4">
                         {canResetPassword && (
                             <Link
-                                href={route('password.request')}
+                                href={route('admin.register')}
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Forgot your password?
+                                Not Register yet?
                             </Link>
                         )}
 

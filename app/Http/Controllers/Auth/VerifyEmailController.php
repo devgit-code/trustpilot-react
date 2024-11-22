@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -27,16 +28,17 @@ class VerifyEmailController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function admin_create(EmailVerificationRequest $request): RedirectResponse
+    public function admin_create(Request $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        if (Auth::guard('business')->check() && Auth::guard('business')->user()->email_verified_at) {
+            return redirect()->route('admin.dashboard');
+        }
+logger('here is verifyemailcontroller' . Auth::guard('business')->user());
+        if (Auth::guard('business')->user()->markEmailAsVerified()) {
+            return redirect()->route('admin.verification.notice');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
+        return redirect()->route('admin.dashboard');
 
-        return redirect(RouteServiceProvider::HOME);
     }
 }
