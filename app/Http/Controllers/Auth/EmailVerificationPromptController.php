@@ -24,8 +24,8 @@ class EmailVerificationPromptController extends Controller
 
     public function admin_create(Request $request): RedirectResponse|Response
     {
-        if(!Auth::guard('business')->check() && !Auth::guard('business')->user()->email_verified_at){
-            return Inertia::render('Admin/Auth/VerifyEmail', ['email' => session('email')]);
+        if(!Auth::guard('business')->check() || !Auth::guard('business')->user()->email_verified_at){
+            return Inertia::render('Admin/Auth/VerifyEmail', ['email' => session('email'), 'status' => session('status')]);
         }
 
         return redirect()->route('admin.dashboard');

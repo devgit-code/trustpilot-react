@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\VerifyEmailController;
 
 
 use App\Http\Controllers\Admin\CategoryController;
@@ -46,16 +47,19 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['user-guest'],
+    'middleware' => ['user-guest', 'business.authed'],
     'as' => 'admin.'
 ], function () {
 
     Route::get('verify-email', [EmailVerificationPromptController::class, 'admin_create'])->name('verification.notice');
 
-
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'admin_store'])
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
+
+    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'admin_create'])
+                ->middleware(['signed', 'throttle:6,1'])
+                ->name('verification.verify');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'admin_destroy'])
                 ->name('logout');

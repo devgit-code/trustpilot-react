@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
-use App\Notifications\BusinessVerifyEmail;
+// use App\Notifications\BusinessVerifyEmail;
+use App\Mail\BusinessVerificationMail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class Business extends Authenticatable implements MustVerifyEmail
 {
@@ -50,8 +53,19 @@ class Business extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    public function getEmailForVerification()
+    {
+        return $this->company_email;
+    }
+
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new BusinessVerifyEmail);
+        $verificationUrl = URL::temporarySignedRoute(
+            'admin.verification.verify',
+            now()->addMinutes(60),
+            ['id' => $this->id, 'hash' => sha1($this->company_email)]
+        );
+
+        Mail::to($this->company_email)->send(new BusinessVerificationMail($verificationUrl));
     }
 }

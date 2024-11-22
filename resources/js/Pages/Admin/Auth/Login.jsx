@@ -60,6 +60,7 @@ export default function Login({ status, canResetPassword  }) {
                             placeholder="Company Email"
                             isFocused={true}
                             onChange={(e) => setData('company_email', e.target.value)}
+                            required
                         />
 
                         <InputError message={errors.email} className="mt-2" />
@@ -75,6 +76,7 @@ export default function Login({ status, canResetPassword  }) {
                             className="mt-1 block w-full"
                             autoComplete="current-password"
                             onChange={(e) => setData('password', e.target.value)}
+                            required
                         />
 
                         <InputError message={errors.password} className="mt-2" />
