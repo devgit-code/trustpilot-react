@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,16 +40,19 @@ Route::middleware(['guest', 'business.guest'])->group(function () {
 });
 
 Route::middleware(['auth', 'business.guest'])->group(function () {
+// profile after verify
+    Route::group([
+        'middleware' =>['verified']
+    ], function(){
+        Route::get('/profile/setting', [UserProfileController::class, 'show'])->name('profile.setting');
+
+
+    });
+
 // profile before verify
     Route::group([
-        'middleware' => ['auth']
     ], function(){
-
-        Route::get('/profile', function(){
-            return Inertia::render('Profile/Edit');
-        })->name('profile');
-
-        // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -57,7 +61,6 @@ Route::middleware(['auth', 'business.guest'])->group(function () {
         })->name('profile.password');
 
     });
-
 
 /******************************************************************************** */
     Route::get('verify-email', [EmailVerificationPromptController::class, 'create'])

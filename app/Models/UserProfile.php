@@ -11,13 +11,11 @@ class UserProfile extends Model
     protected $primaryKey = 'user_id';
     public $timestamps = false;
     protected $fillable = [
-        'name',
         'phone',
-        'email',
         'image',
         'address',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

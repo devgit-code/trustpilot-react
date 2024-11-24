@@ -42,7 +42,12 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $authenticated,
-                'profile' => $request->user() ? UserProfile::where('user_id', $request->user()->id)->first() : null,
+                'userProfileImage' => function () {
+                    $user = auth()->user();
+                    $userProfile = $user ? UserProfile::where('user_id', $user->id)->first() : null;
+
+                    return $userProfile ? $userProfile->image : null;
+                },
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

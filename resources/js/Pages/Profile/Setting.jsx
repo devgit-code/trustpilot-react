@@ -1,12 +1,12 @@
 import ProfileLayout from '@/Layouts/ProfileLayout';
-import UpdateUserInformationForm from './Partials/UpdateUserInformationForm';
+import UserSettingForm from './Partials/UserSettingForm';
 
 export default function Setting({ auth, mustVerifyEmail, status }) {
     return (
         <ProfileLayout>
             <div className="space-y-6">
                 <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateUserInformationForm
+                    <UserSettingForm
                         className="max-w-xl"
                     />
                 </div>
