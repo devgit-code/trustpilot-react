@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useForm } from '@inertiajs/react';
 import profileEditImg from '@/../images/profile2.jpg';
 import "cropperjs/dist/cropper.css";
-import ImageCropper from "../../../Components/ImageCropper";
+import ImageCropper from "@/Components/ImageCropper";
 
 const UserProfileEdit = ({ user, userProfile }) => {
 
@@ -56,27 +56,6 @@ const UserProfileEdit = ({ user, userProfile }) => {
                 <div className="col-md-6">
                     <h3 className="pro_heading">Edit Profile</h3>
                     <form onSubmit={handleSubmit} className="modal_form">
-                        <div className="form-group">
-                            <label htmlFor="">Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="name"
-                                value={data.name}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                value={data.email}
-                                onChange={handleInputChange}
-                                disabled
-                            />
-                        </div>
                         <div className="form-group">
                             <label htmlFor="">Phone Number</label>
                             <input

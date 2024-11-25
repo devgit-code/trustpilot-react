@@ -15,7 +15,7 @@ class UserProfileController extends Controller
     {
         $user = auth()->user();
         $userProfile = $user->profile;
-        return Inertia::render('Profile/Setting', compact('user', 'userProfile'));
+        return Inertia::render('Profile/Setting', compact('userProfile'));
     }
 
     public function update(Request $request)

@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import profileEditImg from '../../../images/profile2.jpg';
 import profileNotImg from '../../../images/profile2.jpg';
 import "cropperjs/dist/cropper.css";
-import ImageCropper from "../ImageCropper";
+import ImageCropper from "../../Components/ImageCropper";
 
 const UserProfileEdit = ({ user, userProfile }) => {
 
