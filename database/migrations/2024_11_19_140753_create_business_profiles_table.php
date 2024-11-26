@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('business_profiles', function (Blueprint $table) {
             $table->unsignedBigInteger('business_id')->unique();
-            $table->string('phone');
-            $table->string('logo');
-            $table->text('location');
+            $table->string('phone')->nullable();
+            $table->string('logo')->nullable();
+            $table->text('location')->nullable();
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
         });
     }

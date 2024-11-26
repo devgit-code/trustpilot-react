@@ -22,7 +22,7 @@ console.log('here++++', auth)
       />
 
       <div id="main">
-        <Sidebar />
+        <Sidebar auth={auth}/>
         <div className="main-content">
           <Header auth={auth}/>
           {/* Tabs section */}

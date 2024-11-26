@@ -4,44 +4,34 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 
-const auth = {
-    user: {
-        name:'admin',
-        email:'admin@test.com'
-    },
-};
-const userProfileImage = '/profile/user.png';
+import userProfileNotlogo from '@/../images/company-logo.jpg';
 
-export default function Sidebar() {
+export default function Sidebar({auth}) {
 //   const { userProfileImage } = usePage().props
 
     return (
         <div className="sidebar h-100 pt-3">
             <div className="px-4" style={{ maxWidth: "100%" }}>
                 <div className="profile text-center mb-5 position-relative">
-                    <div className="logo position-absolute top-0 start-0">
-                        <i className="bi bi-fire text-white fs-3"></i>
+                    <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
+                        {/* <Link href={route("admin.user_profile.show")}>  */}
+                        <img
+                            src={auth.userProfileImage?`/storage/images/${auth.userProfileImage}`:userProfileNotlogo}
+                            alt="user"
+                            className="mx-auto"
+                            width="100"
+                        />
+                        {/* </Link> */}
                     </div>
 
-
-                    <Link href={route("admin.user_profile.show")}> <img
-                        src={`/storage/images/${userProfileImage}`}
-                        alt="user"
-                        className="rounded-circle mx-auto border border-white"
-                        width="100"
-                        height="102"
-                    /></Link>
-
-                    <div className="edit_icon position-absolute">
-                        <i className="bi bi-camera text-white fs-5"></i>
-                    </div>
-                    <div className="profile_text mt-4">
-                        <span className="d-block fs-6 mb-0">{auth.user.name}</span>
-                        <span className="d-block fs-7">{auth.user.email}</span>
+                    <div className="profile_text mt-3">
+                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.first_name}</span>
+                        <span className="d-block text-gray-300 fs-6">{auth.user.company_email}</span>
                     </div>
                 </div>
                 <div className="ps-3">
                     <NavLink style={{ borderBottom: 'none', }}
+                        className="no-underline"
                         href={route('admin.dashboard')} active={route().current('admin.dashboard')}
                     >
                         <span className="text-info fs-4">

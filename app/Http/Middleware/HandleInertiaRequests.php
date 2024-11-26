@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\UserProfile;
+use App\Models\BusinessProfile;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -43,10 +44,17 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $authenticated,
                 'userProfileImage' => function () {
-                    $user = auth()->user();
-                    $userProfile = $user ? UserProfile::where('user_id', $user->id)->first() : null;
+                    if(auth('web')->check()){
+                        $user = auth()->user();
+                        $userProfile = $user ? UserProfile::where('user_id', $user->id)->first() : null;
+                        return $userProfile ? $userProfile->image : null;
+                    }else if(auth('business')->check()){
+                        $business = auth('business')->user();
+                        $businessProfile = $business ? BusinessProfile::where('business_id', $business->id)->first() : null;
+                        return $businessProfile ? $businessProfile->logo : null;
 
-                    return $userProfile ? $userProfile->image : null;
+                    }
+                    return null;
                 },
             ],
             'ziggy' => function () use ($request) {
