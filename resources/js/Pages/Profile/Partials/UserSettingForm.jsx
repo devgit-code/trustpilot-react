@@ -29,23 +29,40 @@ export default function UserSettingForm({className = '', userProfile}) {
     });
 
     const handleImageChange = (e) => {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            setImage(e.target.result);
-            setShow(true);
-        };
+        const file = inputRef.current?.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                setImage(e.target.result);
+                setShow(true);
+            };
             reader.readAsDataURL(inputRef.current.files[0]);
+        }else{//
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+        setData('phone', input);
     };
 
     const setCroppedImage = (data) => {
         previewImageRef.current.setAttribute("src", data);
         croppedImageRef.current.setAttribute("value", data);
+        setShow(false);
+        setImage(null);
     };
+
+    const handleCancelCrop = () => {
+        inputRef.current.value = '';
+        setShow(false);
+        setImage(null);
+    }
 
     const submit = (e) => {
         e.preventDefault();
-
-        patch(route('profile.update'));
+        data.croppedImage = croppedImageRef.current.value;
+        patch(route("profile.setting.update"), data, { forceFormData: true });
     };
 
     return (
@@ -62,20 +79,15 @@ export default function UserSettingForm({className = '', userProfile}) {
 
                 <div className="row">
                     <div className="col">
-                        <div className="mb-3">
-                            <label className="pb-2 fw-medium">
-                                Upload Profile Image
-                            </label>
-                            <input
-                                ref={inputRef}
-                                className="form-control"
-                                id="image-file"
-                                name="image"
-                                type="file"
-                                aria-label="file example"
-                                onChange={handleImageChange}
-                            />
-                        </div>
+                        <input
+                            ref={inputRef}
+                            className="form-control"
+                            id="image-file"
+                            name="image"
+                            type="file"
+                            aria-label="file example"
+                            onChange={handleImageChange}
+                        />
                     </div>
                 </div>
 
@@ -84,7 +96,7 @@ export default function UserSettingForm({className = '', userProfile}) {
                     ref={croppedImageRef}
                     name="croppedImage"
                 />
-                <div className="col-md-2 mb-2">
+                <div className="flex mb-2 items-center">
                     <img
                         ref={previewImageRef}
                         className=""
@@ -93,49 +105,43 @@ export default function UserSettingForm({className = '', userProfile}) {
                         width="128"
                         height="128"
                     />
-                    <div className="profile_text mt-4">
-                        <span className="d-block fs-6 mb-0">{auth.user.name}</span>
-                        <span className="d-block fs-7">{auth.user.email}</span>
+                    <div className="profile_text ml-5">
+                        <span className="d-block fs-5 mb-0 text-gray-800">{auth.user.name}</span>
+                        <span className="d-block fs-6 text-gray-700">{auth.user.email}</span>
                     </div>
                 </div>
 
-                {/* <div className="profile text-center mb-5 position-relative">
-                    <div className="logo position-absolute top-0 start-0">
-                        <i className="bi bi-fire text-white fs-3"></i>
-                    </div>
-
-
-                    <Link href={route("admin.user_profile.show")}> <img
-                        src={`/storage/images/${userProfileImage}`}
-                        alt="user"
-                        className="rounded-circle mx-auto border border-black"
-                        width="100"
-                        height="102"
-                    /></Link>
-
-                    <div className="edit_icon position-absolute">
-                        <i className="bi bi-camera text-blue fs-5"></i>
-                    </div>
-                    <div className="profile_text mt-4">
-                        <span className="d-block fs-6 mb-0">{auth.user.name}</span>
-                        <span className="d-block fs-7">{auth.user.email}</span>
-                    </div>
-                </div> */}
-
                 <div>
-                    <InputLabel htmlFor="location" value="Location" />
+                    <InputLabel htmlFor="phone" value="Phone" />
 
                     <TextInput
-                        id="location"
+                        id="phone"
+                        name="phone"
                         className="mt-1 block w-full"
-                        value={auth.user.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                        isFocused
-                        autoComplete="name"
+                        value={data.phone}
+                        onChange={handleInputChange}
+                        // required
+                        // isFocused
+                        autoComplete="phone"
+                        maxLength={12}
                     />
 
-                    <InputError className="mt-2" message={errors.name} />
+                    <InputError className="mt-2" message={errors.phone} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="address" value="Address" />
+
+                    <TextInput
+                        id="address"
+                        name="address"
+                        className="mt-1 block w-full"
+                        value={data.address}
+                        onChange={(e)=>setData('address', e.target.value)}
+                        autoComplete="address"
+                    />
+
+                    <InputError className="mt-2" message={errors.address} />
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -155,6 +161,7 @@ export default function UserSettingForm({className = '', userProfile}) {
                 <ImageCropper
                     image={image}
                     setCroppedImage={setCroppedImage}
+                    onClose={handleCancelCrop}
                     aspectRatio={1}
                 />
             )}

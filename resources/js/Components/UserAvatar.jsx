@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserAvatar = ({ className, user, width='2.2rem', height='2.2rem' }) => {
+const UserAvatar = ({ className, auth, width='2.2rem', height='2.2rem' }) => {
     // Function to get the user's initials
     const getInitials = (name) => {
         if (!name) return '';
@@ -12,11 +12,11 @@ const UserAvatar = ({ className, user, width='2.2rem', height='2.2rem' }) => {
     return (
         <div className={className}>
             {
-                user.avatar_url ? (
+                auth.userProfileImage ? (
                     <img
-                        src="/img/avatar/user.png"
+                        src={`/storage/images/profile/${auth.userProfileImage}`}
                         alt="logo"
-                        className="avatar p-0 rounded-circle"
+                        className="avatar p-0 rounded-circle border-white"
                         style={{ height: `${height}`}}
                     />
                 ) : (
@@ -24,7 +24,7 @@ const UserAvatar = ({ className, user, width='2.2rem', height='2.2rem' }) => {
                         className="bg-gray-200 text-green-500 rounded-circle d-flex justify-content-center align-items-center p-0"
                         style={{ height: `${height}`, width: `${width}`}}
                     >
-                        {getInitials(user.name)}
+                        {getInitials(auth.user.name)}
                     </div>
                 )
             }

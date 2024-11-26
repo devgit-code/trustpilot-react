@@ -45,6 +45,7 @@ Route::middleware(['auth', 'business.guest'])->group(function () {
         'middleware' =>['verified']
     ], function(){
         Route::get('/profile/setting', [UserProfileController::class, 'show'])->name('profile.setting');
+        Route::patch('/profile/setting', [UserProfileController::class, 'update'])->name('profile.setting.update');
 
 
     });

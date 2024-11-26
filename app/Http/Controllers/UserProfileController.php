@@ -21,9 +21,9 @@ class UserProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->save();
+        // $user->name = $request->input('name');
+        // $user->email = $request->input('email');
+        // $user->save();
 
         $userProfile = $user->userProfile;
 
@@ -32,23 +32,23 @@ class UserProfileController extends Controller
             $userProfile->user_id = $user->id;
         }
 
-        $name = $request->input('name');
-        $email = $request->input('email');
+        // $name = $request->input('name');
+        // $email = $request->input('email');
         $address = $request->input('address');
         $phone = $request->input('phone');
 
-        if (
-            $userProfile->name !== $name ||
-            $userProfile->email !== $email ||
-            $userProfile->address !== $address ||
-            $userProfile->phone !== $phone
-        ) {
+        // if (
+        //     // $userProfile->name !== $name ||
+        //     // $userProfile->email !== $email ||
+        //     $userProfile->address !== $address ||
+        //     $userProfile->phone !== $phone
+        // ) {
 
             $existingUserProfile = UserProfile::where('user_id', $user->id)->first();
 
             if ($existingUserProfile) {
-                $existingUserProfile->name = $name;
-                $existingUserProfile->email = $email;
+                // $existingUserProfile->name = $name;
+                // $existingUserProfile->email = $email;
                 $existingUserProfile->address = $address;
                 $existingUserProfile->phone = $phone;
 
@@ -56,7 +56,7 @@ class UserProfileController extends Controller
                     $extension = explode('/', mime_content_type($request->croppedImage))[1];
                     $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
                     Storage::disk('public')->put(
-                        'images/' . $imageName,
+                        'images/profile/' . $imageName,
                         file_get_contents($request->croppedImage)
                     );
                     $existingUserProfile["image"] = $imageName;
@@ -64,8 +64,8 @@ class UserProfileController extends Controller
 
                 $existingUserProfile->save();
             } else {
-                $userProfile->name = $name;
-                $userProfile->email = $email;
+                // $userProfile->name = $name;
+                // $userProfile->email = $email;
                 $userProfile->address = $address;
                 $userProfile->phone = $phone;
 
@@ -73,15 +73,15 @@ class UserProfileController extends Controller
                     $extension = explode('/', mime_content_type($request->croppedImage))[1];
                     $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
                     Storage::disk('public')->put(
-                        'images/' . $imageName,
+                        'images/profile/' . $imageName,
                         file_get_contents($request->croppedImage)
                     );
                     $userProfile["image"] = $imageName;
                 }
                 $userProfile->save();
             }
-        }
+        // }
 
-        return redirect()->route('admin.user_profile.show')->with('status', 'Profile information updated successfully');
+        return redirect()->route('profile.setting')->with('status', 'Profile information updated successfully');
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('business_id')->unique();
             $table->string('phone');
             $table->string('logo');
-            $table->text('address');
+            $table->text('location');
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
         });
     }
