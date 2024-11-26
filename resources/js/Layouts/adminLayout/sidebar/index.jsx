@@ -86,24 +86,6 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.cities.index')} active={route().current('admin.cities.index')}
-                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                                    >
-                                        <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">cities</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        href={route('admin.states.index')} active={route().current('admin.states.index')}
-                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                                    >
-                                        <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">states</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
                                         href={route('admin.roles.index')} active={route().current('admin.roles.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
