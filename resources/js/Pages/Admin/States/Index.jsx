@@ -30,7 +30,7 @@ const States = ({ items }) => {
                                 <div className="d-flex align-items-center justify-content-end">
                                     <button className='btn btn-success d-flex align-items-center border-0 me-2'>
                                         <BsPlusCircleFill className='fs-5' />
-                                        <Link href={route('states.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
+                                        <Link href={route('admin.states.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
                                     </button>
                                  </div>
                                                     </div>
@@ -63,12 +63,12 @@ const States = ({ items }) => {
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                     <li className="view">
-                                                        <Link href={route('state.cities', item.id)}>
+                                                        <Link href={route('admin.state.cities', item.id)}>
                                                             <FontAwesomeIcon icon={faFolder} className="fs-4 me-2 text-primary" />
                                                         </Link>
                                                     </li>
                                                     <li className="edit">
-                                                        <Link href={route('states.edit', item.id)}>
+                                                        <Link href={route('admin.states.edit', item.id)}>
                                                             <FontAwesomeIcon icon={faPenToSquare} className="fs-4 text-danger" />
                                                         </Link>
                                                     </li>

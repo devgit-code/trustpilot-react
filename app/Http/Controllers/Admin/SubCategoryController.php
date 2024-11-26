@@ -18,7 +18,7 @@ class SubCategoryController extends Controller
     {
         $category = Category::find($id);
         $subCategories = SubCategory::with('category')->where('category_id', $id)->get();
-        return Inertia::render('SubCategories/Index', compact('category', 'subCategories'));
+        return Inertia::render('Admin/SubCategories/Index', compact('category', 'subCategories'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SubCategoryController extends Controller
     public function create(String $id)
     {
         $category = Category::find($id);
-        return Inertia::render('SubCategories/Create', compact('category'));
+        return Inertia::render('Admin/SubCategories/Create', compact('category'));
     }
 
     /**
@@ -42,7 +42,7 @@ class SubCategoryController extends Controller
             'status' => $request->input('status')
         ]);
 
-        return redirect()->route('sub_categories.index', $request->category_id)
+        return redirect()->route('admin.sub_categories.index', $request->category_id)
             ->with('message', 'SubCategory created successfully.');
     }
 
@@ -58,7 +58,7 @@ class SubCategoryController extends Controller
     {
         $category = Category::find($id);
         $subCategory = SubCategory::find($id);
-        return Inertia::render('SubCategories/Edit', compact('subCategory', 'category'));
+        return Inertia::render('Admin/SubCategories/Edit', compact('subCategory', 'category'));
     }
 
     /**
@@ -73,7 +73,7 @@ class SubCategoryController extends Controller
         $subCategory->status = $request->input('status');
         $subCategory->save();
 
-        return redirect()->route('sub_categories.index', $request->category_id)
+        return redirect()->route('admin.sub_categories.index', $request->category_id)
             ->with('message', 'SubCategory updated successfully.');
     }
 

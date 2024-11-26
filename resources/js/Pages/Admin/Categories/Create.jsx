@@ -11,7 +11,7 @@ const CategoriesCreate = ({ onClose }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        post(route('categories.store'), {
+        post(route('admin.categories.store'), {
             onSuccess: () => {
                 onClose();
             },
@@ -61,7 +61,7 @@ const CategoriesCreate = ({ onClose }) => {
                 <button type="submit" className="btn btn-primary m-2">
                     Create
                 </button>
-                <Link href={route('categories.index')} className="btn btn-danger">
+                <Link href={route('admin.categories.index')} className="btn btn-danger">
                     Cancel
                 </Link>
             </form>

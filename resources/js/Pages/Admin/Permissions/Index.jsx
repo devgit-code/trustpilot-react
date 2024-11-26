@@ -2,8 +2,8 @@ import React from 'react';
 import Swal from 'sweetalert2';
 import AdminLayout from '@/Layouts/adminLayout';
 import { FaEdit } from "react-icons/fa"
+import { Link, router, usePage } from '@inertiajs/react';
 import { BsTrashFill } from "react-icons/bs"
-import { Link } from '@inertiajs/react';
 
 const PermissionList = ({ permissions }) => {
     const handleDelete = (event, permissionId) => {
@@ -19,7 +19,7 @@ const PermissionList = ({ permissions }) => {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                Inertia.delete(route('admin.permissions.destroy', permissionId));
+                router.delete(route('admin.permissions.destroy', permissionId));
             }
         });
     };
@@ -63,7 +63,7 @@ const PermissionList = ({ permissions }) => {
                                                         </Link>
                                                     </li>
                                                     <form
-                                                        action={route('admin.permissions.destroy', item.id)}
+                                                        // action={route('admin.permissions.destroy', item.id)}
                                                         onSubmit={(e) => handleDelete(e, item.id)}
                                                         method="POST"
                                                     >

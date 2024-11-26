@@ -13,13 +13,13 @@ class StateController extends Controller
     public function index()
     {
         $items = State::all();
-        return Inertia::render('States/Index', compact('items'));
+        return Inertia::render('Admin/States/Index', compact('items'));
     }
 
 
     public function create()
     {
-        return Inertia::render('States/Create');
+        return Inertia::render('Admin/States/Create');
     }
 
 
@@ -34,13 +34,13 @@ class StateController extends Controller
             "status" => $request->input('status')
         ];
         State::create($creationData);
-        return redirect()->route('states.index');
+        return redirect()->route('admin.states.index');
     }
 
     public function show($id)
     {
         $state = State::with('cities')->find($id);
-        return Inertia::render('States/StateCities', [
+        return Inertia::render('Admin/States/StateCities', [
             'state' => $state
         ]);
     }
@@ -49,7 +49,7 @@ class StateController extends Controller
     public function edit(string $id)
     {
         $state = State::find($id);
-        return Inertia::render('States/Edit', [
+        return Inertia::render('Admin/States/Edit', [
             'state' => $state
         ]);
     }
@@ -64,7 +64,7 @@ class StateController extends Controller
         $updateData['name'] = $request->input('name');
         $updateData["status"] = $request->input('status');
         $state->update($updateData);
-        return redirect()->route('states.index');
+        return redirect()->route('admin.states.index');
     }
 
 

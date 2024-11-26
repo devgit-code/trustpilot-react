@@ -55,9 +55,9 @@ const Testimonial = ({ items }) => {
                                 <div className="d-flex align-items-center justify-content-end">
                                     <button className='btn btn-success d-flex align-items-center border-0 me-2'>
                                         <BsPlusCircleFill className='fs-5' />
-                                        <Link href={route('testimonials.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
+                                        <Link href={route('admin.testimonials.create')} className="ms-2 text-white text-decoration-none" type="button">Add</Link>
                                     </button>
-                                    <a href={route('testimonials.sort')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><BsArrowDownShort className='fs-4' />Sort</a>
+                                    <a href={route('admin.testimonials.sort')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><BsArrowDownShort className='fs-4' />Sort</a>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ const Testimonial = ({ items }) => {
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                     <li className="edit">
-                                                        <Link href={route('testimonials.edit', item.id)}>
+                                                        <Link href={route('admin.testimonials.edit', item.id)}>
                                                             <FontAwesomeIcon icon={faPenToSquare} className="fs-4 text-primary me-2" />
                                                         </Link>
                                                     </li>

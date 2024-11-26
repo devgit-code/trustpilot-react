@@ -12,9 +12,9 @@ const SubCategoryEdit = ({ subCategory, onClose }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        put(route('sub_categories.update', subCategory.id), {
+        put(route('admin.sub_categories.update', subCategory.id), {
             onSuccess: () => {
-                onClose(); 
+                onClose();
             },
         });
     };
@@ -59,7 +59,7 @@ const SubCategoryEdit = ({ subCategory, onClose }) => {
                 <button type="submit" className="btn btn-primary">
                     Update
                 </button>
-                <Link href={route('categories.index')} className="btn btn-danger">
+                <Link href={route('admin.categories.index')} className="btn btn-danger">
                     Cancel
                 </Link>
             </form>

@@ -23,7 +23,7 @@ const TestimonialEdit = ({ item }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         data.croppedImage = croppedImageRef.current.value;
-        put(route("testimonials.update", item.id), data, { forceFormData: true, });
+        put(route("admin.testimonials.update", item.id), data, { forceFormData: true, });
     };
     const handleImageChange = (e) => {
         let reader = new FileReader();
@@ -177,7 +177,7 @@ const TestimonialEdit = ({ item }) => {
                                             </div>
                                             <Link
                                                 className="btn btn-danger me-3"
-                                                href={route('testimonials.index')}
+                                                href={route('admin.testimonials.index')}
                                             >
                                                 Cancel
                                             </Link>

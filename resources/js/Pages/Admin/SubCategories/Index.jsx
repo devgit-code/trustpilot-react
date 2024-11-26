@@ -28,7 +28,7 @@ const Index = ({ subCategories, category }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('sub_categories.destroy', { id }));
+                        router.delete(route('admin.sub_categories.destroy', { id }));
                     },
                 },
                 {

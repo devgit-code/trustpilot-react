@@ -29,7 +29,7 @@ const Index = ({ categories }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('categories.destroy', { id }));
+                        router.delete(route('admin.categories.destroy', { id }));
                     }
                 },
                 {

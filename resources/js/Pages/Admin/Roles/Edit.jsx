@@ -19,7 +19,7 @@ const EditRoleForm = ({ role, permissions }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(selectedPermissions);
-        router.put(route('roles.update', role.id), {
+        router.put(route('admin.roles.update', role.id), {
             name,
             permissions: selectedPermissions.map((per)=> per.id),
         });
@@ -72,7 +72,7 @@ const EditRoleForm = ({ role, permissions }) => {
                             <button type="submit" className="btn btn-primary m-2">
                                 Update
                             </button>
-                            <Link href={route('roles.index')} className="btn btn-danger" type="button">
+                            <Link href={route('admin.roles.index')} className="btn btn-danger" type="button">
                                 Back
                             </Link>
                         </form>

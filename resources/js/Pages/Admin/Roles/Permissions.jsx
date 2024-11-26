@@ -8,9 +8,9 @@ const PermissionCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('permissions.store'), {
+        post(route('admin.permissions.store'), {
             onSuccess: () => {
-                router.visit(route('permissions.index'));
+                router.visit(route('admin.permissions.index'));
             },
         });
     };
@@ -37,7 +37,7 @@ const PermissionCreate = () => {
                             <button type="submit" className="btn btn-primary m-2" disabled={processing}>
                                 Create
                             </button>
-                            <a href={route('permissions.index')} className="btn btn-danger" type="button">
+                            <a href={route('admin.permissions.index')} className="btn btn-danger" type="button">
                                 Back
                             </a>
                         </form>

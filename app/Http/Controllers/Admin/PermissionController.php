@@ -45,6 +45,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return redirect()->back()->withSuccess('Permission deleted !!!');
+        return redirect()->route('admin.permissions.index')->with('success', 'Role deleted successfully.');
+        // return redirect()->back()->withSuccess('Permission deleted !!!');
     }
 }

@@ -21,7 +21,7 @@ const CreateRole = ({ permissions }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        router.post(route('roles.store'), {
+        router.post(route('admin.roles.store'), {
             name,
             permissions: selectedPermissions,
         });
@@ -74,7 +74,7 @@ const CreateRole = ({ permissions }) => {
                                 Create
                             </button>
                             <a
-                                href={route('roles.index')}
+                                href={route('admin.roles.index')}
                                 className="btn btn-danger"
                                 type="button"
                             >
