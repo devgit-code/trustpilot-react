@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 
@@ -6,11 +6,10 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import "cropperjs/dist/cropper.css";
 import ImageCropper from "@/Components/ImageCropper";
+import "cropperjs/dist/cropper.css";
 
-import profilePreviewImg from '@/../images/profile-not-found.png';
-const userProfileImage = '/profile/user.png';
+import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
 export default function UserSettingForm({className = '', userProfile}) {
 
@@ -65,6 +64,20 @@ export default function UserSettingForm({className = '', userProfile}) {
         patch(route("profile.setting.update"), data, { forceFormData: true });
     };
 
+    // Reset form after successful update
+    useEffect(() => {
+        if (recentlySuccessful) {
+            if (inputRef.current) {
+                inputRef.current.value = null;
+            }
+
+            // Reset the cropped image reference
+            if (croppedImageRef.current) {
+                croppedImageRef.current = null;
+            }
+        }
+    }, [recentlySuccessful]);
+
     return (
         <section className={className}>
             <header>
@@ -100,7 +113,7 @@ export default function UserSettingForm({className = '', userProfile}) {
                     <img
                         ref={previewImageRef}
                         className=""
-                        src={profilePreviewImg}
+                        src={userProfile.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg}
                         alt="preview image"
                         width="128"
                         height="128"

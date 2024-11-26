@@ -15,16 +15,15 @@ class UserProfileController extends Controller
     {
         $user = auth()->user();
         $userProfile = $user->profile;
-        return Inertia::render('Profile/Setting', compact('userProfile'));
+        return Inertia::render('Profile/Setting', [
+            'status' => session('status'),
+            'userProfile' => $userProfile
+        ]);
     }
 
     public function update(Request $request)
     {
         $user = Auth::user();
-        // $user->name = $request->input('name');
-        // $user->email = $request->input('email');
-        // $user->save();
-
         $userProfile = $user->userProfile;
 
         if (!$userProfile) {
@@ -32,23 +31,18 @@ class UserProfileController extends Controller
             $userProfile->user_id = $user->id;
         }
 
-        // $name = $request->input('name');
-        // $email = $request->input('email');
         $address = $request->input('address');
         $phone = $request->input('phone');
 
-        // if (
-        //     // $userProfile->name !== $name ||
-        //     // $userProfile->email !== $email ||
-        //     $userProfile->address !== $address ||
-        //     $userProfile->phone !== $phone
-        // ) {
+        if (
+            $userProfile->address !== $address ||
+            $userProfile->phone !== $phone ||
+            $request->croppedImage != null
+        ) {
 
             $existingUserProfile = UserProfile::where('user_id', $user->id)->first();
 
             if ($existingUserProfile) {
-                // $existingUserProfile->name = $name;
-                // $existingUserProfile->email = $email;
                 $existingUserProfile->address = $address;
                 $existingUserProfile->phone = $phone;
 
@@ -64,8 +58,6 @@ class UserProfileController extends Controller
 
                 $existingUserProfile->save();
             } else {
-                // $userProfile->name = $name;
-                // $userProfile->email = $email;
                 $userProfile->address = $address;
                 $userProfile->phone = $phone;
 
@@ -80,8 +72,9 @@ class UserProfileController extends Controller
                 }
                 $userProfile->save();
             }
-        // }
+            return redirect()->route('profile.setting')->with('status', 'Profile information updated successfully');
+        }
 
-        return redirect()->route('profile.setting')->with('status', 'Profile information updated successfully');
+        return redirect()->route('profile.setting');
     }
 }

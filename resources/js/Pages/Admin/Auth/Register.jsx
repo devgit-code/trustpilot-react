@@ -148,7 +148,7 @@ export default function Contact() {
                                 </span> */}
                             </div>
 
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError message={errors.company_email} className="mt-2" />
                         </div>
 
                         <div className="">

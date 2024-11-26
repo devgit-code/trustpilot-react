@@ -64,7 +64,7 @@ export default function Navigation({auth}) {
                             <>
                                 <NavDropdown
                                     title={
-                                        <UserAvatar auth={auth}/>
+                                        <UserAvatar user={auth.user} avatar_url={auth.userProfileImage}/>
                                     }
                                     id="user-dropdown"
                                     align="end"
