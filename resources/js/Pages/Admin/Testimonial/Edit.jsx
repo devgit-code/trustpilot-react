@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import AdminLayout from "@/Layouts/adminLayout";
-import ImageCropper from "../../ImageCropper";
+import ImageCropper from "../../../Components/ImageCropper";
 import "cropperjs/dist/cropper.css";
 import { Editor } from '@tinymce/tinymce-react';
 

@@ -2,14 +2,17 @@ import React from "react";
 import Header from "./header";
 import Sidebar from "./sidebar";
 import "../../../css/style.css";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 
 
 const AdminLayout = ({ children }) => {
+    const { auth } = usePage().props
+console.log('here++++', auth)
+
   return (
     <>
       <Head>
-        <title>Document</title>
+        <title>Dashboard</title>
         <meta name="description" content="Your page description" />
       </Head>
       {/* Bootstrap icons */}
@@ -21,7 +24,7 @@ const AdminLayout = ({ children }) => {
       <div id="main">
         <Sidebar />
         <div className="main-content">
-          <Header />
+          <Header auth={auth}/>
           {/* Tabs section */}
           <main className="">{children}</main>
 

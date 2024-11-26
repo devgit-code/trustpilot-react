@@ -1,32 +1,12 @@
-import FrontendLayout from '@/Layouts/FrontendLayoout';
-import Sidebar from './Partials/Sidebar';
-import DeleteUserForm from './Partials/DeleteUserForm';
+import ProfileLayout from '@/Layouts/ProfileLayout';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
-import { Head } from '@inertiajs/react';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+export default function Edit() {
     return (
-        <FrontendLayout>
-            <Head title="Profile" />
-
-            <div className='bg-gray-100 p-2'>
-                <div className="container-md mx-auto row">
-                    <div className="col-md-3">
-                        <Sidebar />
-                    </div>
-
-                    <div className="col-md-9 my-5">
-                        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                                <UpdatePasswordForm className="max-w-xl" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+        <ProfileLayout>
+            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <UpdatePasswordForm className="max-w-xl" />
             </div>
-
-        </FrontendLayout>
+        </ProfileLayout>
     );
 }

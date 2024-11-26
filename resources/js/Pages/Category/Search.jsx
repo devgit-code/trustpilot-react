@@ -69,7 +69,7 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
 
                 <div className="bg-white p-4 border-gray-200 border-b">
                     <div className='container-md'>
-                        <h3 className="text-3xl font-bold text-gray-900 text-center  mt-5">
+                        <h3 className="text-3xl font-bold tracking-wider text-gray-900 text-center  mt-5">
                             Results for
                             “
                             {query}
@@ -87,7 +87,7 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
                                         href={"/categories/category/" + item. label}
                                         className='no-underline border hover:bg-blue-200 rounded p-2 transition ease-in-out duration-150'>
                                         <p className=''>{item.icon}</p>
-                                        <p className='mt-3 mb-0 pt-2 text-sm text-gray-800 overflow-hidden'>{item.label}</p>
+                                        <p className='mt-3 mb-0 pt-2 truncate text-sm text-gray-800 overflow-hidden'>{item.label}</p>
                                     </a>
                                 ))
                             }

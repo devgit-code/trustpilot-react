@@ -15,14 +15,12 @@ class RedirectIfNotVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(empty($request->user)){
-            dd($request);
+        dd($request->user());
+        if($request->user() && $request->user()->hasRole(['Owner'])){
+
+            return redirect()->route('admin.dashboard');
         }
-            dd('there');
 
-        // return empty($request->user); //->email_verified_at;
-
-        // if($request->user && $request->user->email_verified_at)
         return $next($request);
     }
 }

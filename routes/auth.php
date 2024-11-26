@@ -9,9 +9,13 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 
-Route::middleware('guest')->group(function () {
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
+Route::middleware(['guest', 'business.guest'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -35,11 +39,35 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
+Route::middleware(['auth', 'business.guest'])->group(function () {
+// profile after verify
+    Route::group([
+        'middleware' =>['verified']
+    ], function(){
+        Route::get('/profile/setting', [UserProfileController::class, 'show'])->name('profile.setting');
+        Route::patch('/profile/setting', [UserProfileController::class, 'update'])->name('profile.setting.update');
+
+
+    });
+
+// profile before verify
+    Route::group([
+    ], function(){
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('/profile/password', function(){
+            return Inertia::render('Profile/Password');
+        })->name('profile.password');
+
+    });
+
+/******************************************************************************** */
+    Route::get('verify-email', [EmailVerificationPromptController::class, 'create'])
                 ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'create'])
                 ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
 
@@ -56,4 +84,5 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
 });

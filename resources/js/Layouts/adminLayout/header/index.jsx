@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import india from "../../../../images/india.png";
-import us from "../../../../images/united-states-of-america.png";
 import Dropdown from "@/Components/Dropdown";
-import { usePage } from "@inertiajs/react";
 
-const auth = {
-    user:{
-        name:'admin',
-        email:'admin@test.com'
-    }
-};
-
-export default function Header({ user }) {
+export default function Header({ auth }) {
 //   const { auth } = usePage().props
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
@@ -35,9 +25,9 @@ export default function Header({ user }) {
           <i className="bi bi-list fs-2"></i>
         </button>
         <div className="notify d-flex align-content-center justify-content-center">
-          <button onClick={showsearch} className="icons">
+          {/* <button onClick={showsearch} className="icons">
             <i className="bi bi-search fs-5 me-4"></i>
-          </button>
+          </button> */}
           {/* <div className="btn-group dropstart me-4">
             <button
               className="dropdown-toggle"
@@ -90,8 +80,15 @@ export default function Header({ user }) {
               </span>
             </Dropdown.Trigger>
             <Dropdown.Content>
+              {/* <Dropdown.Link
+                href={route("home")}
+                method="get"
+                as="button"
+              >
+                Visit Homepage
+              </Dropdown.Link> */}
               <Dropdown.Link
-                href={route("logout")}
+                href={route("admin.logout")}
                 method="post"
                 as="button"
               >

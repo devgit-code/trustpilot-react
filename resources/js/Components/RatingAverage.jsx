@@ -4,13 +4,13 @@ function RatingAverage({ className, rating, width='w-5', height='w-5' }) {
     return (
         <div>
             <div className={`${className} p-1 rounded-md inline-flex items-center ${
-                rating < 1.5
+                rating < 1.8
                     ? 'bg-red-200'
-                    : rating < 2.5
+                    : rating < 2.8
                     ? 'bg-orange-100'
-                    : rating < 3.5
+                    : rating < 3.8
                     ? 'bg-yellow-200'
-                    : rating < 4.5
+                    : rating < 4.3
                     ? 'bg-lime-200'
                     : 'bg-green-200'
             }`}>

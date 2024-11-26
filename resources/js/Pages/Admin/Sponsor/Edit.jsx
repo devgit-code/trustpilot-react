@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import AdminLayout from "@/Layouts/adminLayout";
 import "cropperjs/dist/cropper.css";
-import ImageCropper from "../../ImageCropper";
+import ImageCropper from "../../../Components/ImageCropper";
 
 const SponsorEdit = ({ item }) => {
     const [show, setShow] = useState(false);

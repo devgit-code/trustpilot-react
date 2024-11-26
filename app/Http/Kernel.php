@@ -56,7 +56,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'notverified' => \App\Http\Middleware\RedirectIfNotVerified::class,
+        'user-guest' => \App\Http\Middleware\RedirectIfUser::class,
+        'business.verified' => \App\Http\Middleware\BindBusinessMiddleware::class,
+        // 'onlyuser' => \App\Http\Middleware\RedirectIfNotVerified::class,
+        'business.guest' => \App\Http\Middleware\RedirectIfBusiness::class,
+        'business.authed' => \App\Http\Middleware\RedirectIfNotBusinessAuthenticated::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,

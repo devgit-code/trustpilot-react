@@ -19,13 +19,13 @@ export default function RatingClick({ className, star='0', onClick }) {
                 xmlns="http://www.w3.org/2000/svg"
                 className={`w-10 h-10 p-1 text-white ${
                     index < (Math.floor(rating + 0.5))
-                        ? rating < 1.5
+                        ? rating < 1.8
                             ? 'bg-red-500'
-                            : rating < 2.5
+                            : rating < 2.8
                             ? 'bg-orange-400'
-                            : rating < 3.5
+                            : rating < 3.8
                             ? 'bg-yellow-500'
-                            : rating < 4.5
+                            : rating < 4.3
                             ? 'bg-lime-500'
                             : 'bg-green-500'
                         : 'bg-gray-300'

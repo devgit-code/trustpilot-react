@@ -31,18 +31,24 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-// dd($request->user()->hasVerifiedEmail());
+        $authenticated = auth('web')->check()
+            ? auth('web')->user() // Default 'web' guard
+            : (auth('business')->check() ? auth('business')->user() : null); // 'business' guard
+
+        // $profile = auth('web')->check()
+        //     ? UserProfile::where('user_id', $request->user()->id)->first() // Default 'web' guard
+        //     : (auth('business')->check() ? UserProfile::where('user_id', $request->user()->id)->first() : null);
+
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
-                'is_verified' => $request->user() ? $request->user()->hasVerifiedEmail() : null,
-            ],
-            'userProfileImage' => function () {
-                $user = auth()->user();
-                $userProfile = $user ? UserProfile::where('user_id', $user->id)->first() : null;
+                'user' => $authenticated,
+                'userProfileImage' => function () {
+                    $user = auth()->user();
+                    $userProfile = $user ? UserProfile::where('user_id', $user->id)->first() : null;
 
-                return $userProfile ? $userProfile->image : null;
-            },
+                    return $userProfile ? $userProfile->image : null;
+                },
+            ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

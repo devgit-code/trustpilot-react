@@ -22,11 +22,15 @@ const ImageCropper = (props) => {
             reader.readAsDataURL(blob);
             reader.onloadend = function () {
                 props.setCroppedImage(reader.result);
-                handleClose();
+                setShow(false)
             }
         });
+
     }
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        props.onClose();
+    }
 
     return (
         <>

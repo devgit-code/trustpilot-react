@@ -1,29 +1,84 @@
 <?php
 
-// use App\Http\Controllers\Admin\CategoryController;
-// use App\Http\Controllers\Admin\CityController;
-// use App\Http\Controllers\Admin\ClassifiedAdController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+
+
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\ClassifiedAdController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
-// use App\Http\Controllers\Admin\StateController;
-// use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-use App\Http\Controllers\UserProfileController;
+
+// business
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['user-guest', 'business.guest'],
+    'as' => 'admin.'
+], function () {
+
+    Route::get('/register', [RegisteredUserController::class, 'admin_create'])
+            ->name('register');
+
+    Route::post('/register', [RegisteredUserController::class, 'admin_store']);
+
+    Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
+
+    Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
+
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])
+                ->name('password.request');
+
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])
+                ->name('password.email');
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['user-guest', 'business.authed'],
+    'as' => 'admin.'
+], function () {
+
+    Route::get('verify-email', [EmailVerificationPromptController::class, 'admin_create'])->name('verification.notice');
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'admin_store'])
+                ->middleware('throttle:6,1')
+                ->name('verification.send');
+
+    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'admin_create'])
+                ->middleware(['signed', 'throttle:6,1'])
+                ->name('verification.verify');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'admin_destroy'])
+                ->name('logout');
+
+});
 
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middlware' => ['auth', 'verified', 'role:Admin'],
+    'middleware' => ['user-guest', 'business.authed', 'business.verified'],
     'as' => 'admin.'
 ], function () {
+    Route::get('/', function(){
+        return redirect()->route('admin.login');
+    });
 
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
@@ -81,8 +136,5 @@ Route::group([
     Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
     Route::put('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
     Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
-
-
-
 
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserAvatar = ({ className, user, width='2.2rem', height='2.2rem' }) => {
+const UserAvatar = ({ className, user, avatar_url, width='2.2rem', height='2.2rem' }) => {
     // Function to get the user's initials
     const getInitials = (name) => {
         if (!name) return '';
@@ -12,11 +12,11 @@ const UserAvatar = ({ className, user, width='2.2rem', height='2.2rem' }) => {
     return (
         <div className={className}>
             {
-                user.avatar_url ? (
+                avatar_url ? (
                     <img
-                        src="/img/avatar/user.png"
+                        src={`/storage/images/profile/${avatar_url}`}
                         alt="logo"
-                        className="avatar p-0 rounded-circle"
+                        className="avatar p-0 rounded-circle outline-white outline"
                         style={{ height: `${height}`}}
                     />
                 ) : (

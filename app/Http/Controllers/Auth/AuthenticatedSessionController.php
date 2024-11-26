@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -38,6 +39,9 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('verification.notice');
         }
 
+        // if($request->user()->hasAnyRole(['Admin', 'Owner'])){
+        //     return redirect()->route('admin.dashboard');
+        // }
 
         return redirect()->route('home');
     }
@@ -54,5 +58,36 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+
+    /**
+     * Display the Business login view.
+     */
+    public function admin_create(): Response
+    {
+        return Inertia::render('Admin/Auth/Login', [
+            'canResetPassword' => Route::has('admin.password.request'),
+            'status' => session('status'),
+        ]);
+    }
+
+    public function admin_store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate(true);
+        $request->session()->regenerate();
+
+        return redirect()->route('admin.dashboard');
+    }
+
+    public function admin_destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('business')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login');
     }
 }
