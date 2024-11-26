@@ -83,6 +83,7 @@ class RegisteredUserController extends Controller
 
         // event(new Registered($business));
         Auth::guard('business')->login($business);
+        // $request->session()->regenerate();
 
         $business->sendEmailVerificationNotification();
 
