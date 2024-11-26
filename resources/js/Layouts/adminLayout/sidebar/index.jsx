@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 
-import userProfileNotlogo from '@/../images/company-logo.jpg';
+import userProfileNotlogo from '@/../images/company-logo.png';
 
 export default function Sidebar({auth}) {
 //   const { userProfileImage } = usePage().props
@@ -40,78 +40,78 @@ export default function Sidebar({auth}) {
                 </div>
                 <div className="sidebarnav">
                     <ul className="list-unstyled text-white mt-3">
-                        <li>
-                            <NavLink
-                                href={route('admin.users.index')} active={route().current('admin.users.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Users</span>
-                            </NavLink>
-                        </li>
-                        {/* <li>
-                            <NavLink
-                                href={route('admin.settings.index')} active={route().current('admin.settings.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Settings</span>
-                            </NavLink>
-                        </li> */}
-                        <li>
-                            <NavLink
-                                href={route('admin.sponsors.index')} active={route().current('admin.sponsors.index') || route().current('admin.sponsors.edit') || route().current('admin.sponsors.create')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Sponsors</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                href={route('admin.roles.index')} active={route().current('admin.roles.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Roles</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                href={route('admin.permissions.index')} active={route().current('admin.permissions.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Permissions</span>
-                            </NavLink>
-                        </li>
-                        {/* <li>
-                            <NavLink
-                                href={route('admin.cities.index')} active={route().current('admin.cities.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Cities</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                href={route('admin.states.index')} active={route().current('admin.states.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">States</span>
-                            </NavLink>
-                        </li> */}
-                        {/* <li>
-                            <NavLink
-                                href={route('admin.categories.index')} active={route().current('admin.categories.index')}
-                                className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                            >
-                                <i className="bi bi-kanban fs-5"></i>
-                                <span className="text-white mt-1">Categories Management</span>
-                            </NavLink>
-                        </li> */}
+                    {
+                        auth.user.role == 'admin' ? (
+                            <>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Users</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Companies</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Categories</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Sub Categories</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        ):(
+                            <>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Reviews</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.categories.index')} active={route().current('admin.categories.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Products</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.settings.index')} active={route().current('admin.settings.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Setting</span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        )
+                    }
                     </ul>
                 </div>
             </div>

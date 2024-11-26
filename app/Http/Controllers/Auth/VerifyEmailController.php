@@ -33,7 +33,6 @@ class VerifyEmailController extends Controller
         if (Auth::guard('business')->check() && Auth::guard('business')->user()->email_verified_at) {
             return redirect()->route('admin.dashboard');
         }
-logger('here is verifyemailcontroller' . Auth::guard('business')->user());
         if (Auth::guard('business')->user()->markEmailAsVerified()) {
             return redirect()->route('admin.verification.notice');
         }
