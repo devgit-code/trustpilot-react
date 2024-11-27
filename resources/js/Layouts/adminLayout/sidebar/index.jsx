@@ -4,7 +4,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 
-import userProfileNotlogo from '@/../images/company-logo.png';
+import userProfilelogo from '@/../images/company-logo.png';
+import adminProfilelogo from '@/../images/admin-logo.webp';
 
 export default function Sidebar({auth}) {
 //   const { userProfileImage } = usePage().props
@@ -14,18 +15,33 @@ export default function Sidebar({auth}) {
             <div className="px-4" style={{ maxWidth: "100%" }}>
                 <div className="profile text-center mb-5 position-relative">
                     <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
-                        {/* <Link href={route("admin.user_profile.show")}>  */}
-                        <img
-                            src={auth.userProfileImage?`/storage/images/${auth.userProfileImage}`:userProfileNotlogo}
-                            alt="user"
-                            className="mx-auto"
-                            width="100"
-                        />
-                        {/* </Link> */}
+                    {
+                        auth.user.role == 'admin' ? (
+                            <>
+                                <img
+                                    src={adminProfilelogo}
+                                    alt="admin-logo"
+                                    className="mx-auto"
+                                    width="100"
+                                />
+                            </>
+                        ):(
+                            <>
+                                {/* <Link href={route("admin.user_profile.show")}>  */}
+                                <img
+                                    src={auth.userProfileImage ? `/storage/images/${auth.userProfileImage}`:userProfilelogo}
+                                    alt="business-logo"
+                                    className="mx-auto"
+                                    width="100"
+                                />
+                                {/* </Link> */}
+                            </>
+                        )
+                    }
                     </div>
 
                     <div className="profile_text mt-3">
-                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.first_name}</span>
+                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.company_name}</span>
                         <span className="d-block text-gray-300 fs-6">{auth.user.company_email}</span>
                     </div>
                 </div>
@@ -63,7 +79,7 @@ export default function Sidebar({auth}) {
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">Companies</span>
+                                        <span className="text-white mt-1">Businesses</span>
                                     </NavLink>
                                 </li>
                                 <li>
@@ -90,7 +106,7 @@ export default function Sidebar({auth}) {
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">cities</span>
+                                        <span className="text-white mt-1">Blogs</span>
                                     </NavLink>
                                 </li>
                                 <li>
