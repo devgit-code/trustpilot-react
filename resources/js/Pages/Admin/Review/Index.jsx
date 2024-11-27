@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { BsTrashFill } from "react-icons/bs"
 import { FaReply  } from "react-icons/fa"
 import { BsPlusCircleFill } from 'react-icons/bs';
+import moment from "moment";
 
 import AdminLayout from '@/Layouts/adminLayout';
 import SearchBar from '@/Components/SearchBar';
@@ -75,7 +76,10 @@ const Index = ({reviews}) => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th>S.No.</th>
-                                        <th>Name</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Rating</th>
+                                        <th>Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -90,6 +94,9 @@ const Index = ({reviews}) => {
                                         <tr className="border-bottom-secondary" key={item.id}>
                                             <td>{index + 1}</td>
                                             <td>{item.title}</td>
+                                            <td>{item.description}</td>
+                                            <td>{item.rating}</td>
+                                            <td>{moment(item.date_experience).format("MMM D, YYYY")}</td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
