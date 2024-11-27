@@ -12,6 +12,7 @@ import SubCategoriesCreate from './Create';
 import SubCategoriesEdit from './Edit';
 
 const Index = ({ subCategories, category }) => {
+    console.log('+++++', subCategories)
     const { flash } = usePage().props;
     const [searchQuery, setSearchQuery] = useState('');
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -91,7 +92,7 @@ const Index = ({ subCategories, category }) => {
                                         <BsPlusCircleFill className="fs-5" />
                                         <span className="ms-2">Add</span>
                                     </button>
-                                    <Link as='button' className='btn btn-primary' href={route('categories.index')}>
+                                    <Link as='button' className='btn btn-primary' href={route('admin.categories.index')}>
                                         <span>Back</span>
                                     </Link>
                                 </div>
@@ -125,10 +126,10 @@ const Index = ({ subCategories, category }) => {
                                                 <td>{cat.category.name}</td>
                                                 <td>
                                                     <span
-                                                        className={`badge ${cat.status ? 'text-success' : 'text-danger'
+                                                        className={`badge ${cat.status === 1 ? 'text-success' : 'text-danger'
                                                             }`}
                                                     >
-                                                        {cat.status ? 'Active' : 'Inactive'}
+                                                        {cat.status === 1 ? 'Active' : 'Inactive'}
                                                     </span>
                                                 </td>
                                                 <td>

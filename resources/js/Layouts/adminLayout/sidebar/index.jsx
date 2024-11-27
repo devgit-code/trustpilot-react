@@ -88,21 +88,12 @@ export default function Sidebar({auth}) {
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">Categories</span>
+                                        <span className="text-white mt-1">Reviews</span>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.categories.index')} active={route().current('admin.categories.index')}
-                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                                    >
-                                        <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">Sub Categories</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        href={route('admin.cities.index')} active={route().current('admin.cities.index')}
+                                        href={route('admin.users.index')} active={route().current('admin.users.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -111,11 +102,11 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.states.index')} active={route().current('admin.states.index')}
+                                        href={route('admin.categories.index')} active={route().current('admin.categories.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">states</span>
+                                        <span className="text-white mt-1">Categories</span>
                                     </NavLink>
                                 </li>
                                 <li>
@@ -150,7 +141,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.products')} active={route().current('admin.products')}
+                                        href={route('admin.products.index')} active={route().current('admin.products.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>

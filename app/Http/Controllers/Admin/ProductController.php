@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\State;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
-        return Inertia::render('Admin/Product/Index');
+        $products = Product::all();
+        return Inertia::render('Admin/Product/Index', compact('products'));
     }
 
 
@@ -26,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Cities/Create');
+        return Inertia::render('Admin/Product/Create');
     }
 
     public function store(Request $request)
@@ -37,12 +36,13 @@ class ProductController extends Controller
 
         $creationData = [
             "name" => $request->input('name'),
-            "status" => $request->input('status')
+            "description" => $request->input('name'),
+            "business_id" => auth('business')->user()->id,
         ];
 
-        City::create($creationData);
+        Product::create($creationData);
 
-        return redirect()->route('cities.index');
+        return redirect()->route('admin.products.index');
     }
 
 
@@ -57,11 +57,8 @@ class ProductController extends Controller
 
     public function edit(string $id)
     {
-        $city = City::find($id);
-        $state = State::find($id);
-        return Inertia::render('Cities/Edit', [
-            'city' => $city, 'state' => $state
-        ]);
+        $product = Product::find($id);
+        return Inertia::render('Admin/Product/Edit', compact('product'));
     }
 
 
@@ -71,21 +68,19 @@ class ProductController extends Controller
             "name" => "required|max:255"
         ]);
 
-        $city = City::findOrFail($id);
+        $city = Product::findOrFail($id);
 
         $updateData = [
             "name" => $request->input('name'),
-            "status" => $request->input('status')
         ];
 
         $city->update($updateData);
-        return redirect()->route('state.cities', ['state'=> $city->state_id]);
+        return redirect()->route('admin.products.index');
     }
 
-
-
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Role deleted successfully.');
     }
 }

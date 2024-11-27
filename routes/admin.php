@@ -85,8 +85,10 @@ Route::group([
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
-    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::resource('products', ProductController::class);
 
+    // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+    // Route::resource('permissions', PermissionController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');
@@ -113,16 +115,10 @@ Route::group([
     Route::post('/roles/{role}/remove', [RoleController::class, 'removeRole'])->name('roles.remove');
     Route::resource('roles', RoleController::class);
 
-    Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     Route::resource('permissions', PermissionController::class);
-
 
     Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
     Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
-
-    Route::resource('cities', CityController::class);
-    Route::get('/states/{state}/cities', [StateController::class, 'show'])->name('state.cities');
-    Route::resource('states', StateController::class);
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');

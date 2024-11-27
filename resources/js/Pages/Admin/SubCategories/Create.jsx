@@ -23,6 +23,8 @@ const SubCategoriesCreate = ({ category, onClose }) => {
     }, [flash]);
 
     const handleSubmit = (event) => {
+
+        console.log('--------------++++++++++++++++++++')
         event.preventDefault();
         post(route('admin.sub_categories.store'), {
             onSuccess: () => {

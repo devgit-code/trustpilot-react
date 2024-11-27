@@ -11,6 +11,7 @@ const SubCategoryEdit = ({ subCategory, onClose }) => {
     });
 
     const handleSubmit = (event) => {
+        console.log('++++++++++++++++')
         event.preventDefault();
         put(route('admin.sub_categories.update', subCategory.id), {
             onSuccess: () => {
