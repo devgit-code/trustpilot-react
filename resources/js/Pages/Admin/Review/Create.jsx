@@ -8,9 +8,9 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('admin.products.store'), {
+        post(route('admin.reviews.store'), {
             onSuccess: () => {
-                router.visit(route('admin.products.index'));
+                router.visit(route('admin.reviews.index'));
             },
         });
     };
@@ -20,24 +20,24 @@ const Create = () => {
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Create Product</h4>
+                        <h4 className="card-title">Create Review</h4>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
-                                <label htmlFor="name" className='fw-bold py-2'>Name</label>
+                                <label htmlFor="title" className='fw-bold py-2'>Title</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="name"
-                                    name="name"
-                                    value={data.name || ''}
-                                    onChange={(e) => setData('name', e.target.value)}
+                                    id="title"
+                                    name="title"
+                                    value={data.title || ''}
+                                    onChange={(e) => setData('title', e.target.value)}
                                     required
                                 />
                             </div>
                             <button type="submit" className="btn btn-primary m-2" disabled={processing}>
                                 Create
                             </button>
-                            <a href={route('admin.products.index')} className="btn btn-danger" type="button">
+                            <a href={route('admin.reviews.index')} className="btn btn-danger" type="button">
                                 Back
                             </a>
                         </form>

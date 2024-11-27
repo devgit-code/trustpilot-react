@@ -86,6 +86,7 @@ Route::group([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
     Route::resource('products', ProductController::class);
+    Route::resource('reviews', ReviewController::class);
 
     // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     // Route::resource('permissions', PermissionController::class);

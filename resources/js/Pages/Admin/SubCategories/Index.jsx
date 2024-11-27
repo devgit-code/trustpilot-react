@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/adminLayout';
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { confirmAlert } from 'react-confirm-alert';

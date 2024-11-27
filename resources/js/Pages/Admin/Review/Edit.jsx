@@ -2,14 +2,14 @@ import AdminLayout from '@/Layouts/adminLayout';
 import { Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
-const Edit = ({ product }) => {
+const Edit = ({ review }) => {
     const { data, setData, put } = useForm({
-        name: product.name
+        name: review.name
     })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('admin.products.update', product.id), data);
+        put(route('admin.reviews.update', review.id), data);
     };
 
     return (
@@ -17,7 +17,7 @@ const Edit = ({ product }) => {
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Edit Product</h4>
+                        <h4 className="card-title">Edit Review</h4>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
@@ -39,7 +39,7 @@ const Edit = ({ product }) => {
                             <button type="submit" className="btn btn-primary">
                                 Update
                             </button>
-                            <Link href={route('admin.products.index')} className="btn btn-danger" type="button">
+                            <Link href={route('admin.reviews.index')} className="btn btn-danger" type="button">
                                 Back
                             </Link>
                         </form>

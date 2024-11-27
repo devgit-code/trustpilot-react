@@ -49,7 +49,7 @@ const Index = ({products}) => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th>S.No.</th>
-                                        <th>Name{products.length}</th>
+                                        <th>Name</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

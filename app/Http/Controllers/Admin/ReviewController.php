@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\State;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,8 +14,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
-        return Inertia::render('Admin/Review/Index');
+        $reviews = Review::all();
+        return Inertia::render('Admin/Review/Index', compact('reviews'));
     }
 
 
@@ -26,23 +25,26 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Cities/Create');
+        return Inertia::render('Admin/Review/Create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required|max:255"
+            "title" => "required|max:255"
         ]);
 
         $creationData = [
-            "name" => $request->input('name'),
-            "status" => $request->input('status')
+            "title" => $request->input('title'),
+            "description" => $request->input('title'),
+            "business_id" => auth('business')->user()->id,
+            "user_id" => 1,
+            "rating" => 1,
         ];
 
-        City::create($creationData);
+        Review::create($creationData);
 
-        return redirect()->route('cities.index');
+        return redirect()->route('admin.reviews.index');
     }
 
 
@@ -57,11 +59,8 @@ class ReviewController extends Controller
 
     public function edit(string $id)
     {
-        $city = City::find($id);
-        $state = State::find($id);
-        return Inertia::render('Cities/Edit', [
-            'city' => $city, 'state' => $state
-        ]);
+        $review = Review::find($id);
+        return Inertia::render('Admin/Review/Edit', compact('review'));
     }
 
 
@@ -71,21 +70,19 @@ class ReviewController extends Controller
             "name" => "required|max:255"
         ]);
 
-        $city = City::findOrFail($id);
+        $review = Review::findOrFail($id);
 
         $updateData = [
             "name" => $request->input('name'),
-            "status" => $request->input('status')
         ];
 
-        $city->update($updateData);
-        return redirect()->route('state.cities', ['state'=> $city->state_id]);
+        $review->update($updateData);
+        return redirect()->route('admin.reviews.index');
     }
 
-
-
-    public function destroy(string $id)
+    public function destroy(Review $review)
     {
-        //
+        $review->delete();
+        return redirect()->route('admin.reviews.index')->with('success', 'Role deleted successfully.');
     }
 }

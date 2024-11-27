@@ -9,7 +9,7 @@ import { BsPlusCircleFill, BsArrowDownShort } from "react-icons/bs"
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { useState } from 'react';
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
 
 const Testimonial = ({ items }) => {
     const [searchQuery, setSearchQuery] = useState('');

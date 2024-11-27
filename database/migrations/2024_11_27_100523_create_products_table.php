@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('business_id')->index();
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');

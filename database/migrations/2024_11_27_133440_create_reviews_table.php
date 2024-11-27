@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->integer('rating');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('business_id')->index();
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');
             $table->timestamps();
         });
     }

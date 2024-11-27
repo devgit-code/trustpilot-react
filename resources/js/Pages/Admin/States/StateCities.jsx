@@ -6,7 +6,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Link, router } from '@inertiajs/react';
 import React, { useState } from 'react'
 import { BsPlusCircleFill } from "react-icons/bs"
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
 
 
 

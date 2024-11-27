@@ -16,6 +16,6 @@ class Product extends Model
 
     public function business()
     {
-        return $this->belongsTo(State::class);
+        return $this->belongsTo(Business::class);
     }
 }
