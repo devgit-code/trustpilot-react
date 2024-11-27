@@ -11,8 +11,10 @@ class BusinessProfile extends Model
     protected $primaryKey = 'business_id';
     public $timestamps = false;
     protected $fillable = [
-        'phone',
+        'description',
         'logo',
+        'email',
+        'phone',
         'location',
     ];
 

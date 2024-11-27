@@ -27,21 +27,36 @@ export default function Sidebar({auth}) {
                             </>
                         ):(
                             <>
-                                {/* <Link href={route("admin.user_profile.show")}>  */}
-                                <img
-                                    src={auth.userProfileImage ? `/storage/images/${auth.userProfileImage}`:userProfilelogo}
-                                    alt="business-logo"
-                                    className="mx-auto"
-                                    width="100"
-                                />
-                                {/* </Link> */}
+                            {
+                                auth.userProfileImage ? (
+                                    <>
+                                        <img
+                                            src={`/storage/images/${auth.userProfileImage}`}
+                                            alt="business-logo"
+                                            className="mx-auto"
+                                            width="100"
+                                        />
+                                    </>
+                                ):(
+                                    <>
+                                        <Link href={`${route("admin.settings.logo")}`}>
+                                            <img
+                                                src={userProfilelogo}
+                                                alt="business-logo"
+                                                className="mx-auto"
+                                                width="100"
+                                            />
+                                        </Link>
+                                    </>
+                                )
+                            }
                             </>
                         )
                     }
                     </div>
 
                     <div className="profile_text mt-3">
-                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.company_name}</span>
+                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.first_name + ' ' + auth.user.last_name}</span>
                         <span className="d-block text-gray-300 fs-6">{auth.user.company_email}</span>
                     </div>
                 </div>

@@ -61,7 +61,7 @@ export default function Dashboard({ auth }) {
                                     <span className="fw-bold mb-0" style={{ color: "#ef4444" }}>0</span>
                                     {/* <h6 className="mt-0" style={{ color: "#ef4444" }}>Tasks</h6> */}
 
-                                    <h5 className="fw-light fs-7">Completed: <span>9</span></h5>
+                                    <h5 className="fw-light fs-7">Total: <span>9</span></h5>
                                 </div>
                             </div>
                         </div>

@@ -88,6 +88,10 @@ Route::group([
     Route::resource('products', ProductController::class);
     Route::resource('reviews', ReviewController::class);
 
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::get('/settings/logo', [SettingController::class, 'logo'])->name('settings.logo');
+    Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
+
     // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     // Route::resource('permissions', PermissionController::class);
 
@@ -100,8 +104,6 @@ Route::group([
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
     Route::get('/slides/sort', [SliderController::class, 'sort'])->name('slides.sort');
     Route::post('/slides/updateOrder', [SliderController::class, 'updateOrder'])->name('slides.updateOrder');
     Route::resource('slides', SliderController::class);

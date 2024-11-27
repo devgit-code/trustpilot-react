@@ -8,13 +8,13 @@ import {
 } from 'react-bootstrap';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import HomeTab from './Partial/HomeTab'
+import HomeTab from './Partial/HomeTab.jsx'
 import LogoTab from './Partial/LogoTab'
 import AccountTab from './Partial/AccountTab'
 import ContactTab from './Partial/ContactTab'
 import CategoryTab from './Partial/CategoryTab'
 
-const SettingIndex = ({businessProfile}) => {
+const SettingIndex = ({businessProfile, activeTab}) => {
     const { auth } = usePage().props;
 
     const handleDelete = (event, id) => {
@@ -44,14 +44,14 @@ const SettingIndex = ({businessProfile}) => {
                 <div className="card">
                     <div className="card-body">
                         <Tabs
-                            defaultActiveKey="home"
+                            defaultActiveKey={activeTab}
                             id="fill-tab-example"
                             className="mb-3"
                             fill
                             >
-                            <Tab eventKey="home" title="Home">
+                            <Tab eventKey="home" title="General">
                                 <div className='bg-white'>
-                                    <HomeTab auth={auth} businessProfile={businessProfile}/>
+                                    <HomeTab business={auth.user} businessProfile={businessProfile}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="logo" title="Logo">
@@ -64,7 +64,7 @@ const SettingIndex = ({businessProfile}) => {
                                     <AccountTab auth={auth}/>
                                 </div>
                             </Tab>
-                            <Tab eventKey="contact" title="Contact">
+                            <Tab eventKey="contact" title="Contact Info">
                                 <div className='bg-white'>
                                     <ContactTab businessProfile={businessProfile}/>
                                 </div>

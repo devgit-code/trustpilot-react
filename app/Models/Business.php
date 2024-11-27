@@ -78,4 +78,9 @@ class Business extends Authenticatable implements MustVerifyEmail
         }
 
     }
+
+    public function profile()
+    {
+        return $this->hasOne(BusinessProfile::class);
+    }
 }

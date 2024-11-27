@@ -7,11 +7,11 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
-export default function HomeTab({auth, businessProfile}){
+export default function HomeTab({business, businessProfile}){
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        about_us: businessProfile?.about_us || '',
+        company_name: business.company_name,
+        website: business.website,
         description: businessProfile?.description || '',
-        company_name: auth.company_name,
     });
 
     const submit = (e) => {
@@ -40,34 +40,35 @@ export default function HomeTab({auth, businessProfile}){
             </div>
 
             <div>
-                <InputLabel htmlFor="about_us" value="About us" />
+                <InputLabel htmlFor="website" value="Company Domain" />
 
                 <TextInput
-                    id="about_us"
-                    name="about_us"
+                    id="website"
+                    name="website"
                     className="mt-1 block w-full"
-                    value={data.about_us}
-                    onChange={(e)=>setData('about_us', e.target.value)}
+                    value={data.website}
+                    onChange={(e)=>setData('website', e.target.value)}
                     // required
                     isFocused
-                    autoComplete="about_us"
+                    autoComplete="website"
                 />
 
-                <InputError className="mt-2" message={errors.about_us} />
+                <InputError className="mt-2" message={errors.website} />
             </div>
 
             <div>
                 <InputLabel htmlFor="description" value="Description" />
 
-                <TextInput
-                    id="description"
+                <textarea
+                    className="form-control mt-2"
                     name="description"
-                    type="text"
-                    className="mt-1 block w-full"
+                    id="description"
+                    rows="4"
+                    style={{ height: "auto" }}
                     value={data.description}
-                    onChange={(e)=>setData('description', e.target.value)}
-                    autoComplete="description"
-                />
+                    placeholder='Tell your customers what makes you unique. We recommend writing at least 200 words about your company. '
+                    onChange={(e) => setData('description', e.target.value)}
+                ></textarea>
 
                 <InputError className="mt-2" message={errors.description} />
             </div>

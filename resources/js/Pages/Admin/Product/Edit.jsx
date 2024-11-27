@@ -47,7 +47,6 @@ const Edit = ({ product }) => {
                                 <TextInput
                                     id="description"
                                     name="description"
-                                    // type="textarea"
                                     className="mt-1 block w-full"
                                     value={data.description}
                                     onChange={(e)=>setData('description', e.target.value)}

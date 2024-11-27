@@ -13,10 +13,18 @@ class SettingController extends Controller
 
     public function index()
     {
-        $settings = Setting::all();
+        $business = auth('business')->user();
+        $businessProfile = $business->profile;
+
         return Inertia::render('Admin/Setting/Index', [
-            'settings' => $settings,
+            'businessProfile' => $businessProfile,
+            'activeTab'=>session('activeTab') ?? 'home'
         ]);
+    }
+
+    public function logo()
+    {
+        return redirect()->route('admin.settings.index')->with('activeTab', 'logo');
     }
 
     public function update(Request $request)
