@@ -2,6 +2,10 @@ import React from 'react';
 import AdminLayout from '@/Layouts/adminLayout';
 import { router, useForm } from '@inertiajs/react';
 
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+
 const Create = () => {
     const { data, setData, errors, post, processing } = useForm();
 
@@ -21,25 +25,48 @@ const Create = () => {
                 <div className="card">
                     <div className="card-body">
                         <h4 className="card-title">Create Product</h4>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="name" className='fw-bold py-2'>Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
+                        <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
+                            <div>
+                                <InputLabel htmlFor="name" value="Name" />
+
+                                <TextInput
                                     id="name"
                                     name="name"
-                                    value={data.name || ''}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    required
+                                    className="mt-1 block w-full"
+                                    value={data.name}
+                                    onChange={(e)=>setData('name', e.target.value)}
+                                    // required
+                                    isFocused
+                                    autoComplete="name"
                                 />
+
+                                <InputError className="mt-2" message={errors.name} />
                             </div>
-                            <button type="submit" className="btn btn-primary m-2" disabled={processing}>
-                                Create
-                            </button>
-                            <a href={route('admin.products.index')} className="btn btn-danger" type="button">
-                                Back
-                            </a>
+
+                            <div>
+                                <InputLabel htmlFor="description" value="Description" />
+
+                                <TextInput
+                                    id="description"
+                                    name="description"
+                                    // type="textarea"
+                                    className="mt-1 block w-full"
+                                    value={data.description}
+                                    onChange={(e)=>setData('description', e.target.value)}
+                                    // required
+                                />
+
+                                <InputError className="mt-2" message={errors.description} />
+                            </div>
+
+                            <div>
+                                <button type="submit" className="btn btn-primary m-2" disabled={processing}>
+                                    Create
+                                </button>
+                                <a href={route('admin.products.index')} className="btn btn-danger" type="button">
+                                    Back
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>

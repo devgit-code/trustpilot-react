@@ -50,6 +50,7 @@ const Index = ({products}) => {
                                     <tr className="border-bottom-primary">
                                         <th>S.No.</th>
                                         <th>Name</th>
+                                        <th>Description</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,7 @@ const Index = ({products}) => {
                                         <tr className="border-bottom-secondary" key={item.id}>
                                             <td>{index + 1}</td>
                                             <td>{item.name}</td>
+                                            <td>{item.description}</td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">

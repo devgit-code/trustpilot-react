@@ -36,7 +36,7 @@ class ProductController extends Controller
 
         $creationData = [
             "name" => $request->input('name'),
-            "description" => $request->input('name'),
+            "description" => $request->input('description'),
             "business_id" => auth('business')->user()->id,
         ];
 
@@ -72,6 +72,7 @@ class ProductController extends Controller
 
         $updateData = [
             "name" => $request->input('name'),
+            "description" => $request->input('description'),
         ];
 
         $product->update($updateData);

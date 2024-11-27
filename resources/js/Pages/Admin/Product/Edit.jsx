@@ -2,9 +2,14 @@ import AdminLayout from '@/Layouts/adminLayout';
 import { Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
+
 const Edit = ({ product }) => {
-    const { data, setData, put } = useForm({
-        name: product.name
+    const { data, setData, put, errors } = useForm({
+        name: product.name || '',
+        description: product.description || '',
     })
 
     const handleSubmit = (e) => {
@@ -13,35 +18,53 @@ const Edit = ({ product }) => {
     };
 
     return (
-        <div className="content-wrapper">
+        <div className="content-wrapper m-3">
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
                         <h4 className="card-title">Edit Product</h4>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="name">Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
+                        <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
+                            <div>
+                                <InputLabel htmlFor="name" value="Name" />
+
+                                <TextInput
                                     id="name"
                                     name="name"
+                                    className="mt-1 block w-full"
                                     value={data.name}
-                                    onChange={(e) =>
-                                        setData(
-                                            "name",
-                                            e.target.value
-                                        )
-                                    }
-                                    required
+                                    onChange={(e)=>setData('name', e.target.value)}
+                                    // required
+                                    isFocused
+                                    autoComplete="name"
                                 />
+
+                                <InputError className="mt-2" message={errors.name} />
                             </div>
-                            <button type="submit" className="btn btn-primary">
-                                Update
-                            </button>
-                            <Link href={route('admin.products.index')} className="btn btn-danger" type="button">
-                                Back
-                            </Link>
+
+                            <div>
+                                <InputLabel htmlFor="description" value="Description" />
+
+                                <TextInput
+                                    id="description"
+                                    name="description"
+                                    // type="textarea"
+                                    className="mt-1 block w-full"
+                                    value={data.description}
+                                    onChange={(e)=>setData('description', e.target.value)}
+                                    // required
+                                />
+
+                                <InputError className="mt-2" message={errors.description} />
+                            </div>
+
+                            <div>
+                                <button type="submit" className="btn btn-primary mr-3">
+                                    Update
+                                </button>
+                                <Link href={route('admin.products.index')} className="btn btn-danger" type="button">
+                                    Back
+                                </Link>
+                            </div>
                         </form>
                     </div>
                 </div>
