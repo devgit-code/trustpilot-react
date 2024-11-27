@@ -68,13 +68,13 @@ class ProductController extends Controller
             "name" => "required|max:255"
         ]);
 
-        $city = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
 
         $updateData = [
             "name" => $request->input('name'),
         ];
 
-        $city->update($updateData);
+        $product->update($updateData);
         return redirect()->route('admin.products.index');
     }
 

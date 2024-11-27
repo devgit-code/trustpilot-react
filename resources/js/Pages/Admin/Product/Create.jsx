@@ -2,7 +2,7 @@ import React from 'react';
 import AdminLayout from '@/Layouts/adminLayout';
 import { router, useForm } from '@inertiajs/react';
 
-const PermissionCreate = () => {
+const Create = () => {
     const { data, setData, errors, post, processing } = useForm();
 
     const handleSubmit = (e) => {

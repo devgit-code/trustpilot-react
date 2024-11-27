@@ -2,8 +2,7 @@ import AdminLayout from '@/Layouts/adminLayout';
 import { Link, useForm } from '@inertiajs/react';
 import React from 'react';
 
-
-const EditPermission = ({ product }) => {
+const Edit = ({ product }) => {
     const { data, setData, put } = useForm({
         name: product.name
     })
@@ -18,7 +17,7 @@ const EditPermission = ({ product }) => {
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Edit Role</h4>
+                        <h4 className="card-title">Edit Product</h4>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="name">Name</label>
