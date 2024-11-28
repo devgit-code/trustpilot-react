@@ -8,7 +8,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
 export default function HomeTab({business, businessProfile}){
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
         website: business.website,
         description: businessProfile?.description || '',
@@ -16,8 +16,8 @@ export default function HomeTab({business, businessProfile}){
 
     const submit = (e) => {
         e.preventDefault();
-        data.croppedImage = croppedImageRef.current.value;
-        patch(route("profile.setting.update"), data, { forceFormData: true });
+
+        put(route("admin.settings.update.home"), data);
     };
 
     return (
@@ -45,6 +45,7 @@ export default function HomeTab({business, businessProfile}){
                 <TextInput
                     id="website"
                     name="website"
+                    type="url"
                     className="mt-1 block w-full"
                     value={data.website}
                     onChange={(e)=>setData('website', e.target.value)}
