@@ -29,6 +29,10 @@ class SettingController extends Controller
 
     public function logo_update(Request $request)
     {
+        $request->validate([
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
         $business = auth('business')->user();
         $businessProfile = $business->profile;
 
@@ -36,17 +40,17 @@ class SettingController extends Controller
             $businessProfile = new BusinessProfile();
             $businessProfile->business_id = $business->id;
         }
-dd($request);
 
         if (
-            $request->image != null
+            $request->hasFile('image')
         ) {
-            $extension = explode('/', mime_content_type($request->image))[1];
+            $extension = $request->file('image')->getClientOriginalExtension();
             $imageName = "BusinessProfile-" . now()->timestamp . "." . $extension;
-            Storage::disk('public')->put(
-                'images/logo/' . $imageName,
-                file_get_contents($request->image)
-            );
+            $path = $request->file('image')->storeAs('images/logo', $imageName, 'public');
+            // Storage::disk('public')->put(
+            //     'images/logo/' . $imageName,
+            //     file_get_contents($request->image)
+            // );
             $businessProfile["logo"] = $imageName;
 
             $businessProfile->save();

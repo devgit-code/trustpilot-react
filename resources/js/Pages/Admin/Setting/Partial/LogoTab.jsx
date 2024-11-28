@@ -4,19 +4,20 @@ import React, { useState, useRef } from 'react';
 
 import profileNotLogo from '@/../images/company-logo.png';
 import PrimaryButton from '@/Components/PrimaryButton';
+import InputError from '@/Components/InputError';
 
 export default function LogoTab({businessProfile}){
 
     const [preview, setPreview] = useState(null); // Preview URL
-    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
-        image: null,
+    const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
+        image:null
     });
 
     // Handle file input change
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setData('image', file);
-        console.log('image---', file)
+        clearErrors();
 
         // Generate preview URL
         const reader = new FileReader();
@@ -32,11 +33,9 @@ export default function LogoTab({businessProfile}){
 
     const submit = (e) => {
         e.preventDefault();
-        if (!data.image) {
-            return;
-        }
 
-        put(route("admin.settings.update.logo"), data, { forceFormData: true });
+        clearErrors();
+        post(route("admin.settings.update.logo"), data, { forceFormData: true });
     };
 
     return (
@@ -51,6 +50,8 @@ export default function LogoTab({businessProfile}){
                     aria-label="file example"
                     onChange={handleFileChange}
                 />
+
+                <InputError className="mt-2" message={errors.image} />
             </div>
 
             {preview ? (
@@ -61,12 +62,14 @@ export default function LogoTab({businessProfile}){
             ):(
                 <div>
                     <p className='text-gray-700'>{businessProfile.logo ? 'Company Logo' : 'No Business logo. Please upload'}</p>
-                    <img src={businessProfile.logo ? `/storage/images/profile/${businessProfile.logo}` : profileNotLogo}
+                    <img src={businessProfile.logo ? `/storage/images/logo/${businessProfile.logo}` : profileNotLogo}
                         alt="Business-logo"
                         style={{ maxWidth: '200px', maxHeight: '200px' }} />
                 </div>
             )}
-
+{/* @if(session('error'))
+    <p class="text-red-500">{{ session('error') }}</p>
+@endif */}
             <div className="flex items-center gap-4">
                 <PrimaryButton disabled={processing}>Save</PrimaryButton>
 

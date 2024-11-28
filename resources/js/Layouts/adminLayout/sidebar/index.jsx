@@ -31,7 +31,7 @@ export default function Sidebar({auth}) {
                                 auth.userProfileImage ? (
                                     <>
                                         <img
-                                            src={`/storage/images/${auth.userProfileImage}`}
+                                            src={`/storage/images/logo/${auth.userProfileImage}`}
                                             alt="business-logo"
                                             className="mx-auto"
                                             width="100"
