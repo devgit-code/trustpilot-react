@@ -22,7 +22,7 @@ export default function ContactTab({businessProfile}){
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("admin.settings.update.contact"), data);
+        put(route("admin.profile.update.contact"), data);
     };
 
     return (

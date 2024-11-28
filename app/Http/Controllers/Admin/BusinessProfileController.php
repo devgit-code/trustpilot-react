@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SettingController extends Controller
+class BusinessProfileController extends Controller
 {
 
     public function index()
@@ -16,7 +16,7 @@ class SettingController extends Controller
         $business = auth('business')->user();
         $businessProfile = $business->profile;
 
-        return Inertia::render('Admin/Setting/Index', [
+        return Inertia::render('Admin/Profile/Index', [
             'businessProfile' => $businessProfile,
             'activeTab'=>session('activeTab') ?? 'home'
         ]);

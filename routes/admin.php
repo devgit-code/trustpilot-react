@@ -10,13 +10,13 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BusinessProfileController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClassifiedAdController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\StateController;
@@ -88,13 +88,13 @@ Route::group([
     Route::resource('products', ProductController::class);
     Route::resource('reviews', ReviewController::class);
 
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::get('/settings/logo', [SettingController::class, 'logo'])->name('settings.logo');
-    Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
-    Route::put('/settings/update/home', [SettingController::class, 'home'])->name('settings.update.home');
-    Route::put('/settings/update/account', [SettingController::class, 'account'])->name('settings.update.account');
-    Route::put('/settings/update/contact', [SettingController::class, 'contact'])->name('settings.update.contact');
-    Route::post('/settings/update/logo', [SettingController::class, 'logo_update'])->name('settings.update.logo');
+    Route::get('/profile', [BusinessProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/logo', [BusinessProfileController::class, 'logo'])->name('profile.logo');
+    Route::put('/profile/update', [BusinessProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/update/home', [BusinessProfileController::class, 'home'])->name('profile.update.home');
+    Route::put('/profile/update/account', [BusinessProfileController::class, 'account'])->name('profile.update.account');
+    Route::put('/profile/update/contact', [BusinessProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/logo', [BusinessProfileController::class, 'logo_update'])->name('profile.update.logo');
 
     // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     // Route::resource('permissions', PermissionController::class);

@@ -39,7 +39,7 @@ export default function Sidebar({auth}) {
                                     </>
                                 ):(
                                     <>
-                                        <Link href={`${route("admin.settings.logo")}`}>
+                                        <Link href={`${route("admin.profile.logo")}`}>
                                             <img
                                                 src={userProfilelogo}
                                                 alt="business-logo"
@@ -165,11 +165,11 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.settings.index')} active={route().current('admin.settings.index')}
+                                        href={route('admin.profile.index')} active={route().current('admin.profile.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">Setting</span>
+                                        <span className="text-white mt-1">Profile</span>
                                     </NavLink>
                                 </li>
                             </>

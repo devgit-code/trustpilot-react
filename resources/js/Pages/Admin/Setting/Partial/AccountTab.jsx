@@ -17,7 +17,7 @@ export default function AccountTab({business}){
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("admin.settings.update.account"), data, { forceFormData: true });
+        put(route("admin.profile.update.account"), data, { forceFormData: true });
     };
 
     return (
