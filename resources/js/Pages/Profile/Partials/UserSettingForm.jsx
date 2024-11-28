@@ -60,6 +60,7 @@ export default function UserSettingForm({className = '', userProfile}) {
 
     const submit = (e) => {
         e.preventDefault();
+
         data.croppedImage = croppedImageRef.current.value;
         patch(route("profile.setting.update"), data, { forceFormData: true });
     };

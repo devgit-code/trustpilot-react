@@ -11,7 +11,7 @@ const CategoryEdit = ({ category, onClose }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        put(route('categories.update', category.id), {
+        put(route('admin.categories.update', category.id), {
             onSuccess: () => {
                 onClose();
             },
@@ -58,7 +58,7 @@ const CategoryEdit = ({ category, onClose }) => {
                 <button type="submit" className="btn btn-primary m-2">
                     Update
                 </button>
-                <Link href={route('categories.index')} className="btn btn-danger">
+                <Link href={route('admin.categories.index')} className="btn btn-danger">
                     Cancel
                 </Link>
             </form>

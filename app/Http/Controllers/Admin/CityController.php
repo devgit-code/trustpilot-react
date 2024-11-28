@@ -16,7 +16,7 @@ class CityController extends Controller
     public function index()
     {
         $cities = City::all();
-        return Inertia::render('Cities/Index', compact('cities'));
+        return Inertia::render('Admin/Cities/Index', compact('cities'));
     }
 
 
@@ -26,7 +26,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Cities/Create');
+        return Inertia::render('Admin/Cities/Create');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class CityController extends Controller
 
         City::create($creationData);
 
-        return redirect()->route('cities.index');
+        return redirect()->route('admin.cities.index');
     }
 
 
@@ -59,7 +59,7 @@ class CityController extends Controller
     {
         $city = City::find($id);
         $state = State::find($id);
-        return Inertia::render('Cities/Edit', [
+        return Inertia::render('Admin/Cities/Edit', [
             'city' => $city, 'state' => $state
         ]);
     }
@@ -79,7 +79,7 @@ class CityController extends Controller
         ];
 
         $city->update($updateData);
-        return redirect()->route('state.cities', ['state'=> $city->state_id]);
+        return redirect()->route('admin.state.cities', ['state'=> $city->state_id]);
     }
 
 

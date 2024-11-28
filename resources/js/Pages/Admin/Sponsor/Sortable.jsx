@@ -13,7 +13,7 @@ const SlideSorting = ({ items }) => {
                 const order = Array.from(evt.target.children).map((item) => item.getAttribute('data-id'));
 
                 router
-                    .post(route('sponsors.updateOrder'), {
+                    .post(route('admin.sponsors.updateOrder'), {
                         _token: csrf_token,
                         order: order,
                     })
@@ -32,7 +32,7 @@ const SlideSorting = ({ items }) => {
                                 <h3 className="m-0 text-center text-lg-start">Slide sorting</h3>
                             </div>
                             <div className="col-lg-6 col-md-12 text-center text-md-end">
-                                <Link href={route('sponsors.index')} className="btn btn-primary" as="button">
+                                <Link href={route('admin.sponsors.index')} className="btn btn-primary" as="button">
                                     Back
                                 </Link>
                             </div>

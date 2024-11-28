@@ -23,7 +23,7 @@ const TestimonialCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         data.croppedImage = croppedImageRef.current.value;
-        post(route("testimonials.store"), data, { forceFormData: true, });
+        post(route("admin.testimonials.store"), data, { forceFormData: true, });
     };
     const handleImageChange = (e) => {
         let reader = new FileReader();
@@ -180,7 +180,7 @@ const TestimonialCreate = () => {
                                             </div>
                                             <Link
                                                 className="btn btn-danger me-3"
-                                                href={route('testimonials.index')}
+                                                href={route('admin.testimonials.index')}
                                             >
                                                 Cancel
                                             </Link>

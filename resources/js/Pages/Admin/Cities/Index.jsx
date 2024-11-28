@@ -7,7 +7,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Link, router } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { BsPlusCircleFill } from 'react-icons/bs';
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
+
 
 const Cities = ({ cities }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -29,7 +30,7 @@ const Cities = ({ cities }) => {
                                     <button className="btn btn-success d-flex align-items-center border-0 me-2">
                                         <BsPlusCircleFill className="fs-5" />
                                         <Link
-                                            href={route('cities.create')}
+                                            href={route('admin.cities.create')}
                                             className="ms-2 text-white text-decoration-none"
                                             type="button"
                                         >
@@ -70,7 +71,7 @@ const Cities = ({ cities }) => {
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                         <li className="edit">
-                                                            <a href={route('cities.edit', city.id)}>
+                                                            <a href={route('admin.cities.edit', city.id)}>
                                                                 <FontAwesomeIcon
                                                                     icon={faPenToSquare}
                                                                     className="fs-4 me-2 text-primary"

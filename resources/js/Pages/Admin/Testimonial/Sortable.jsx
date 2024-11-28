@@ -13,7 +13,7 @@ const TestimonialSorting = ({ items }) => {
                 const order = Array.from(evt.target.children).map((item) => item.getAttribute('data-id'));
 
                 router
-                    .post(route('testimonials.updateOrder'), {
+                    .post(route('admin.testimonials.updateOrder'), {
                         _token: csrf_token,
                         order: order,
                     })
@@ -32,7 +32,7 @@ const TestimonialSorting = ({ items }) => {
                                 <h3 className="m-0 text-center text-lg-start">Testimonial Sorting</h3>
                             </div>
                             <div className="col-lg-6 col-md-12 text-center text-md-end">
-                                <Link href={route('testimonials.index')} className="btn btn-primary" as="button">
+                                <Link href={route('admin.testimonials.index')} className="btn btn-primary" as="button">
                                     Back
                                 </Link>
                             </div>

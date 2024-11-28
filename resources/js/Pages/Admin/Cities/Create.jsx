@@ -12,7 +12,7 @@ const CityCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route("cities.store"), data, { forceFormData: true, });
+        post(route("admin.cities.store"), data, { forceFormData: true, });
     };
 
     return (
@@ -84,7 +84,7 @@ const CityCreate = () => {
                                             </div>
                                             <Link
                                                 className="btn btn-danger me-3"
-                                                href={route('cities.index')}
+                                                href={route('admin.cities.index')}
                                             >
                                                 Cancel
                                             </Link>

@@ -37,7 +37,7 @@ class UserProfileController extends Controller
         if (
             $userProfile->address !== $address ||
             $userProfile->phone !== $phone ||
-            $request->croppedImage != null
+            $request->filled('croppedImage')
         ) {
 
             $existingUserProfile = UserProfile::where('user_id', $user->id)->first();

@@ -19,7 +19,7 @@ const SponsorCreate = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         data.croppedImage = croppedImageRef.current.value;
-        post(route("sponsors.store"), data, { forceFormData: true, });
+        post(route("admin.sponsors.store"), data, { forceFormData: true, });
     };
     const handleImageChange = (e) => {
         let reader = new FileReader();
@@ -127,7 +127,7 @@ const SponsorCreate = () => {
                                             </div>
                                             <Link
                                                 className="btn btn-danger me-3"
-                                                href={route('sponsors.index')}
+                                                href={route('admin.sponsors.index')}
                                             >
                                                 Cancel
                                             </Link>

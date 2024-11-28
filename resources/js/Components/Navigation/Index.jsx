@@ -20,11 +20,6 @@ import "./Style.css"
 import UserAvatar from '@/Components/UserAvatar';
 
 export default function Navigation({auth}) {
-    useEffect(() => {
-        console.log("init+++++++++", auth)
-
-    }, []);
-
     return (
         <>
             <Navbar collapseOnSelect expand="sm" className="bg-dark p-0">

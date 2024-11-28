@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/adminLayout';
 import { Link, router } from '@inertiajs/react';
 import { React, useState } from 'react';
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { confirmAlert } from 'react-confirm-alert';
@@ -29,7 +29,7 @@ const Index = ({ categories }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('categories.destroy', { id }));
+                        router.delete(route('admin.categories.destroy', { id }));
                     }
                 },
                 {

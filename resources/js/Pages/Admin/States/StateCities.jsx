@@ -6,7 +6,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Link, router } from '@inertiajs/react';
 import React, { useState } from 'react'
 import { BsPlusCircleFill } from "react-icons/bs"
-import SearchBar from '../SearchBar';
+import SearchBar from '@/Components/SearchBar';
 
 
 
@@ -28,7 +28,7 @@ const StateCities = ({ state }) => {
                             </div>
                             <div className="col-lg-2 col-md-12">
                                 <div className="d-flex align-items-center justify-content-end">
-                                    <Link href={route('states.index')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><i className="fa-solid fa-sort"></i>Back</Link>
+                                    <Link href={route('admin.states.index')} className="btn btn-primary d-flex align-items-center border-0 " type="button"><i className="fa-solid fa-sort"></i>Back</Link>
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@ const StateCities = ({ state }) => {
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
                                                         <li className="edit">
-                                                            <Link href={route('cities.edit', item.id)}>
+                                                            <Link href={route('admin.cities.edit', item.id)}>
                                                                 <FontAwesomeIcon icon={faPenToSquare} className="fs-4 text-danger" />
                                                             </Link>
                                                         </li>

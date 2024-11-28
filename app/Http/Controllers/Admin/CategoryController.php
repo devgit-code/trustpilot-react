@@ -15,14 +15,14 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return Inertia::render('Categories/Index', [
+        return Inertia::render('Admin/Categories/Index', [
             'categories' => $categories,
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Categories/Create');
+        return Inertia::render('Admin/Categories/Create');
     }
 
     public function store(Request $request)
@@ -33,7 +33,7 @@ class CategoryController extends Controller
             'status' => $request->input('status')
         ]);
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('message', 'Category created successfully.');
     }
 
@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function edit(String $id)
     {
         $category = Category::find($id);
-        return Inertia::render('Categories/Edit', [
+        return Inertia::render('Admin/Categories/Edit', [
             'category' => $category
         ]);
     }
@@ -56,7 +56,7 @@ class CategoryController extends Controller
         $category->status = $request->input('status');
         $category->save();
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('message', 'Category updated successfully.');
     }
 
@@ -65,7 +65,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')
+        return redirect()->route('admin.categories.index')
             ->with('success', 'Category deleted successfully.');
     }
 }

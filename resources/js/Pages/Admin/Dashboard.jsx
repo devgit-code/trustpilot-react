@@ -11,7 +11,7 @@ export default function Dashboard({ auth }) {
                         <div className="col-lg-3">
                             <div className="card p-4 rounded rounded-4">
                                 <div className="card-title d-flex justify-content-between">
-                                    <h4>Total</h4>
+                                    <h4>Trustscore</h4>
                                     <div className="dropdown">
                                         <button
                                             className="dropdown-toggle"
@@ -28,17 +28,17 @@ export default function Dashboard({ auth }) {
                                 </div>
 
                                 <div className="text-center">
-                                    <span className="fw-bold mb-0" style={{ color: "#3b82f6" }}>21</span>
-                                    <h6 className="mt-0" style={{ color: "#3b82f6" }}>Due Tasks</h6>
+                                    <span className="fw-bold mb-0" style={{ color: "#3b82f6" }}>4.5</span>
+                                    {/* <h6 className="mt-0" style={{ color: "#3b82f6" }}>Due Tasks</h6> */}
 
-                                    <h5 className="fw-light fs-7">Completed: <span>13</span></h5>
+                                    <h5 className="fw-light fs-7">Total reviews: <span>13</span></h5>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-3">
                             <div className="card p-4 rounded rounded-4">
                                 <div className="card-title d-flex justify-content-between">
-                                    <h4>Average</h4>
+                                    <h4>Products</h4>
                                     <div className="dropdown">
                                         <button
                                             className="dropdown-toggle"
@@ -53,18 +53,15 @@ export default function Dashboard({ auth }) {
                                             <li>
                                                 <a className="dropdown-item" href="#">Another action</a>
                                             </li>
-                                            <li>
-                                                <a className="dropdown-item" href="#">Something else here</a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div className="text-center">
-                                    <span className="fw-bold mb-0" style={{ color: "#ef4444" }}>17</span>
-                                    <h6 className="mt-0" style={{ color: "#ef4444" }}>Tasks</h6>
+                                    <span className="fw-bold mb-0" style={{ color: "#ef4444" }}>0</span>
+                                    {/* <h6 className="mt-0" style={{ color: "#ef4444" }}>Tasks</h6> */}
 
-                                    <h5 className="fw-light fs-7">Completed: <span>9</span></h5>
+                                    <h5 className="fw-light fs-7">Total: <span>9</span></h5>
                                 </div>
                             </div>
                         </div>

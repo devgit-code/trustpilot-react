@@ -6,7 +6,7 @@ const SubCategoriesCreate = ({ category, onClose }) => {
     const { flash } = usePage().props;
     const { data, setData, post, errors } = useForm({
         name: '',
-        category_id: category.id, 
+        category_id: category.id,
         status: 1,
     });
     const [showFlash, setShowFlash] = useState(true);
@@ -16,15 +16,17 @@ const SubCategoriesCreate = ({ category, onClose }) => {
             setShowFlash(true);
             const timer = setTimeout(() => {
                 setShowFlash(false);
-            }, 5000); 
+            }, 5000);
 
             return () => clearTimeout(timer);
         }
     }, [flash]);
 
     const handleSubmit = (event) => {
+
+        console.log('--------------++++++++++++++++++++')
         event.preventDefault();
-        post(route('sub_categories.store'), {
+        post(route('admin.sub_categories.store'), {
             onSuccess: () => {
                 onClose();
             },
@@ -79,7 +81,7 @@ const SubCategoriesCreate = ({ category, onClose }) => {
                 <button type="submit" className="btn btn-primary">
                     Create
                 </button>
-                <Link href={route('categories.index')} className="btn btn-danger">
+                <Link href={route('admin.categories.index')} className="btn btn-danger">
                     Cancel
                 </Link>
             </form>

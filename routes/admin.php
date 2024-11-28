@@ -7,13 +7,16 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BusinessProfileController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClassifiedAdController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\StateController;
@@ -79,10 +82,22 @@ Route::group([
     Route::get('/', function(){
         return redirect()->route('admin.login');
     });
+    //for owner
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
+    Route::resource('products', ProductController::class);
+    Route::resource('reviews', ReviewController::class);
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('dashboard');
+    Route::get('/profile', [BusinessProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/logo', [BusinessProfileController::class, 'logo'])->name('profile.logo');
+    Route::put('/profile/update', [BusinessProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/update/home', [BusinessProfileController::class, 'home'])->name('profile.update.home');
+    Route::put('/profile/update/account', [BusinessProfileController::class, 'account'])->name('profile.update.account');
+    Route::put('/profile/update/contact', [BusinessProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/logo', [BusinessProfileController::class, 'logo_update'])->name('profile.update.logo');
+
+    // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+    // Route::resource('permissions', PermissionController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');
@@ -93,8 +108,6 @@ Route::group([
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
     Route::get('/slides/sort', [SliderController::class, 'sort'])->name('slides.sort');
     Route::post('/slides/updateOrder', [SliderController::class, 'updateOrder'])->name('slides.updateOrder');
     Route::resource('slides', SliderController::class);
@@ -109,18 +122,10 @@ Route::group([
     Route::post('/roles/{role}/remove', [RoleController::class, 'removeRole'])->name('roles.remove');
     Route::resource('roles', RoleController::class);
 
-    Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     Route::resource('permissions', PermissionController::class);
-
 
     Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
     Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
-
-
-
-    Route::resource('cities', CityController::class);
-    Route::get('/states/{state}/cities', [StateController::class, 'show'])->name('state.cities');
-    Route::resource('states', StateController::class);
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
