@@ -78,7 +78,6 @@ class SettingController extends Controller
         $request->validate([
             "company_name" => "required|string|max:255",
             "website" => "required|url",
-            "description" => "required",
         ]);
 
         $business = auth('business')->user();
@@ -148,5 +147,40 @@ class SettingController extends Controller
         }
 
         return redirect()->route('admin.settings.index')->with('activeTab', 'account');
+    }
+
+    public function contact(Request $request)
+    {
+        $request->validate([
+            "email" => "nullable|email|max:255",
+            "phone" => 'nullable|regex:/^\+?[0-9]{10,15}$/',
+            "location" => "nullable|string|max:255",
+        ]);
+
+        $business = auth('business')->user();
+        $businessProfile = $business->profile;
+
+        if (!$businessProfile) {
+            $businessProfile = new BusinessProfile();
+            $businessProfile->business_id = $business->id;
+        }
+
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $location = $request->input('location');
+
+        if (
+            $businessProfile->email !== $email ||
+            $businessProfile->phone !== $phone ||
+            $businessProfile->location !== $location
+        ) {
+            $businessProfile->email = $email;
+            $businessProfile->phone = $phone;
+            $businessProfile->location = $location;
+
+            $businessProfile->save();
+        }
+
+        return redirect()->route('admin.settings.index');
     }
 }

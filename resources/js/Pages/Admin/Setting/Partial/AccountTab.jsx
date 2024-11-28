@@ -7,17 +7,17 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
-export default function AccountTab({auth}){
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        first_name: auth.first_name,
-        last_name: auth.last_name,
-        job_title: auth.job_title,
+export default function AccountTab({business}){
+    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+        first_name: business.first_name,
+        last_name: business.last_name,
+        job_title: business.job_title,
     });
 
     const submit = (e) => {
         e.preventDefault();
-        data.croppedImage = croppedImageRef.current.value;
-        patch(route("profile.setting.update"), data, { forceFormData: true });
+
+        put(route("admin.settings.update.account"), data, { forceFormData: true });
     };
 
     return (
@@ -31,7 +31,7 @@ export default function AccountTab({auth}){
                     className="mt-1 block w-full"
                     value={data.first_name}
                     onChange={(e)=>setData('first_name', e.target.value)}
-                    // required
+                    required
                     isFocused
                     autoComplete="first_name"
                 />
@@ -48,8 +48,7 @@ export default function AccountTab({auth}){
                     className="mt-1 block w-full"
                     value={data.last_name}
                     onChange={(e)=>setData('last_name', e.target.value)}
-                    // required
-                    isFocused
+                    required
                     autoComplete="last_name"
                 />
 
@@ -65,8 +64,7 @@ export default function AccountTab({auth}){
                     className="mt-1 block w-full"
                     value={data.job_title}
                     onChange={(e)=>setData('job_title', e.target.value)}
-                    // required
-                    isFocused
+                    required
                     autoComplete="job_title"
                 />
 

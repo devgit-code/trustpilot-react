@@ -31,7 +31,7 @@ export default function HomeTab({business, businessProfile}){
                     className="mt-1 block w-full"
                     value={data.company_name}
                     onChange={(e)=>setData('company_name', e.target.value)}
-                    // required
+                    required
                     isFocused
                     autoComplete="company_name"
                 />
@@ -49,7 +49,7 @@ export default function HomeTab({business, businessProfile}){
                     className="mt-1 block w-full"
                     value={data.website}
                     onChange={(e)=>setData('website', e.target.value)}
-                    // required
+                    required
                     isFocused
                     autoComplete="website"
                 />

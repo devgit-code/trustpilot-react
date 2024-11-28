@@ -8,30 +8,53 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
 export default function ContactTab({businessProfile}){
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+        email: businessProfile?.email || '',
         phone: businessProfile?.phone || '',
         location: businessProfile?.location || '',
     });
 
+    const handleInputChange = (e) => {
+        const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+        setData('phone', input);
+    };
+
     const submit = (e) => {
         e.preventDefault();
-        data.croppedImage = croppedImageRef.current.value;
-        patch(route("profile.setting.update"), data, { forceFormData: true });
+
+        put(route("admin.settings.update.contact"), data);
     };
 
     return (
         <form onSubmit={submit} className="mt-6 space-y-6 mx-3">
+            <div>
+                <InputLabel htmlFor="email" value="email" />
+
+                <TextInput
+                    id="email"
+                    name="email"
+                    type="email"
+                    className="mt-1 block w-full"
+                    isFocused
+                    value={data.email}
+                    onChange={(e)=>setData('email', e.target.value)}
+                    autoComplete="email"
+                />
+
+                <InputError className="mt-2" message={errors.email} />
+            </div>
+
             <div>
                 <InputLabel htmlFor="phone" value="Phone" />
 
                 <TextInput
                     id="phone"
                     name="phone"
-                    type="text"
                     className="mt-1 block w-full"
                     value={data.phone}
-                    onChange={(e)=>setData('phone', e.target.value)}
+                    onChange={handleInputChange}
                     autoComplete="phone"
+                    maxLength={12}
                 />
 
                 <InputError className="mt-2" message={errors.phone} />

@@ -61,7 +61,7 @@ const SettingIndex = ({businessProfile, activeTab}) => {
                             </Tab>
                             <Tab eventKey="account" title="Account">
                                 <div className='bg-white'>
-                                    <AccountTab auth={auth}/>
+                                    <AccountTab business={auth.user}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="contact" title="Contact Info">

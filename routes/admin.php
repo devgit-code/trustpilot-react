@@ -92,6 +92,8 @@ Route::group([
     Route::get('/settings/logo', [SettingController::class, 'logo'])->name('settings.logo');
     Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
     Route::put('/settings/update/home', [SettingController::class, 'home'])->name('settings.update.home');
+    Route::put('/settings/update/account', [SettingController::class, 'account'])->name('settings.update.account');
+    Route::put('/settings/update/contact', [SettingController::class, 'contact'])->name('settings.update.contact');
 
     // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     // Route::resource('permissions', PermissionController::class);
