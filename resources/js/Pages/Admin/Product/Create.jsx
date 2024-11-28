@@ -7,7 +7,10 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
 const Create = () => {
-    const { data, setData, errors, post, processing } = useForm();
+    const { data, setData, errors, post, processing } = useForm({
+        name: '',
+        description: '',
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
