@@ -27,6 +27,6 @@ class BusinessProfile extends Model
 
     public function getImgAttribute()
     {
-        return $this->image;
+        return $this->logo;
     }
 }

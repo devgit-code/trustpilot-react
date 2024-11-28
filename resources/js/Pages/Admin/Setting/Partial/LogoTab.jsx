@@ -1,42 +1,71 @@
 import { Transition } from '@headlessui/react';
 import { Link, router, usePage, useForm } from '@inertiajs/react';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
+import profileNotLogo from '@/../images/company-logo.png';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 
 export default function LogoTab({businessProfile}){
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        about_us: businessProfile?.about_us || '',
-        description: businessProfile?.description || '',
+
+    const [preview, setPreview] = useState(null); // Preview URL
+    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+        image: null,
     });
+
+    // Handle file input change
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setData('image', file);
+        console.log('image---', file)
+
+        // Generate preview URL
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreview(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            // setPreview(null);
+        }
+    };
 
     const submit = (e) => {
         e.preventDefault();
-        data.croppedImage = croppedImageRef.current.value;
-        patch(route("profile.setting.update"), data, { forceFormData: true });
+        if (!data.image) {
+            return;
+        }
+
+        put(route("admin.settings.update.logo"), data, { forceFormData: true });
     };
 
     return (
         <form onSubmit={submit} className="mt-6 space-y-6 mx-3">
             <div>
-                <InputLabel htmlFor="company_name" value="Company Logo" />
-
-                <TextInput
-                    id="company_name"
-                    name="company_name"
-                    className="mt-1 block w-full"
-                    value={data.company_name}
-                    onChange={(e)=>setData('company_name', e.target.value)}
-                    // required
-                    isFocused
-                    autoComplete="company_name"
+                <input
+                    // ref={inputRef}
+                    className="form-control"
+                    id="image-file"
+                    name="image"
+                    type="file"
+                    aria-label="file example"
+                    onChange={handleFileChange}
                 />
-
-                <InputError className="mt-2" message={errors.company_name} />
             </div>
+
+            {preview ? (
+                <div>
+                    <p className='text-gray-700'>Preview:</p>
+                    <img src={preview} alt="Image Preview" style={{ maxWidth: '200px', maxHeight: '200px' }} />
+                </div>
+            ):(
+                <div>
+                    <p className='text-gray-700'>{businessProfile.logo ? 'Company Logo' : 'No Business logo. Please upload'}</p>
+                    <img src={businessProfile.logo ? `/storage/images/profile/${businessProfile.logo}` : profileNotLogo}
+                        alt="Business-logo"
+                        style={{ maxWidth: '200px', maxHeight: '200px' }} />
+                </div>
+            )}
 
             <div className="flex items-center gap-4">
                 <PrimaryButton disabled={processing}>Save</PrimaryButton>

@@ -27,6 +27,34 @@ class SettingController extends Controller
         return redirect()->route('admin.settings.index')->with('activeTab', 'logo');
     }
 
+    public function logo_update(Request $request)
+    {
+        $business = auth('business')->user();
+        $businessProfile = $business->profile;
+
+        if (!$businessProfile) {
+            $businessProfile = new BusinessProfile();
+            $businessProfile->business_id = $business->id;
+        }
+dd($request);
+
+        if (
+            $request->image != null
+        ) {
+            $extension = explode('/', mime_content_type($request->image))[1];
+            $imageName = "BusinessProfile-" . now()->timestamp . "." . $extension;
+            Storage::disk('public')->put(
+                'images/logo/' . $imageName,
+                file_get_contents($request->image)
+            );
+            $businessProfile["logo"] = $imageName;
+
+            $businessProfile->save();
+        }
+
+        return redirect()->route('admin.settings.index')->with('acctiveTab', 'logo');
+    }
+
     public function update(Request $request)
     {
         // $settings = $request->except('_token', '_method');
