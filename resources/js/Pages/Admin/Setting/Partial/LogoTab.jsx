@@ -35,7 +35,7 @@ export default function LogoTab({businessProfile}){
         e.preventDefault();
 
         clearErrors();
-        post(route("admin.profile.update.logo"), data, { forceFormData: true });
+        post(route("business.profile.update.logo"), data, { forceFormData: true });
     };
 
     return (

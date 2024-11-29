@@ -14,7 +14,7 @@ const Edit = ({ product }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('admin.products.update', product.id), data);
+        put(route('business.products.update', product.id), data);
     };
 
     return (
@@ -60,7 +60,7 @@ const Edit = ({ product }) => {
                                 <button type="submit" className="btn btn-primary mr-3">
                                     Update
                                 </button>
-                                <Link href={route('admin.products.index')} className="btn btn-danger" type="button">
+                                <Link href={route('business.products.index')} className="btn btn-danger" type="button">
                                     Back
                                 </Link>
                             </div>

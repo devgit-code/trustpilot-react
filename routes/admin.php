@@ -75,16 +75,15 @@ Route::group([
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
-    'prefix' => 'admin',
+    'prefix' => 'business',
     'middleware' => ['user-guest', 'business.authed', 'business.verified'],
-    'as' => 'admin.'
+    'as' => 'business.'
 ], function () {
     Route::get('/', function(){
         return redirect()->route('admin.login');
     });
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
     Route::resource('products', ProductController::class);
     Route::resource('reviews', ReviewController::class);
 
@@ -96,8 +95,18 @@ Route::group([
     Route::put('/profile/update/contact', [BusinessProfileController::class, 'contact'])->name('profile.update.contact');
     Route::post('/profile/update/logo', [BusinessProfileController::class, 'logo_update'])->name('profile.update.logo');
 
-    // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
-    // Route::resource('permissions', PermissionController::class);
+
+});
+
+Route::group([
+    'namespace' => 'App\Http\Controllers\Admin',
+    'prefix' => 'admin',
+    'middleware' => ['user-guest', 'business.authed', 'business.verified'],
+    'as' => 'admin.'
+], function () {
+    Route::get('/', function(){
+        return redirect()->route('admin.login');
+    });
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');
@@ -117,12 +126,6 @@ Route::group([
     Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
     Route::post('/sponsors/updateOrder', [SponsorController::class, 'updateOrder'])->name('sponsors.updateOrder');
     Route::resource('/sponsors', SponsorController::class);
-
-    Route::post('/roles/{role}/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
-    Route::post('/roles/{role}/remove', [RoleController::class, 'removeRole'])->name('roles.remove');
-    Route::resource('roles', RoleController::class);
-
-    Route::resource('permissions', PermissionController::class);
 
     Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
     Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');

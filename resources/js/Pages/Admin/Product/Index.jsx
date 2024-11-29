@@ -21,7 +21,7 @@ const Index = ({products}) => {
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('admin.products.destroy', productId));
+                router.delete(route('business.products.destroy', productId));
             }
         });
     };
@@ -38,7 +38,7 @@ const Index = ({products}) => {
                             </div>
                             <div className="col-lg-6 col-md-12">
                                 <div className="text-center text-lg-end">
-                                    <Link href={route('admin.products.create')} className="btn btn-success" type="button">
+                                    <Link href={route('business.products.create')} className="btn btn-success" type="button">
                                         <i className="fa-solid fa-plus"></i> Add
                                     </Link>
                                 </div>
@@ -69,12 +69,12 @@ const Index = ({products}) => {
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
-                                                        <Link href={route('admin.products.edit', item.id)}>
+                                                        <Link href={route('business.products.edit', item.id)}>
                                                             <FaEdit className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>
                                                     <form
-                                                        // action={route('admin.products.destroy', item.id)}
+                                                        // action={route('business.products.destroy', item.id)}
                                                         onSubmit={(e) => handleDelete(e, item.id)}
                                                         method="POST"
                                                     >

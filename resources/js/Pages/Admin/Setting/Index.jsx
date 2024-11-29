@@ -26,7 +26,7 @@ const SettingIndex = ({businessProfile, activeTab}) => {
                 {
                     label: 'Yes',
                     onClick: () => {
-                        router.delete(route('admin.roles.destroy', id));
+                        router.delete(route('business.roles.destroy', id));
                     },
                 },
                 {

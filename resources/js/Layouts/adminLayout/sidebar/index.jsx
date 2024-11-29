@@ -65,7 +65,7 @@ export default function Sidebar({auth}) {
                         <div className="ps-3">
                             <NavLink style={{ borderBottom: 'none', }}
                                 className="no-underline"
-                                href={route('admin.dashboard')} active={route().current('admin.dashboard')}
+                                href={route('business.dashboard')} active={route().current('business.dashboard')}
                             >
                                 <span className="text-info fs-4">
                                 DASHBOARD</span>
@@ -129,7 +129,7 @@ export default function Sidebar({auth}) {
                             <>
                                 <li>
                                     <NavLink
-                                        href={route('admin.reviews.index')} active={route().current('admin.reviews.index')}
+                                        href={route('business.reviews.index')} active={route().current('business.reviews.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -138,7 +138,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.products.index')} active={route().current('admin.products.index')}
+                                        href={route('business.products.index')} active={route().current('business.products.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -147,7 +147,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.categories.index')} active={route().current('admin.categories.index')}
+                                        href={route('business.products.index')} active={route().current('business.products.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -156,7 +156,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.profile.index')} active={route().current('admin.profile.index')}
+                                        href={route('business.profile.index')} active={route().current('business.profile.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>

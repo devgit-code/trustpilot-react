@@ -42,7 +42,7 @@ class ProductController extends Controller
 
         Product::create($creationData);
 
-        return redirect()->route('admin.products.index');
+        return redirect()->route('business.products.index');
     }
 
 
@@ -76,12 +76,12 @@ class ProductController extends Controller
         ];
 
         $product->update($updateData);
-        return redirect()->route('admin.products.index');
+        return redirect()->route('business.products.index');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('business.products.index')->with('success', 'Role deleted successfully.');
     }
 }

@@ -15,9 +15,9 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('admin.products.store'), {
+        post(route('business.products.store'), {
             onSuccess: () => {
-                router.visit(route('admin.products.index'));
+                router.visit(route('business.products.index'));
             },
         });
     };
@@ -65,7 +65,7 @@ const Create = () => {
                                 <button type="submit" className="btn btn-primary m-2" disabled={processing}>
                                     Create
                                 </button>
-                                <a href={route('admin.products.index')} className="btn btn-danger" type="button">
+                                <a href={route('business.products.index')} className="btn btn-danger" type="button">
                                     Back
                                 </a>
                             </div>
