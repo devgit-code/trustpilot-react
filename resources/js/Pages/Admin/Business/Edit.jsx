@@ -1,33 +1,28 @@
-import React from 'react';
 import AdminLayout from '@/Layouts/adminLayout';
-import { router, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
+import React from 'react';
 
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
-const Create = () => {
-    const { data, setData, errors, post, processing } = useForm({
-        name: '',
-        description: '',
-    });
+const Edit = ({ product }) => {
+    const { data, setData, put, errors } = useForm({
+        name: product.name || '',
+        description: product.description || '',
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // post(route('business.products.store'), {
-        //     onSuccess: () => {
-        //         router.visit(route('business.products.index'));
-        //     },
-        // });
+        put(route('business.products.update', product.id), data);
     };
 
     return (
-        <div className="m-3 content-wrapper">
+        <div className="content-wrapper m-3">
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Add Category</h4>
+                        <h4 className="card-title">Edit Product</h4>
                         <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
                             <div>
                                 <InputLabel htmlFor="name" value="Name" />
@@ -62,12 +57,12 @@ const Create = () => {
                             </div>
 
                             <div>
-                                <button type="submit" className="btn btn-primary m-2" disabled={processing}>
-                                    Create
+                                <button type="submit" className="btn btn-primary mr-3">
+                                    Update
                                 </button>
-                                <a href={route('business.products.index')} className="btn btn-danger" type="button">
+                                <Link href={route('business.products.index')} className="btn btn-danger" type="button">
                                     Back
-                                </a>
+                                </Link>
                             </div>
                         </form>
                     </div>
@@ -77,6 +72,6 @@ const Create = () => {
     );
 };
 
-Create.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;
+Edit.layout = (page) => <AdminLayout>{page}</AdminLayout>
+export default Edit;
 
-export default Create;

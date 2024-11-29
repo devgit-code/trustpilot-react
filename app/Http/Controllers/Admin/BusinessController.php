@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Business;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BusinessCategory;
+use App\Models\Business;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class CategoryController extends Controller
+class BusinessController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $business = auth('business')->user();
-        $categories = $business->categories;
-
-        return Inertia::render('Business/Category/Index', compact('categories'));
+        $businesses = Business::all();
+        return Inertia::render('Admin/Business/Index', compact('businesses'));
     }
 
 
@@ -27,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Business/Category/Create');
+        return Inertia::render('Admin/Business/Create');
     }
 
     public function store(Request $request)
@@ -60,7 +58,7 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id);
-        return Inertia::render('Business/Category/Edit', compact('product'));
+        return Inertia::render('Business/Product/Edit', compact('product'));
     }
 
 

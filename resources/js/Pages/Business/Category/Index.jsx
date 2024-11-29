@@ -67,7 +67,7 @@ const Index = ({categories}) => {
                                             <td>
                                                 <div className='flex justify-between mx-3'>
                                                     <div className='flex items-center px-3'>
-                                                        <h4 className='mb-0'>{item.name}</h4>
+                                                        <h5 className='mb-0'>{item.name}</h5>
                                                         {
                                                             item.pivot.is_primary !== 0 && (
                                                                 <p className='ml-3 mb-0 py-1 px-3 rounded-full text-gray-200 bg-primary'>

@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClassifiedAdController;
+use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SliderController;
@@ -111,6 +112,7 @@ Route::group([
         return redirect()->route('admin.login');
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('businesses', BusinessController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');

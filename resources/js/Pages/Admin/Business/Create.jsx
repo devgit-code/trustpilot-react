@@ -15,11 +15,11 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // post(route('business.products.store'), {
-        //     onSuccess: () => {
-        //         router.visit(route('business.products.index'));
-        //     },
-        // });
+        post(route('business.products.store'), {
+            onSuccess: () => {
+                router.visit(route('business.products.index'));
+            },
+        });
     };
 
     return (
@@ -27,7 +27,7 @@ const Create = () => {
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Add Category</h4>
+                        <h4 className="card-title">Create Product</h4>
                         <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
                             <div>
                                 <InputLabel htmlFor="name" value="Name" />
