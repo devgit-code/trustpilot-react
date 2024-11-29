@@ -78,7 +78,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // if()
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('business.dashboard');
     }
 
     public function admin_destroy(Request $request): RedirectResponse

@@ -7,12 +7,13 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\BusinessProfileController;
+use App\Http\Controllers\Business\DashboardController;
+use App\Http\Controllers\Business\ReviewController;
+use App\Http\Controllers\Business\ProductController;
+use App\Http\Controllers\Business\ProfileController;
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ClassifiedAdController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -74,6 +75,31 @@ Route::group([
 
 
 Route::group([
+    'namespace' => 'App\Http\Controllers\Business',
+    'prefix' => 'business',
+    'middleware' => ['user-guest', 'business.authed', 'business.verified'],
+    'as' => 'business.'
+], function () {
+    Route::get('/', function(){
+        return redirect()->route('admin.login');
+    });
+    //for owner
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('products', ProductController::class);
+    Route::resource('reviews', ReviewController::class);
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
+    Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');
+    Route::put('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/logo', [ProfileController::class, 'logo_update'])->name('profile.update.logo');
+
+
+});
+
+Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
     'middleware' => ['user-guest', 'business.authed', 'business.verified'],
@@ -82,22 +108,7 @@ Route::group([
     Route::get('/', function(){
         return redirect()->route('admin.login');
     });
-    //for owner
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
-    Route::resource('products', ProductController::class);
-    Route::resource('reviews', ReviewController::class);
-
-    Route::get('/profile', [BusinessProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/logo', [BusinessProfileController::class, 'logo'])->name('profile.logo');
-    Route::put('/profile/update', [BusinessProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/update/home', [BusinessProfileController::class, 'home'])->name('profile.update.home');
-    Route::put('/profile/update/account', [BusinessProfileController::class, 'account'])->name('profile.update.account');
-    Route::put('/profile/update/contact', [BusinessProfileController::class, 'contact'])->name('profile.update.contact');
-    Route::post('/profile/update/logo', [BusinessProfileController::class, 'logo_update'])->name('profile.update.logo');
-
-    // Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
-    // Route::resource('permissions', PermissionController::class);
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');
@@ -118,21 +129,15 @@ Route::group([
     Route::post('/sponsors/updateOrder', [SponsorController::class, 'updateOrder'])->name('sponsors.updateOrder');
     Route::resource('/sponsors', SponsorController::class);
 
-    Route::post('/roles/{role}/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
-    Route::post('/roles/{role}/remove', [RoleController::class, 'removeRole'])->name('roles.remove');
-    Route::resource('roles', RoleController::class);
-
-    Route::resource('permissions', PermissionController::class);
-
     Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
     Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::resource('classifiedAds', ClassifiedAdController::class);
     Route::get('/sub_categories/category/{id}', [SubCategoryController::class, 'index'])->name('sub_categories.index');

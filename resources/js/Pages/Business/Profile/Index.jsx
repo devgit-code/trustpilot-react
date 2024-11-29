@@ -13,29 +13,29 @@ import LogoTab from './Partial/LogoTab'
 import AccountTab from './Partial/AccountTab'
 import ContactTab from './Partial/ContactTab'
 
-const SettingIndex = ({businessProfile, activeTab}) => {
+const Index = ({businessProfile, activeTab}) => {
     const { auth } = usePage().props;
 
-    const handleDelete = (event, id) => {
-        event.preventDefault();
+    // const handleDelete = (event, id) => {
+    //     event.preventDefault();
 
-        confirmAlert({
-            title: 'Are you sure?',
-            message: "You won't be able to revert this!",
-            buttons: [
-                {
-                    label: 'Yes',
-                    onClick: () => {
-                        router.delete(route('business.roles.destroy', id));
-                    },
-                },
-                {
-                    label: 'No',
-                    onClick: () => { },
-                },
-            ],
-        });
-    };
+    //     confirmAlert({
+    //         title: 'Are you sure?',
+    //         message: "You won't be able to revert this!",
+    //         buttons: [
+    //             {
+    //                 label: 'Yes',
+    //                 onClick: () => {
+    //                     router.delete(route('business.roles.destroy', id));
+    //                 },
+    //             },
+    //             {
+    //                 label: 'No',
+    //                 onClick: () => { },
+    //             },
+    //         ],
+    //     });
+    // };
 
     return (
         <div className="content-wrapper m-3">
@@ -76,6 +76,6 @@ const SettingIndex = ({businessProfile, activeTab}) => {
     );
 };
 
-SettingIndex.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;
+Index.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;
 
-export default SettingIndex;
+export default Index;

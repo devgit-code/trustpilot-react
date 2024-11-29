@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Business;
 
 use App\Models\BusinessProfile;
 use Illuminate\Support\Facades\Storage;
@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class BusinessProfileController extends Controller
+class ProfileController extends Controller
 {
 
     public function index()
@@ -16,7 +16,7 @@ class BusinessProfileController extends Controller
         $business = auth('business')->user();
         $businessProfile = $business->profile;
 
-        return Inertia::render('Admin/Setting/Index', [
+        return Inertia::render('Business/Profile/Index', [
             'businessProfile' => $businessProfile,
             'activeTab'=>session('activeTab') ?? 'home'
         ]);
@@ -24,7 +24,7 @@ class BusinessProfileController extends Controller
 
     public function logo()
     {
-        return redirect()->route('admin.profile.index')->with('activeTab', 'logo');
+        return redirect()->route('business.profile.index')->with('activeTab', 'logo');
     }
 
     public function logo_update(Request $request)
@@ -56,7 +56,7 @@ class BusinessProfileController extends Controller
             $businessProfile->save();
         }
 
-        return redirect()->route('admin.profile.index')->with('acctiveTab', 'logo');
+        return redirect()->route('business.profile.index')->with('acctiveTab', 'logo');
     }
 
     public function update(Request $request)
@@ -102,7 +102,7 @@ class BusinessProfileController extends Controller
         //     }
         // }
 
-        return to_route('admin.profile.index');
+        return to_route('business.profile.index');
     }
 
     public function home(Request $request)
@@ -149,7 +149,7 @@ class BusinessProfileController extends Controller
             // }
         }
 
-        return redirect()->route('admin.profile.index');
+        return redirect()->route('business.profile.index');
     }
 
     public function account(Request $request)
@@ -178,7 +178,7 @@ class BusinessProfileController extends Controller
             $business->save();
         }
 
-        return redirect()->route('admin.profile.index')->with('activeTab', 'account');
+        return redirect()->route('business.profile.index')->with('activeTab', 'account');
     }
 
     public function contact(Request $request)
@@ -213,6 +213,6 @@ class BusinessProfileController extends Controller
             $businessProfile->save();
         }
 
-        return redirect()->route('admin.profile.index');
+        return redirect()->route('business.profile.index');
     }
 }

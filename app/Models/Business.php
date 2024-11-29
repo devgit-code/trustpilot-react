@@ -83,4 +83,16 @@ class Business extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(BusinessProfile::class);
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(ChildCategory::class, 'business_categories')
+            ->withPivot('is_primary') // Access `is_primary` from pivot table
+            ->withTimestamps();
+    }
+
+    public function primaryCategory()
+    {
+        return $this->categories()->wherePivot('is_primary', true);
+    }
 }

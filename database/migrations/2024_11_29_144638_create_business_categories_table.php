@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('business_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->integer('rating');
-            $table->date('date_experience');
-            $table->boolean('status')->default(false);
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->boolean('is_primary')->default(false);
+            $table->unsignedBigInteger('sub_category_id')->index();
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('restrict');
             $table->unsignedBigInteger('business_id')->index();
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('business_categories');
     }
 };

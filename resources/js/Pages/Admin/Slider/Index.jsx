@@ -69,7 +69,7 @@ const Slider = ({ items }) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th scope="col">S.No.</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Sub title</th>

@@ -17,7 +17,7 @@ export default function HomeTab({business, businessProfile}){
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("admin.profile.update.home"), data);
+        put(route("business.profile.update.home"), data);
     };
 
     return (
@@ -50,7 +50,6 @@ export default function HomeTab({business, businessProfile}){
                     value={data.website}
                     onChange={(e)=>setData('website', e.target.value)}
                     required
-                    isFocused
                     autoComplete="website"
                 />
 
