@@ -8,9 +8,10 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\BusinessProfileController;
+
+use App\Http\Controllers\Business\ReviewController;
+use App\Http\Controllers\Business\ProductController;
+use App\Http\Controllers\Business\ProfileController;
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
@@ -74,7 +75,7 @@ Route::group([
 
 
 Route::group([
-    'namespace' => 'App\Http\Controllers\Admin',
+    'namespace' => 'App\Http\Controllers\Business',
     'prefix' => 'business',
     'middleware' => ['user-guest', 'business.authed', 'business.verified'],
     'as' => 'business.'
@@ -87,13 +88,13 @@ Route::group([
     Route::resource('products', ProductController::class);
     Route::resource('reviews', ReviewController::class);
 
-    Route::get('/profile', [BusinessProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/logo', [BusinessProfileController::class, 'logo'])->name('profile.logo');
-    Route::put('/profile/update', [BusinessProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/update/home', [BusinessProfileController::class, 'home'])->name('profile.update.home');
-    Route::put('/profile/update/account', [BusinessProfileController::class, 'account'])->name('profile.update.account');
-    Route::put('/profile/update/contact', [BusinessProfileController::class, 'contact'])->name('profile.update.contact');
-    Route::post('/profile/update/logo', [BusinessProfileController::class, 'logo_update'])->name('profile.update.logo');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
+    Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');
+    Route::put('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/logo', [ProfileController::class, 'logo_update'])->name('profile.update.logo');
 
 
 });

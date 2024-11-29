@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return Inertia::render('Admin/Product/Index', compact('products'));
+        return Inertia::render('Business/Product/Index', compact('products'));
     }
 
 
@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Product/Create');
+        return Inertia::render('Business/Product/Create');
     }
 
     public function store(Request $request)
@@ -58,7 +58,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id);
-        return Inertia::render('Admin/Product/Edit', compact('product'));
+        return Inertia::render('Business/Product/Edit', compact('product'));
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Business;
 
 use App\Models\BusinessProfile;
 use Illuminate\Support\Facades\Storage;
@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class BusinessProfileController extends Controller
+class ProfileController extends Controller
 {
 
     public function index()
@@ -16,7 +16,7 @@ class BusinessProfileController extends Controller
         $business = auth('business')->user();
         $businessProfile = $business->profile;
 
-        return Inertia::render('Admin/Setting/Index', [
+        return Inertia::render('Business/Profile/Index', [
             'businessProfile' => $businessProfile,
             'activeTab'=>session('activeTab') ?? 'home'
         ]);

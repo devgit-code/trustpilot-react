@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
@@ -15,7 +15,7 @@ class ReviewController extends Controller
     public function index()
     {
         $reviews = Review::all();
-        return Inertia::render('Admin/Review/Index', compact('reviews'));
+        return Inertia::render('Business/Review/Index', compact('reviews'));
     }
 
 
@@ -25,7 +25,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Review/Create');
+        return Inertia::render('Business/Review/Create');
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class ReviewController extends Controller
 
         Review::create($creationData);
 
-        return redirect()->route('admin.reviews.index');
+        return redirect()->route('business.reviews.index');
     }
 
 
@@ -60,7 +60,7 @@ class ReviewController extends Controller
     public function edit(string $id)
     {
         $review = Review::find($id);
-        return Inertia::render('Admin/Review/Edit', compact('review'));
+        return Inertia::render('Business/Review/Edit', compact('review'));
     }
 
 
@@ -77,12 +77,12 @@ class ReviewController extends Controller
         ];
 
         $review->update($updateData);
-        return redirect()->route('admin.reviews.index');
+        return redirect()->route('business.reviews.index');
     }
 
     public function destroy(Review $review)
     {
         $review->delete();
-        return redirect()->route('admin.reviews.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('business.reviews.index')->with('success', 'Role deleted successfully.');
     }
 }
