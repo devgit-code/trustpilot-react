@@ -52,7 +52,7 @@ export default function ReviewCard({review}) {
                 <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
             </div>
             {
-                review.reply?.length ? (
+                review.reply?.length && (
                 <div className='mt-3 bg-[#F1F1E8] rounded-lg border-l-4 p-3 border-blue-500 flex'>
                     <div><FaReply className='text-gray-700 mt-1'/></div>
                     <div className='ml-3 flex-grow'>
@@ -68,8 +68,6 @@ export default function ReviewCard({review}) {
                         <pre className="mt-3 text-black text-sm whitespace-pre-wrap font-medium">{review.reply[0].comment}</pre>
                     </div>
                 </div>
-                ):(
-                    <></>
                 )
             }
         </div>

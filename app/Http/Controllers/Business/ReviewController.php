@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reply;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,10 +13,22 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $reviews = Review::all();
-        return Inertia::render('Business/Review/Index', compact('reviews'));
+        $sortOrder = $request->input('sort_by_date', 'desc');
+        $rating = $request->input('rating');
+
+        $query  = Review::query()->with(['user']);
+
+        if ($rating) {
+            $query->where('rating', $rating);
+        }
+        $query->orderBy('date_experience', $sortOrder);
+
+        return Inertia::render('Business/Review/Index', [
+            'reviews' => $query->paginate(10),
+            'filters' => $request->only('sort_by_date', 'rating'),
+        ]);
     }
 
 
@@ -59,25 +72,34 @@ class ReviewController extends Controller
 
     public function edit(string $id)
     {
-        $review = Review::find($id);
-        return Inertia::render('Business/Review/Edit', compact('review'));
+        $review = Review::with(['user', 'user.profile', 'reply'])->findOrFail($id);
+
+        $userTotalReviews = Review::where('user_id', $review->user_id)->count();
+
+        return Inertia::render('Business/Review/Edit', [
+            'review' => $review,
+            'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
+        ]);
     }
 
 
     public function update(Request $request, string $id)
     {
         $request->validate([
-            "name" => "required|max:255"
+            "reply" => "required"
         ]);
 
-        $review = Review::findOrFail($id);
+        $reply = Reply::where('review_id', $id)->first();
 
-        $updateData = [
-            "name" => $request->input('name'),
-        ];
+        if (!$reply) {
+            $reply = new Reply();
+            $reply->review_id = $id;
+        }
 
-        $review->update($updateData);
-        return redirect()->route('business.reviews.index');
+        $reply['comment'] = $request->input('reply');
+        $reply->save();
+
+        return redirect()->route('business.reviews.edit', $id);
     }
 
     public function destroy(Review $review)
