@@ -11,6 +11,7 @@ use App\Http\Controllers\Business\DashboardController;
 use App\Http\Controllers\Business\ReviewController;
 use App\Http\Controllers\Business\ProductController;
 use App\Http\Controllers\Business\ProfileController;
+use App\Http\Controllers\Business\CategoryController;
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
@@ -87,6 +88,7 @@ Route::group([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
     Route::resource('reviews', ReviewController::class);
+    Route::resource('categories', CategoryController::class);
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');

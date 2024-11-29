@@ -56,7 +56,7 @@ class PasswordResetLinkController extends Controller
         ]);
     }
 
-    public function admin_store(Request $request): RedirectResponse | boolean
+    public function admin_store(Request $request): RedirectResponse
     {
         $request->validate([
             'company_email' => 'required|email',
@@ -65,11 +65,11 @@ class PasswordResetLinkController extends Controller
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
 
-    $status = Password::broker('businesses')->sendResetLink([
-        'company_email' => 'admin@lisste.com',
-    ]);
+    // $status = Password::broker('businesses')->sendResetLink([
+    //     'company_email' => 'admin@lisste.com',
+    // ]);
 
-    return $status === Password::RESET_LINK_SENT ? 'Reset link sent.' : 'Error sending reset link.';
+    // return $status === Password::RESET_LINK_SENT ? 'Reset link sent.' : 'Error sending reset link.';
 
         $status = Password::broker('businesses')->sendResetLink(
             $request->only('company_email')
