@@ -48,7 +48,7 @@ const Index = ({products}) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th>S.No.</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Actions</th>

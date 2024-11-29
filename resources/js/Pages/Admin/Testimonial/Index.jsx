@@ -66,7 +66,7 @@ const Testimonial = ({ items }) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th scope="col">S.No.</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Designation</th>

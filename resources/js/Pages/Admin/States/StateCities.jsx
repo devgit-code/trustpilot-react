@@ -39,7 +39,7 @@ const StateCities = ({ state }) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th scope="col">S.No.</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>

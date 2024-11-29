@@ -75,7 +75,7 @@ const Index = ({reviews}) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th>S.No.</th>
+                                        <th>No</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Rating</th>

@@ -104,7 +104,7 @@ const Index = ({ subCategories, category }) => {
                                 {/* Table header */}
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th scope="col">S.No.</th>
+                                        <th scope="col">No</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Slug</th>
                                         <th scope="col">Parent Category</th>

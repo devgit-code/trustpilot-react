@@ -12,7 +12,6 @@ import HomeTab from './Partial/HomeTab.jsx'
 import LogoTab from './Partial/LogoTab'
 import AccountTab from './Partial/AccountTab'
 import ContactTab from './Partial/ContactTab'
-import CategoryTab from './Partial/CategoryTab'
 
 const SettingIndex = ({businessProfile, activeTab}) => {
     const { auth } = usePage().props;
@@ -67,11 +66,6 @@ const SettingIndex = ({businessProfile, activeTab}) => {
                             <Tab eventKey="contact" title="Contact Info">
                                 <div className='bg-white'>
                                     <ContactTab businessProfile={businessProfile}/>
-                                </div>
-                            </Tab>
-                            <Tab eventKey="category" title="Category">
-                                <div className='bg-white'>
-                                    <CategoryTab/>
                                 </div>
                             </Tab>
                         </Tabs>

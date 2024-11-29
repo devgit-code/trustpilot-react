@@ -45,7 +45,7 @@ const PermissionList = ({ permissions }) => {
                             <table className="table">
                                 <thead>
                                     <tr className="border-bottom-primary">
-                                        <th>S.No.</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Actions</th>
                                     </tr>
