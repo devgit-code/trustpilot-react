@@ -91,15 +91,6 @@ export default function Sidebar({auth}) {
                             <>
                                 <li>
                                     <NavLink
-                                        href={route('admin.slides.index')} active={route().current('admin.slides.index')}
-                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
-                                    >
-                                        <i className="bi bi-kanban fs-5"></i>
-                                        <span className="text-white mt-1">Blogs</span>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
                                         href={route('admin.categories.index')} active={route().current('admin.categories.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
@@ -127,11 +118,20 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.testimonials.index')} active={route().current('admin.testimonials.index')}
+                                        href={route('admin.reviews.index')} active={route().current('admin.reviews.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
                                         <span className="text-white mt-1">Reviews</span>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        href={route('admin.testimonials.index')} active={route().current('admin.testimonials.index')}
+                                        className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
+                                    >
+                                        <i className="bi bi-kanban fs-5"></i>
+                                        <span className="text-white mt-1">Blogs</span>
                                     </NavLink>
                                 </li>
                             </>
