@@ -50,7 +50,6 @@ export default function HomeTab({business, businessProfile}){
                     value={data.website}
                     onChange={(e)=>setData('website', e.target.value)}
                     required
-                    isFocused
                     autoComplete="website"
                 />
 

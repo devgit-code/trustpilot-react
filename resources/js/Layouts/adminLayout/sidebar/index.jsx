@@ -61,14 +61,24 @@ export default function Sidebar({auth}) {
                     </div>
                 </div>
                 {
-                    auth.user.role == 'owner' && (
+                    auth.user.role == 'owner' ? (
                         <div className="ps-3">
                             <NavLink style={{ borderBottom: 'none', }}
                                 className="no-underline"
                                 href={route('business.dashboard')} active={route().current('business.dashboard')}
                             >
                                 <span className="text-info fs-4">
-                                DASHBOARD</span>
+                                BUSINESS</span>
+                            </NavLink>
+                        </div>
+                    ):(
+                        <div className="ps-3">
+                            <NavLink style={{ borderBottom: 'none', }}
+                                className="no-underline"
+                                href={route('admin.dashboard')} active={route().current('admin.dashboard')}
+                            >
+                                <span className="text-info fs-4">
+                                Administrator</span>
                             </NavLink>
                         </div>
                     )
