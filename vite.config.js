@@ -14,7 +14,7 @@ export default defineConfig({
         exclude: ['js-big-decimal']
     },
     server:{
-        host:'0.0.0.0',
+        // host:'0.0.0.0',
         hmr:{
             host:'localhost'
         }
