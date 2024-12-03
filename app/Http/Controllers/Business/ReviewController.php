@@ -15,23 +15,56 @@ class ReviewController extends Controller
      */
     public function index(Request $request)
     {
+        return Inertia::render('Business/Review/Index', []);
+    }
+
+    public function apiIndex(Request $request)
+    {
+        $page = $request->input('page', 1); // Default to page 1
         $sortOrder = $request->input('sort_by_date', 'desc');
         $rating = $request->input('rating');
+        $searchTerm = $request->input('search');
 
-        $query  = Review::query()->with(['user']);
+        $query = Review::query()->with(['user']);
 
         if ($rating) {
             $query->where('rating', $rating);
         }
+
+        if($searchTerm){
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                        $userQuery->where('name', 'like', "%{$searchTerm}%");
+                    });
+                    // ->orWhereHas('business', function ($businessQuery) use ($searchTerm) {
+                    //     $businessQuery->where('name', 'like', "%{$searchTerm}%");
+                    // });
+            });
+        }
+
         $query->orderBy('date_experience', $sortOrder);
 
-        return Inertia::render('Business/Review/Index', [
-            'reviews' => $query->paginate(10),
+        // Paginate the results
+        $reviews = $query->paginate(10, ['*'], 'page', $page);
+
+        return response()->json([
+            'reviews' => $reviews->items(),
             'filters' => $request->only('sort_by_date', 'rating'),
+            'pagination' => [
+                'current_page' => $reviews->currentPage(),
+                'last_page' => $reviews->lastPage(),
+                'per_page' => $reviews->perPage(),
+                'total' => $reviews->total(),
+                'links' => [
+                    'first' => $reviews->url(1),
+                    'last' => $reviews->url($reviews->lastPage()),
+                    'next' => $reviews->nextPageUrl(),
+                    'prev' => $reviews->previousPageUrl(),
+                ],
+            ],
         ]);
     }
-
-
 
     /**
      * Show the form for creating a new resource.

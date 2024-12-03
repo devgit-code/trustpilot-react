@@ -89,8 +89,8 @@ Route::group([
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
-    Route::resource('reviews', ReviewController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('reviews', ReviewController::class);
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
