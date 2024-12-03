@@ -1,6 +1,7 @@
-import AdminLayout from '@/Layouts/adminLayout';
 import { Link, router } from '@inertiajs/react';
 import { React, useState } from 'react';
+
+import AdminLayout from '@/Layouts/adminLayout';
 import SearchBar from '@/Components/SearchBar';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { BsPlusCircleFill } from 'react-icons/bs';
@@ -9,6 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaFolderOpen } from "react-icons/fa"
 import { Modal, Button, ModalHeader, ModalBody } from 'react-bootstrap';
+
 import CategoriesCreate from './Create';
 import CategoryEdit from './Edit';
 

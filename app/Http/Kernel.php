@@ -59,7 +59,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'user-guest' => \App\Http\Middleware\RedirectIfUser::class,
         'business.verified' => \App\Http\Middleware\BindBusinessMiddleware::class,
-        // 'onlyuser' => \App\Http\Middleware\RedirectIfNotVerified::class,
+        'admin.authed' => \App\Http\Middleware\RedirectIfNotAdmin::class,
         'business.guest' => \App\Http\Middleware\RedirectIfBusiness::class,
         'business.authed' => \App\Http\Middleware\RedirectIfNotBusinessAuthenticated::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,

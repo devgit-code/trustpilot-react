@@ -107,7 +107,7 @@ Route::group([
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
-    'middleware' => ['user-guest', 'business.authed', 'business.verified'],
+    'middleware' => ['user-guest', 'business.authed', 'business.verified', 'admin.authed'],
     'as' => 'admin.'
 ], function () {
     Route::get('/', function(){

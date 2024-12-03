@@ -39,7 +39,7 @@ export default function Sidebar({auth}) {
                                     </>
                                 ):(
                                     <>
-                                        <Link href={`${route("admin.profile.logo")}`}>
+                                        <Link href={route("business.profile.logo")}>
                                             <img
                                                 src={userProfilelogo}
                                                 alt="business-logo"
