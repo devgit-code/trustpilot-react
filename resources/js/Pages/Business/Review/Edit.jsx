@@ -40,7 +40,7 @@ const Edit = ({ review, userTotalReviews }) => {
                                 </div>
                             </div>
 
-                            <div className='py-2 border-b border-b-2'>
+                            <div className='py-2'>
                                 <div className='flex items-center justify-between'>
                                     <div className='flex items-center'>
                                         <Rating className="inline-flex" rating={review.rating}/>
@@ -51,7 +51,7 @@ const Edit = ({ review, userTotalReviews }) => {
                                     <h4 className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline capitalize'>{review.title}</h4>
                                     <pre className="text-black whitespace-pre-wrap font-medium h-20">{review.description}</pre>
                                 </div>
-                                <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
+                                <p className='text-sm text-gray-800 mb-0'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
                             </div>
                         </div>
 

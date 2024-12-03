@@ -251,7 +251,7 @@ const Index = () => {
                                             value={gotoPage}
                                             onChange={handlePageChange}
                                             onKeyDown={handleGotoPage} // Trigger on Enter
-                                            className="w-16 border-2 border-gray-200 rounded-l-md px-2 py-1 text-center"
+                                            className="w-14 border-2 border-gray-200 rounded-l-md px-2 py-1 text-center"
                                         />
                                         <span className='px-2 py-2 text-gray-800 border bg-gray-200 rounded-r-md '>/ {pagination.last_page}</span>
                                     </div>

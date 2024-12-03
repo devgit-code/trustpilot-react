@@ -9,6 +9,7 @@ class BusinessCategory extends Model
 {
     use HasFactory;
     protected $fillable = ['business_id', 'sub_category_id'];
+    public $timestamps = false;
 
 
     // public function subcategories()

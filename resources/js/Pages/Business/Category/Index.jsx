@@ -67,10 +67,10 @@ const Index = ({categories}) => {
                                             <td>
                                                 <div className='flex justify-between mx-3'>
                                                     <div className='flex items-center px-3'>
-                                                        <h5 className='mb-0'>{item.name}</h5>
+                                                        <p className='mb-0 text-gray-700'>{item.name}</p>
                                                         {
                                                             item.pivot.is_primary !== 0 && (
-                                                                <p className='ml-3 mb-0 py-1 px-3 rounded-full text-gray-200 bg-primary'>
+                                                                <p className='ml-3 mb-0 py-1 px-4 rounded-full text-sm text-gray-200 bg-primary'>
                                                                     Primary
                                                                 </p>
                                                             )
@@ -79,13 +79,13 @@ const Index = ({categories}) => {
                                                     <div className='flex items-center'>
                                                         {
                                                             item.pivot.is_primary == 0 && (
-                                                                <a className="no-underline mr-3 inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                                                                <a className="no-underline mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
                                                                 Set Primary
                                                                 </a>
                                                             )
                                                         }
 
-                                                        <a className="no-underline mr-3 inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-gray-800 rounded-full bg-yellow-500 hover:bg-yellow-400">
+                                                        <a className="no-underline mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-gray-800 rounded-full bg-yellow-500 hover:bg-yellow-400">
                                                         Remove
                                                         </a>
                                                     </div>

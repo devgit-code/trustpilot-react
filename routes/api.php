@@ -19,4 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/business/reviews', [ReviewController::class, 'apiIndex']);
+Route::middleware([])->group(function () {
+    Route::get('/business/reviews', [ReviewController::class, 'apiIndex']);
+});
