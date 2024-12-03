@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
+import AdminLayout from '@/Layouts/adminLayout';
 import Swal from 'sweetalert2';
 import { BsTrashFill } from "react-icons/bs"
-import { FaEdit } from "react-icons/fa"
+import Select from "react-select";
 
-import AdminLayout from '@/Layouts/adminLayout';
+const Index = ({categories, sub_categories}) => {
+    const [subCategories, setSubCategories] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
 
-const Index = ({categories}) => {
-    console.log("eee===", categories[0].pivot.is_primary)
-
-    const handleDelete = (event, productId) => {
-        event.preventDefault();
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                router.delete(route('business.categories.destroy', productId));
-            }
-        });
+    const handleSelectChange = (option) => {
+        setSelectedOption(option);
     };
+
+    const handleAddClick = () => {
+        console.log('eee', selectedOption)
+        if (selectedOption) {
+            // onAddCategory(selectedOption);
+            router.post(route('business.categories.store'), {
+                'id':selectedOption.value
+            });
+            setSelectedOption(null); // Reset the dropdown
+        }
+    };
+
+    const handleSetAsPrimary = (id) => {
+        router.put(route('business.categories.update', id));
+    };
+
+    const handleDelete = (id) => {
+        router.delete(route('business.categories.destroy', id));
+    };
+
+    useEffect(() => {
+        const formattedData = sub_categories.map((sub) => ({
+            value: sub.id, // Map the ID to the "value" field
+            label: sub.name, // Map the name to the "label" field
+        }));
+        setSubCategories(formattedData);
+    }, []);
 
     return (
         <div className='content-wrapper m-3'>
@@ -34,15 +47,24 @@ const Index = ({categories}) => {
             <div className="row">
                 <div className="col-sm-12">
                     <div className="card">
-                        <div className="m-3 row align-items-center">
-                            <div className="col-lg-6 col-md-12">
+                        <div className="m-3 flex items-center justify-between">
+                            <div className="">
                                 <h3 className="m-0 text-center text-lg-start">Categories</h3>
                             </div>
-                            <div className="col-lg-6 col-md-12">
-                                <div className="text-center text-lg-end">
-                                    <Link href={route('business.categories.create')} className="btn btn-success" type="button">
+                            <div className="flex items-center">
+                                <Select
+                                    options={subCategories}
+                                    value={selectedOption}
+                                    onChange={handleSelectChange}
+                                    placeholder="Select a sub category..."
+                                    isClearable
+                                    className="w-64 inline"
+                                />
+
+                                <div className="ml-4 text-center text-lg-end">
+                                    <button onClick={handleAddClick} className="btn btn-success" type="button">
                                         <i className="fa-solid fa-plus"></i> Add
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -63,13 +85,13 @@ const Index = ({categories}) => {
                                     ):(
                                         <>
                                         {categories.map((item, index) => (
-                                        <tr className="border-bottom-secondary" key={item.id}>
+                                        <tr className="border-bottom-secondary" key={index}>
                                             <td>
                                                 <div className='flex justify-between mx-3'>
                                                     <div className='flex items-center px-3'>
-                                                        <p className='mb-0 text-gray-700'>{item.name}</p>
+                                                        <p className='mb-0 text-gray-700'>{item.sub_category.name}</p>
                                                         {
-                                                            item.pivot.is_primary !== 0 && (
+                                                            item.is_primary !== 0 && (
                                                                 <p className='ml-3 mb-0 py-1 px-4 rounded-full text-sm text-gray-200 bg-primary'>
                                                                     Primary
                                                                 </p>
@@ -78,16 +100,25 @@ const Index = ({categories}) => {
                                                     </div>
                                                     <div className='flex items-center'>
                                                         {
-                                                            item.pivot.is_primary == 0 && (
-                                                                <a className="no-underline mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
-                                                                Set Primary
-                                                                </a>
+                                                            item.is_primary == 0 && (
+                                                                <button
+                                                                    onClick={()=>handleSetAsPrimary(item.id)}
+                                                                    className="no-underline mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                                                                Set as Primary
+                                                                </button>
                                                             )
                                                         }
 
-                                                        <a className="no-underline mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-gray-800 rounded-full bg-yellow-500 hover:bg-yellow-400">
-                                                        Remove
-                                                        </a>
+                                                        {
+                                                            categories.length !== 1 && (
+                                                                <button
+                                                                    onClick={()=>handleDelete(item.id)}
+                                                                    className="mr-3 inline py-1 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-gray-800 rounded-full bg-yellow-500 hover:bg-yellow-400">
+                                                                Remove
+                                                                </button>
+
+                                                            )
+                                                        }
                                                     </div>
                                                 </div>
                                             </td>

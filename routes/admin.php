@@ -90,6 +90,7 @@ Route::group([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
+    Route::post('/categories/primary', [CategoryController::class, 'primary'])->name('categories.primary');
     Route::resource('reviews', ReviewController::class);
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

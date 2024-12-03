@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Business;
 
 use App\Http\Controllers\Controller;
 use App\Models\BusinessCategory;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,13 +15,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $sub_categories = SubCategory::all();
+
         $business = auth('business')->user();
-        $categories = $business->categories;
+        $categories = $business->businessCategories;    //primaryBusinessCategory
 
-        return Inertia::render('Business/Category/Index', compact('categories'));
+        return Inertia::render('Business/Category/Index', compact('categories', 'sub_categories'));
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -33,20 +34,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required|max:255"
+            "id" => "required|max:255"
         ]);
 
+        $business = auth('business')->user();
+        // if(count($business->businessCategories) === 6) //max limit
+
         $creationData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-            "business_id" => auth('business')->user()->id,
+            "sub_category_id" => $request->input('id'),
+            "business_id" => $business->id,
         ];
 
-        Product::create($creationData);
+        BusinessCategory::create($creationData);
 
-        return redirect()->route('business.products.index');
+        return redirect()->route('business.categories.index');
     }
-
 
     /**
      * Display the specified resource.
@@ -59,31 +61,42 @@ class CategoryController extends Controller
 
     public function edit(string $id)
     {
-        $product = Product::find($id);
-        return Inertia::render('Business/Category/Edit', compact('product'));
-    }
 
+    }
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            "name" => "required|max:255"
-        ]);
+        $business = auth('business')->user();
+        $primaryCategory = $business->primaryBusinessCategory;
 
-        $product = Product::findOrFail($id);
+        if($primaryCategory)
+        {
+            $primaryCategory->is_primary = false;
+            $primaryCategory->save();
+        }
 
-        $updateData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-        ];
+        $category = BusinessCategory::findOrFail($id);
+        $category->is_primary = true;
+        $category->save();
 
-        $product->update($updateData);
-        return redirect()->route('business.products.index');
+        return redirect()->route('business.categories.index');
     }
 
-    public function destroy(Product $product)
+    public function destroy(BusinessCategory $category)
     {
-        $product->delete();
-        return redirect()->route('business.products.index')->with('success', 'Role deleted successfully.');
+        $category->delete();
+
+        $business = auth('business')->user();
+        $primaryCategory = $business->primaryBusinessCategory;
+        if(!$primaryCategory){
+            $firstCategory = $business->businessCategories->first();
+
+            if ($firstCategory) {
+                $firstCategory->is_primary = true;
+                $firstCategory->save();
+            }
+        }
+
+        return redirect()->route('business.categories.index')->with('success', 'Role deleted successfully.');
     }
 }

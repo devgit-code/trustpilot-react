@@ -11,6 +11,15 @@ class BusinessCategory extends Model
     protected $fillable = ['business_id', 'sub_category_id'];
     public $timestamps = false;
 
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class, 'sub_category_id');
+    }
 
     // public function subcategories()
     // {
