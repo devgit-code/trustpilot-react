@@ -20,7 +20,15 @@ const Index = () => {
         setLoading(true);
         try {
             const queryString = new URLSearchParams(filters).toString();
-            const response = await fetch(`/api/business/reviews?${queryString}`);
+            const response = await fetch(`/api/business/reviews?${queryString}`,
+            // {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type':'application/json',
+            //     },
+            //     credentials: 'include',
+            // }
+            );
             const data = await response.json();
 
             setReviews(data.reviews);

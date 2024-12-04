@@ -45,7 +45,7 @@ export default function Dashboard(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row mt-3">
                         <div className="col-lg-6 my-1">
                             <div className="card p-4 rounded rounded-4">
                                 <div className="card-title d-flex justify-content-between">

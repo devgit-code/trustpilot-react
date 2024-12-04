@@ -7,6 +7,7 @@ use App\Models\Reply;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -20,12 +21,14 @@ class ReviewController extends Controller
 
     public function apiIndex(Request $request)
     {
+        $business = Auth::guard('business')->user();
+
         $page = $request->input('page', 1); // Default to page 1
         $sortOrder = $request->input('sort_by_date', 'desc');
         $rating = $request->input('rating');
         $searchTerm = $request->input('search');
 
-        $query = Review::query()->with(['user']);
+        $query = Review::query()->where('business_id', $business->id)->with(['user']);
 
         if ($rating) {
             $query->where('rating', $rating);

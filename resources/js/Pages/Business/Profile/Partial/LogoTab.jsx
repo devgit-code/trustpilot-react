@@ -7,7 +7,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import InputError from '@/Components/InputError';
 
 export default function LogoTab({businessProfile}){
-
     const [preview, setPreview] = useState(null); // Preview URL
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         image:null
@@ -61,8 +60,8 @@ export default function LogoTab({businessProfile}){
                 </div>
             ):(
                 <div>
-                    <p className='text-gray-700'>{businessProfile.logo ? 'Company Logo' : 'No Business logo. Please upload'}</p>
-                    <img src={businessProfile.logo ? `/storage/images/logo/${businessProfile.logo}` : profileNotLogo}
+                    <p className='text-gray-700'>{businessProfile?.logo ? 'Company Logo' : 'No Business logo. Please upload'}</p>
+                    <img src={businessProfile?.logo ? `/storage/images/logo/${businessProfile.logo}` : profileNotLogo}
                         alt="Business-logo"
                         style={{ maxWidth: '200px', maxHeight: '200px' }} />
                 </div>

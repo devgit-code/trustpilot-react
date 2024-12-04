@@ -13,9 +13,7 @@ import LogoTab from './Partial/LogoTab'
 import AccountTab from './Partial/AccountTab'
 import ContactTab from './Partial/ContactTab'
 
-const Index = ({businessProfile, activeTab}) => {
-    const { auth } = usePage().props;
-
+const Index = ({businessProfile, activeTab, business}) => {
     // const handleDelete = (event, id) => {
     //     event.preventDefault();
 
@@ -50,7 +48,7 @@ const Index = ({businessProfile, activeTab}) => {
                             >
                             <Tab eventKey="home" title="General">
                                 <div className='bg-white'>
-                                    <HomeTab business={auth.user} businessProfile={businessProfile}/>
+                                    <HomeTab business={business} businessProfile={businessProfile}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="logo" title="Logo">
@@ -60,7 +58,7 @@ const Index = ({businessProfile, activeTab}) => {
                             </Tab>
                             <Tab eventKey="account" title="Account">
                                 <div className='bg-white'>
-                                    <AccountTab business={auth.user}/>
+                                    <AccountTab business={business}/>
                                 </div>
                             </Tab>
                             <Tab eventKey="contact" title="Contact Info">

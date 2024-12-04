@@ -14,11 +14,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $business = auth('business')->user();
+        $products = Product::where('business_id', $business->id)->get();
         return Inertia::render('Business/Product/Index', compact('products'));
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -60,7 +59,6 @@ class ProductController extends Controller
         $product = Product::find($id);
         return Inertia::render('Business/Product/Edit', compact('product'));
     }
-
 
     public function update(Request $request, string $id)
     {
