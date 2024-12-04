@@ -151,7 +151,7 @@ Route::group([
     Route::get('/sub_categories/category/{id}/create', [SubCategoryController::class, 'create'])->name('sub_categories.create');
     Route::post('/sub_categories', [SubCategoryController::class, 'store'])->name('sub_categories.store');
     Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
-    Route::put('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
+    Route::post('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
     Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
 
 });

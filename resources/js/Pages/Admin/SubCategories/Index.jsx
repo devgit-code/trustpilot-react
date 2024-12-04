@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
+
 import AdminLayout from '@/Layouts/adminLayout';
+import Alert from '@/Components/Alert';
 import SearchBar from '@/Components/SearchBar';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Modal, Button } from 'react-bootstrap';
-import SubCategoriesCreate from './Create';
-import SubCategoriesEdit from './Edit';
+
 
 const Index = ({ subCategories, category }) => {
-    console.log('+++++', subCategories)
     const { flash } = usePage().props;
     const [searchQuery, setSearchQuery] = useState('');
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
 
     const handleDelete = (event, id) => {
         event.preventDefault();
@@ -40,62 +36,38 @@ const Index = ({ subCategories, category }) => {
         });
     };
 
-    const handleAddButtonClick = () => {
-        setIsCreateModalOpen(true);
-    };
-
-    const handleEditButtonClick = (subCategory) => {
-        setSelectedSubCategory(subCategory);
-        setIsEditModalOpen(true);
-    };
-
-    const handleCloseCreateModal = () => {
-        setIsCreateModalOpen(false);
-    };
-
-    const handleCloseEditModal = () => {
-        setIsEditModalOpen(false);
-    };
-
-    const handleSubCategoryCreated = () => {
-        handleCloseCreateModal();
-    };
-
-    const handleSubCategoryUpdated = () => {
-        handleCloseEditModal();
-    };
-
     return (
-        <div className="container-fluid basic_table">
-            {flash.message && <div className="alert">{flash.message}</div>}
+        <div className="container-wrapper m-3">
+            {/* {flash.message && (
+                <Alert
+                    message={flash.message}
+                    type="success"
+                    duration={3000} // Alert disappears after 5 seconds
+                />
+            )} */}
             <div className="row">
                 <div className="col-sm-12">
-                    <div className="card border-0 p-3 my-2">
-                        <div className="row g-3 d-flex align-items-center">
-                            <div className="col-lg-3 col-md-12">
+                    <div className="card p-3">
+                        <div className="flex items-center justify-between">
+                            <div className="">
                                 <h5 className="m-0 text-center text-lg-start">
-                                    {category.name}-: Sub Categories
+                                    Sub Categories
                                 </h5>
                             </div>
-                            <div className="col-lg-6 col-md-12 card-body p-0">
+                            <div className="flex items-center">
                                 <SearchBar
                                     searchQuery={searchQuery}
                                     setSearchQuery={setSearchQuery}
                                 />
-                            </div>
-                            <div className="col-lg-2 col-md-12">
-                                <div className="d-flex align-items-center justify-content-end">
-                                    <button
-                                        className="btn btn-success d-flex align-items-center border-0 me-2"
-                                        onClick={handleAddButtonClick}
-                                    >
-                                        <BsPlusCircleFill className="fs-5" />
-                                        <span className="ms-2">Add</span>
-                                    </button>
-                                    <Link as='button' className='btn btn-primary' href={route('admin.categories.index')}>
-                                        <span>Back</span>
-                                    </Link>
-                                </div>
+                                <Link href={route('admin.sub_categories.create', category.id)}
+                                    className="ml-3 btn btn-success d-flex align-items-center border-0 me-2"
+                                >
+                                    <BsPlusCircleFill className="fs-5" />
+                                    <span className="ms-2">Add</span>
+                                </Link>
+                                <Link as='button' className='btn btn-primary' href={route('admin.categories.index')}>
+                                    <span>Back</span>
+                                </Link>
                             </div>
                         </div>
                         <hr />
@@ -105,10 +77,9 @@ const Index = ({ subCategories, category }) => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th scope="col">No</th>
+                                        <th scope="col">Icon</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Slug</th>
                                         <th scope="col">Parent Category</th>
-                                        <th scope="col">Status</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -119,30 +90,29 @@ const Index = ({ subCategories, category }) => {
                                             cat.name.toLowerCase().includes(searchQuery.toLowerCase())
                                         )
                                         .map((cat, index) => (
-                                            <tr key={cat.id} className="border-bottom-secondary">
-                                                <th scope="row">{index + 1}</th>
+                                            <tr key={cat.id} className="border-bottom-secondary align-middle">
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                {cat.image ? (
+                                                    <img src={`/storage/${cat.image}`}
+                                                        alt="sub-category-logo"
+                                                        className='inline'
+                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                ):(
+                                                    <>No image</>
+                                                )}
+                                                </td>
                                                 <td>{cat.name}</td>
-                                                <td>{cat.slug}</td>
                                                 <td>{cat.category.name}</td>
                                                 <td>
-                                                    <span
-                                                        className={`badge ${cat.status === 1 ? 'text-success' : 'text-danger'
-                                                            }`}
-                                                    >
-                                                        {cat.status === 1 ? 'Active' : 'Inactive'}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
+                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                         <li className="edit">
-                                                            <button
-                                                                onClick={() => handleEditButtonClick(cat)}
-                                                            >
+                                                            <Link href={route('admin.sub_categories.edit', cat.id)}>
                                                                 <FontAwesomeIcon
                                                                     icon={faPenToSquare}
                                                                     className="fa-lg text-danger"
                                                                 />
-                                                            </button>
+                                                            </Link>
                                                         </li>
                                                         <li className="delete">
                                                             <Link
@@ -163,38 +133,6 @@ const Index = ({ subCategories, category }) => {
                     </div>
                 </div>
             </div>
-
-            {/* Create Subcategory Modal */}
-            <Modal show={isCreateModalOpen} onHide={handleCloseCreateModal}>
-                <Modal.Body>
-                    <SubCategoriesCreate
-                        category={category}
-                        onClose={handleSubCategoryCreated}
-                    />
-                </Modal.Body>
-            </Modal>
-
-            {/* Edit Subcategory Modal */}
-            {
-                selectedSubCategory && (
-                    <Modal show={isEditModalOpen} onHide={handleCloseEditModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Edit Subcategory</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <SubCategoriesEdit
-                                subCategory={selectedSubCategory}
-                                onClose={handleSubCategoryUpdated}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseEditModal}>
-                                Close
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-                )
-            }
         </div >
     );
 };

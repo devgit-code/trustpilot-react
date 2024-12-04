@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useForm, usePage } from '@inertiajs/react';
+
 import AdminLayout from '@/Layouts/adminLayout';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
 
 const SubCategoriesCreate = ({ category, onClose }) => {
     const { flash } = usePage().props;
-    const { data, setData, post, errors } = useForm({
+    const [preview, setPreview] = useState(null); // Preview URL
+
+    const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
+        image:null,
         name: '',
         category_id: category.id,
         status: 1,
@@ -22,69 +30,100 @@ const SubCategoriesCreate = ({ category, onClose }) => {
         }
     }, [flash]);
 
-    const handleSubmit = (event) => {
+    // Handle file input change
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setData('image', file);
+        clearErrors();
 
-        console.log('--------------++++++++++++++++++++')
+        // Generate preview URL
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreview(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            // setPreview(null);
+        }
+    };
+
+    const handleSubmit = (event) => {
         event.preventDefault();
         post(route('admin.sub_categories.store'), {
             onSuccess: () => {
-                onClose();
+                // onClose();
             },
         });
     };
 
     return (
-        <div>
-            <h1>Create Sub Category</h1>
-            {showFlash && flash.message && <div className="alert">{flash.message}</div>}
+        <div className='container-wrapper m-3'>
+            <div className="card p-3">
+                <h4>Create Sub Category</h4>
+                {showFlash && flash.message && <div className="alert">{flash.message}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                        id="name"
-                        type="text"
-                        value={data.name}
-                        onChange={(e) => setData('name', e.target.value)}
-                        className="form-control"
-                    />
-                    {errors.name && <div className="text-danger">{errors.name}</div>}
-                </div>
-                <div className="form-group">
-                    <label htmlFor="category_id">Parent Category</label>
-                    <select
-                        id="category_id"
-                        value={data.category_id}
-                        onChange={(e) => setData('category_id', e.target.value)}
-                        className="form-control"
-                    >
-                        <option value={category.id}>{category.name}</option>
-                    </select>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <div className="mb-3">
-                            <label className="switch">
-                                <input
-                                    type="checkbox"
-                                    name="status"
-                                    checked={data.status === 1}
-                                    onChange={(e) =>
-                                        setData('status', e.target.checked ? 1 : 0)
-                                    }
-                                />
-                                <span className="switch-state"></span>
-                            </label>
-                        </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="category_id">Parent Category</label>
+                        <select
+                            id="category_id"
+                            value={data.category_id}
+                            className="form-control shadow-none"
+                            disabled
+                        >
+                            <option value={category.id}>{category.name}</option>
+                        </select>
                     </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                    Create
-                </button>
-                <Link href={route('admin.categories.index')} className="btn btn-danger">
-                    Cancel
-                </Link>
-            </form>
+
+                    <div className='mt-4'>
+                        <InputLabel htmlFor="name" value="Name" />
+
+                        <TextInput
+                            id="name"
+                            name="name"
+                            className="mt-1 block w-full"
+                            value={data.name}
+                            onChange={(e)=>setData('name', e.target.value)}
+                            required
+                            isFocused
+                            autoComplete="name"
+                        />
+
+                        <InputError className="mt-2" message={errors.name} />
+                    </div>
+
+                    <div className='mt-4'>
+                        <input
+                            // ref={inputRef}
+                            className="form-control"
+                            id="image-file"
+                            name="image"
+                            type="file"
+                            aria-label="file example"
+                            onChange={handleFileChange}
+                        />
+
+                        <InputError className="mt-2" message={errors.image} />
+                    </div>
+
+                    {preview && (
+                        <div className='mt-2'>
+                            <p className='text-gray-700'>Preview:</p>
+                            <img src={preview} alt="Image Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                        </div>
+                    )}
+
+                    <div className='mt-4'>
+                        <button type="submit" className="btn btn-primary">
+                            Create
+                        </button>
+                        <Link href={route('admin.sub_categories.index', category.id)} className="ml-3 btn btn-danger">
+                            Cancel
+                        </Link>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

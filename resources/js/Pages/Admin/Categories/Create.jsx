@@ -49,7 +49,7 @@ const CategoriesCreate = ({ onClose }) => {
         <div className='container-wrapper m-3'>
             <div className="card p-3">
 
-                <h1>Create Category</h1>
+                <h4>Create Category</h4>
                 {flash.message && (
                     <div className="alert">{flash.message}</div>
                 )}

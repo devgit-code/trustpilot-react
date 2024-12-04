@@ -49,7 +49,7 @@ const CategoryEdit = ({ category, onClose }) => {
         <div className='container-wrapper m-3'>
             <div className="card p-3">
 
-                <h1>Edit Category</h1>
+                <h4>Edit Category</h4>
                 {flash.message && (
                     <div className="alert">{flash.message}</div>
                 )}

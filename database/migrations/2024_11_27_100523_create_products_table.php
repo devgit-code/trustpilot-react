@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image')->nullable();
             $table->unsignedBigInteger('business_id')->index();
-            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             $table->timestamps();
         });
     }
