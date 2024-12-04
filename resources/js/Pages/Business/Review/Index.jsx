@@ -6,11 +6,11 @@ import { BsTrashFill, BsPlusCircleFill, BsArrowDownShort, BsArrowUpShort } from 
 import { FaReply  } from "react-icons/fa"
 import moment from "moment";
 import Swal from 'sweetalert2';
-
+import Rating from '@/Components/Ratings';
 
 const Index = () => {
-    const [reviews, setReviews] = useState([]);
     const [filters, setFilters] = useState({ sort_by_date: "desc", rating: "", search:"", page:1 });
+    const [reviews, setReviews] = useState([]);
     const [pagination, setPagination] = useState({});
     const [loading, setLoading] = useState(false);
     const [gotoPage, setGotoPage] = useState(""); // Input for "Go to Page"
@@ -206,8 +206,13 @@ const Index = () => {
                                             {reviews.map((item, index) => (
                                             <tr className="border-bottom-secondary" key={item.id}>
                                                 <td>{index + 1}</td>
-                                                <td>{item.title}</td>
-                                                <td>{item.rating}</td>
+                                                <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td>
+                                                <td>
+                                                    <div className='inline-flex items-center'>
+                                                        <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>
+                                                        <span className='ml-2 text-gray-800'>({item.rating})</span>
+                                                    </div>
+                                                </td>
                                                 <td>{moment(item.date_experience).format("MMM D, YYYY")}</td>
                                                 <td>{item.user.name}</td>
                                                 <td>
