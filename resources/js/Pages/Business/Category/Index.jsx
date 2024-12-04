@@ -6,6 +6,16 @@ import Swal from 'sweetalert2';
 import { BsTrashFill } from "react-icons/bs"
 import Select from "react-select";
 
+const customStyles = {
+  input: (provided) => ({
+    ...provided,
+    boxShadow: "none", // Remove any focus shadow
+    border: "none", // Remove the input border
+    outline: "none", // Remove the browser outline
+  }),
+};
+
+
 const Index = ({categories, sub_categories}) => {
     const [subCategories, setSubCategories] = useState([]);
     const [selectedOption, setSelectedOption] = useState(null);
@@ -55,6 +65,7 @@ const Index = ({categories, sub_categories}) => {
                                 <Select
                                     options={subCategories}
                                     value={selectedOption}
+                                    styles={customStyles}
                                     onChange={handleSelectChange}
                                     placeholder="Select a sub category..."
                                     isClearable
@@ -92,7 +103,7 @@ const Index = ({categories, sub_categories}) => {
                                                         <p className='mb-0 text-gray-700'>{item.sub_category.name}</p>
                                                         {
                                                             item.is_primary !== 0 && (
-                                                                <p className='ml-3 mb-0 py-1 px-4 rounded-full text-sm text-gray-200 bg-primary'>
+                                                                <p className='ml-5 mb-0 py-1 px-3 rounded-full text-sm text-gray-200 bg-primary'>
                                                                     Primary
                                                                 </p>
                                                             )

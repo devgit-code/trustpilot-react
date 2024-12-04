@@ -40,7 +40,7 @@ export default function Dashboard(props) {
                                         <Rating className="" width="w-10" height="w-10" rating={props.average_rating}/>
                                         <span className='ml-3 text-gray-800 font-bold !text-4xl'>{props.average_rating}</span>
                                     </div>
-                                    <p className="mb-0 text-gray-700">Total reviews: <span className='!text-2xl font-semibold text-gray-600'>{props.total_reviews}</span></p>
+                                    <p className="mb-0 text-gray-700 mt-3">Total reviews: <span className='!text-2xl font-semibold text-gray-600'>{props.total_reviews}</span></p>
                                 </div>
                             </div>
                         </div>
