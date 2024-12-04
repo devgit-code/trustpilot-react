@@ -25,7 +25,7 @@ const Edit = ({ review, userTotalReviews }) => {
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
-                        <h4 className="card-title">Review From</h4>
+                        <h4 className="card-title">Detail</h4>
                         <div className='p-4 bg-white border rounded'>
                             <div className=' pb-3 border-b border-b-2 flex items-center'>
                                 <UserAvatar user={review.user} avatar_url={review.user?.profile.image} width='3rem' height='3rem'/>

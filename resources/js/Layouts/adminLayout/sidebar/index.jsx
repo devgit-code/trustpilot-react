@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js"
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
 
-import userProfilelogo from '@/../images/company-logo.png';
+import businessProfilelogo from '@/../images/company-logo.png';
 import adminProfilelogo from '@/../images/admin-logo.webp';
 
 export default function Sidebar({auth}) {
@@ -41,7 +41,7 @@ export default function Sidebar({auth}) {
                                     <>
                                         <Link href={route("business.profile.logo")}>
                                             <img
-                                                src={userProfilelogo}
+                                                src={businessProfilelogo}
                                                 alt="business-logo"
                                                 className="mx-auto"
                                                 width="100"
