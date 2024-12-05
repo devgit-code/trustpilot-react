@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
-import { FaReply  } from "react-icons/fa"
+import { FaReply, FaFlag } from "react-icons/fa"
 import moment from "moment";
 import Rating from '@/Components/Ratings';
 
@@ -154,7 +154,7 @@ export default function ReviewTable({setting}){
                         <thead>
                             <tr className="border-bottom-primary">
                                 <th>No</th>
-                                <th>{setting.mode == 'user' ? 'User' : 'Business'}</th>
+                                <th>{setting.header_name == 'user' ? 'User' : 'Business'}</th>
                                 <th>Rating</th>
                                 <th>Title</th>
                                 <th>Date</th>
@@ -182,7 +182,7 @@ export default function ReviewTable({setting}){
                                     {reviews.map((item, index) => (
                                     <tr className="border-bottom-secondary align-middle" key={item.id}>
                                         <td>{index + 1}</td>
-                                        <td>{setting.mode == 'user' ? item.user.name : item.business.company_name}</td>
+                                        <td>{setting.header_name == 'user' ? item.user.name : item.business.company_name}</td>
                                         <td>
                                             <div className='inline-flex items-center'>
                                                 <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>
@@ -198,6 +198,15 @@ export default function ReviewTable({setting}){
                                                         <FaReply  className='text-primary fs-4 me-2' />
                                                     </Link>
                                                 </li>
+                                                {/* {
+                                                    setting.has_flag && (
+                                                        <li className="edit">
+                                                            <Link href={route(setting.show_link, item.id)}>
+                                                                <FaFlag  className='text-gray-800/70 italic fs-4 me-2' />
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                } */}
                                                 {/* <form
                                                     onSubmit={(e) => handleDelete(e, item.id)}
                                                     method="POST"

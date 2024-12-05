@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('rating');
+            $table->integer('useful')->default(0);
             $table->date('date_experience');
             $table->boolean('status')->default(false);
             $table->unsignedBigInteger('user_id')->index();

@@ -25,7 +25,8 @@ const Index = () => {
         title: 'Reviews',
         url: '/api/business/reviews',
         show_link: 'business.reviews.edit',
-        mode:'user'
+        header_name:'user',
+        // has_flag: 'true'
     }
 
     return (

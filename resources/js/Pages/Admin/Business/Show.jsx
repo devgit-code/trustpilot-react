@@ -14,7 +14,7 @@ const Show = ({ business }) => {
         title: 'Reviews',
         url: '/api/admin/businesses/' + business.id,
         show_link: 'admin.reviews.show',
-        mode:'business'
+        header_name:'business'
     }
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({

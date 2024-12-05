@@ -17,7 +17,7 @@ const Show = ({ user, userProfile }) => {
         title: 'Reviews',
         url: '/api/admin/users/' + user.id,
         show_link: 'admin.reviews.show',
-        mode:'user'
+        header_name:'user'
     }
 
     const [show, setShow] = useState(false);

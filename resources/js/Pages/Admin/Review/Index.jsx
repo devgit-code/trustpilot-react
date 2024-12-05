@@ -183,6 +183,8 @@ const Index = () => {
                                         <th>Rating</th>
                                         <th>User</th>
                                         <th>Date</th>
+                                        <th>Useful</th>
+                                        <th>Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
@@ -217,6 +219,12 @@ const Index = () => {
                                                 </td>
                                                 <td>{item.user.name}</td>
                                                 <td>{moment(item.date_experience).fromNow()}</td>
+                                                <td>{item.useful}</td>
+                                                <td>
+                                                    <span className={`badge ${item.status ? 'text-danger' : 'text-success'}`}>
+                                                        {item.status ? 'Flag' : 'Normal'}
+                                                    </span>
+                                                </td>
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                         <li className="edit">
