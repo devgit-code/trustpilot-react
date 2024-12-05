@@ -28,7 +28,7 @@ class ReviewController extends Controller
         $rating = $request->input('rating');
         $searchTerm = $request->input('search');
 
-        $query = Review::query()->where('business_id', $business->id)->with(['user']);
+        $query = Review::query()->where('business_id', $business->id)->with(['user', 'business']);
 
         if ($rating) {
             $query->where('rating', $rating);

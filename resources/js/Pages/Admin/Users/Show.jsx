@@ -6,12 +6,19 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
+import ReviewTable from '@/Components/ReviewTable';
 
 import "cropperjs/dist/cropper.css";
 import ImageCropper from "@/Components/ImageCropper";
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
 const Show = ({ user, userProfile }) => {
+    const table_setting = {
+        title: 'Reviews',
+        url: '/api/admin/users/' + user.id,
+        show_link: 'admin.reviews.show',
+        mode:'user'
+    }
 
     const [show, setShow] = useState(false);
     const [image, setImage] = useState(null);
@@ -199,6 +206,10 @@ const Show = ({ user, userProfile }) => {
                             aspectRatio={1}
                         />
                     )}
+                </div>
+
+                <div className='mt-3 p-3 card'>
+                    <ReviewTable setting={table_setting}/>
                 </div>
             </div>
         </>

@@ -25,7 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware([])->group(function () {
     Route::get('/business/reviews', [ReviewController::class, 'apiIndex']);
 
-    Route::get('/admin/users', [UserController::class, 'apiIndex']);
     Route::get('/admin/reviews', [AdminReviewController::class, 'apiIndex']);
+    Route::get('/admin/users', [UserController::class, 'apiIndex']);
+    Route::get('/admin/users/{user_id}', [UserController::class, 'apiDetail']);
     Route::get('/admin/businesses', [BusinessController::class, 'apiIndex']);
+    Route::get('/admin/businesses/{business_id}', [BusinessController::class, 'apiDetail']);
 });

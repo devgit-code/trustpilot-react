@@ -5,10 +5,18 @@ import AdminLayout from '@/Layouts/adminLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import ReviewTable from '@/Components/ReviewTable';
 
 import profileNotLogo from '@/../images/company-logo.png';
 
 const Show = ({ business }) => {
+    const table_setting = {
+        title: 'Reviews',
+        url: '/api/admin/businesses/' + business.id,
+        show_link: 'admin.reviews.show',
+        mode:'business'
+    }
+
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
         website: business.website,
@@ -241,6 +249,10 @@ const Show = ({ business }) => {
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <div className='mt-3 p-3 card'>
+                    <ReviewTable setting={table_setting}/>
                 </div>
             </div>
         </div>

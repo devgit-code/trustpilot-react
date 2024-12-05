@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -33,7 +34,7 @@ class BusinessController extends Controller
 
         // Paginate the results
         $data = $query->paginate(10, ['*'], 'page', $page);
-        $businesses = $data->getCollection()->map(function ($business, $index) {
+        $businesses = collect($data->items())->map(function ($business, $index) {
             $business['trustscore'] = round($business->reviews->avg('rating'), 1);
             $business['reviews_count'] = count($business->reviews);
             return $business;
@@ -85,6 +86,59 @@ class BusinessController extends Controller
     public function edit(String $id)
     {
         //
+    }
+
+
+    public function apiDetail(Request $request, string $id)
+    {
+        logger('hrer' . $id);
+        $business = Business::where('id', $id)->with('profile')->first();
+
+        $page = $request->input('page', 1); // Default to page 1
+        $sortOrder = $request->input('sort_by_date', 'desc');
+        $rating = $request->input('rating');
+        $searchTerm = $request->input('search');
+
+        $query = Review::query()->where('business_id', $business->id)->with(['user', 'business']);
+
+        if ($rating) {
+            $query->where('rating', $rating);
+        }
+
+        if($searchTerm){
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                        $userQuery->where('name', 'like', "%{$searchTerm}%");
+                    });
+                    // ->orWhereHas('business', function ($businessQuery) use ($searchTerm) {
+                    //     $businessQuery->where('name', 'like', "%{$searchTerm}%");
+                    // });
+            });
+        }
+
+        $query->orderBy('date_experience', $sortOrder);
+
+        // Paginate the results
+        $reviews = $query->paginate(10, ['*'], 'page', $page);
+
+        return response()->json([
+            'reviews' => $reviews->items(),
+            'filters' => $request->only('sort_by_date', 'rating'),
+            'pagination' => [
+                'current_page' => $reviews->currentPage(),
+                'last_page' => $reviews->lastPage(),
+                'per_page' => $reviews->perPage(),
+                'total' => $reviews->total(),
+                'links' => [
+                    'first' => $reviews->url(1),
+                    'last' => $reviews->url($reviews->lastPage()),
+                    'next' => $reviews->nextPageUrl(),
+                    'prev' => $reviews->previousPageUrl(),
+                ],
+            ],
+        ]);
+
     }
 
 
