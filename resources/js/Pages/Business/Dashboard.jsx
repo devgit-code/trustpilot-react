@@ -37,6 +37,7 @@ export default function Dashboard(props) {
 
                                 <div className="text-center">
                                     <div className='flex items-center justify-center'>
+
                                         <Rating className="" width="w-10" height="w-10" rating={props.average_rating}/>
                                         <span className='ml-3 text-gray-800 font-bold !text-4xl'>{props.average_rating}</span>
                                     </div>

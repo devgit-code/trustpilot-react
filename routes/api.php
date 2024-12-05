@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Business\ReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\BusinessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,5 @@ Route::middleware([])->group(function () {
 
     Route::get('/admin/users', [UserController::class, 'apiIndex']);
     Route::get('/admin/reviews', [AdminReviewController::class, 'apiIndex']);
+    Route::get('/admin/businesses', [BusinessController::class, 'apiIndex']);
 });

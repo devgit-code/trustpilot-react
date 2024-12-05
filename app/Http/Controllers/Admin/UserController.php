@@ -57,7 +57,7 @@ class UserController extends Controller
 
         return response()->json([
             'users' => $users->items(),
-            'filters' => $request->only('sort_by_date', 'rating'),
+            'filters' => $request->only('page', 'search'),
             'pagination' => [
                 'current_page' => $users->currentPage(),
                 'last_page' => $users->lastPage(),

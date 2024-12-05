@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import { CiMenuKebab } from 'react-icons/ci';
+import { BsTrashFill } from "react-icons/bs"
+import { CgMenuBoxed } from "react-icons/cg";
+
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Swal from 'sweetalert2';
@@ -185,32 +187,25 @@ const Index = () => {
                                         </span>
                                     </td>
                                     <td data-label="email">{user.review_count}</td>
-                                    <td data-label="Membership" style={{paddingRight:'5%'}}>
-                                        <div className="btn-group t_dropdown">
-                                            <CiMenuKebab
-                                                className="text-dark"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            />
-                                            <ul className="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <Link href={route('admin.users.edit', user.id)} className="dropdown-item">
-                                                        View Detail
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link
-                                                        as="button"
-                                                        // href={route('admin.users.destroy', user.id)}
-                                                        onClick={()=>handleDelete(user.id)}
-                                                        className="dropdown-item"
-                                                        // method="delete"
-                                                    >
-                                                        Delete
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <td data-label="">
+                                        <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
+                                            <li className="edit">
+                                                <Link href={route('admin.users.edit', user.id)}>
+                                                    <CgMenuBoxed className='text-primary fs-4 me-2' />
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    as="button"
+                                                    // href={route('admin.users.destroy', user.id)}
+                                                    onClick={()=>handleDelete(user.id)}
+                                                    className="dropdown-item"
+                                                    // method="delete"
+                                                >
+                                                    <BsTrashFill className="text-danger fs-4" />
+                                                </Link>
+                                            </li>
+                                        </ul>
                                     </td>
                                 </tr>
                             ))}

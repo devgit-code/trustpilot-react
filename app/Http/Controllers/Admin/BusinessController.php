@@ -14,10 +14,48 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $businesses = Business::all();
-        return Inertia::render('Admin/Business/Index', compact('businesses'));
+        return Inertia::render('Admin/Business/Index');
     }
 
+    public function apiIndex(Request $request)
+    {
+        $page = $request->input('page', 1); // Default to page 1
+        $searchTerm = $request->input('search');
+
+        $query = Business::query()->where('role', 'owner')->with(['profile']);
+
+        if($searchTerm){
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('company_name', 'like', "%{$searchTerm}%");
+                    // ->where('company_name', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Paginate the results
+        $data = $query->paginate(10, ['*'], 'page', $page);
+        $businesses = $data->getCollection()->map(function ($business, $index) {
+            $business['trustscore'] = round($business->reviews->avg('rating'), 1);
+            $business['reviews_count'] = count($business->reviews);
+            return $business;
+        });
+
+        return response()->json([
+            'businesses' => $businesses,
+            'filters' => $request->only('page', 'search'),
+            'pagination' => [
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'per_page' => $data->perPage(),
+                'total' => $data->total(),
+                'links' => [
+                    'first' => $data->url(1),
+                    'last' => $data->url($data->lastPage()),
+                    'next' => $data->nextPageUrl(),
+                    'prev' => $data->previousPageUrl(),
+                ],
+            ],
+        ]);
+    }
 
 
     /**
@@ -30,19 +68,7 @@ class BusinessController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            "name" => "required|max:255"
-        ]);
 
-        $creationData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-            "business_id" => auth('business')->user()->id,
-        ];
-
-        Product::create($creationData);
-
-        return redirect()->route('business.products.index');
     }
 
 
@@ -55,33 +81,21 @@ class BusinessController extends Controller
     }
 
 
-    public function edit(string $id)
+    public function edit(String $id)
     {
-        $product = Product::find($id);
-        return Inertia::render('Business/Product/Edit', compact('product'));
+        $business = Business::where('id', $id)->with('profile')->first();
+        return Inertia::render('Admin/Business/Edit', compact('business'));
     }
 
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            "name" => "required|max:255"
-        ]);
 
-        $product = Product::findOrFail($id);
-
-        $updateData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-        ];
-
-        $product->update($updateData);
-        return redirect()->route('business.products.index');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Business $business)
     {
-        $product->delete();
-        return redirect()->route('business.products.index')->with('success', 'Role deleted successfully.');
+        $business->delete();
+        return redirect()->route('admin.businesses.index')->with('success', 'Role deleted successfully.');
     }
 }
