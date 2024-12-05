@@ -91,7 +91,6 @@ class BusinessController extends Controller
 
     public function apiDetail(Request $request, string $id)
     {
-        logger('hrer' . $id);
         $business = Business::where('id', $id)->with('profile')->first();
 
         $page = $request->input('page', 1); // Default to page 1

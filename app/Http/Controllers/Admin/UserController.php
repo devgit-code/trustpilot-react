@@ -86,7 +86,6 @@ class UserController extends Controller
 
     public function apiDetail(Request $request, string $id)
     {
-        logger('hrer' . $id);
         $user = User::where('id', $id)->with('profile')->first();
 
         $page = $request->input('page', 1); // Default to page 1
