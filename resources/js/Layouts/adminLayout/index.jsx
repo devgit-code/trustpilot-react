@@ -13,6 +13,7 @@ const AdminLayout = ({ children }) => {
             <Head>
                 <title>Dashboard</title>
                 <meta name="description" content="Your page description" />
+                <meta name="csrf-token" content="{{ csrf_token() }}" />
             </Head>
             {/* Bootstrap icons */}
             <link

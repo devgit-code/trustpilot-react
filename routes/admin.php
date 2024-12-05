@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -21,7 +23,7 @@ use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\UserProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BlogController;
 
 
 // admin auth
@@ -110,6 +112,7 @@ Route::group([
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
     Route::resource('reviews', AdminReviewController::class);
+    Route::resource('blogs', BlogController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Business\ReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\BusinessController;
+use App\Http\Controllers\Admin\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,6 @@ Route::middleware([])->group(function () {
     Route::get('/admin/users/{user_id}', [UserController::class, 'apiDetail']);
     Route::get('/admin/businesses', [BusinessController::class, 'apiIndex']);
     Route::get('/admin/businesses/{business_id}', [BusinessController::class, 'apiDetail']);
+
+    Route::post('/admin/blogs', [BlogController::class, 'store']);
 });
