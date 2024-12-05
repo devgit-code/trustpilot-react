@@ -127,7 +127,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('admin.testimonials.index')} active={route().current('admin.testimonials.index')}
+                                        href={route('admin.sponsors.index')} active={route().current('admin.sponsors.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>

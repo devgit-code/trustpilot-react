@@ -17,22 +17,14 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\AdminReviewController;
-use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\ClassifiedAdController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SponsorController;
-use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\SubCategoryController;
-use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 
-// business
+// admin auth
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['user-guest', 'business.guest'],
@@ -77,6 +69,7 @@ Route::group([
 });
 
 
+//business
 Route::group([
     'namespace' => 'App\Http\Controllers\Business',
     'prefix' => 'business',
@@ -101,9 +94,10 @@ Route::group([
     Route::put('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
     Route::post('/profile/update/logo', [ProfileController::class, 'logo_update'])->name('profile.update.logo');
 
-
 });
 
+
+//super admin
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => 'admin',
@@ -126,12 +120,7 @@ Route::group([
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/slides/sort', [SliderController::class, 'sort'])->name('slides.sort');
-    Route::post('/slides/updateOrder', [SliderController::class, 'updateOrder'])->name('slides.updateOrder');
-    Route::resource('slides', SliderController::class);
-    Route::get('/testimonials/sort', [TestimonialController::class, 'sort'])->name('testimonials.sort');
-    Route::post('/testimonials/updateOrder', [TestimonialController::class, 'updateOrder'])->name('testimonials.updateOrder');
-    Route::resource('/testimonials', TestimonialController::class);
+
     Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
     Route::post('/sponsors/updateOrder', [SponsorController::class, 'updateOrder'])->name('sponsors.updateOrder');
     Route::resource('/sponsors', SponsorController::class);
@@ -146,7 +135,6 @@ Route::group([
     Route::post('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
 
-    Route::resource('classifiedAds', ClassifiedAdController::class);
     Route::get('/sub_categories/category/{id}', [SubCategoryController::class, 'index'])->name('sub_categories.index');
     Route::get('/sub_categories/category/{id}/create', [SubCategoryController::class, 'create'])->name('sub_categories.create');
     Route::post('/sub_categories', [SubCategoryController::class, 'store'])->name('sub_categories.store');
