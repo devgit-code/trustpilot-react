@@ -88,7 +88,7 @@ const Show = ({ review, userTotalReviews }) => {
                                 </div>
                             </div>
 
-                            <div className='py-2 border-b-2 '>
+                            <div className='py-2 '>
                                 <div className='mt-3 bg-[#edeef0] m-2'>
                                     <h4 className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline capitalize'>{review.title}</h4>
                                     <pre className="text-black whitespace-pre-wrap font-medium h-20 p-2">{review.description}</pre>
@@ -97,26 +97,23 @@ const Show = ({ review, userTotalReviews }) => {
                             </div>
                             {
                                 data.reply && (
-                                    // <div>
-                                    //     <p>Reply from: {review.business.company_name}</p>
-                                    //     <pre className="text-black whitespace-pre-wrap font-medium h-20 ">{data.reply}</pre>
-                                    // </div>
+                                    <div className='border-t-2'>
+                                        <div className='mt-3 bg-[#F1F1E8] rounded-lg border-l-4 p-3 border-blue-500 flex'>
+                                            <div><FaReply className='text-gray-700 mt-1'/></div>
+                                            <div className='ml-3 flex-grow'>
+                                                <div className='flex items-center justify-between'>
+                                                    <a className='text-sm text-gray-800 font-bold no-underline'>
+                                                    Reply from {review.business.company_name}
+                                                    </a>
+                                                    <p className='mb-0 text-sm'>
+                                                    Updated {moment(review.reply.updated_at).fromNow()}
+                                                    </p>
+                                                </div>
 
-                <div className='mt-3 bg-[#F1F1E8] rounded-lg border-l-4 p-3 border-blue-500 flex'>
-                    <div><FaReply className='text-gray-700 mt-1'/></div>
-                    <div className='ml-3 flex-grow'>
-                        <div className='flex items-center justify-between'>
-                            <a className='text-sm text-gray-800 font-bold no-underline'>
-                            Reply from {review.business.company_name}
-                            </a>
-                            <p className='mb-0 text-sm'>
-                            Updated {moment(review.reply.updated_at).fromNow()}
-                            </p>
-                        </div>
-
-                        <pre className="mt-3 text-black text-sm whitespace-pre-wrap font-medium">{review.reply.comment}</pre>
-                    </div>
-                </div>
+                                                <pre className="mt-3 text-black text-sm whitespace-pre-wrap font-medium">{review.reply.comment}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
                                     // <form onSubmit={handleSubmit}>
                                     //     <div>
                                     //         <InputLabel className='mt-3 text-xl font-bold' htmlFor="reply" value={`Reply from: ${review.business.company_name}`} />

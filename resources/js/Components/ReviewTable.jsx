@@ -180,13 +180,13 @@ export default function ReviewTable({setting}){
                                 ):(
                                     <>
                                     {reviews.map((item, index) => (
-                                    <tr className="border-bottom-secondary" key={item.id}>
+                                    <tr className="border-bottom-secondary align-middle" key={item.id}>
                                         <td>{index + 1}</td>
                                         <td>{setting.mode == 'user' ? item.user.name : item.business.company_name}</td>
                                         <td>
                                             <div className='inline-flex items-center'>
                                                 <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>
-                                                <span className='ml-2 text-gray-800'>({item.rating})</span>
+                                                {/* <span className='ml-2 text-gray-800'>({item.rating})</span> */}
                                             </div>
                                         </td>
                                         <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td>
@@ -237,6 +237,7 @@ export default function ReviewTable({setting}){
                             {/* Go to Page */}
                             <div className='mx-1'>
                                 <input
+                                    id="page"
                                     value={gotoPage}
                                     onChange={handlePageChange}
                                     onKeyDown={handleGotoPage} // Trigger on Enter

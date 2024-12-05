@@ -165,7 +165,7 @@ const Index = () => {
                                             <td>
                                                 <div className='inline-flex items-center'>
                                                     <Rating className="inline-flex" width="w-5" height="w-5" rating={item.trustscore}/>
-                                                    <span className='ml-2 text-gray-800'>({item.trustscore} /{item.reviews_count})</span>
+                                                    <span className='ml-2 text-gray-800'>{item.trustscore} ({item.reviews_count})</span>
                                                 </div>
                                             </td>
                                             <td>
@@ -218,6 +218,7 @@ const Index = () => {
                                 {/* Go to Page */}
                                 <div className='mx-1'>
                                     <input
+                                        id="page"
                                         value={gotoPage}
                                         onChange={handlePageChange}
                                         onKeyDown={handleGotoPage} // Trigger on Enter

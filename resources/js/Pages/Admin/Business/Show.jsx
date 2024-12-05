@@ -73,7 +73,7 @@ const Show = ({ business }) => {
                                             required
                                             isFocused
                                             disabled
-                                            autoComplete="company_name"
+                                            autoComplete="company name"
                                         />
 
                                         <InputError className="mt-2" message={errors.company_name} />
@@ -125,7 +125,7 @@ const Show = ({ business }) => {
                                             onChange={(e)=>setData('last_name', e.target.value)}
                                             disabled
                                             required
-                                            autoComplete="last_name"
+                                            autoComplete="last name"
                                         />
 
                                         <InputError className="mt-2" message={errors.last_name} />

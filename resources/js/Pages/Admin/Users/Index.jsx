@@ -232,6 +232,7 @@ const Index = () => {
                         {/* Go to Page */}
                         <div className='mx-1'>
                             <input
+                                id="page"
                                 value={gotoPage}
                                 onChange={handlePageChange}
                                 onKeyDown={handleGotoPage} // Trigger on Enter
