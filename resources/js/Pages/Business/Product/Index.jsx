@@ -10,7 +10,6 @@ import AdminLayout from '@/Layouts/adminLayout';
 const Index = ({products}) => {
     const handleDelete = (event, productId) => {
         event.preventDefault();
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

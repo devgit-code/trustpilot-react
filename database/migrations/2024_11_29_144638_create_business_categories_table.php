@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_primary')->default(false);
             $table->unsignedBigInteger('sub_category_id')->index();
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('restrict');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
             $table->unsignedBigInteger('business_id')->index();
-            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');
-            $table->timestamps();
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
+            // $table->timestamps();
         });
     }
 

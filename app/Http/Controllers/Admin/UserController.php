@@ -7,20 +7,52 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
-
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        $users = $users->map(function ($user, $index) {
-            $user['serialNumber'] = $index + 1;
+        return Inertia::render('Admin/Users/Index');
+    }
+
+    public function apiIndex(Request $request)
+    {
+        $page = $request->input('page', 1); // Default to page 1
+        $searchTerm = $request->input('search');
+
+        $query = User::query()->with(['profile']);
+
+        if($searchTerm){
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Paginate the results
+        $data = $query->paginate(10, ['*'], 'page', $page);
+        $users = $data->map(function ($user, $index) {
+            $user['reviews_count'] = count($user->reviews);
             return $user;
         });
-        return Inertia::render('Admin/Users/Index', [
-            'users' => $users, 'Index'
+
+        return response()->json([
+            'users' => $data->items(),
+            'filters' => $request->only('page', 'search'),
+            'pagination' => [
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'per_page' => $data->perPage(),
+                'total' => $data->total(),
+                'links' => [
+                    'first' => $data->url(1),
+                    'last' => $data->url($data->lastPage()),
+                    'next' => $data->nextPageUrl(),
+                    'prev' => $data->previousPageUrl(),
+                ],
+            ],
         ]);
     }
 
@@ -46,15 +78,67 @@ class UserController extends Controller
     {
         return Inertia::render('Admin/Users/Show', [
             'user' => $user,
+            'userProfile' => $user->profile,
         ]);
+    }
+
+
+
+    public function apiDetail(Request $request, string $id)
+    {
+        logger('hrer' . $id);
+        $user = User::where('id', $id)->with('profile')->first();
+
+        $page = $request->input('page', 1); // Default to page 1
+        $sortOrder = $request->input('sort_by_date', 'desc');
+        $rating = $request->input('rating');
+        $searchTerm = $request->input('search');
+
+        $query = Review::query()->where('user_id', $user->id)->with(['user', 'business']);
+
+        if ($rating) {
+            $query->where('rating', $rating);
+        }
+
+        if($searchTerm){
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                        $userQuery->where('name', 'like', "%{$searchTerm}%");
+                    });
+                    // ->orWhereHas('business', function ($businessQuery) use ($searchTerm) {
+                    //     $businessQuery->where('name', 'like', "%{$searchTerm}%");
+                    // });
+            });
+        }
+
+        $query->orderBy('date_experience', $sortOrder);
+
+        // Paginate the results
+        $reviews = $query->paginate(10, ['*'], 'page', $page);
+
+        return response()->json([
+            'reviews' => $reviews->items(),
+            'filters' => $request->only('sort_by_date', 'rating'),
+            'pagination' => [
+                'current_page' => $reviews->currentPage(),
+                'last_page' => $reviews->lastPage(),
+                'per_page' => $reviews->perPage(),
+                'total' => $reviews->total(),
+                'links' => [
+                    'first' => $reviews->url(1),
+                    'last' => $reviews->url($reviews->lastPage()),
+                    'next' => $reviews->nextPageUrl(),
+                    'prev' => $reviews->previousPageUrl(),
+                ],
+            ],
+        ]);
+
     }
 
 
     public function edit(User $user)
     {
-        return Inertia::render('Admin/Users/Edit', [
-            'user' => $user,
-        ]);
     }
     public function userRoles($id)
     {

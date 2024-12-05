@@ -32,17 +32,29 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $authenticated = auth('web')->check()
-            ? auth('web')->user() // Default 'web' guard
-            : (auth('business')->check() ? auth('business')->user() : null); // 'business' guard
-
-        // $profile = auth('web')->check()
-        //     ? UserProfile::where('user_id', $request->user()->id)->first() // Default 'web' guard
-        //     : (auth('business')->check() ? UserProfile::where('user_id', $request->user()->id)->first() : null);
-
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $authenticated,
+                'user' => function(){
+                    if(auth('web')->check()){
+                        $user = auth()->user();
+                        return [
+                            'id'=>$user->id,
+                            'name'=>$user->name,
+                            'email'=>$user->email,
+                            'email_verified_at'=>$user->email_verified_at,
+                        ];
+                    }else if(auth('business')->check()){
+                        $business = auth('business')->user();
+                        return [
+                            'id'=>$business->id,
+                            'company_name'=>$business->company_name,
+                            'first_name'=>$business->first_name,
+                            'last_name'=>$business->last_name,
+                            'role'=>$business->role,
+                        ];
+                    }
+                    return null;
+                },
                 'userProfileImage' => function () {
                     if(auth('web')->check()){
                         $user = auth()->user();

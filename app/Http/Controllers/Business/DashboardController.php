@@ -14,50 +14,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $cities = City::all();
-        return Inertia::render('Business/Dashboard');
-    }
+        $business = auth('business')->user();
+        $averageRating = $business->reviews->avg('rating');
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-
-    }
-
-    public function store(Request $request)
-    {
-
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-
-    public function edit(string $id)
-    {
-
-    }
-
-
-    public function update(Request $request, string $id)
-    {
-
-    }
-
-
-
-    public function destroy(string $id)
-    {
-        //
+        return Inertia::render('Business/Dashboard', [
+            'average_rating' => round($averageRating, 1),
+            'total_reviews' => count($business->reviews),
+            'total_products' => count($business->products),
+        ]);
     }
 }

@@ -18,6 +18,7 @@ class ProfileController extends Controller
 
         return Inertia::render('Business/Profile/Index', [
             'businessProfile' => $businessProfile,
+            'business' => $business,
             'activeTab'=>session('activeTab') ?? 'home'
         ]);
     }

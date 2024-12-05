@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -35,12 +36,20 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        SubCategory::create([
-            'name' => $request->name,
-            'slug' => Str::slug($request->name),
-            'category_id' => $request->category_id,
-            'status' => $request->input('status')
+        $validated = $request->validate([
+            'name' => 'required|string|unique:categories,name',
+            'category_id' => 'required',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "sub-category-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/category', $imageName, 'public');
+            $validated['image'] = $path; // Add the avatar path to the validated data
+        }
+
+        SubCategory::create($validated);
 
         return redirect()->route('admin.sub_categories.index', $request->category_id)
             ->with('message', 'SubCategory created successfully.');
@@ -57,7 +66,7 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::find($id);
-        $subCategory = SubCategory::find($id);
+        $subCategory = SubCategory::with('category')->find($id);
         return Inertia::render('Admin/SubCategories/Edit', compact('subCategory', 'category'));
     }
 
@@ -67,10 +76,24 @@ class SubCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $subCategory = SubCategory::find($id);
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('sub_categories', 'name')->ignore($subCategory->id),
+            ],
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
 
         $subCategory->name = $request->name;
-        $subCategory->slug = Str::slug($request->name);
-        $subCategory->status = $request->input('status');
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "sub-category-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/category', $imageName, 'public');
+            $subCategory['image'] = $path; // Add the avatar path to the validated data
+        }
+
         $subCategory->save();
 
         return redirect()->route('admin.sub_categories.index', $request->category_id)

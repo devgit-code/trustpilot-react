@@ -22,7 +22,7 @@ const Alert = ({ message, type = "success", duration = 5000 }) => {
 
     return (
         <div
-            className={`border px-4 py-3 rounded relative ${alertColors[type]} flex items-center`}
+            className={`border px-4 py-3 rounded relative ${alertColors[type]} flex items-center my-2`}
             role="alert"
         >
             <span className="flex-1">{message}</span>

@@ -1,6 +1,7 @@
-import AdminLayout from '@/Layouts/adminLayout';
 import { Link, router } from '@inertiajs/react';
 import { React, useState } from 'react';
+
+import AdminLayout from '@/Layouts/adminLayout';
 import SearchBar from '@/Components/SearchBar';
 import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { BsPlusCircleFill } from 'react-icons/bs';
@@ -8,16 +9,9 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FaFolderOpen } from "react-icons/fa"
-import { Modal, Button, ModalHeader, ModalBody } from 'react-bootstrap';
-import CategoriesCreate from './Create';
-import CategoryEdit from './Edit';
 
 const Index = ({ categories }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [selectedCategory, setIsSelectedCategory] = useState(null);
-
 
     const handleDelete = (event, id) => {
         event.preventDefault();
@@ -28,6 +22,7 @@ const Index = ({ categories }) => {
             buttons: [
                 {
                     label: 'Yes',
+                    className:'bg-blue-800',
                     onClick: () => {
                         router.delete(route('admin.categories.destroy', { id }));
                     }
@@ -42,43 +37,23 @@ const Index = ({ categories }) => {
         });
     };
 
-    const handleAddButtonClick = () => {
-        setIsCreateModalOpen(true);
-    }
-
-    const handleCloseCreateModal = () => {
-        setIsCreateModalOpen(false);
-    }
-
-    const handleEditButtonClick = (Category) => {
-        setIsSelectedCategory(Category);
-        setIsEditModalOpen(true);
-    }
-    const handleCloseEditModal = () => {
-        setIsEditModalOpen(false);
-    }
     return (
-        <div className="container-fluid basic_table">
+        <div className="container-wrapper m-3">
             <div className="row">
                 <div className="col-sm-12">
-                    <div className="card border-0 p-3 my-2">
-                        <div className="row g-3 d-flex align-items-center">
-                            <div className="col-lg-3 col-md-12">
+                    <div className="card p-3">
+                        <div className=" g-3 d-flex align-items-center justify-between">
+                            <div className="">
                                 <h3 className="m-0 text-center text-lg-start">Categories</h3>
                             </div>
-                            <div className="col-lg-6 col-md-12 card-body p-0">
+                            <div className="flex items-center">
                                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                            </div>
-                            <div className="col-lg-2 col-md-12">
-                                <div className="d-flex align-items-center justify-content-end">
-                                    <button
-                                        className="btn btn-success d-flex align-items-center border-0 me-2"
-                                        onClick={handleAddButtonClick}
-                                    >
-                                        <BsPlusCircleFill className="fs-5" />
-                                        <span className="ms-2 text-white">Add</span>
-                                    </button>
-                                </div>
+                                <Link href={route('admin.categories.create')}
+                                    className="btn btn-success d-flex align-items-center border-0 ml-2 me-3"
+                                >
+                                    <BsPlusCircleFill className="fs-5" />
+                                    <span className="ms-2 text-white">Add</span>
+                                </Link>
                             </div>
                         </div>
                         <hr />
@@ -87,9 +62,9 @@ const Index = ({ categories }) => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th scope="col">No</th>
+                                        <th scope="col">Icon</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Slug</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Sub Count</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -97,33 +72,39 @@ const Index = ({ categories }) => {
                                     {categories
                                         .filter((category) => category.name.toLowerCase().includes(searchQuery.toLowerCase()))
                                         .map((category, index) => (
-                                            <tr key={category.id} className="border-bottom-secondary">
-                                                <th scope="row">{index + 1}</th>
+                                            <tr key={category.id} className="border-bottom-secondary align-middle">
+                                                <td>{index + 1}</td>
+                                                <td>
+                                                {category.image ? (
+                                                    <img src={`/storage/${category.image}`}
+                                                        alt="category-logo"
+                                                        className='inline'
+                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                ):(
+                                                    <>No image</>
+                                                )}
+                                                </td>
                                                 <td>{category.name}</td>
-                                                <td>{category.slug}</td>
                                                 {/* <img className="img-60 me-2" src={`/storage/${category.image}`} alt="profile" /> */}
 
                                                 <td>
-                                                    <span className={`badge ${category.status ? 'text-success' : 'text-danger'}`}>
-                                                        {category.status ? 'Active' : 'Inactive'}
-                                                    </span>
+                                                    {category.subcategories_count}
                                                 </td>
                                                 <td>
-                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0">
+                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                         <li className="view">
                                                             <Link href={route('admin.sub_categories.index', category.id)}>
                                                                 <FaFolderOpen className='fs-3 me-2 text-success' />
                                                             </Link>
                                                         </li>
                                                         <li className="edit">
-                                                            <button
-                                                                onClick={() => handleEditButtonClick(category)}
+                                                            <Link href={route('admin.categories.edit', category.id)}
                                                             >
                                                                 <FontAwesomeIcon
                                                                     icon={faPenToSquare}
                                                                     className="fs-4 me-2 text-primary"
                                                                 />
-                                                            </button>
+                                                            </Link>
                                                         </li>
                                                         <li className="delete">
                                                             <Link as="button" method="delete" onClick={(event) => handleDelete(event, category.id)}>
@@ -140,17 +121,6 @@ const Index = ({ categories }) => {
                     </div>
                 </div>
             </div>
-            <Modal show={isCreateModalOpen} onHide={handleCloseCreateModal}>
-                <ModalBody>
-                    <CategoriesCreate onClose={handleCloseCreateModal} />
-                </ModalBody>
-            </Modal>
-
-            <Modal show={isEditModalOpen} onHide={handleCloseEditModal}>
-                <ModalBody>
-                    <CategoryEdit onClose={handleCloseEditModal} category={selectedCategory} />
-                </ModalBody>
-            </Modal>
         </div >
     );
 };

@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('rating');
+            $table->integer('useful')->default(0);
             $table->date('date_experience');
             $table->boolean('status')->default(false);
             $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('business_id')->index();
-            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('restrict');
+            $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
             // $table->timestamps();
         });
     }

@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Business\ReviewController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\BusinessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +20,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware([])->group(function () {
+    Route::get('/business/reviews', [ReviewController::class, 'apiIndex']);
+
+    Route::get('/admin/reviews', [AdminReviewController::class, 'apiIndex']);
+    Route::get('/admin/users', [UserController::class, 'apiIndex']);
+    Route::get('/admin/users/{user_id}', [UserController::class, 'apiDetail']);
+    Route::get('/admin/businesses', [BusinessController::class, 'apiIndex']);
+    Route::get('/admin/businesses/{business_id}', [BusinessController::class, 'apiDetail']);
 });

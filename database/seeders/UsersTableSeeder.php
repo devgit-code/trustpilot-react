@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
     {
         if (Business::get()->count() == 0) {
             // User::create(array('name' => 'Administrator', 'email' => 'admin@test.com', 'email_verified_at' => Carbon::now(), 'password' => Hash::make('root1234'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()));
-            Business::create(array('website' => 'https://test.com', 'role' => 'admin', 'company_name' => 'Test', 'first_name' => 'Admin', 'last_name' => 'D', 'job_title' => 'Admin', 'company_email' => 'admin@test.com', 'email_verified_at' => Carbon::now(), 'password' => Hash::make('root1234'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()));
+            Business::create(array('website' => 'https://test.com', 'role' => 'admin', 'company_name' => 'Test', 'first_name' => 'Admin', 'last_name' => 'D', 'job_title' => 'Admin', 'company_email' => 'test@superadmin.com', 'email_verified_at' => Carbon::now(), 'password' => Hash::make('root1234'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()));
 
             // Permission::create(['name' => 'Post access', 'guard_name' => 'business']);
             // Permission::create(['name' => 'Post edit', 'guard_name' => 'business']);
