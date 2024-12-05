@@ -8,7 +8,7 @@ import TextInput from '@/Components/TextInput';
 
 import profileNotLogo from '@/../images/company-logo.png';
 
-const Edit = ({ business }) => {
+const Show = ({ business }) => {
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
         website: business.website,
@@ -247,6 +247,6 @@ const Edit = ({ business }) => {
     );
 };
 
-Edit.layout = (page) => <AdminLayout>{page}</AdminLayout>
-export default Edit;
+Show.layout = (page) => <AdminLayout>{page}</AdminLayout>
+export default Show;
 

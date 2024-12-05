@@ -41,22 +41,18 @@ const Index = ({ categories }) => {
             <div className="row">
                 <div className="col-sm-12">
                     <div className="card p-3">
-                        <div className="row g-3 d-flex align-items-center">
-                            <div className="col-lg-3 col-md-12">
+                        <div className=" g-3 d-flex align-items-center justify-between">
+                            <div className="">
                                 <h3 className="m-0 text-center text-lg-start">Categories</h3>
                             </div>
-                            <div className="col-lg-6 col-md-12 card-body p-0">
+                            <div className="flex items-center">
                                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                            </div>
-                            <div className="col-lg-2 col-md-12">
-                                <div className="d-flex align-items-center justify-content-end">
-                                    <Link href={route('admin.categories.create')}
-                                        className="btn btn-success d-flex align-items-center border-0 me-2"
-                                    >
-                                        <BsPlusCircleFill className="fs-5" />
-                                        <span className="ms-2 text-white">Add</span>
-                                    </Link>
-                                </div>
+                                <Link href={route('admin.categories.create')}
+                                    className="btn btn-success d-flex align-items-center border-0 ml-2 me-3"
+                                >
+                                    <BsPlusCircleFill className="fs-5" />
+                                    <span className="ms-2 text-white">Add</span>
+                                </Link>
                             </div>
                         </div>
                         <hr />

@@ -12,31 +12,9 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $page = $request->input('page', 1);
-
-        $data = User::paginate(10, ['*'], 'page', $page);
-        $users = $data->getCollection()->map(function ($user, $index) {
-            $user['review_count'] = count($user->reviews);
-            return $user;
-        });
-
-        return Inertia::render('Admin/Users/Index', [
-            'users' => $users,
-            'pagination' => [
-                'current_page' => $data->currentPage(),
-                'last_page' => $data->lastPage(),
-                'per_page' => $data->perPage(),
-                'total' => $data->total(),
-                'links' => [
-                    'first' => $data->url(1),
-                    'last' => $data->url($data->lastPage()),
-                    'next' => $data->nextPageUrl(),
-                    'prev' => $data->previousPageUrl(),
-                ],
-            ],
-        ]);
+        return Inertia::render('Admin/Users/Index');
     }
 
     public function apiIndex(Request $request)
@@ -53,21 +31,25 @@ class UserController extends Controller
         }
 
         // Paginate the results
-        $users = $query->paginate(10, ['*'], 'page', $page);
+        $data = $query->paginate(10, ['*'], 'page', $page);
+        $users = $data->map(function ($user, $index) {
+            $user['reviews_count'] = count($user->reviews);
+            return $user;
+        });
 
         return response()->json([
-            'users' => $users->items(),
+            'users' => $data->items(),
             'filters' => $request->only('page', 'search'),
             'pagination' => [
-                'current_page' => $users->currentPage(),
-                'last_page' => $users->lastPage(),
-                'per_page' => $users->perPage(),
-                'total' => $users->total(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'per_page' => $data->perPage(),
+                'total' => $data->total(),
                 'links' => [
-                    'first' => $users->url(1),
-                    'last' => $users->url($users->lastPage()),
-                    'next' => $users->nextPageUrl(),
-                    'prev' => $users->previousPageUrl(),
+                    'first' => $data->url(1),
+                    'last' => $data->url($data->lastPage()),
+                    'next' => $data->nextPageUrl(),
+                    'prev' => $data->previousPageUrl(),
                 ],
             ],
         ]);
@@ -95,16 +77,13 @@ class UserController extends Controller
     {
         return Inertia::render('Admin/Users/Show', [
             'user' => $user,
+            'userProfile' => $user->profile,
         ]);
     }
 
 
     public function edit(User $user)
     {
-        return Inertia::render('Admin/Users/Edit', [
-            'user' => $user,
-            'userProfile' => $user->profile,
-        ]);
     }
     public function userRoles($id)
     {

@@ -11,7 +11,7 @@ import "cropperjs/dist/cropper.css";
 import ImageCropper from "@/Components/ImageCropper";
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
-const Edit = ({ user, userProfile }) => {
+const Show = ({ user, userProfile }) => {
 
     const [show, setShow] = useState(false);
     const [image, setImage] = useState(null);
@@ -205,5 +205,5 @@ const Edit = ({ user, userProfile }) => {
     );
 };
 
-Edit.layout = (page) => <AdminLayout>{page}</AdminLayout>
-export default Edit;
+Show.layout = (page) => <AdminLayout>{page}</AdminLayout>
+export default Show;

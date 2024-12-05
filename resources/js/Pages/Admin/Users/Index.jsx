@@ -8,6 +8,7 @@ import { CgMenuBoxed } from "react-icons/cg";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Swal from 'sweetalert2';
+import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
 const Index = () => {
     const [filters, setFilters] = useState({ search:"", page:1 });
@@ -168,9 +169,9 @@ const Index = () => {
                         <thead className='table_header_admin'>
                             <tr className="border-bottom-primary">
                                 <th>No</th>
+                                <th>Avatar</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Status</th>
                                 <th>Total Reviews</th>
                                 <th>Actions</th>
                             </tr>
@@ -179,18 +180,23 @@ const Index = () => {
                             {users.map((user, index) => (
                                 <tr key={user.id}>
                                     <td data-label="No">{index + 1}</td>
-                                    <td data-label="name">{user.name}</td>
-                                    <td data-label="email">{user.email}</td>
-                                    <td data-label="status">
-                                        <span className={`badge ${user.email_verified_at ? 'text-success' : 'text-danger'}`}>
-                                            {user.email_verified_at ? 'Verified' : 'Inactive'}
-                                        </span>
+                                    <td data-label="">
+                                        <div className='inline-flex items-center' style={{height: '64px'}}>
+                                            <img
+                                                className='inline'
+                                                style={{ maxWidth: '64px', maxHeight: '64px' }}
+                                                src={user.profile.image ? `/storage/images/profile/${user.profile.image}` : profileNotPreviewImg}
+                                                alt="preview image"
+                                            />
+                                        </div>
                                     </td>
-                                    <td data-label="email">{user.review_count}</td>
+                                    <td data-label="name">{user.name}</td>
+                                    <td data-label="status">{user.email}</td>
+                                    <td data-label="email">{user.reviews_count}</td>
                                     <td data-label="">
                                         <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                             <li className="edit">
-                                                <Link href={route('admin.users.edit', user.id)}>
+                                                <Link href={route('admin.users.show', user.id)}>
                                                     <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                 </Link>
                                             </li>

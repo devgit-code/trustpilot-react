@@ -178,9 +178,8 @@ const Index = () => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th>No</th>
-                                        <th>Title</th>
-                                        <th>Rating</th>
                                         <th>Business</th>
+                                        <th>Rating</th>
                                         <th>User</th>
                                         <th>Date</th>
                                         <th>Detail</th>
@@ -205,22 +204,22 @@ const Index = () => {
                                         ):(
                                             <>
                                             {reviews.map((item, index) => (
-                                            <tr className="border-bottom-secondary" key={item.id}>
+                                            <tr className="border-bottom-secondary align-middle" key={item.id}>
                                                 <td>{index + 1}</td>
-                                                <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td>
+                                                {/* <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td> */}
+                                                <td>{item.business.company_name}</td>
                                                 <td>
                                                     <div className='inline-flex items-center'>
                                                         <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>
-                                                        <span className='ml-2 text-gray-800'>({item.rating})</span>
+                                                        {/* <span className='ml-2 text-gray-800'>({item.rating})</span> */}
                                                     </div>
                                                 </td>
-                                                <td>{item.business.company_name}</td>
                                                 <td>{item.user.name}</td>
                                                 <td>{moment(item.date_experience).fromNow()}</td>
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                         <li className="edit">
-                                                            <Link href={route('admin.reviews.edit', item.id)}>
+                                                            <Link href={route('admin.reviews.show', item.id)}>
                                                                 <FaReply  className='text-primary fs-4 me-2' />
                                                             </Link>
                                                         </li>

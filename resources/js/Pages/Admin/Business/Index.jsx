@@ -134,9 +134,8 @@ const Index = () => {
                                     <tr className="border-bottom-primary">
                                         <th>No</th>
                                         <th>Logo</th>
-                                        <th>Company Name</th>
+                                        <th>Name</th>
                                         <th>Trustscore</th>
-                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -170,11 +169,6 @@ const Index = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <span className={`badge ${item.email_verified_at ? 'text-success' : 'text-danger'}`}>
-                                                    {item.email_verified_at ? 'Verified' : 'Inactive'}
-                                                </span>
-                                            </td>
-                                            <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <a href={item.website} target="_blank">
@@ -182,7 +176,7 @@ const Index = () => {
                                                         </a>
                                                     </li>
                                                     <li className="edit">
-                                                        <Link href={route('admin.businesses.edit', item.id)}>
+                                                        <Link href={route('admin.businesses.show', item.id)}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>

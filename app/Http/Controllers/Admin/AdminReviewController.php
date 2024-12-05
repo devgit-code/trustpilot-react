@@ -100,19 +100,19 @@ class AdminReviewController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $review = Review::with(['user', 'user.profile', 'reply', 'business', 'business.profile'])->findOrFail($id);
+        $userTotalReviews = Review::where('user_id', $review->user_id)->count();
+
+        return Inertia::render('Admin/Review/Show', [
+            'review' => $review,
+            'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
+        ]);
     }
 
 
     public function edit(string $id)
     {
-        $review = Review::with(['user', 'user.profile', 'reply', 'business', 'business.profile'])->findOrFail($id);
-        $userTotalReviews = Review::where('user_id', $review->user_id)->count();
-
-        return Inertia::render('Admin/Review/Edit', [
-            'review' => $review,
-            'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
-        ]);
+        //
     }
 
 
