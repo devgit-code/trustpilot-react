@@ -22,6 +22,7 @@ const Index = ({ categories }) => {
             buttons: [
                 {
                     label: 'Yes',
+                    className:'bg-blue-800',
                     onClick: () => {
                         router.delete(route('admin.categories.destroy', { id }));
                     }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\State;
+use App\Models\User;
+use App\Models\Business;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,8 +15,14 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
-        return Inertia::render('Admin/Dashboard');
+        $users = User::all();
+        $businesses = Business::all();
+        return Inertia::render('Admin/Dashboard', [
+            'data' => [
+                'count_users' => count($users),
+                'count_businesses' => count($businesses)
+            ]
+        ]);
     }
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
 import { BsTrashFill } from "react-icons/bs"

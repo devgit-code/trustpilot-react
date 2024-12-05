@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, router, usePage } from '@inertiajs/react';
+import { Link , router, usePage } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
 import { BsTrashFill, BsPlusCircleFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
@@ -110,23 +110,24 @@ const Index = () => {
     };
 
 
-    // const handleDelete = (event, reviweId) => {
-    //     event.preventDefault();
+    const handleDelete = (event, reviweId) => {
+        event.preventDefault();
 
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!',
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             router.delete(route('admin.reviews.destroy', reviweId));
-    //         }
-    //     });
-    // };
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = await router.delete(route('admin.reviews.destroy', reviweId));
+                fetchReviews();
+            }
+        });
+    };
 
     return (
         <div className='content-wrapper m-3'>
@@ -223,7 +224,7 @@ const Index = () => {
                                                                 <FaReply  className='text-primary fs-4 me-2' />
                                                             </Link>
                                                         </li>
-                                                        {/* <form
+                                                        <form
                                                             onSubmit={(e) => handleDelete(e, item.id)}
                                                             method="POST"
                                                         >
@@ -235,7 +236,7 @@ const Index = () => {
 
                                                                 </button>
                                                             </li>
-                                                        </form> */}
+                                                        </form>
                                                     </ul>
                                                 </td>
                                             </tr>
