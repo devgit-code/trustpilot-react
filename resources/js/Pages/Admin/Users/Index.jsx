@@ -7,6 +7,7 @@ import { CgMenuBoxed } from "react-icons/cg";
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { confirmAlert } from 'react-confirm-alert';
 import Swal from 'sweetalert2';
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
@@ -79,7 +80,10 @@ const Index = () => {
         doc.save('user_details.pdf');
     };
 
-    const handleDelete = (id) => {
+
+    const handleDelete = (event, userId) => {
+        event.preventDefault();
+
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -88,12 +92,30 @@ const Index = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                router.delete(route('admin.users.destroy', id));
+                const response = await router.delete(route('admin.users.destroy', userId));
+                fetchUsers();
             }
         });
     };
+
+        // confirmAlert({
+        //     title: 'Are you sure?',
+        //     message: "You won't be able to revert this!",
+        //     buttons: [
+        //         {
+        //             label: 'Yes',
+        //             onClick: () => {
+        //                 router.delete(route('admin.sub_categories.destroy', { id }));
+        //             },
+        //         },
+        //         {
+        //             label: 'No',
+        //             onClick: () => { },
+        //         },
+        //     ],
+        // });
 
     const goToNextPage = () => {
         if (pagination.current_page < pagination.last_page) {
@@ -177,44 +199,54 @@ const Index = () => {
                             </tr>
                         </thead>
                         <tbody className="table_body">
-                            {users.map((user, index) => (
-                                <tr key={user.id}>
-                                    <td data-label="No">{index + 1}</td>
-                                    <td data-label="">
-                                        <div className='inline-flex items-center' style={{height: '64px'}}>
-                                            <img
-                                                className='inline'
-                                                style={{ maxWidth: '64px', maxHeight: '64px' }}
-                                                src={user.profile.image ? `/storage/images/profile/${user.profile.image}` : profileNotPreviewImg}
-                                                alt="preview image"
-                                            />
-                                        </div>
-                                    </td>
-                                    <td data-label="name">{user.name}</td>
-                                    <td data-label="status">{user.email}</td>
-                                    <td data-label="email">{user.reviews_count}</td>
-                                    <td data-label="">
-                                        <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
-                                            <li className="edit">
-                                                <Link href={route('admin.users.show', user.id)}>
-                                                    <CgMenuBoxed className='text-primary fs-4 me-2' />
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    as="button"
-                                                    // href={route('admin.users.destroy', user.id)}
-                                                    onClick={()=>handleDelete(user.id)}
-                                                    className="dropdown-item"
-                                                    // method="delete"
-                                                >
-                                                    <BsTrashFill className="text-danger fs-4" />
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </td>
+                        {
+                            users.length == 0 ? (
+                                <tr className='text-center'>
+                                    <td colSpan="6">There is no data</td>
                                 </tr>
-                            ))}
+                            ):(
+                                <>
+                                    {users.map((user, index) => (
+                                        <tr key={user.id}>
+                                            <td data-label="No">{index + 1}</td>
+                                            <td data-label="">
+                                                <div className='inline-flex items-center' style={{height: '64px'}}>
+                                                    <img
+                                                        className='inline'
+                                                        style={{ maxWidth: '64px', maxHeight: '64px' }}
+                                                        src={user.profile?.image ? `/storage/images/profile/${user.profile.image}` : profileNotPreviewImg}
+                                                        alt="preview image"
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td data-label="name">{user.name}</td>
+                                            <td data-label="status">{user.email}</td>
+                                            <td data-label="email">{user.reviews_count}</td>
+                                            <td data-label="">
+                                                <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
+                                                    <li className="edit">
+                                                        <Link href={route('admin.users.show', user.id)}>
+                                                            <CgMenuBoxed className='text-primary fs-4 me-2' />
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link
+                                                            as="button"
+                                                            // href={route('admin.users.destroy', user.id)}
+                                                            onClick={(event)=>handleDelete(event, user.id)}
+                                                            className="dropdown-item"
+                                                            // method="delete"
+                                                        >
+                                                            <BsTrashFill className="text-danger fs-4" />
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </>
+                            )
+                        }
                         </tbody>
                     </table>
                 </div>

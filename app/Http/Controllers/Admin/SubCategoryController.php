@@ -37,9 +37,10 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|unique:categories,name',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            'name' => 'required|string|unique:sub_categories,name',
             'category_id' => 'required',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -82,7 +83,7 @@ class SubCategoryController extends Controller
                 'string',
                 Rule::unique('sub_categories', 'name')->ignore($subCategory->id),
             ],
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         $subCategory->name = $request->name;

@@ -82,7 +82,7 @@ const Show = ({ user, userProfile }) => {
                     <form onSubmit={handleSubmit} className="modal_form">
                         <div className='row gx-6'>
                             <div className="col-lg-6 space-y-5">
-                                <p className={`${user.email_verified_at ? 'bg-green-200' : ''} mb-0 py-1 px-3 rounded-sm bg-gray-100 inline-flex text-sm items-center`}>
+                                <p className={`${user.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                         className="inline mr-1">
                                         <path fill={`${user.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
@@ -124,11 +124,11 @@ const Show = ({ user, userProfile }) => {
                                     <InputError className="mt-2" message={errors.email} />
                                 </div>
                             </div>
-                            <div className="col-lg-6 space-y-5 mb-3">
+                            <div className="col-lg-6 space-y-5 my-3">
                                 <img
                                     ref={previewImageRef}
                                     className=""
-                                    src={userProfile.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg}
+                                    src={userProfile?.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg}
                                     alt="preview image"
                                     width="128"
                                     height="128"

@@ -16,7 +16,7 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $users = User::all();
-        $businesses = Business::all();
+        $businesses = Business::where('role', 'owner')->get();
         return Inertia::render('Admin/Dashboard', [
             'data' => [
                 'count_users' => count($users),

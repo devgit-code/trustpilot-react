@@ -69,52 +69,61 @@ const Index = ({ categories }) => {
                                     </tr>
                                 </thead>
                                 <tbody id="myTable">
-                                    {categories
-                                        .filter((category) => category.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                        .map((category, index) => (
-                                            <tr key={category.id} className="border-bottom-secondary align-middle">
-                                                <td>{index + 1}</td>
-                                                <td>
-                                                {category.image ? (
-                                                    <img src={`/storage/${category.image}`}
-                                                        alt="category-logo"
-                                                        className='inline'
-                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                ):(
-                                                    <>No image</>
-                                                )}
-                                                </td>
-                                                <td>{category.name}</td>
-                                                {/* <img className="img-60 me-2" src={`/storage/${category.image}`} alt="profile" /> */}
+                                    {categories.length == 0 ? (
+                                        <tr className='text-center'>
+                                            <td colSpan="5">There is no data</td>
+                                        </tr>
+                                    ):(
+                                        <>
+                                            {categories
+                                                .filter((category) => category.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                .map((category, index) => (
+                                                    <tr key={category.id} className="border-bottom-secondary align-middle">
+                                                        <td>{index + 1}</td>
+                                                        <td>
+                                                        {category.image ? (
+                                                            <img src={`/storage/${category.image}`}
+                                                                alt="category-logo"
+                                                                className='inline'
+                                                                style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                        ):(
+                                                            <>No image</>
+                                                        )}
+                                                        </td>
+                                                        <td>{category.name}</td>
+                                                        {/* <img className="img-60 me-2" src={`/storage/${category.image}`} alt="profile" /> */}
 
-                                                <td>
-                                                    {category.subcategories_count}
-                                                </td>
-                                                <td>
-                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
-                                                        <li className="view">
-                                                            <Link href={route('admin.sub_categories.index', category.id)}>
-                                                                <FaFolderOpen className='fs-3 me-2 text-success' />
-                                                            </Link>
-                                                        </li>
-                                                        <li className="edit">
-                                                            <Link href={route('admin.categories.edit', category.id)}
-                                                            >
-                                                                <FontAwesomeIcon
-                                                                    icon={faPenToSquare}
-                                                                    className="fs-4 me-2 text-primary"
-                                                                />
-                                                            </Link>
-                                                        </li>
-                                                        <li className="delete">
-                                                            <Link as="button" method="delete" onClick={(event) => handleDelete(event, category.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                        <td>
+                                                            {category.subcategories_count}
+                                                        </td>
+                                                        <td>
+                                                            <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
+                                                                <li className="view">
+                                                                    <Link href={route('admin.sub_categories.index', category.id)}>
+                                                                        <FaFolderOpen className='fs-3 me-2 text-success' />
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="edit">
+                                                                    <Link href={route('admin.categories.edit', category.id)}
+                                                                    >
+                                                                        <FontAwesomeIcon
+                                                                            icon={faPenToSquare}
+                                                                            className="fs-4 me-2 text-primary"
+                                                                        />
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="delete">
+                                                                    <Link as="button" method="delete" onClick={(event) => handleDelete(event, category.id)}>
+                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
                         </div>

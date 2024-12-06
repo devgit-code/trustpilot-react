@@ -5,7 +5,6 @@ import user from '@/../images/profile-not-found.png'
 
 export default function ClickableWrite({company_name}){
     const handleRatingClick = (rating) => {
-        console.log('hrere++', rating)
         window.location.replace('/reviews/evaluate/'+ company_name+'?star='+rating)
     }
 

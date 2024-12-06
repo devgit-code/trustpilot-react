@@ -57,7 +57,7 @@ const Index = ({products}) => {
                                 <tbody>
                                     {products.length == 0 ? (
                                         <tr className='text-center'>
-                                            <td colSpan="3">There is no data</td>
+                                            <td colSpan="4">There is no data</td>
                                         </tr>
                                     ):(
                                         <>
