@@ -12,88 +12,8 @@ import AdPart3 from './Partial/Ad3';
 
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
-
-const data = [
-    {
-        image: "https://placekitten.com/64/64",
-        name: "EECU Credit Union",
-        link: "https://eecu.org",
-        rating: 3.8,
-        is_verified: true,
-        reviews: 1502
-    },
-    {
-        image: "https://placekitten.com/65/65",
-        name: "Wainscoting America",
-        link: "https://wainscotingamerica.com",
-        is_verified: false,
-        rating: 5.0,
-        reviews: 930
-    },
-    {
-        image: "https://placekitten.com/66/66",
-        name: "RISLA",
-        link: "https://risla.com",
-        is_verified: false,
-        rating: 1.8,
-        reviews: 3981
-    },
-    {
-        image: "https://placekitten.com/67/67",
-        name: "Wade Caves - Astrologer",
-        link: "https://wadecaves.com",
-        is_verified: true,
-        rating: 4.9,
-        reviews: 92
-    },
-];
-
-const data2 = [
-    {
-        image: "https://placekitten.com/64/64",
-        name: "EECU Credit Union",
-        link: "https://eecu.org",
-        rating: 4.2,
-        is_verified: true,
-        reviews: 1502
-    },
-    {
-        image: "https://placekitten.com/65/65",
-        name: "Wainscoting America",
-        link: "https://wainscotingamerica.com",
-        is_verified: false,
-        rating: 2.7,
-        reviews: 930
-    },
-    {
-        image: "https://placekitten.com/66/66",
-        name: "RISLA",
-        link: "https://risla.com",
-        is_verified: false,
-        rating: 1.0,
-        reviews: 3981
-    },
-    {
-        image: "https://placekitten.com/67/67",
-        name: "Wade Caves - Astrologer",
-        link: "https://wadecaves.com",
-        is_verified: true,
-        rating: 0.6,
-        reviews: 92
-    },
-];
-
 const LandingArea = ({ data }) => {
     return (
-        // <section className="Landing position-relative">
-        //     <img src={fifthbanner} alt="" className='' />
-        //     <div className='position-absolute top-50 start-50 translate-middle-x'>
-        //         <h1 className="text-uppercase fw-bold text-primary display-1">
-        //             Lorem ipsum dolor sit amet
-        //         </h1>
-
-        //     </div>
-        // </section>
         <>
             <SearchSection />
 
@@ -114,23 +34,13 @@ const LandingArea = ({ data }) => {
 
             {/* <CompanyList title="Best in Banks" link="/categories/bank" data={data}/> */}
 
-            <CompanyList title="Latest Companies" link="/categories/latest" data={data2}/>
+            <CompanyList title="Latest Companies" link="/categories/latest" data={data.businesses}/>
 
             <AdPart2 />
 
-            <RecentReviews />
+            <RecentReviews reviews={data.reviews}/>
 
             <AdPart3 />
-
-            {/* <AdPart3
-                bgColor="#234F3F"
-                headTitle="Are you a business?"
-                bodyText="Join Trustpilot and inspire customer confidence with real reviews."
-                imgSrc={ad3}
-                imgClassName="w-1/2 right-0 float-right"
-                imgAspect="1/1"
-                btnText="Contact us"
-                /> */}
         </>
     );
 };

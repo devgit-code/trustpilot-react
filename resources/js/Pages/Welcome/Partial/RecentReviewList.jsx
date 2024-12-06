@@ -9,122 +9,7 @@ import {
 } from '@inertiajs/react';
 
 
-const reviews = [
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '233',
-        user: {
-            name: 'Se kang',
-            avatar: null
-        },
-        rating: 2,
-        comment: 'Like very well',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '233',
-        user: {
-            name: 'Se kang',
-            avatar: null
-        },
-        rating: 2,
-        comment: 'Like very well',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '233',
-        user: {
-            name: 'Se kang',
-            avatar: null
-        },
-        rating: 2,
-        comment: 'Like very well',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '233',
-        user: {
-            name: 'Se kang',
-            avatar: null
-        },
-        rating: 2,
-        comment: 'Like very well',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-    },
-];
-
-const RecentReviewList = () => {
+const RecentReviewList = ({ reviews }) => {
 
     return (
         <div className="container-md bg-white">
@@ -141,12 +26,20 @@ const RecentReviewList = () => {
 
             <div className="relative flex items-center pt-3">
                 <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
-                    {reviews.map((item, index) => (
-                        <ReviewCard
-                            key={index}
-                            {...item}
-                        />
-                    ))}
+                    {
+                        reviews.length === 0 ? (
+                            <div className='lg:col-span-4 text-2xl font-bold text-center text-gray-500'>There is no reviews yet.</div>
+                        ):(
+                            <>
+                                {reviews.map((item, index) => (
+                                    <ReviewCard
+                                        key={index}
+                                        {...item}
+                                    />
+                                ))}
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </div>
