@@ -30,7 +30,7 @@ class AdminCategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|unique:categories,name',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         // Handle the avatar upload if it exists
@@ -64,7 +64,7 @@ class AdminCategoryController extends Controller
                 'string',
                 Rule::unique('categories', 'name')->ignore($category->id),
             ],
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         $category->name = $request->input('name');

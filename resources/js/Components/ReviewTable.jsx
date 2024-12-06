@@ -175,7 +175,7 @@ export default function ReviewTable({setting}){
                                 <>{
                                 reviews.length == 0 ? (
                                     <tr className='text-center'>
-                                        <td colSpan="4">There is no data</td>
+                                        <td colSpan="6">There is no data</td>
                                     </tr>
                                 ):(
                                     <>

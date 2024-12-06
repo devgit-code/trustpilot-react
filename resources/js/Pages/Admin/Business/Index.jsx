@@ -8,6 +8,7 @@ import { BsTrashFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
 import Swal from 'sweetalert2';
+import logo from "@/../images/company-logo.png"
 
 
 const Index = () => {
@@ -88,7 +89,7 @@ const Index = () => {
         }
     };
 
-    const handleDelete = (event, productId) => {
+    const handleDelete = (event, id) => {
         event.preventDefault();
 
         Swal.fire({
@@ -99,9 +100,10 @@ const Index = () => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                router.delete(route('admin.businesses.destroy', productId));
+                const response = router.delete(route('admin.businesses.destroy', id));
+                fetchBusinesses();
             }
         });
     };
@@ -142,7 +144,7 @@ const Index = () => {
                                 <tbody>
                                     {businesses.length == 0 ? (
                                         <tr className='text-center'>
-                                            <td colSpan="3">There is no data</td>
+                                            <td colSpan="5">There is no data</td>
                                         </tr>
                                     ):(
                                         <>
@@ -150,15 +152,20 @@ const Index = () => {
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
                                             <td>{index + 1}</td>
                                             <td>
-                                            {item.profile.logo ? (
-                                                <div className='inline-flex items-center' style={{height: '64px'}}>
+                                            {item.profile?.logo ? (
+                                                <div className='inline-flex items-center border' style={{height: '64px'}}>
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }} />
                                                 </div>
                                             ):(
-                                                <>No image</>
+                                                <div className='inline-flex border items-center' style={{height: '64px'}}>
+                                                    <img src={logo}
+                                                        alt="category-logo"
+                                                        className='inline'
+                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                </div>
                                             )}
                                             </td>
                                             <td>{item.company_name}</td>
@@ -180,20 +187,11 @@ const Index = () => {
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>
-                                                    <form
-                                                        // action={route('admin.businesses.destroy', item.id)}
-                                                        onSubmit={(e) => handleDelete(e, item.id)}
-                                                        method="POST"
-                                                    >
-                                                        <input type="hidden" name="_method" value="DELETE" />
-                                                        <li className="delete d-flex align-items-center">
-
-                                                            <button type="submit" className="border-0 bg-transparent">
-                                                                <BsTrashFill className="text-danger fs-4" />
-
-                                                            </button>
-                                                        </li>
-                                                    </form>
+                                                    <li className="delete">
+                                                        <Link onClick={(e) => handleDelete(e, item.id)}>
+                                                            <BsTrashFill className='text-danger fs-4 me-2' />
+                                                        </Link>
+                                                    </li>
                                                 </ul>
                                             </td>
                                         </tr>

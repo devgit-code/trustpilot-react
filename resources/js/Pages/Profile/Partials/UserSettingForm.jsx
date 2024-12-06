@@ -114,7 +114,7 @@ export default function UserSettingForm({className = '', userProfile}) {
                     <img
                         ref={previewImageRef}
                         className=""
-                        src={userProfile.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg}
+                        src={userProfile?.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg}
                         alt="preview image"
                         width="128"
                         height="128"

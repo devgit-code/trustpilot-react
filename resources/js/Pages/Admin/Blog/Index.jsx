@@ -22,7 +22,6 @@ const Index = ({ blogs }) => {
             buttons: [
                 {
                     label: 'Yes',
-                    className:'bg-blue-800',
                     onClick: () => {
                         router.delete(route('admin.blogs.destroy', { id }));
                     }
@@ -68,33 +67,42 @@ const Index = ({ blogs }) => {
                                     </tr>
                                 </thead>
                                 <tbody id="myTable">
-                                    {blogs
-                                        .filter((blog) => blog.title.toLowerCase().includes(searchQuery.toLowerCase()))
-                                        .map((blog, index) => (
-                                            <tr key={blog.id} className="border-bottom-secondary align-middle">
-                                                <td>{index + 1}</td>
-                                                <td>{blog.title}</td>
-                                                <td>{moment(blog.created_at)}</td>
-                                                <td>
-                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
-                                                        <li className="edit">
-                                                            <Link href={route('admin.blogs.edit', blog.id)}
-                                                            >
-                                                                <FontAwesomeIcon
-                                                                    icon={faPenToSquare}
-                                                                    className="fs-4 me-2 text-primary"
-                                                                />
-                                                            </Link>
-                                                        </li>
-                                                        <li className="delete">
-                                                            <Link as="button" method="delete" onClick={(event) => handleDelete(event, blog.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                    {blogs.length == 0 ? (
+                                        <tr className='text-center'>
+                                            <td colSpan="4">There is no data</td>
+                                        </tr>
+                                    ):(
+                                        <>
+                                            {blogs
+                                                .filter((blog) => blog.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                                                .map((blog, index) => (
+                                                    <tr key={blog.id} className="border-bottom-secondary align-middle">
+                                                        <td>{index + 1}</td>
+                                                        <td>{blog.title}</td>
+                                                        <td>{moment(blog.created_at)}</td>
+                                                        <td>
+                                                            <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
+                                                                <li className="edit">
+                                                                    <Link href={route('admin.blogs.edit', blog.id)}
+                                                                    >
+                                                                        <FontAwesomeIcon
+                                                                            icon={faPenToSquare}
+                                                                            className="fs-4 me-2 text-primary"
+                                                                        />
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="delete">
+                                                                    <Link as="button" method="delete" onClick={(event) => handleDelete(event, blog.id)}>
+                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -105,8 +113,5 @@ const Index = ({ blogs }) => {
     );
 };
 
-
-
 export default Index;
-
 Index.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;

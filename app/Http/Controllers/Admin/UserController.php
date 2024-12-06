@@ -33,13 +33,13 @@ class UserController extends Controller
 
         // Paginate the results
         $data = $query->paginate(10, ['*'], 'page', $page);
-        $users = $data->map(function ($user, $index) {
+        $users = collect($data->items())->map(function ($user, $index) {
             $user['reviews_count'] = count($user->reviews);
             return $user;
         });
 
         return response()->json([
-            'users' => $data->items(),
+            'users' => $users,
             'filters' => $request->only('page', 'search'),
             'pagination' => [
                 'current_page' => $data->currentPage(),
@@ -185,12 +185,9 @@ class UserController extends Controller
         return redirect()->route('admin.users.index');
     }
 
-    public function destroy(String $id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
-        if ($user) {
-            $user->delete();
-            return to_route('admin.users.index');
-        }
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 }

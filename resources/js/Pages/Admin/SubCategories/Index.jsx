@@ -85,48 +85,57 @@ const Index = ({ subCategories, category }) => {
                                 </thead>
                                 {/* Table body */}
                                 <tbody id="myTable">
-                                    {subCategories
-                                        .filter((cat) =>
-                                            cat.name.toLowerCase().includes(searchQuery.toLowerCase())
-                                        )
-                                        .map((cat, index) => (
-                                            <tr key={cat.id} className="border-bottom-secondary align-middle">
-                                                <td>{index + 1}</td>
-                                                <td>
-                                                {cat.image ? (
-                                                    <img src={`/storage/${cat.image}`}
-                                                        alt="sub-category-logo"
-                                                        className='inline'
-                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                ):(
-                                                    <>No image</>
-                                                )}
-                                                </td>
-                                                <td>{cat.name}</td>
-                                                <td>{cat.category.name}</td>
-                                                <td>
-                                                    <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
-                                                        <li className="edit">
-                                                            <Link href={route('admin.sub_categories.edit', cat.id)}>
-                                                                <FontAwesomeIcon
-                                                                    icon={faPenToSquare}
-                                                                    className="fa-lg text-danger"
-                                                                />
-                                                            </Link>
-                                                        </li>
-                                                        <li className="delete">
-                                                            <Link
-                                                                as="button"
-                                                                method="delete"
-                                                                onClick={(event) => handleDelete(event, cat.id)}
-                                                            >
-                                                                <FontAwesomeIcon icon={faTrashCan} />
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                    {subCategories.length == 0 ? (
+                                        <tr className='text-center'>
+                                            <td colSpan="5">There is no data</td>
+                                        </tr>
+                                    ):(
+                                        <>
+                                            {subCategories
+                                                .filter((cat) =>
+                                                    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                )
+                                                .map((cat, index) => (
+                                                    <tr key={cat.id} className="border-bottom-secondary align-middle">
+                                                        <td>{index + 1}</td>
+                                                        <td>
+                                                        {cat.image ? (
+                                                            <img src={`/storage/${cat.image}`}
+                                                                alt="sub-category-logo"
+                                                                className='inline'
+                                                                style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                        ):(
+                                                            <>No image</>
+                                                        )}
+                                                        </td>
+                                                        <td>{cat.name}</td>
+                                                        <td>{cat.category.name}</td>
+                                                        <td>
+                                                            <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
+                                                                <li className="edit">
+                                                                    <Link href={route('admin.sub_categories.edit', cat.id)}>
+                                                                        <FontAwesomeIcon
+                                                                            icon={faPenToSquare}
+                                                                            className="fa-lg text-danger"
+                                                                        />
+                                                                    </Link>
+                                                                </li>
+                                                                <li className="delete">
+                                                                    <Link
+                                                                        as="button"
+                                                                        method="delete"
+                                                                        onClick={(event) => handleDelete(event, cat.id)}
+                                                                    >
+                                                                        <FontAwesomeIcon icon={faTrashCan} />
+                                                                    </Link>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            }
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
                         </div>

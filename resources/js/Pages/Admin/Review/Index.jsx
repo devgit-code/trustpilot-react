@@ -192,7 +192,7 @@ const Index = () => {
                                     {
                                     loading ? (
                                         <tr className="">
-                                            <td colSpan="4">
+                                            <td colSpan="8">
                                                 <div className='flex justify-center'>
                                                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
                                                 </div>
@@ -202,7 +202,7 @@ const Index = () => {
                                         <>{
                                         reviews.length == 0 ? (
                                             <tr className='text-center'>
-                                                <td colSpan="4">There is no data</td>
+                                                <td colSpan="8">There is no data</td>
                                             </tr>
                                         ):(
                                             <>
