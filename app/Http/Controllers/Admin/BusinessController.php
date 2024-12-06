@@ -79,7 +79,10 @@ class BusinessController extends Controller
     public function show(string $id)
     {
         $business = Business::where('id', $id)->with('profile')->first();
-        return Inertia::render('Admin/Business/Show', compact('business'));
+        return Inertia::render('Admin/Business/Show', [
+            'business' => $business,
+            'has_reviews' => count($business->reviews),
+        ]);
     }
 
 

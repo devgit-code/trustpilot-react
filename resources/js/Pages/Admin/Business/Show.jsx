@@ -9,7 +9,7 @@ import ReviewTable from '@/Components/ReviewTable';
 
 import profileNotLogo from '@/../images/company-logo.png';
 
-const Show = ({ business }) => {
+const Show = ({ business, has_reviews }) => {
     const table_setting = {
         title: 'Reviews',
         url: '/api/admin/businesses/' + business.id,
@@ -251,9 +251,13 @@ const Show = ({ business }) => {
                     </div>
                 </div>
 
-                <div className='mt-3 p-3 card'>
-                    <ReviewTable setting={table_setting}/>
-                </div>
+                {
+                    has_reviews !== 0 && (
+                        <div className='mt-3 p-3 card'>
+                            <ReviewTable setting={table_setting}/>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

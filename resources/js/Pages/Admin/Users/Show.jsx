@@ -12,7 +12,7 @@ import "cropperjs/dist/cropper.css";
 import ImageCropper from "@/Components/ImageCropper";
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
-const Show = ({ user, userProfile }) => {
+const Show = ({ user, userProfile, has_reviews }) => {
     const table_setting = {
         title: 'Reviews',
         url: '/api/admin/users/' + user.id,
@@ -208,9 +208,13 @@ const Show = ({ user, userProfile }) => {
                     )}
                 </div>
 
-                <div className='mt-3 p-3 card'>
-                    <ReviewTable setting={table_setting}/>
-                </div>
+                {
+                    has_reviews !== 0 && (
+                        <div className='mt-3 p-3 card'>
+                            <ReviewTable setting={table_setting}/>
+                        </div>
+                    )
+                }
             </div>
         </>
     );

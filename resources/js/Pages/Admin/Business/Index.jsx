@@ -4,7 +4,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/adminLayout';
 import Rating from '@/Components/Ratings';
 
-import { BsTrashFill } from "react-icons/bs"
+import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
 import Swal from 'sweetalert2';
@@ -160,11 +160,15 @@ const Index = () => {
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }} />
                                                 </div>
                                             ):(
-                                                <div className='inline-flex border items-center' style={{height: '64px'}}>
+                                                <div className='relative inline-flex border items-center' style={{height: '64px'}}>
                                                     <img src={logo}
                                                         alt="category-logo"
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                    {!item.email_verified_at && (
+                                                        <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
+                                                    )}
+
                                                 </div>
                                             )}
                                             </td>

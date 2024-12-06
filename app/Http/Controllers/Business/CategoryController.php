@@ -38,14 +38,18 @@ class CategoryController extends Controller
         ]);
 
         $business = auth('business')->user();
-        // if(count($business->businessCategories) === 6) //max limit
 
         $creationData = [
             "sub_category_id" => $request->input('id'),
             "business_id" => $business->id,
         ];
 
-        BusinessCategory::create($creationData);
+        $businessCat = BusinessCategory::create($creationData);
+        if(count($business->businessCategories) === 1) //only one
+        {
+            $businessCat->is_primary = true;
+            $businessCat->save();
+        }
 
         return redirect()->route('business.categories.index');
     }

@@ -17,15 +17,21 @@ const customStyles = {
 
 
 const Index = ({categories, sub_categories}) => {
-    const [subCategories, setSubCategories] = useState([]);
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const formattedData = sub_categories.map((sub) => ({
+        value: sub.id, // Map the ID to the "value" field
+        label: sub.name, // Map the name to the "label" field
+    }));
+    const availableData = formattedData.filter(
+        (item) => !categories.some((selected) => selected.sub_category_id === item.value)
+    )
 
     const handleSelectChange = (option) => {
         setSelectedOption(option);
     };
 
     const handleAddClick = () => {
-        console.log('eee', selectedOption)
         if (selectedOption) {
             // onAddCategory(selectedOption);
             router.post(route('business.categories.store'), {
@@ -44,11 +50,6 @@ const Index = ({categories, sub_categories}) => {
     };
 
     useEffect(() => {
-        const formattedData = sub_categories.map((sub) => ({
-            value: sub.id, // Map the ID to the "value" field
-            label: sub.name, // Map the name to the "label" field
-        }));
-        setSubCategories(formattedData);
     }, []);
 
     return (
@@ -63,7 +64,7 @@ const Index = ({categories, sub_categories}) => {
                             </div>
                             <div className="flex items-center">
                                 <Select
-                                    options={subCategories}
+                                    options={availableData}
                                     value={selectedOption}
                                     styles={customStyles}
                                     onChange={handleSelectChange}

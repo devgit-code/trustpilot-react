@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import { BsTrashFill } from "react-icons/bs"
+import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { CgMenuBoxed } from "react-icons/cg";
 
 import jsPDF from 'jspdf';
@@ -210,13 +210,16 @@ const Index = () => {
                                         <tr key={user.id}>
                                             <td data-label="No">{index + 1}</td>
                                             <td data-label="">
-                                                <div className='inline-flex items-center' style={{height: '64px'}}>
+                                                <div className='relative inline-flex items-center' style={{height: '64px'}}>
                                                     <img
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }}
                                                         src={user.profile?.image ? `/storage/images/profile/${user.profile.image}` : profileNotPreviewImg}
                                                         alt="preview image"
                                                     />
+                                                    {!user.email_verified_at && (
+                                                        <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
+                                                    )}
                                                 </div>
                                             </td>
                                             <td data-label="name">{user.name}</td>
