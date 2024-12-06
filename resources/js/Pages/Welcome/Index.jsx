@@ -7,13 +7,13 @@ import About from './About';
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 
 
-export default function Welcome() {
+export default function Welcome({ data }) {
     return (
         <>
             <FrontendLayout>
                 <Head title="Welcome" />
                 {/* <!-- landingarea --> */}
-                <LandingArea />
+                <LandingArea data={data}/>
                 {/* <!-- \landingarea --> */}
 
                 {/* <!-- About section --> */}

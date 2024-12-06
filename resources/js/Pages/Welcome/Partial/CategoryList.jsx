@@ -6,24 +6,7 @@ import {
     usePage,
 } from '@inertiajs/react';
 
-const categories = [
-  { icon: "🏦", label: "Bank" },
-  { icon: "✈️", label: "Travel Insurance Company" },
-  { icon: "🚗", label: "Car Dealer" },
-  { icon: "🛋️", label: "Furniture Store" },
-  { icon: "💎", label: "Jewelry Store" },
-  { icon: "👕", label: "Clothing Store" },
-  { icon: "💻", label: "Electronics & Technology" },
-  { icon: "🏋️", label: "Fitness and Nutrition Service" },
-  { icon: "🛋️", label: "Furniture Store" },
-  { icon: "💎", label: "Jewelry Store" },
-  { icon: "👕", label: "Clothing Store" },
-  { icon: "💻", label: "Electronics & Technology" },
-  { icon: "🏋️", label: "Fitness and Nutrition Service" },
-  // Add more items as needed
-];
-
-const CategoryGridItems = () => {
+const CategoryGridItems = ({ categories }) => {
     const containerRef = useRef(null);
 
     const scrollLeft = () => {
@@ -70,8 +53,14 @@ const CategoryGridItems = () => {
                 <div ref={containerRef} className="flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth">
                     {categories.map((category, index) => (
                         <div key={index} className="flex flex-shrink-0 flex-col items-center group justify-center pr-4 text-center hover:cursor-pointer">
-                            <div className="flex items-center justify-center w-6 h-6">{category.icon}</div>
-                            <Link href="/categories/category_name" className="block text-center p-2 no-underline text-black text-sm group-hover:underline" > {category.label}</Link>
+                            <div className="flex items-center justify-center w-6 h-6">
+                                <img src={`/storage/${category.image}`}
+                                    alt="category-logo"
+                                    className='inline max-w-6 max-h-6'
+                                    // style={{ maxWidth: '32px', maxHeight: '32px' }}
+                                    />
+                            </div>
+                            <Link href="/categories/category_name" className="block text-center p-2 no-underline text-black capitalize text-sm group-hover:underline" > {category.name}</Link>
                         </div>
                     ))}
                 </div>

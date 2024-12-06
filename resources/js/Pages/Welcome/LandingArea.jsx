@@ -83,7 +83,7 @@ const data2 = [
     },
 ];
 
-const LandingArea = () => {
+const LandingArea = ({ data }) => {
     return (
         // <section className="Landing position-relative">
         //     <img src={fifthbanner} alt="" className='' />
@@ -108,7 +108,7 @@ const LandingArea = () => {
                 </a>
             </div>
 
-            <CategoryGridItems />
+            <CategoryGridItems categories={data.categories}/>
 
             <AdPart1 />
 

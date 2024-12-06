@@ -48,6 +48,7 @@ class SubCategoryController extends Controller
             $imageName = "sub-category-" . now()->timestamp . "." . $extension;
             $path = $request->file('image')->storeAs('images/category', $imageName, 'public');
             $validated['image'] = $path; // Add the avatar path to the validated data
+            $validated['slug'] = Str::slug($validated['name']);
         }
 
         SubCategory::create($validated);
@@ -87,6 +88,7 @@ class SubCategoryController extends Controller
         ]);
 
         $subCategory->name = $request->name;
+        $subCategory->slug = Str::slug($request->name);
 
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
