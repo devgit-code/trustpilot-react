@@ -5,7 +5,7 @@ import company_logo from "@/../images/company-logo.png"
 import { FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
 import Rating from '@/Components/Ratings';
 
-function Status({className, rating}) {
+function Status({className, rating, total}) {
     return (
         <p className={`${className} `}>
             {
@@ -23,18 +23,22 @@ function Status({className, rating}) {
     )
 }
 
-export default function Header({company_name, profile, website, email_verified_at, rating_statistic}) {
+export default function Header({company_name, profile, primary_business_category, website, email_verified_at, rating_statistic}) {
     return (
         <div className='p-2 bg-whtie border-b'>
             <div className='container-lg'>
                 <div className='mt-2 flex items-center'>
-                    <div>
-                        <span className='text-gray-800 text-sm'>subcategory </span>
-                        &gt;
-                        <span className='text-gray-800 text-sm'> name  </span>
-                        &gt;
-                    </div>
-                    <span className='ml-2 text-gray-700 font-bold text-sm'>{name}</span>
+                    {
+                        primary_business_category && (
+                            <>
+                                <div>
+                                    <span className='text-gray-800 text-sm'>{primary_business_category.sub_category.name} </span>
+                                    &gt;
+                                </div>
+                                <span className='ml-2 text-gray-700 font-bold text-sm'>{company_name}</span>
+                            </>
+                        )
+                    }
                 </div>
                 <div className='mt-3 grid md:grid-cols-[2fr_1fr] gap-4 grid-cols-1'>
                     <div className="p-2">
@@ -43,13 +47,13 @@ export default function Header({company_name, profile, website, email_verified_a
                                 <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="w-36 object-cover" />
                             </div>
                             <div className="mt-2 flex-1">
-                                <p className='text-3xl text-gray-800 font-black mb-0'>{name}</p>
+                                <p className='text-3xl text-gray-800 font-black mb-0'>{company_name}</p>
                                 <div className='flex items-center mt-2'>
                                     <p className='text-gray-600 mb-0'>Reviews
                                         <span className='mx-3 text-gray-700'>{rating_statistic.total}</span>
                                         &#10625;
                                     </p>
-                                    <Status className='pl-3 text-gray-700 mb-0' rating={rating_statistic.avg}/>
+                                    <Status className='pl-3 text-gray-700 mb-0' rating={rating_statistic.avg} total={rating_statistic.total}/>
                                 </div>
                                 <div className='flex items-center mt-1'>
                                     <Rating rating={rating_statistic.avg} width='w-8' height='w-8'/>

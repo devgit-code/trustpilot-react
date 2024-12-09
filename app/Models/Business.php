@@ -93,7 +93,7 @@ class Business extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(BusinessCategory::class)
             ->where('is_primary', true)
-            ->with('subCategory');
+            ->with(['subCategory']);
     }
 
     public function reviews()

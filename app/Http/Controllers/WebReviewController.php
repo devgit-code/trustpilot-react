@@ -62,7 +62,7 @@ class WebReviewController extends Controller
 
     public function company(Request $request, String $id)
     {
-        $business = Business::with(['profile'])->findOrFail($id);
+        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category'])->findOrFail($id);
 
         $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();

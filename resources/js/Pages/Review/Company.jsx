@@ -11,26 +11,7 @@ import CompanyInfo from './Partial/CompanyInfo.jsx'
 import CompanyActivity from './Partial/CompanyActivity.jsx'
 import CompanyRelated from './Partial/CompanyRelated.jsx'
 
-const company = {
-    logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-    name: 'Liquid Expat Mortgages',
-    website: 'liquidexpatmortgages.com',
-    is_verified: true,
-    rating_statistic:{
-        avg: 4.2,
-        total: 340,
-        stars: {
-            '5' : 221,
-            '4' : 114,
-            '3' : 1,
-            '2' : 32,
-            '1' : 2,
-        }
-    }
-}
-
 export default function Company({ company }) {
-console.log('rr---', company)
     return (
         <>
             <FrontendLayout>
@@ -56,7 +37,7 @@ console.log('rr---', company)
                             <div className='flex flex-col gap-4'>
                                 <CompanyActivity />
 
-                                <CompanyInfo />
+                                <CompanyInfo {...company}/>
 
                                 <CompanyRelated />
                             </div>

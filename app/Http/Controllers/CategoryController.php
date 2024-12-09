@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
 use App\Models\Category;
@@ -23,6 +24,27 @@ class CategoryController extends Controller
     public function search()
     {
         return Inertia::render('Category/Search');
+    }
+
+
+    public function apiSearchCategory(Request $request)
+    {
+        $searchTerm = $request->input('query', '');
+
+        $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
+            ->select('id', 'name', DB::raw('1 as is_category')); // Add is_category = 1 for categories
+
+        $sub_categories = SubCategory::where('name', 'like', '%' . $searchTerm . '%')
+            ->select('id', 'name', DB::raw('0 as is_category')); // Add is_category = 1 for categories
+
+        $results = $categories->union($sub_categories)
+            ->orderBy('name', 'asc') // Optional: Sort alphabetically
+            ->limit(5)
+            ->get();
+
+        return response()->json([
+            'categories' => $results,
+        ]);
     }
 
     public function show(Request $request, String $category_id)

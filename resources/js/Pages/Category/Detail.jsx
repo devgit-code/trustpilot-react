@@ -11,7 +11,6 @@ import PaginationList from './Partial/PaginationList.jsx'
 
 export default function Detail({page=1, count=327, data}) {
     const [sortBy, setSortBy] = useState("relevant");
-console.log('rrr-----', data)
     return (
         <>
             <FrontendLayout>

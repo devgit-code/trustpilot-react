@@ -1,12 +1,9 @@
 import React, { useRef } from 'react';
+import { Link, usePage, } from '@inertiajs/react';
+
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import ReviewCard from '@/Components/Frontend/ReviewCard';
-
 import "./Style.css"
-import {
-    Link,
-    usePage,
-} from '@inertiajs/react';
 
 
 const RecentReviewList = ({ reviews }) => {
