@@ -115,7 +115,7 @@ class ReviewController extends Controller
         return Inertia::render('Business/Review/Edit', [
             'review' => $review,
             'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
-        ]);
+        ])->with('status', session('status'));
     }
 
 
@@ -135,7 +135,7 @@ class ReviewController extends Controller
         $reply['comment'] = $request->input('reply');
         $reply->save();
 
-        return redirect()->route('business.reviews.edit', $id);
+        return redirect()->route('business.reviews.edit', $id)->with('status', 'Update reply successfully');
     }
 
     public function destroy(Review $review)

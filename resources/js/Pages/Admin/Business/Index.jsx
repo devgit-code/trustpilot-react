@@ -174,7 +174,7 @@ const Index = () => {
                                             <td>{item.company_name}</td>
                                             <td>
                                                 <div className='inline-flex items-center'>
-                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={item.trustscore}/>
+                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={Number(item.trustscore)}/>
                                                     <span className='ml-2 text-gray-800'>{item.trustscore} ({item.reviews_count})</span>
                                                 </div>
                                             </td>

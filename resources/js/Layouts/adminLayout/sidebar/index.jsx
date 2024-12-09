@@ -34,7 +34,7 @@ export default function Sidebar({auth}) {
                                     src={auth.userProfileImage ? `/storage/images/logo/${auth.userProfileImage}` : businessProfilelogo}
                                     alt="business-logo"
                                     className="mx-auto"
-                                    width="100"
+                                    style={{maxWidth:'100px', maxHeight:'100px'}}
                                 />
                             </>
                         )

@@ -14,7 +14,7 @@ const Show = ({ business, has_reviews }) => {
         title: 'Reviews',
         url: '/api/admin/businesses/' + business.id,
         show_link: 'admin.reviews.show',
-        header_name:'business'
+        header_name:'user'
     }
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
@@ -184,7 +184,7 @@ const Show = ({ business, has_reviews }) => {
                                             className="form-control mt-2"
                                             name="description"
                                             id="description"
-                                            rows="4"
+                                            rows="6"
                                             disabled
                                             style={{ height: "auto" }}
                                             value={data.description}

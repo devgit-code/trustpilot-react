@@ -7,9 +7,9 @@ import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import Alert from '@/Components/Alert';
 
-const Edit = ({ review, userTotalReviews }) => {
-    const { auth } = usePage().props;
+const Edit = ({ review, userTotalReviews, status }) => {
     const { data, setData, put, errors } = useForm({
         reply: review.reply?.comment || '',
     })
@@ -28,7 +28,7 @@ const Edit = ({ review, userTotalReviews }) => {
                         <h4 className="card-title">Detail</h4>
                         <div className='p-4 bg-white border rounded'>
                             <div className=' pb-3 border-b border-b-2 flex items-center'>
-                                <UserAvatar user={review.user} avatar_url={review.user?.profile.image} width='3rem' height='3rem'/>
+                                <UserAvatar user={review.user} avatar={review.user?.profile.image} width='3rem' height='3rem'/>
                                 <div className='no-underline ml-3'>
                                     <p className='text-gray-800 text-sm font-bold mb-0'>
                                         {review.user.name}
@@ -49,7 +49,7 @@ const Edit = ({ review, userTotalReviews }) => {
                                 </div>
                                 <div className='mt-3'>
                                     <h4 className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline capitalize'>{review.title}</h4>
-                                    <pre className="text-black whitespace-pre-wrap font-medium h-20">{review.description}</pre>
+                                    <pre className="text-black whitespace-pre-wrap font-medium min-h-36">{review.description}</pre>
                                 </div>
                                 <p className='text-sm text-gray-800 mb-0'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
                             </div>
@@ -71,6 +71,14 @@ const Edit = ({ review, userTotalReviews }) => {
 
                                 <InputError className="mt-2" message={errors.reply} />
                             </div>
+
+                            {status && (
+                                <Alert
+                                    message={status}
+                                    type="success"
+                                    duration={3000} // Alert disappears after 5 seconds
+                                />
+                            )}
 
                             <div className='mt-3 space-x-3'>
                                 <button type="submit" className="btn btn-primary">
