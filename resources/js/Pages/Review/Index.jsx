@@ -52,7 +52,7 @@ export default function Write({ companies }) {
 
                 <div className="py-4"></div>
 
-                <WriteCompanyList title="Ready to write your review?" data={companies}/>
+                <WriteCompanyList data={companies}/>
 
                 <AddCompanySection />
 

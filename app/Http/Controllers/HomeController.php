@@ -20,7 +20,7 @@ class HomeController extends Controller
         $businesses = Business::latest()->take(4)->get();
         $businesses = $businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
-            $business['trustscore'] = round($business->reviews->avg('rating'), 1);
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
             $business['count_reviews'] = count($business->reviews);
             return $business;
         });

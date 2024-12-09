@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $averageRating = $business->reviews->avg('rating');
 
         return Inertia::render('Business/Dashboard', [
-            'average_rating' => round($averageRating, 1),
+            'average_rating' => number_format($averageRating, 1),
             'total_reviews' => count($business->reviews),
             'total_products' => count($business->products),
         ]);

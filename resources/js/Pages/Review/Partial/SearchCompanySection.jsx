@@ -5,6 +5,7 @@ import { BsDot } from "react-icons/bs";
 
 import RatingAverage from '@/Components/RatingAverage';
 import RatingTotal from '@/Components/RatingTotal';
+import company_logo from "@/../images/company-logo.png"
 
 function SearchSection() {
     const [filters, setFilters] = useState({query:""});
@@ -110,13 +111,28 @@ function SearchSection() {
                                         className="p-3 cursor-pointer hover:bg-blue-100"
                                     >
                                         <Link href={route('reviews.evaluate', company.id)} className='text-gray-900 no-underline flex justify-between'>
-                                            <div className='flex flex-col justify-start'>
-                                                <p className='text-left text-lg font-bold mb-0 text-gray-800'>
-                                                {company.company_name}
-                                                </p>
-                                                <p className='text-sm mb-0'>{company.website}<span className='inline'><BsDot className='inline'/></span><RatingTotal total={company.totalReviews}/> reviews</p>
+                                            <div className='flex items-center gap-4 w-full'>
+                                                <div className="relative inline-flex items-center w-12 h-12 rounded">
+                                                    <img
+                                                        src={company.logo ? `/storage/images/logo/${company.logo}` : company_logo}
+                                                        alt={company.name}
+                                                        className="w-12 object-cover rounded" />
+                                                </div>
+
+                                                <div className='flex flex-grow justify-between'>
+                                                    <div className='flex flex-col'>
+                                                        <p className='text-left text-lg font-bold mb-0 text-gray-800'>
+                                                        {company.company_name}
+                                                        </p>
+                                                        <p className='text-sm mb-0'>
+                                                            {company.website}
+                                                            <span className='inline'><BsDot className='inline'/></span>
+                                                            <RatingTotal total={company.count_reviews}/> reviews
+                                                        </p>
+                                                    </div>
+                                                    <RatingAverage rating={company.trustscore}/>
+                                                </div>
                                             </div>
-                                            <RatingAverage rating={company.trustscore}/>
                                         </Link>
                                     </li>
                                 ))

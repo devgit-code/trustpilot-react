@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('website')->unique();
             $table->string('company_name');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('job_title');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('job_title')->nullable();
             $table->string('role')->default('owner');
             $table->string('company_email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken(); // Token for "remember me" functionality
             $table->timestamps();
         });

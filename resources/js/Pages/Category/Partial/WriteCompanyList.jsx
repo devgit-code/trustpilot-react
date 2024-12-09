@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import EvaluateCard from './EvaluateCard';
 
-const WriteCompanyList = ({title, link, data}) => {
-
+const WriteCompanyList = ({data}) => {
     return (
         <div className="container-md bg-white">
             {/* Title */}

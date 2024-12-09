@@ -78,10 +78,10 @@ const AddCompanySection = () => {
 
             </div>
 
-            <MyVerticallyCenteredModal
+            {/* <MyVerticallyCenteredModal
                 show={open}
                 onHide={handleOpen}
-            />
+            /> */}
       </>
     );
 };

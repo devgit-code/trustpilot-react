@@ -41,10 +41,10 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    // category
     Route::get('/search', [HomeController::class, 'search'])
         ->name('search');
 
+    // category
     Route::get('/categories', [CategoryController::class, 'index'])
         ->name('categories.index');
 
