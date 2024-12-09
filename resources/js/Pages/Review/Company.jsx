@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import Header from './Partial/Header.jsx'
@@ -29,8 +29,8 @@ const company = {
     }
 }
 
-export default function CompanyReviews({company_name}) {
-
+export default function Company({ company }) {
+console.log('rr---', company)
     return (
         <>
             <FrontendLayout>
@@ -45,7 +45,7 @@ export default function CompanyReviews({company_name}) {
                         <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
-                                    <ClickableWrite company_name={company.name}/>
+                                    <ClickableWrite company_name={company.id}/>
 
                                     <Filter />
 

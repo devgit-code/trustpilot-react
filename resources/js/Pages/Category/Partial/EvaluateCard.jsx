@@ -20,7 +20,7 @@ function EvaluateCard({ id, website, name, trustscore, count_reviews, email_veri
 
                 <h3 className="mt-2 text-black text-lg font-semibold mb-0">{name}</h3>
                 <p className="text-sm text-gray-500 mb-1">
-                    {website.replace("https://", "").replace("www.", "")}
+                    {website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}
                 </p>
                 <div className="flex items-center">
                     <Rating className="inline-flex" rating={trustscore}/>

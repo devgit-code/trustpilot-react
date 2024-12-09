@@ -1,7 +1,7 @@
-import { Head } from '@inertiajs/react';
-import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import React, {useState} from 'react';
+import { Head, Link } from '@inertiajs/react';
 
+import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import Header from './Partial/Header.jsx'
 import Rating from './Partial/Rating.jsx'
 import Status from './Partial/CompanyStatus.jsx'

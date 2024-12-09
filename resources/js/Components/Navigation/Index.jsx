@@ -1,12 +1,5 @@
-import {
-    Link,
-    usePage,
-    // Button,
-} from '@inertiajs/react';
-import {
-    React,
-    useEffect,
-} from 'react';
+import { Link, usePage,} from '@inertiajs/react';
+import React, { useState, useEffect, } from 'react';
 import {
     Container,
     Nav,

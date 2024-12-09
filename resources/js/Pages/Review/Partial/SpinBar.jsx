@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link, router, usePage } from '@inertiajs/react';
 
+import company_logo from "@/../images/company-logo.png"
 import { FaExternalLinkAlt } from "react-icons/fa";
-
-import logo from '@/../images/company-logo.png';
 import Rating from '@/Components/Ratings';
 
 
-export default function SpinBar({name, website, is_verified, rating_statistic }) {
+export default function SpinBar({id, profile, company_name, website, email_verified_at, rating_statistic }) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -28,15 +28,15 @@ export default function SpinBar({name, website, is_verified, rating_statistic })
                         <div className="p-2">
                             <div className='flex gap-4'>
                                 <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                    <img src={logo} alt={name} className="w-20 object-cover rounded border-2 border-white" />
+                                    <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="w-20 object-cover rounded border-2 border-white" />
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                         className="absolute -top-2 -right-2">
-                                        <path fill={`${is_verified ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                                        <path fill={`${email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
                                         <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
                                     </svg>
                                 </div>
                                 <div className="">
-                                    <p className='text-2xl text-gray-800 font-extrabold mb-0'>{name}</p>
+                                    <p className='text-2xl text-gray-800 font-extrabold mb-0'>{company_name}</p>
                                     <div className='flex items-center mt-3'>
                                         <Rating rating={rating_statistic.avg}/>
                                         <span className='ml-4 text-gray-500'>{rating_statistic.avg}</span>
@@ -46,7 +46,7 @@ export default function SpinBar({name, website, is_verified, rating_statistic })
                         </div>
                         <div className="px-3 flex flex-col justify-end items-end">
                             <div className='flex gap-4'>
-                                <a href="#" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
+                                <a href={website} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>
                                         <p className='text-blue-600 mb-1'>
                                             <FaExternalLinkAlt className='inline mr-2 text-sm group-hover:text-gray-600'/>
@@ -54,9 +54,9 @@ export default function SpinBar({name, website, is_verified, rating_statistic })
                                         </p>
                                     </div>
                                 </a>
-                                <a href={'/reviews/company/' + name} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
+                                <Link href={route('reviews.evaluate', id)} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
                                     <span className='text-sm font-bold text-gray-100 group-hover:text-gray-700 '>Write a review</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

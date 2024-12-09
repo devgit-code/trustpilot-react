@@ -35,7 +35,7 @@ const LandingArea = ({ data }) => {
 
             {/* <CompanyList title="Best in Banks" link="/categories/bank" data={data}/> */}
 
-            <CompanyList title="Latest Companies" link='/categories/latest' data={data.businesses}/>
+            <CompanyList title="Latest Companies" link={route('search')} data={data.businesses}/>
 
             <AdPart2 />
 

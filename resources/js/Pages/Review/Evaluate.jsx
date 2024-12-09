@@ -128,9 +128,9 @@ export default function Evaluate({ company }) {
                                         <div className='mt-5'>
                                             <p className="text-sm text-gray-600 mb-6">
                                                 By submitting this review, you confirm it’s{" "}
-                                                <a href="#" className="text-blue-600 underline hover:text-blue-800">
+                                                <span href="#" className="text-blue-600 underline hover:text-blue-800">
                                                 based on a genuine experience
-                                                </a>{" "}
+                                                </span>{" "}
                                                 and you haven’t received an incentive to write it.
                                             </p>
 

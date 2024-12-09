@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import { Head, Link } from '@inertiajs/react';
+
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import ReviewCard from './RecentCompanyReviewCard.jsx';
 

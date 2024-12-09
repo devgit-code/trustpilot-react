@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\WebReviewController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -56,19 +56,19 @@ Route::group([
 
 
     // reviews
-    Route::get('/writeareview', [ReviewController::class, 'write'])
+    Route::get('/writeareview', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
-    Route::get('/reviews/evaluate/{company}', [ReviewController::class, 'evaluate'])
+    Route::get('/reviews/evaluate/{company}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
-    Route::get('/reviews/company/{id}', [ReviewController::class, 'company'])
+    Route::get('/reviews/company/{id}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
-    Route::get('/reviews/user/{id}', [ReviewController::class, 'user'])
+    Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])
         ->name('reviews.user');
 
-    Route::get('/reviews/review/{id}', [ReviewController::class, 'detail'])
+    Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
 

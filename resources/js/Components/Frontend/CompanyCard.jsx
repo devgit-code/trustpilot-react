@@ -1,10 +1,12 @@
 import React from "react";
+import { Link, usePage, } from '@inertiajs/react';
+
 import company_logo from "@/../images/company-logo.png"
 import Rating from '@/Components/Ratings';
 
-function CompanyCard({ company_name, website, trustscore, count_reviews, email_verified_at, logo}) {
+function CompanyCard({ id, company_name, website, trustscore, count_reviews, email_verified_at, logo}) {
     return (
-        <a href={"/reviews/company/" + company_name} className="no-underline">
+        <Link href={route('reviews.company', id)} className="no-underline">
             <div className="bg-white rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl p-4" style={{minWidth: '240px'}}>
                 <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
                     <img src={logo ? `/storage/images/logo/${logo}` : company_logo} alt={company_name} className="w-20 object-cover rounded border-2 border-white" />
@@ -17,7 +19,7 @@ function CompanyCard({ company_name, website, trustscore, count_reviews, email_v
 
                 <h3 className="mt-2 text-black text-lg font-semibold mb-0">{company_name}</h3>
                 <p className="text-sm text-gray-500 mb-1">
-                    {website.replace("https://", "").replace("www.", "")}
+                    {website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}
                 </p>
                 <div className="flex items-center">
                     <Rating className="inline-flex" rating={trustscore}/>
@@ -25,7 +27,7 @@ function CompanyCard({ company_name, website, trustscore, count_reviews, email_v
                     <span className="text-xs ml-2 text-gray-500">({count_reviews})</span>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
 

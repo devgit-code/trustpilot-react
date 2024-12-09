@@ -1,112 +1,59 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link, usePage,} from '@inertiajs/react';
 import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { BsDot } from "react-icons/bs";
 
 import RatingAverage from '@/Components/RatingAverage';
 import RatingTotal from '@/Components/RatingTotal';
 
-const companies = [
-  {
-    id: 1,
-    name: "Tech Solutions Inc.",
-    logo: "https://via.placeholder.com/100", // Placeholder for a logo image
-    website: "https://techsolutions.com",
-    totalReviews: 221334,
-    averageReview: 4.5,
-  },
-  {
-    id: 2,
-    name: "Green Energy Co.",
-    logo: "https://via.placeholder.com/100",
-    website: "https://greenenergyco.com",
-    totalReviews: 15217,
-    averageReview: 4.2,
-  },
-  {
-    id: 3,
-    name: "FinServ Corporation",
-    logo: "https://via.placeholder.com/100",
-    website: "https://finservcorp.com",
-    totalReviews: 312,
-    averageReview: 3.8,
-  },
-  {
-    id: 4,
-    name: "EduNext Academy",
-    logo: "https://via.placeholder.com/100",
-    website: "https://edunextacademy.com",
-    totalReviews: 89,
-    averageReview: 4.7,
-  },
-  {
-    id: 5,
-    name: "Healthify Plus",
-    logo: "https://via.placeholder.com/100",
-    website: "https://healthifyplus.com",
-    totalReviews: 410,
-    averageReview: 4.9,
-  },
-  {
-    id: 6,
-    name: "6 Academy",
-    logo: "https://via.placeholder.com/100",
-    website: "https://edunextacademy.com",
-    totalReviews: 69,
-    averageReview: 2.7,
-  },
-  {
-    id: 7,
-    name: "7 Plus",
-    logo: "https://via.placeholder.com/100",
-    website: "https://healthifyplus.com",
-    totalReviews: 10,
-    averageReview: 3.9,
-  },
-  {
-    id: 8,
-    name: "8 Academy",
-    logo: "https://via.placeholder.com/100",
-    website: "https://edunextacademy.com",
-    totalReviews: 9,
-    averageReview: 4.6,
-  },
-  {
-    id: 9,
-    name: "0 Plus",
-    logo: "https://via.placeholder.com/100",
-    website: "https://healthifyplus.com",
-    totalReviews: 40,
-    averageReview: 4.5,
-  },
-];
-
 function SearchSection() {
-    const [query, setQuery] = useState("");
+    const [filters, setFilters] = useState({query:""});
     const [results, setResults] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-
     const handleInputChange = (e) => {
         const value = e.target.value;
-        setQuery(value);
 
-        if (value) {
-            // Filter items based on the query
-            const filteredResults = companies.filter((item) =>
-                item.name.toLowerCase().includes(value.toLowerCase())
-            );
-            setResults(filteredResults);
-            setIsDropdownVisible(true);
-        } else {
-            setResults([]);
+        if(!value){
             setIsDropdownVisible(false);
         }
+
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            query: value,
+        }));
     };
 
     const handleResultClick = (name) => {
-        setQuery(name);
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            query: name,
+        }));
+
         setIsDropdownVisible(false);
     };
+
+    // Fetch reviews from the API
+    const fetchReviews = async () => {
+        if(!filters.query) return;
+        setIsDropdownVisible(true);
+        try {
+            const queryString = new URLSearchParams(filters).toString();
+            const response = await fetch(`/api/companies?${queryString}`);
+            const data = await response.json();
+            setResults(data.companies);
+        } catch (error) {
+            console.error("Error fetching reviews:", error);
+        } finally {
+            // setIsDropdownVisible(false);
+        }
+
+    };
+
+    // Fetch reviews whenever filters change
+    useEffect(() => {
+        fetchReviews();
+    }, [filters]);
 
     return (
         <div className="relative flex items-center justify-center h-[45vh] min-h-[331px] bg-[#9FF6D3] p-2">
@@ -129,7 +76,7 @@ function SearchSection() {
                     </button>
                     <input
                         type="text"
-                        value={query}
+                        value={filters.query}
                         onChange={handleInputChange}
                         placeholder="Find a company to review"
                         className={`w-full py-3 px-5  shadow-lg text-gray-700 ${isDropdownVisible ? ('rounded-t-[2rem] focus:border-none') : 'rounded-[2rem]'} `}
@@ -147,10 +94,10 @@ function SearchSection() {
                                             <p className="text-md text-gray-800 mb-0">It might not be listed on Trustpilot yet. Add it and be the first to write a review.</p>
                                         </div>
 
-                                        <a href="#"
+                                        <Link href="#"
                                             className="no-underline text-blue-500 text-sm font-bold border-1 border-blue-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-blue-200 hover:text-gray-800">
                                             Add Company
-                                        </a>
+                                        </Link>
                                     </div>
                                 </li>
                             ):(
@@ -159,18 +106,18 @@ function SearchSection() {
                                 results.slice(0,5).map((company, index) => (
                                     <li
                                         key={index}
-                                        onClick={() => handleResultClick(company.name)}
+                                        onClick={() => handleResultClick('')}
                                         className="p-3 cursor-pointer hover:bg-blue-100"
                                     >
-                                        <a href={'/reviews/company/' + company.name} className='text-gray-900 no-underline flex justify-between'>
+                                        <Link href={route('reviews.evaluate', company.id)} className='text-gray-900 no-underline flex justify-between'>
                                             <div className='flex flex-col justify-start'>
                                                 <p className='text-left text-lg font-bold mb-0 text-gray-800'>
-                                                {company.name}
+                                                {company.company_name}
                                                 </p>
                                                 <p className='text-sm mb-0'>{company.website}<span className='inline'><BsDot className='inline'/></span><RatingTotal total={company.totalReviews}/> reviews</p>
                                             </div>
-                                            <RatingAverage rating={company.averageReview}/>
-                                        </a>
+                                            <RatingAverage rating={company.trustscore}/>
+                                        </Link>
                                     </li>
                                 ))
                                 }
@@ -179,9 +126,9 @@ function SearchSection() {
                         </ul>
                     )}
 
-                    {query && (
+                    {filters.query && (
                         <button className="absolute top-1/2 right-3 transform -translate-y-1/2 bg-none text-gray-700 rounded-full p-2"
-                            onClick={()=>handleResultClick("")}>
+                            onClick={()=>handleResultClick('')}>
                             <IoClose className='text-xl'/>
                         </button>
                     )}
