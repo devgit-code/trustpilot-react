@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import { Link, usePage, } from '@inertiajs/react';
 
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import ReviewCard from '@/Components/Frontend/ReviewCard';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import "./Style.css"
 
 
 const RecentReviewList = ({ reviews }) => {
-
     return (
         <div className="container-md bg-white">
             {/* Title */}

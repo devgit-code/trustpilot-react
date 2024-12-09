@@ -3,7 +3,7 @@ import ReviewCard from './ReviewCard.jsx'
 import Pagination from '@/Components/Pagination';
 
 const review = {
-    review_id: 13,
+    id: 13,
     title:'Do not use this company product',
     comment:`Quick review - Currently been waiting in the queue for a few days. Have been constantly asking for update on how much longer my order will take to complete, with no answers. Have asked to upgrade from standard delivery to express delivery to fasten the delivery time, however was told not to as my order is almost first in line. Still 24 hours later, I am still waiting with no indication of how long my order will take to complete.
 rind camos in BO6, be wary as now I can prestige, however I cant because I will need to re-unlock guns to get headshots with them.

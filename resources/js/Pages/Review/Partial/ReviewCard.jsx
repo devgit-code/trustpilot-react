@@ -1,14 +1,16 @@
 import React from 'react';
+import { Link } from '@inertiajs/react'
 
+import moment from 'moment'
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCircle } from 'react-icons/fa';
 
-export default function ReviewCard({review}) {
+export default function ReviewCard({ review }) {
     return (
         <div className='p-4 bg-white border rounded'>
             <div className=' pb-3 border-b border-b-2 flex items-center'>
-                <UserAvatar user={review.user} width='3rem' height='3rem'/>
+                <UserAvatar user={review.user} avatar={review.user.profile?.image} width='3rem' height='3rem'/>
                 <a href={"/reviews/user/" + review.user.name} className='no-underline ml-3'>
                     <p className='text-gray-800 text-sm font-bold mb-0'>
                         {review.user.name}
@@ -35,13 +37,13 @@ export default function ReviewCard({review}) {
                             )
                         }
                     </div>
-                    <p className='mb-0 text-sm'>A day ago</p>
+                    <p className='mb-0 text-sm'>{moment(review.date_experience).fromNow()}</p>
                 </div>
                 <div className='mt-3'>
-                    <a href={"/reviews/review/" + review.review_id} className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
-                    <pre className="text-black whitespace-pre-wrap font-medium">{review.comment}</pre>
+                    <a href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
+                    <pre className="text-black whitespace-pre-wrap font-medium min-h-16">{review.description}</pre>
                 </div>
-                <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{review.date}</p>
+                <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
             </div>
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>

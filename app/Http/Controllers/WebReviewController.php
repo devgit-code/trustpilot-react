@@ -60,6 +60,30 @@ class WebReviewController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            "title" => "required|max:255",
+            "description" => "required|string",
+            "business_id" => "required",
+            "rating" => "required",
+            "date" => "required|date",
+        ]);
+
+        $creationData = [
+            "title" => $request->input('title'),
+            "description" => $request->input('description'),
+            "business_id" => $request->input('business_id'),
+            "user_id" => auth()->user()->id,
+            "date_experience" => $request->input('date'),
+            "rating" => $request->input('rating'),
+        ];
+
+        Review::create($creationData);
+
+        return redirect()->route('reviews.company', $request->input('business_id'));
+    }
+
     public function company(Request $request, String $id)
     {
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category'])->findOrFail($id);
@@ -88,9 +112,16 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function detail()
+    public function detail(Request $request, String $id)
     {
-        return Inertia::render('Review/Detail');
+        $review = Review::with(['reply'])->findOrFail($id);
+        $review['user'] = [
+            'name' => $review->user->name,
+            'avatar' => $review->user->profile->image,
+        ];
+        $review['company'] = $review->business;
+
+        return Inertia::render('Review/Detail', compact('review'));
     }
 
     public function user()

@@ -92,8 +92,15 @@ Route::group([
     Route::get('/aboutus/{detail}', function(){
         return Inertia::render('About/Detail');
     })->name('aboutus.detail');
-
 });
 
+
+Route::group([
+    'middleware' => ['auth', 'business.guest'],
+], function(){
+    Route::post('/reviews', [WebReviewController::class, 'store'])
+        ->name('reviews.store');
+
+});
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
