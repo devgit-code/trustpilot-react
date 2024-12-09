@@ -21,7 +21,7 @@ const RecentReviewList = ({ reviews }) => {
             </div>
 
             <div className="relative flex items-center pt-3">
-                <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
+                <div className="flex lg:grid lg:grid-cols-4 px-2 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                     {
                         reviews.length === 0 ? (
                             <div className='lg:col-span-4 text-2xl font-bold text-center text-gray-500'>There is no reviews yet.</div>

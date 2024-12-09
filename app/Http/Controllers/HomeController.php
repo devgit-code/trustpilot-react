@@ -32,6 +32,7 @@ class HomeController extends Controller
                 'avatar'=>$review->user->profile?->image,
             ];
             $review['company'] = [
+                'id'=>$review->business->id,
                 'name'=>$review->business->company_name,
                 'website'=>$review->business->website,
                 'logo'=>$review->business->profile?->logo,
@@ -65,16 +66,16 @@ class HomeController extends Controller
 
         $businesses = $businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
-            $business['trustscore'] = round($business->reviews->avg('rating'), 1);
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
             $business['count_reviews'] = count($business->reviews);
             return $business;
         });
 
         $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', DB::raw('1 as is_category')); // Add is_category = 1 for categories
+            ->select('id', 'name', 'image', DB::raw('1 as is_category')); // Add is_category = 1 for categories
 
         $sub_categories = SubCategory::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', DB::raw('0 as is_category')); // Add is_category = 1 for categories
+            ->select('id', 'name', 'image', DB::raw('0 as is_category')); // Add is_category = 1 for categories
 
         $results = $categories->union($sub_categories)
             ->orderBy('name', 'asc') // Optional: Sort alphabetically
@@ -85,6 +86,11 @@ class HomeController extends Controller
             'companies' => $businesses,
             'categories' => $results,
         ]);
+    }
+
+    public function search()
+    {
+        return Inertia::render('Welcome/Search');
     }
 
     public function show()

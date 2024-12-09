@@ -32,6 +32,7 @@ function SearchSection() {
     };
 
     const handleResultClick = (name) => {
+        console.log('r---', name)
         setFilters((prevFilters) => ({
             ...prevFilters,
             query: name,
@@ -135,7 +136,7 @@ function SearchSection() {
                                                     results.map((company, index) => (
                                                         <li
                                                             key={index}
-                                                            onClick={() => handleResultClick(company.company_name)}
+                                                            // onClick={() => handleResultClick(company.company_name)}
                                                             className="p-2 cursor-pointer hover:bg-blue-100"
                                                         >
                                                             <Link href={route('reviews.company', company.id)} className='pl-2 text-gray-900 no-underline flex justify-between'>
@@ -176,14 +177,21 @@ function SearchSection() {
                                                     results2.map((category, index) => (
                                                         <li
                                                             key={index}
-                                                            onClick={() => handleResultClick(category.name)}
+                                                            // onClick={() => handleResultClick(category.name)}
                                                             className="p-2 cursor-pointer hover:bg-blue-100"
                                                         >
                                                             <Link href={category.is_category ? route('categories.show', category.id) : route('categories.detail', category.id)} className='ml-2 text-gray-900 no-underline flex items-center justify-beetween'>
                                                                 <div className='flex items-center'>
+                                                                    <div className="relative inline-flex items-center w-10 h-10 rounded">
+                                                                        <img src={`/storage/${category.image}`}
+                                                                            alt="category-logo"
+                                                                            className='w-10 object-cover'
+                                                                            // style={{ maxWidth: '32px', maxHeight: '32px' }}
+                                                                            />
+                                                                    </div>
                                                                     {/* <span className="flex items-center text-xl m-0">{category.image}</span> */}
                                                                     <div className='ml-4 text-left'>
-                                                                        <p className='font-bold text-gray-800 mb-0'>
+                                                                        <p className='font-bold text-gray-800 mb-0 capitalize   '>
                                                                         {category.name}
                                                                         </p>
                                                                         <p className='mb-0 text-gray-800 text-sm'>

@@ -21,11 +21,6 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function search()
-    {
-        return Inertia::render('Category/Search');
-    }
-
 
     public function apiSearchCategory(Request $request)
     {

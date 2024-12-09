@@ -5,9 +5,9 @@ import { GiBinoculars } from "react-icons/gi";
 import { FaQuoteLeft } from "react-icons/fa";
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
-import Rating from './Partial/Rating.jsx'
-import Status from './Partial/CompanyStatus.jsx'
-import PaginationList from './Partial/PaginationList.jsx'
+import Rating from '../Category/Partial/Rating.jsx'
+import Status from '../Category/Partial/CompanyStatus.jsx'
+import PaginationList from '../Category/Partial/PaginationList.jsx'
 
 const data = {
     search_categories :[
@@ -59,6 +59,7 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const query = queryParams.get("query");
+    console.log('here=======', query)
         setQuery(query);
     }, []);
 
@@ -70,10 +71,18 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
                 <div className="bg-white p-4 border-gray-200 border-b">
                     <div className='container-md'>
                         <h3 className="text-3xl font-bold tracking-wider text-gray-900 text-center  mt-5">
-                            Results for
-                            “
-                            {query}
-                            ”
+                        {
+                            query ? (
+                                <>
+                                    Results for
+                                    “
+                                    {query}
+                                    ”
+                                </>
+                            ):(
+                                <>Find your company</>
+                            )
+                        }
                         </h3>
 
                         <div className="mt-5 p-2">

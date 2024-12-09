@@ -40,7 +40,6 @@ Also, your comment on Prestiging is unrelated to our services and is just apart 
 }
 
 export default function Detail({review}) {
-    console.log('b---', review)
     return (
         <>
             <FrontendLayout>

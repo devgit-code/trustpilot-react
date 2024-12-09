@@ -42,7 +42,7 @@ Route::group([
         ->name('home');
 
     // category
-    Route::get('/search', [CategoryController::class, 'search'])
+    Route::get('/search', [HomeController::class, 'search'])
         ->name('search');
 
     Route::get('/categories', [CategoryController::class, 'index'])
@@ -59,7 +59,7 @@ Route::group([
     Route::get('/writeareview', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
-    Route::get('/reviews/evaluate/{company}', [WebReviewController::class, 'evaluate'])
+    Route::middleware('auth')->get('/reviews/evaluate/{company}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
     Route::get('/reviews/company/{id}', [WebReviewController::class, 'company'])

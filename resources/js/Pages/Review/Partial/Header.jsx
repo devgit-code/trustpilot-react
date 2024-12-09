@@ -32,7 +32,7 @@ export default function Header({company_name, profile, primary_business_category
                         primary_business_category && (
                             <>
                                 <div>
-                                    <span className='text-gray-800 text-sm'>{primary_business_category.sub_category.name} </span>
+                                    <span className='text-gray-800 text-sm capitalize'>{primary_business_category.sub_category.name} </span>
                                     &gt;
                                 </div>
                                 <span className='ml-2 text-gray-700 font-bold text-sm'>{company_name}</span>
