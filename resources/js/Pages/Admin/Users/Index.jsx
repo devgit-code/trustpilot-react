@@ -209,7 +209,7 @@ const Index = () => {
                                     {users.map((user, index) => (
                                         <tr key={user.id}>
                                             <td data-label="No">{index + 1}</td>
-                                            <td data-label="">
+                                            <td data-label="flex justify-center">
                                                 <div className='relative inline-flex items-center' style={{height: '64px'}}>
                                                     <img
                                                         className='inline'

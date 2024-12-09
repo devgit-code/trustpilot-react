@@ -11,19 +11,26 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with('subcategories')->get();
 
-        return Inertia::render('Category/Index');
+        return Inertia::render('Category/Index', [
+            'categories' => $categories,
+        ]);
     }
 
-    public function show()
+    public function search()
+    {
+        return Inertia::render('Category/Search');
+    }
+
+    public function show(Request $request)
     {
         return Inertia::render('Category/Detail', [
             'category_name' => "Animals & Pets"
         ]);
     }
 
-    public function subcat()
+    public function detail()
     {
         return Inertia::render('Category/Detail', [
             'category_name' => "Animals & Pets",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\Business;
 use App\Models\Review;
 use Inertia\Inertia;
@@ -13,7 +14,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = SubCategory::all();
 
         $businesses = Business::latest()->take(4)->get();
         $businesses = $businesses->map(function ($business, $index) {

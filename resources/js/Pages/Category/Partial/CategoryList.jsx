@@ -146,21 +146,21 @@ const colors = [
     'orange'
 ];
 
-function CategoryList() {
-
+function CategoryList({categories}) {
+    console.log('ee----', categories)
     const items = categories.map((category, index) => (
         <CategoryItem
-            title={category.title}
-            icon={category.icon}
+            title={category.name}
+            icon={category.image}
             color={colors[Math.floor(Math.random()*4)]}
-            items={category.items}
+            items={category.subcategories}
         />
     ));
 
     return (
         //grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto
         /**MasonryLayout */
-        <div className="md:columns-2 lg:columns-3 xl:columns-4 gap-4">
+        <div className="md:columns-2 lg:columns-3 xl:columns-4 gap-4 p-2">
             {items.map((item, index) => (
                 <div key={index} className="mb-4 break-inside-avoid ">
                 {item}

@@ -19,16 +19,29 @@ function CategoryItem({ title, icon, color, items }) {
                     onClick={toggleOpen}
                     className={`w-full flex items-center justify-between rounded-t-lg text-center p-2 border border-gray-600 text-gray-800`}
                     >
-                    <span className="flex items-center text-2xl m-0">{icon}</span>
-                    <h2 className="text-lg font-semibold">{title}</h2>
+                    <div className="flex items-center justify-center w-6 h-6">
+                        <img src={`/storage/${icon}`}
+                            alt="category-logo"
+                            className='inline max-w-6 max-h-6'
+                            // style={{ maxWidth: '32px', maxHeight: '32px' }}
+                            />
+                    </div>
+                    <h2 className="text-lg font-semibold capitalize">{title}</h2>
                     <span className='flex items-center text-xl'>{isOpen ? '-' : '+'}</span>
                 </button>
                 {isOpen && (
                     <ul className="text-gray-700 text-sm px-4 mt-2">
+                    {
+                        items.length === 0 && (
+                            <li className="text-red-700 py-3">
+                                No categories yet
+                            </li>
+                        )
+                    }
                         {items.map((item, index) => (
                             <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                                <a href="#" className="pl-2 no-underline text-gray-700 hover:underline">
-                                {item}
+                                <a href="#" className="pl-2 no-underline text-gray-700 hover:underline capitalize">
+                                {item.id}
                                 </a>
                             </li>
                         ))}
@@ -40,14 +53,26 @@ function CategoryItem({ title, icon, color, items }) {
             <div className="rounded-lg border-1 bg-white hidden md:block">
                 <a href="/categories/category_name" className='no-underline text-gray-800'>
                     <div className={`rounded-t-lg text-center p-4 ${colorClasses[color]}`}>
-                        <span className="text-2xl">{icon}</span>
-                        <h2 className="text-lg font-semibold">{title}</h2>
+                        <div className="inline-flex items-center justify-center w-6 h-6">
+                            <img src={`/storage/${icon}`}
+                                alt="category-logo"
+                                className='inline max-w-6 max-h-6'
+                                />
+                        </div>
+                        <h2 className="text-lg font-semibold capitalize">{title}</h2>
                     </div>
                 </a>
                 <ul className="text-gray-700 text-sm px-4 mt-2">
+                {
+                    items.length === 0 && (
+                        <li className="text-red-700 py-3">
+                            No categories yet
+                        </li>
+                    )
+                }
                     {items.map((item, index) => (
                     <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                        <a href="/categories/category_name/sub_cat" className="pl-2 no-underline text-gray-700 hover:underline">{item}</a>
+                        <a href="/categories/category_name/sub_cat" className="pl-2 no-underline text-gray-700 hover:underline capitalize pr-2">{item.name}</a>
                     </li>
                     ))}
                 </ul>

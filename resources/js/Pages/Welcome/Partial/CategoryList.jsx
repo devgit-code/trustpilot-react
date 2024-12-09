@@ -42,9 +42,9 @@ const CategoryGridItems = ({ categories }) => {
                             <FiArrowRight size={20} />
                         </button>
                     </div>
-                    <a href={route('categories')} className="no-underline inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
+                    <Link href={route('categories.index')} className="no-underline inline px-4 py-2 min-w-[120px] ml-4 border border-blue-500 text-sm text-bold text-blue-500 rounded-full hover:bg-blue-100">
                     See more
-                    </a>
+                    </Link>
                 </div>
             </div>
 

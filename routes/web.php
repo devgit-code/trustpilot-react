@@ -41,20 +41,18 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    Route::get('/search', function(){
-        return Inertia::render('Category/Search');
-    })->name('search');
-
-
     // category
+    Route::get('/search', [CategoryController::class, 'search'])
+        ->name('search');
+
     Route::get('/categories', [CategoryController::class, 'index'])
-        ->name('categories');
+        ->name('categories.index');
 
     Route::get('/categories/{category}', [CategoryController::class, 'show'])
-        ->name('categories.detail');
+        ->name('categories.show');
 
-    Route::get('/categories/{category_name}/{sub_cat}', [CategoryController::class, 'subcat'])
-        ->name('categories.subcat');
+    Route::get('/categories/{category_name}/detail', [CategoryController::class, 'detail'])
+        ->name('categories.detail');
 
 
     // reviews
