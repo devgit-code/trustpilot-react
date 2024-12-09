@@ -68,7 +68,7 @@ const Show = ({ review, userTotalReviews }) => {
                                 <div>
                                     <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
                                     {
-                                        review.business.profile.logo ? (
+                                        review.business.profile?.logo ? (
                                             <img
                                                 src={`/storage/images/logo/${review.business.profile.logo}`}
                                                 alt="business-logo"

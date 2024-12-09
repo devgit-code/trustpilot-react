@@ -1,4 +1,5 @@
 import React, {useState,} from 'react';
+import { Head, Link } from '@inertiajs/react';
 
 const colorClasses = {
     yellow: 'bg-yellow-100 hover:bg-yellow-200',
@@ -7,7 +8,7 @@ const colorClasses = {
     orange: 'bg-orange-100 hover:bg-orange-200',
 };
 
-function CategoryItem({ title, icon, color, items }) {
+function CategoryItem({ id, title, icon, color, items }) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -15,8 +16,8 @@ function CategoryItem({ title, icon, color, items }) {
         <div>
             {/* mobile view accordion */}
             <div className='md:hidden'>
-                <button
-                    onClick={toggleOpen}
+                <Link
+                    href={route('categories.show', id)}
                     className={`w-full flex items-center justify-between rounded-t-lg text-center p-2 border border-gray-600 text-gray-800`}
                     >
                     <div className="flex items-center justify-center w-6 h-6">
@@ -27,8 +28,8 @@ function CategoryItem({ title, icon, color, items }) {
                             />
                     </div>
                     <h2 className="text-lg font-semibold capitalize">{title}</h2>
-                    <span className='flex items-center text-xl'>{isOpen ? '-' : '+'}</span>
-                </button>
+                    <span onClick={toggleOpen} className='flex items-center text-xl'>{isOpen ? '-' : '+'}</span>
+                </Link>
                 {isOpen && (
                     <ul className="text-gray-700 text-sm px-4 mt-2">
                     {
@@ -40,9 +41,9 @@ function CategoryItem({ title, icon, color, items }) {
                     }
                         {items.map((item, index) => (
                             <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                                <a href="#" className="pl-2 no-underline text-gray-700 hover:underline capitalize">
-                                {item.id}
-                                </a>
+                                <Link href={route('categories.detail', id)} className="pl-2 text-gray-700 capitalize">
+                                {item.name}
+                                </Link>
                             </li>
                         ))}
                     </ul>
@@ -51,7 +52,7 @@ function CategoryItem({ title, icon, color, items }) {
 
             {/*focus  */}
             <div className="rounded-lg border-1 bg-white hidden md:block">
-                <a href="/categories/category_name" className='no-underline text-gray-800'>
+                <Link href={route('categories.show', id)} className='no-underline text-gray-800'>
                     <div className={`rounded-t-lg text-center p-4 ${colorClasses[color]}`}>
                         <div className="inline-flex items-center justify-center w-6 h-6">
                             <img src={`/storage/${icon}`}
@@ -61,7 +62,7 @@ function CategoryItem({ title, icon, color, items }) {
                         </div>
                         <h2 className="text-lg font-semibold capitalize">{title}</h2>
                     </div>
-                </a>
+                </Link>
                 <ul className="text-gray-700 text-sm px-4 mt-2">
                 {
                     items.length === 0 && (
@@ -72,7 +73,7 @@ function CategoryItem({ title, icon, color, items }) {
                 }
                     {items.map((item, index) => (
                     <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                        <a href="/categories/category_name/sub_cat" className="pl-2 no-underline text-gray-700 hover:underline capitalize pr-2">{item.name}</a>
+                        <Link href={route('categories.detail', item.id)} className="pl-2 no-underline text-gray-700 hover:underline capitalize pr-2">{item.name}</Link>
                     </li>
                     ))}
                 </ul>

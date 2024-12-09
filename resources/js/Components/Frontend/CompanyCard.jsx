@@ -5,7 +5,7 @@ import Rating from '@/Components/Ratings';
 function CompanyCard({ company_name, website, trustscore, count_reviews, email_verified_at, logo}) {
     return (
         <a href={"/reviews/company/" + company_name} className="no-underline">
-            <div className="bg-white rounded-lg p-4 mx-3 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '280px'}}>
+            <div className="bg-white rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl p-4" style={{minWidth: '240px'}}>
                 <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
                     <img src={logo ? `/storage/images/logo/${logo}` : company_logo} alt={company_name} className="w-20 object-cover rounded border-2 border-white" />
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"

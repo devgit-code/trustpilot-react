@@ -51,15 +51,15 @@ Route::group([
     Route::get('/categories/{category}', [CategoryController::class, 'show'])
         ->name('categories.show');
 
-    Route::get('/categories/{category_name}/detail', [CategoryController::class, 'detail'])
+    Route::get('/categories/{sub_category}/detail', [CategoryController::class, 'detail'])
         ->name('categories.detail');
 
 
     // reviews
-    Route::get('/writeareview', [ReviewController::class, 'index'])
-        ->name('reviews');
+    Route::get('/writeareview', [ReviewController::class, 'write'])
+        ->name('reviews.write');
 
-    Route::get('/reviews/evaluate/{company_name}', [ReviewController::class, 'evaluate'])
+    Route::get('/reviews/evaluate/{company}', [ReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
     Route::get('/reviews/company/{id}', [ReviewController::class, 'company'])

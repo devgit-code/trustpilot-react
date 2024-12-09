@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import "./Style.css"
-import {
-    Link,
-    usePage,
-} from '@inertiajs/react';
+import { Link, usePage, } from '@inertiajs/react';
 
 const CategoryGridItems = ({ categories }) => {
     const containerRef = useRef(null);
@@ -60,7 +57,7 @@ const CategoryGridItems = ({ categories }) => {
                                     // style={{ maxWidth: '32px', maxHeight: '32px' }}
                                     />
                             </div>
-                            <Link href="/categories/category_name" className="block text-center p-2 no-underline text-black capitalize text-sm group-hover:underline" > {category.name}</Link>
+                            <Link href={route('categories.detail', category.id)} className="block text-center p-2 no-underline text-black capitalize text-sm group-hover:underline" > {category.name}</Link>
                         </div>
                     ))}
                 </div>

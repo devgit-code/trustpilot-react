@@ -42,7 +42,7 @@ const data = [
     },
 ];
 
-export default function Write() {
+export default function Write({ companies }) {
     return (
         <>
             <FrontendLayout>
@@ -52,7 +52,7 @@ export default function Write() {
 
                 <div className="py-4"></div>
 
-                <WriteCompanyList title="Ready to write your review?" data={data}/>
+                <WriteCompanyList title="Ready to write your review?" data={companies}/>
 
                 <AddCompanySection />
 

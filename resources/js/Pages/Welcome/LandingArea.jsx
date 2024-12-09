@@ -20,7 +20,7 @@ const LandingArea = ({ data }) => {
 
             <div className="container-md mx-auto mt-20 relative flex w-full items-center justify-center">
                 <hr className="absolute h-px my-8 w-full bg-gray-500 border-0" />
-                <Link href={route('reviews')} className="no-underline absolute z-10 flex items-center px-4 py-3 border border-blue-500 group text-sm rounded-full bg-slate-50/90 hover:bg-gray-100 transition duration-300 ease-in-out">
+                <Link href={route('reviews.write')} className="no-underline absolute z-10 flex items-center px-4 py-3 border border-blue-500 group text-sm rounded-full bg-slate-50/90 hover:bg-gray-100 transition duration-300 ease-in-out">
                     <span className='text-gray-700'>Bought something recently?</span>
                     <span className="ml-1 text-bold text-blue-500"> Write a review</span>
                     <span className="ml-2 font-semibold text-blue-500 transition-transform transform group-hover:translate-x-1">
@@ -35,7 +35,7 @@ const LandingArea = ({ data }) => {
 
             {/* <CompanyList title="Best in Banks" link="/categories/bank" data={data}/> */}
 
-            <CompanyList title="Latest Companies" link="/categories/latest" data={data.businesses}/>
+            <CompanyList title="Latest Companies" link='/categories/latest' data={data.businesses}/>
 
             <AdPart2 />
 
