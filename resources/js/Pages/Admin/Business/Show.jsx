@@ -37,7 +37,7 @@ const Show = ({ business, has_reviews }) => {
     };
 
     return (
-        <div className="content-wrapper m-3">
+        <div className="content-wrapper m-3 mx-5">
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">

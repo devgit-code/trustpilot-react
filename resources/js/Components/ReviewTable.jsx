@@ -112,7 +112,7 @@ export default function ReviewTable({setting}){
             <div className="">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="inline-block text-left">{setting.title}</h3>
+                        <h4 className="inline-block text-left">{setting.title}</h4>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className=''>
@@ -182,7 +182,14 @@ export default function ReviewTable({setting}){
                                     {reviews.map((item, index) => (
                                     <tr className="border-bottom-secondary align-middle" key={item.id}>
                                         <td>{index + 1}</td>
-                                        <td>{setting.header_name == 'user' ? item.user.name : item.business.company_name}</td>
+                                        <td>
+                                        {
+                                            setting.header_name == 'user' ?
+                                                item.user.name.length > 15 ? `${item.user.name.slice(0, 15)}...` : item.user.name
+                                                :
+                                                item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
+                                        }
+                                        </td>
                                         <td>
                                             <div className='inline-flex items-center'>
                                                 <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>

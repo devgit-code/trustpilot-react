@@ -228,7 +228,7 @@ const Index = () => {
                                             <td data-label="">
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
-                                                        <Link href={route('admin.users.show', user.id)}>
+                                                        <Link href={route('admin.users.show', {id : user.id, page:pagination.current_page})}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>

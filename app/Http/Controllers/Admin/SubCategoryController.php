@@ -18,7 +18,13 @@ class SubCategoryController extends Controller
     public function index(String $id)
     {
         $category = Category::find($id);
-        $subCategories = SubCategory::with('category')->where('category_id', $id)->get();
+        $subCategories = SubCategory::withCount('businesses')->with(['category'])->where('category_id', $id)->get();
+
+        // $subCategories = $subCategories->map(function ($category, $index) {
+        //     $category['count_businesses'] = count($category->businesses);
+        //     return $category;
+        // });
+
         return Inertia::render('Admin/SubCategories/Index', compact('category', 'subCategories'));
     }
 

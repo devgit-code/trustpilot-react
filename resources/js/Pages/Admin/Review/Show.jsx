@@ -34,8 +34,8 @@ const Show = ({ review, userTotalReviews }) => {
     };
 
     return (
-        <div className="content-wrapper m-3">
-            <div className="col-lg-12">
+        <div className="content-wrapper m-3 flex justify-center">
+            <div className="col-lg-8">
                 <div className="card">
                     <div className="card-body">
                         <div className='flex items-center justify-between'>
@@ -76,7 +76,7 @@ const Show = ({ review, userTotalReviews }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
+                                    <div className="flex items-center mx-auto bg-white" style={{width:'64px', height:'64px'}}>
                                     {
                                         review.business.profile?.logo ? (
                                             <img

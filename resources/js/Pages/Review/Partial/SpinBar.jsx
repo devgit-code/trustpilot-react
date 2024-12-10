@@ -27,8 +27,8 @@ export default function SpinBar({id, profile, company_name, website, email_verif
                     <div className='my-1 grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div className="p-2">
                             <div className='flex gap-4'>
-                                <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                    <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="w-20 object-cover rounded border-2 border-white" />
+                                <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
+                                    <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="max-w-20 max-h-20 object-cover rounded" />
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                         className="absolute -top-2 -right-2">
                                         <path fill={`${email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>

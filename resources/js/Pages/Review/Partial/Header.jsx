@@ -43,8 +43,8 @@ export default function Header({company_name, profile, primary_business_category
                 <div className='mt-3 grid md:grid-cols-[2fr_1fr] gap-4 grid-cols-1'>
                     <div className="p-2">
                         <div className='flex gap-16'>
-                            <div className="hidden sm:inline-flex items-center w-36 h-36 border rounded">
-                                <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="w-36 object-cover" />
+                            <div className="hidden sm:inline-flex items-center justify-center w-36 h-36 border rounded">
+                                <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="max-w-36 max-h-36 object-cover" />
                             </div>
                             <div className="mt-2 flex-1">
                                 <p className='text-3xl text-gray-800 font-black mb-0'>{company_name}</p>

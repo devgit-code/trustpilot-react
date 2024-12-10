@@ -26,7 +26,7 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                 </div>
 
                 {/* User Avatar, Name, and Rating */}
-                <div className='m-2 border rounded'>
+                <div className='m-2 border rounded min-h-[200px]'>
                     <p className="text-gray-700 px-4 mt-3 text-sm">
                         {moment(date_experience).fromNow()}
                     </p>

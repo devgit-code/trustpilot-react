@@ -30,8 +30,8 @@ const ReviewCard = ({ id, user, rating, description, company }) => {
 
             {/* Company Logo and Name */}
             <Link href={route('reviews.company', company.id)} className="no-underline flex items-center gap-2 border-t rounded-b text-black px-4 py-2 hover:bg-gray-100">
-                <div className="relative inline-flex items-center w-12 h-12 border-2 bordered rounded">
-                    <img src={company?.logo ? `/storage/images/logo/${company.logo}` : company_logo} alt={company.name} className="w-12 object-cover rounded border-2 border-white" />
+                <div className="relative inline-flex items-center justify-center w-12 h-12 border-2 bordered rounded">
+                    <img src={company?.logo ? `/storage/images/logo/${company.logo}` : company_logo} alt={company.name} className="max-w-12 max-h-12 object-cover" />
                 </div>
                 <div>
                     <h4 className="pt-1 text-sm font-semibold">{company.name.length > 18 ? `${company.name.slice(0, 18)}...` : company.name}</h4>

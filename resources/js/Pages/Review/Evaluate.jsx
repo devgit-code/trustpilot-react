@@ -86,8 +86,8 @@ export default function Evaluate({ company }) {
                 <div className='bg-whtie border-b '>
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full flex items-center'>
-                            <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                <img src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo} alt={company.name} className="w-20 object-cover rounded border-2 border-white" />
+                            <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
+                                <img src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo} alt={company.name} className="max-w-20 max-h-20 object-cover rounded" />
                             </div>
                             <div className='ml-5'>
                                 <p className='text-gray-800 text-xl font-extrabold'>

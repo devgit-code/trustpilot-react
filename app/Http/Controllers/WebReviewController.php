@@ -113,7 +113,7 @@ class WebReviewController extends Controller
         });
 
         $business['rating_statistic'] = [
-            'avg' => $averageRating,
+            'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
             'stars' => $ratingCounts->map(function ($item) {
                 return [
