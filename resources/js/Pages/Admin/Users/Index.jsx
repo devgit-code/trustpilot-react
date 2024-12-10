@@ -194,7 +194,7 @@ const Index = () => {
                                 <th>Avatar</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Total Reviews</th>
+                                <th>Reviews</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

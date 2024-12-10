@@ -73,8 +73,8 @@ class SubCategoryController extends Controller
 
     public function edit(string $id)
     {
-        $category = Category::find($id);
         $subCategory = SubCategory::with('category')->find($id);
+        $category = $subCategory->category;
         return Inertia::render('Admin/SubCategories/Edit', compact('subCategory', 'category'));
     }
 
@@ -107,6 +107,21 @@ class SubCategoryController extends Controller
 
         return redirect()->route('admin.sub_categories.index', $request->category_id)
             ->with('message', 'SubCategory updated successfully.');
+    }
+
+    public function detail(string $id)
+    {
+        $subCategory = SubCategory::with('category', 'businesses')->find($id);
+
+        $businesses = $subCategory->businesses;
+        $businesses = $businesses->map(function ($business, $index){
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
+            $business['count_reviews'] = count($business->reviews);
+            $business['logo'] = $business->profile?->img;
+            return $business;
+        });
+
+        return Inertia::render('Admin/SubCategories/Detail', compact('subCategory', 'businesses'));
     }
 
 

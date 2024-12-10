@@ -32,7 +32,6 @@ function SearchSection() {
     };
 
     const handleResultClick = (name) => {
-        console.log('r---', name)
         setFilters((prevFilters) => ({
             ...prevFilters,
             query: name,
