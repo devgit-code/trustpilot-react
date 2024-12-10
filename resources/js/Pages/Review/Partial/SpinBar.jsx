@@ -38,7 +38,7 @@ export default function SpinBar({id, profile, company_name, website, email_verif
                                 <div className="">
                                     <p className='text-2xl text-gray-800 font-extrabold mb-0'>{company_name}</p>
                                     <div className='flex items-center mt-3'>
-                                        <Rating rating={rating_statistic.avg}/>
+                                        <Rating rating={Number(rating_statistic.avg)}/>
                                         <span className='ml-4 text-gray-500'>{rating_statistic.avg}</span>
                                     </div>
                                 </div>

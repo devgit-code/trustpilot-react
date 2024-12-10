@@ -56,7 +56,7 @@ export default function Header({company_name, profile, primary_business_category
                                     <Status className='pl-3 text-gray-700 mb-0' rating={rating_statistic.avg} total={rating_statistic.total}/>
                                 </div>
                                 <div className='flex items-center mt-1'>
-                                    <Rating rating={rating_statistic.avg} width='w-8' height='w-8'/>
+                                    <Rating rating={Number(rating_statistic.avg)} width='w-8' height='w-8'/>
                                     <span className='ml-4 text-gray-500'>{rating_statistic.avg}</span>
                                 </div>
                                 <p className={`${email_verified_at ? 'bg-green-200' : ''} mt-2 py-1 px-3 rounded-sm bg-gray-100 inline-flex text-sm items-center`}>

@@ -9,7 +9,7 @@ import RelatedCategory from './Partial/RelatedCategory.jsx'
 import RecentlyReviewedCompany from './Partial/RecentCompanyReviews.jsx'
 import PaginationList from './Partial/PaginationList.jsx'
 
-export default function Detail({data}) {
+export default function Detail({data, current_page=1}) {
     const [sortBy, setSortBy] = useState("relevant");
 
     return (
@@ -38,7 +38,7 @@ export default function Detail({data}) {
 
                                 <div className='mb-4 ml-2 flex items center justify-between'>
                                     <div className='flex items-center'>
-                                        <p className='text-black text-sm'>{((data.pagination.current_page-1)*20+1)} - {data.pagination.current_page*20} of {data.pagination.total} results</p>
+                                        <p className='text-black text-sm'>{((current_page-1)*20+1)} - {current_page*20} of {2} results</p>
                                     </div>
                                     <div className='flex items-center p-2 w-96'>
                                         <label className='w-16'>Sort by</label>

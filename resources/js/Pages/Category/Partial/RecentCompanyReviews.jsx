@@ -6,7 +6,6 @@ import ReviewCard from './RecentCompanyReviewCard.jsx';
 
 
 const RecentCompanyReviews = ({ reviews }) => {
-console.log('dd----', reviews)
     return (
         <div className="">
             {/* Title */}

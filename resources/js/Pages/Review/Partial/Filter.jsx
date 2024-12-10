@@ -18,7 +18,8 @@ const ratings = [
     { stars: 2, count: 40 },
     { stars: 1, count: 20 },
 ];
-export default function FilterReview() {
+
+export default function FilterReview({ ratings }) {
     const [checkedRating, setCheckedRating] = useState([false, false, false, false, false])
     const [sortBy, setSortBy] = useState('Most relevant')
 
@@ -28,7 +29,7 @@ export default function FilterReview() {
         setCheckedRating(updatedChecked); // Update the state
     };
 
-    const totalRatings = ratings.reduce((sum, rating) => sum + rating.count, 0)
+    // const totalRatings = ratings.reduce((sum, rating) => sum + rating.count, 0)
 
     return (
         <div className="p-3 bg-white border rounded">
@@ -37,8 +38,8 @@ export default function FilterReview() {
 
             <div className='mt-2 pb-3 border-b-2'>
                 <div className="space-y-6">
-                {ratings.map((rating, index) => {
-                    const percentage = ((rating.count / totalRatings) * 100).toFixed(1);
+                {[...Array(5)].map((_, index) => {
+                    const percentage = ratings.stars[index] ? ((ratings.stars[index].count / ratings.total) * 100).toFixed(1) : 0;
                     return (
                         <div key={index} className="flex group items-center space-x-4 hover:cursor-pointer"
                             onClick={()=>handleCheckboxChange(index)}>
@@ -50,15 +51,15 @@ export default function FilterReview() {
                                     group-focus:ring-2 group-focus:ring-blue-500
                                     checked:bg-blue-500
                                     "
-                                id={`star-${rating.stars}`}
+                                id={`star-${index+1}`}
                                 checked={checkedRating[index]}
                                 onChange={() => handleCheckboxChange(index)}
                                 />
                             <label
-                                htmlFor={`star-${rating.stars}`}
+                                htmlFor={`star-${index+1}`}
                                 className="text-sm text-gray-800 whitespace-nowrap w-16"
                                 >
-                                {rating.stars}-star
+                                {index+1}-star
                             </label>
                             <div className="relative w-full bg-gray-200 rounded-md overflow-hidden">
                                 <div

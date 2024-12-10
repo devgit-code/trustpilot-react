@@ -44,7 +44,7 @@ export default function PaginationList({ pagination,  companies}) {
             <Pagination
                 className='mb-2 flex justify-center itmes-center'
                 totalPages={1}
-                currentPage={currentPage}
+                currentPage={1}
                 onPageChange={(page) => setCurrentPage(page)}
                 />
         </div>

@@ -52,15 +52,52 @@ class CategoryController extends Controller
         }])->findOrFail($category_id);
 
         $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
-        $businesses = Business::with(['profile', 'trustscore', 'count_reviews'])->whereHas('businessCategories', function ($query) use ($subCategory_ids) {
+        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($subCategory_ids) {
             $query->whereIn('sub_category_id', $subCategory_ids);
-        })->paginate(10); // Paginate the results
+        })->get(); // Paginate the results
+
+        $businesses = $businesses->map(function ($business, $index) {
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
+            $business['reviews_count'] = count($business->reviews);
+            return $business;
+        });
+
+
+        $reviews = Review::with('reply')->latest()->take(3)->get();
+        $reviews = $reviews->map(function ($review, $index) {
+            $review['user'] = [
+                'name'=>$review->user->name,
+                'avatar'=>$review->user->profile?->image,
+            ];
+            $review['company'] = [
+                'id'=>$review->business->id,
+                'name'=>$review->business->company_name,
+                'website'=>$review->business->website,
+                'logo'=>$review->business->profile?->logo,
+                'trustscore'=>number_format($review->business->reviews->avg('rating'), 1),
+                'count_reviews'=>count($review->business->reviews),
+            ];
+            return $review;
+        });
 
         return Inertia::render('Category/Detail', [
             'data' => [
                 'category' => $category,
                 'related_categoreies' => $subCategories->subcategories,
                 'companies' => $businesses,
+                // 'pagination' => [
+                //     'current_page' => $paginate->currentPage(),
+                //     'last_page' => $paginate->lastPage(),
+                //     'per_page' => $paginate->perPage(),
+                //     'total' => $paginate->total(),
+                //     'links' => [
+                //         'first' => $paginate->url(1),
+                //         'last' => $paginate->url($paginate->lastPage()),
+                //         'next' => $paginate->nextPageUrl(),
+                //         'prev' => $paginate->previousPageUrl(),
+                //     ],
+                // ],
+                'recent_reviews' => $reviews
             ]
         ]);
     }
@@ -73,11 +110,11 @@ class CategoryController extends Controller
             $query->withCount('businesses');
         }])->findOrFail($subCategory->category_id);
 
-        $paginate = Business::query()->with(['profile'])->whereHas('businessCategories', function ($query) use ($sub_category_id) {
+        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($sub_category_id) {
             $query->where('sub_category_id', $sub_category_id);
-        })->paginate(10); // Paginate the results
+        })->get(); // Paginate the results
 
-        $businesses = collect($paginate->items())->map(function ($business, $index) {
+        $businesses = $businesses->map(function ($business, $index) {
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
             $business['reviews_count'] = count($business->reviews);
             return $business;
@@ -106,18 +143,18 @@ class CategoryController extends Controller
                 'sub_category' => $subCategory,
                 'related_categoreies' => $subCategories->subcategories,
                 'companies' => $businesses,
-                'pagination' => [
-                    'current_page' => $paginate->currentPage(),
-                    'last_page' => $paginate->lastPage(),
-                    'per_page' => $paginate->perPage(),
-                    'total' => $paginate->total(),
-                    'links' => [
-                        'first' => $paginate->url(1),
-                        'last' => $paginate->url($paginate->lastPage()),
-                        'next' => $paginate->nextPageUrl(),
-                        'prev' => $paginate->previousPageUrl(),
-                    ],
-                ],
+                // 'pagination' => [
+                //     'current_page' => $paginate->currentPage(),
+                //     'last_page' => $paginate->lastPage(),
+                //     'per_page' => $paginate->perPage(),
+                //     'total' => $paginate->total(),
+                //     'links' => [
+                //         'first' => $paginate->url(1),
+                //         'last' => $paginate->url($paginate->lastPage()),
+                //         'next' => $paginate->nextPageUrl(),
+                //         'prev' => $paginate->previousPageUrl(),
+                //     ],
+                // ],
                 'recent_reviews' => $reviews
             ]
         ]);

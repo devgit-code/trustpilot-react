@@ -11,33 +11,33 @@ import CompanyInfo from './Partial/CompanyInfo.jsx'
 import CompanyActivity from './Partial/CompanyActivity.jsx'
 import CompanyRelated from './Partial/CompanyRelated.jsx'
 
-export default function Company({ company }) {
+export default function Company({ data }) {
     return (
         <>
             <FrontendLayout>
-                <Head title="Reviews" />
+                <Head title={data.company.company_name} />
 
-                <SpinBar {...company}/>
+                <SpinBar {...data.company}/>
 
-                <Header {...company}/>
+                <Header {...data.company}/>
 
                 <div className="p-2 bg-[#FCFBF3]">
                     <div className='container-sm my-2'>
                         <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
-                                    <ClickableWrite company_name={company.id}/>
+                                    <ClickableWrite company_name={data.company.id}/>
 
-                                    <Filter />
+                                    <Filter ratings={data.company.rating_statistic}/>
 
-                                    <PaginationList />
+                                    <PaginationList reviews={data.reviews}/>
                                 </div>
                             </div>
 
                             <div className='flex flex-col gap-4'>
                                 <CompanyActivity />
 
-                                <CompanyInfo {...company}/>
+                                <CompanyInfo {...data.company}/>
 
                                 <CompanyRelated />
                             </div>

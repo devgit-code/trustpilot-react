@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Review;
 use App\Models\Business;
+use App\Models\User;
 use Inertia\Inertia;
 
 class WebReviewController extends Controller
@@ -94,6 +95,22 @@ class WebReviewController extends Controller
             ->orderBy('rating', 'desc')
             ->get();
 
+        $reviews = Review::where('business_id', $business->id)
+            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+            ->with(['reply', 'business'])
+            ->get();
+
+        $reviews = $reviews->map(function ($review, $index) {
+            $review['userinfo'] = [
+                'id'=>$review->user->id,
+                'name'=>$review->user->name,
+                'avatar'=>$review->user->profile?->image,
+                'count_reviews'=>count($review->user->reviews),
+                'location'=>$review->user->profile?->address,
+            ];
+            return $review;
+        });
+
         $business['rating_statistic'] = [
             'avg' => $averageRating,
             'total' => $totalCount,
@@ -106,25 +123,59 @@ class WebReviewController extends Controller
         ];
 
         return Inertia::render('Review/Company', [
-            'company' => $business
+            'data' =>[
+                'reviews' => $reviews,
+                'company' => $business,
+            ]
         ]);
     }
 
     public function detail(Request $request, String $id)
     {
         $review = Review::with(['reply'])->findOrFail($id);
-        $review['user'] = [
+        $review['userinfo'] = [
+            'id' => $review->user->id,
             'name' => $review->user->name,
             'avatar' => $review->user->profile->image,
         ];
-        $review['company'] = $review->business;
+        $review['business'] = $review->business;
 
-        return Inertia::render('Review/Detail', compact('review'));
+        return Inertia::render('Review/Detail', [
+            'review'=>$review
+        ]);
     }
 
-    public function user()
+    public function user(Request $request, String $id)
     {
-        return Inertia::render('Review/User');
+        $user = User::findOrFail($id);
+
+        $reviews = Review::where('user_id', $user->id)
+            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+            ->with(['reply', 'business'])
+            ->get();
+
+        $reviews = $reviews->map(function ($review, $index) {
+            $review['userinfo'] = [
+                'id'=>$review->user->id,
+                'name'=>$review->user->name,
+                'avatar'=>$review->user->profile?->image,
+                'count_reviews'=>count($review->user->reviews),
+                'location'=>$review->user->profile?->address,
+            ];
+            $review['business_name'] = $review->business->company_name;
+            return $review;
+        });
+
+        return Inertia::render('Review/User', [
+            'data'=>[
+                'reviews'=>$reviews,
+                'user'=>$user,
+                'userinfo'=>[
+                    'avatar'=>$user->profile?->img,
+                    'location'=>$user->profile?->address,
+                ]
+            ]
+        ]);
     }
 
     public function update(Request $request)
