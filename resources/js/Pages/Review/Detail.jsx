@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import React from 'react';
+import { Head, Link } from '@inertiajs/react';
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import ReviewCard from './Partial/ReviewCard.jsx'
@@ -39,17 +39,17 @@ Also, your comment on Prestiging is unrelated to our services and is just apart 
     ]
 }
 
-export default function Detail() {
+export default function Detail({review}) {
     return (
         <>
             <FrontendLayout>
-                <Head title="Write a Review" />
+                <Head title="Review" />
 
                 <div className="p-2 bg-[#FCFBF3]">
                     <div className='container-sm'>
                         <div className='max-w-screen-sm my-5 lg:ml-32'>
                             <p className='p-2 text-sm text-gray-700'>Review of
-                                <a href={'/reviews/company/' + review.company.name} className='ml-2 hover:no-underline'>{review.company.name}</a>
+                                <Link href={route('reviews.company', review.business.id)} className='ml-2 hover:no-underline'>{review.business.company_name}</Link>
                             </p>
 
                             <div className='mt-3 pb-5'>

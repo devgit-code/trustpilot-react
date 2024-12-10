@@ -23,9 +23,19 @@ const Show = ({ review, userTotalReviews }) => {
         put(route('admin.reviews.update', review.id), data);
     };
 
+    const handleBack = (e) => {
+        e.preventDefault();
+        // Navigate back if possible, otherwise go to the fallback route
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            Inertia.visit(fallbackRoute);
+        }
+    };
+
     return (
-        <div className="content-wrapper m-3">
-            <div className="col-lg-12">
+        <div className="content-wrapper m-3 flex justify-center">
+            <div className="col-lg-8">
                 <div className="card">
                     <div className="card-body">
                         <div className='flex items-center justify-between'>
@@ -39,7 +49,7 @@ const Show = ({ review, userTotalReviews }) => {
                                 </h5>
                             </div>
 
-                            <Link href={route('admin.reviews.index')} className="btn btn-primary" type="button">
+                            <Link href={route('admin.dashboard')} onClick={handleBack} className="btn btn-primary" type="button">
                                 Back
                             </Link>
                         </div>
@@ -52,7 +62,7 @@ const Show = ({ review, userTotalReviews }) => {
                             </div>
                             <div className='mt-3 flex items-center justify-between'>
                                 <div className='flex items-center'>
-                                    <UserAvatar user={review.user} avatar_url={review.user?.profile.image} width='3rem' height='3rem'/>
+                                    <UserAvatar user={review.user} avatar={review.user?.profile.image} width='3rem' height='3rem'/>
                                     <div className='no-underline ml-3'>
                                         <Link
                                             href={route('admin.users.show', review.user.id)}
@@ -66,9 +76,9 @@ const Show = ({ review, userTotalReviews }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
+                                    <div className="flex items-center mx-auto bg-white" style={{width:'64px', height:'64px'}}>
                                     {
-                                        review.business.profile.logo ? (
+                                        review.business.profile?.logo ? (
                                             <img
                                                 src={`/storage/images/logo/${review.business.profile.logo}`}
                                                 alt="business-logo"
@@ -91,7 +101,7 @@ const Show = ({ review, userTotalReviews }) => {
                             <div className='py-2 '>
                                 <div className='mt-3 bg-[#edeef0] m-2'>
                                     <h4 className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline capitalize'>{review.title}</h4>
-                                    <pre className="text-black whitespace-pre-wrap font-medium h-20 p-2">{review.description}</pre>
+                                    <pre className="text-black whitespace-pre-wrap font-medium min-h-36 p-2">{review.description}</pre>
                                 </div>
                                 <p className='text-sm text-gray-800 mb-0'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
                             </div>

@@ -37,7 +37,7 @@ const Index = ({ subCategories, category }) => {
     };
 
     return (
-        <div className="container-wrapper m-3">
+        <div className="container-wrapper m-3 mx-5">
             {/* {flash.message && (
                 <Alert
                     message={flash.message}
@@ -51,7 +51,7 @@ const Index = ({ subCategories, category }) => {
                         <div className="flex items-center justify-between">
                             <div className="">
                                 <h5 className="m-0 text-center text-lg-start">
-                                    Sub Categories
+                                    Sub Categories: <a className='text-gray-700 font-bold capitalize'>{category.name}</a>
                                 </h5>
                             </div>
                             <div className="flex items-center">
@@ -79,7 +79,7 @@ const Index = ({ subCategories, category }) => {
                                         <th scope="col">No</th>
                                         <th scope="col">Icon</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Parent Category</th>
+                                        <th scope="col">Businesses</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -87,7 +87,7 @@ const Index = ({ subCategories, category }) => {
                                 <tbody id="myTable">
                                     {subCategories.length == 0 ? (
                                         <tr className='text-center'>
-                                            <td colSpan="5">There is no data</td>
+                                            <td colSpan="6">There is no data</td>
                                         </tr>
                                     ):(
                                         <>
@@ -109,7 +109,7 @@ const Index = ({ subCategories, category }) => {
                                                         )}
                                                         </td>
                                                         <td>{cat.name}</td>
-                                                        <td>{cat.category.name}</td>
+                                                        <td>{cat.businesses_count}</td>
                                                         <td>
                                                             <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                                 <li className="edit">

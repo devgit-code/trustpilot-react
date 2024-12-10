@@ -3,6 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WebReviewController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,62 +38,41 @@ Route::group([
     'middleware' => ['business.guest'],
 ], function(){
 
-    Route::get('/', function () {
-        return Inertia::render('Welcome/Index', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
-        ]);
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])
+        ->name('home');
 
-    Route::get('/search', function(){
-        return Inertia::render('Category/Search');
-    })->name('search');
-
+    Route::get('/search', [HomeController::class, 'search'])
+        ->name('search');
 
     // category
-    Route::get('/categories', function(){
-        return Inertia::render('Category/Index');
-    })->name('categories');
+    Route::get('/categories', [CategoryController::class, 'index'])
+        ->name('categories.index');
 
-    Route::get('/categories/{category_name}', function(){
-        return Inertia::render('Category/Detail', [
-            'category_name' => "Animals & Pets"
-        ]);
-    })->name('categories.detail');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])
+        ->name('categories.show');
 
-    Route::get('/categories/{category_name}/{sub_cat}', function(){
-        return Inertia::render('Category/Detail', [
-            'category_name' => "Animals & Pets",
-            'sub_cat' => 'Cats & Dogs'
-        ]);
-    })->name('categories.subcat');
+    Route::get('/categories/{sub_category}/detail', [CategoryController::class, 'detail'])
+        ->name('categories.detail');
 
 
     // reviews
-    Route::get('/writeareview', function(){
-        return Inertia::render('Review/Index');
-    })->name('reviews');
+    Route::get('/writeareview', [WebReviewController::class, 'write'])
+        ->name('reviews.write');
 
-    Route::get('/reviews/evaluate/{company_name}', function(){
-        return Inertia::render('Review/Evaluate');
-    })->name('reviews.evaluate');
+    Route::middleware('auth')->get('/reviews/evaluate/{company}', [WebReviewController::class, 'evaluate'])
+        ->name('reviews.evaluate');
 
-    Route::get('/reviews/company/{id}', function(){
-        return Inertia::render('Review/Company');
-    })->name('reviews.company');
+    Route::get('/reviews/company/{id}', [WebReviewController::class, 'company'])
+        ->name('reviews.company');
 
-    Route::get('/reviews/user/{id}', function(){
-        return Inertia::render('Review/User');
-    })->name('reviews.user');
+    Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])
+        ->name('reviews.user');
 
-    Route::get('/reviews/review/{id}', function(){
-        return Inertia::render('Review/Detail');
-    })->name('reviews.detail');
+    Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
+        ->name('reviews.detail');
 
 
-    // blog
+    // blogs
     Route::get('/aboutus', function(){
         return Inertia::render('About/Index');
     })->name('aboutus');
@@ -110,8 +92,15 @@ Route::group([
     Route::get('/aboutus/{detail}', function(){
         return Inertia::render('About/Detail');
     })->name('aboutus.detail');
-
 });
 
+
+Route::group([
+    'middleware' => ['auth', 'business.guest'],
+], function(){
+    Route::post('/reviews', [WebReviewController::class, 'store'])
+        ->name('reviews.store');
+
+});
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

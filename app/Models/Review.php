@@ -10,7 +10,7 @@ class Review extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'rating', 'user_id', 'business_id', 'date_experience'];
     protected $hidden = [];
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $casts = [
     ];

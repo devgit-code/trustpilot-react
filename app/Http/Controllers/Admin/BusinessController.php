@@ -35,7 +35,7 @@ class BusinessController extends Controller
         // Paginate the results
         $data = $query->paginate(10, ['*'], 'page', $page);
         $businesses = collect($data->items())->map(function ($business, $index) {
-            $business['trustscore'] = round($business->reviews->avg('rating'), 1);
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
             $business['reviews_count'] = count($business->reviews);
             return $business;
         });
@@ -79,7 +79,10 @@ class BusinessController extends Controller
     public function show(string $id)
     {
         $business = Business::where('id', $id)->with('profile')->first();
-        return Inertia::render('Admin/Business/Show', compact('business'));
+        return Inertia::render('Admin/Business/Show', [
+            'business' => $business,
+            'has_reviews' => count($business->reviews),
+        ]);
     }
 
 

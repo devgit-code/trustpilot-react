@@ -1,12 +1,5 @@
-import {
-    Link,
-    usePage,
-    // Button,
-} from '@inertiajs/react';
-import {
-    React,
-    useEffect,
-} from 'react';
+import { Link, usePage,} from '@inertiajs/react';
+import React, { useState, useEffect, } from 'react';
 import {
     Container,
     Nav,
@@ -29,8 +22,8 @@ export default function Navigation({auth}) {
 
                     <Navbar.Collapse id="responsive-navbar-nav " className="">
                         <div className="list-unstyled sm:hidden block">
-                            <Link href={route('reviews')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
-                            <Link href={route('categories')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
+                            <Link href={route('reviews.write')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
+                            <Link href={route('categories.index')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
                             <Link href={route('aboutus')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Blog</Link>
                             <hr className="hr text-white" />
                             {auth && auth.user ? (
@@ -51,15 +44,15 @@ export default function Navigation({auth}) {
 
                     <Nav className="d-none d-sm-flex justify-content-center h-full">
                         <div className="flex h-full">
-                            <NavLink href={route('reviews')} active={route().current('reviews')} className="butn" > Write a review </NavLink>
-                            <NavLink href={route('categories')} active={route().current('categories')} className="butn" > Categories </NavLink>
+                            <NavLink href={route('reviews.write')} active={route().current('reviews.write')} className="butn" > Write a review </NavLink>
+                            <NavLink href={route('categories.index')} active={route().current('categories.index')} className="butn" > Categories </NavLink>
                             <NavLink href={route('aboutus')} active={route().current('aboutus')} className="butn" > About us </NavLink>
                         </div>
                         {auth && auth.user ? (
                             <>
                                 <NavDropdown
                                     title={
-                                        <UserAvatar user={auth.user} avatar_url={auth.userProfileImage}/>
+                                        <UserAvatar user={auth.user} avatar={auth.userProfileImage}/>
                                     }
                                     id="user-dropdown"
                                     align="end"

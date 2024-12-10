@@ -29,7 +29,7 @@ const companies = [
     },
 ];
 
-export default function PaginationList({ page }) {
+export default function PaginationList({ pagination,  companies}) {
     const [currentPage, setCurrentPage] = useState(1);
 
     return (
@@ -43,8 +43,8 @@ export default function PaginationList({ page }) {
 
             <Pagination
                 className='mb-2 flex justify-center itmes-center'
-                totalPages={10}
-                currentPage={currentPage}
+                totalPages={1}
+                currentPage={1}
                 onPageChange={(page) => setCurrentPage(page)}
                 />
         </div>

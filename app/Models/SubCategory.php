@@ -16,9 +16,16 @@ class SubCategory extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function businessCategories()
+    public function businesses()
     {
-        return $this->hasMany(BusinessCategory::class);
+        return $this->hasManyThrough(
+            Business::class,
+            BusinessCategory::class,
+            'sub_category_id', // Foreign key on BusinessSubCategoriesRelation table
+            'id',              // Foreign key on Businesses table
+            'id',              // Local key on SubCategories table
+            'business_id'      // Local key on BusinessSubCategoriesRelation table
+        );
     }
 
 }

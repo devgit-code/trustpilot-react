@@ -4,7 +4,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/adminLayout';
 import Rating from '@/Components/Ratings';
 
-import { BsTrashFill } from "react-icons/bs"
+import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
 import Swal from 'sweetalert2';
@@ -151,27 +151,30 @@ const Index = () => {
                                         {businesses.map((item, index) => (
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
                                             <td>{index + 1}</td>
-                                            <td>
-                                            {item.profile?.logo ? (
-                                                <div className='inline-flex items-center border' style={{height: '64px'}}>
+                                            <td className='flex justify-center'>
+                                                <div className='flex justify-center items-center border' style={{height: '64px', width: '64px'}}>
+                                                {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
-                                                        className='inline'
+                                                        className=''
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                ):(
+                                                    <div className='relative'>
+                                                        <img src={logo}
+                                                            alt="category-logo"
+                                                            className=''
+                                                            style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                                        {!item.email_verified_at && (
+                                                            <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
+                                                        )}
+                                                    </div>
+                                                )}
                                                 </div>
-                                            ):(
-                                                <div className='inline-flex border items-center' style={{height: '64px'}}>
-                                                    <img src={logo}
-                                                        alt="category-logo"
-                                                        className='inline'
-                                                        style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                </div>
-                                            )}
                                             </td>
                                             <td>{item.company_name}</td>
                                             <td>
                                                 <div className='inline-flex items-center'>
-                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={item.trustscore}/>
+                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={Number(item.trustscore)}/>
                                                     <span className='ml-2 text-gray-800'>{item.trustscore} ({item.reviews_count})</span>
                                                 </div>
                                             </td>

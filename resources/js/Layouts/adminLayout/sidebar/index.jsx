@@ -14,7 +14,10 @@ export default function Sidebar({auth}) {
         <div className="sidebar h-100 pt-3">
             <div className="px-4" style={{ maxWidth: "100%" }}>
                 <div className="profile text-center mb-5 position-relative">
-                    <div className="flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
+                    {auth.role == 'owner' && !auth.userProfileImage && (
+                        <Link href={route("business.profile.logo")} className="no-underline hover:underline hover:text-blue-500">Set your profile logo</Link>
+                    )}
+                    <div className="mt-2 flex items-center mx-auto border border-gray-100 bg-white" style={{width:'100px', height:'100px'}}>
                     {
                         auth.user.role == 'admin' ? (
                             <>
@@ -27,29 +30,12 @@ export default function Sidebar({auth}) {
                             </>
                         ):(
                             <>
-                            {
-                                auth.userProfileImage ? (
-                                    <>
-                                        <img
-                                            src={`/storage/images/logo/${auth.userProfileImage}`}
-                                            alt="business-logo"
-                                            className="mx-auto"
-                                            width="100"
-                                        />
-                                    </>
-                                ):(
-                                    <>
-                                        <Link href={route("business.profile.logo")}>
-                                            <img
-                                                src={businessProfilelogo}
-                                                alt="business-logo"
-                                                className="mx-auto"
-                                                width="100"
-                                            />
-                                        </Link>
-                                    </>
-                                )
-                            }
+                                <img
+                                    src={auth.userProfileImage ? `/storage/images/logo/${auth.userProfileImage}` : businessProfilelogo}
+                                    alt="business-logo"
+                                    className="mx-auto"
+                                    style={{maxWidth:'100px', maxHeight:'100px'}}
+                                />
                             </>
                         )
                     }

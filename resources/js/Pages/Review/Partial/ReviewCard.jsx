@@ -1,31 +1,37 @@
 import React from 'react';
+import { Link } from '@inertiajs/react'
 
+import moment from 'moment'
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCircle } from 'react-icons/fa';
 
-export default function ReviewCard({review}) {
+export default function ReviewCard({ review }) {
     return (
         <div className='p-4 bg-white border rounded'>
             <div className=' pb-3 border-b border-b-2 flex items-center'>
-                <UserAvatar user={review.user} width='3rem' height='3rem'/>
-                <a href={"/reviews/user/" + review.user.name} className='no-underline ml-3'>
-                    <p className='text-gray-800 text-sm font-bold mb-0'>
-                        {review.user.name}
+                <UserAvatar user={review.userinfo} avatar={review.userinfo.avatar} width='3rem' height='3rem'/>
+                <Link href={route('reviews.user', review.userinfo.id)} className='no-underline ml-3'>
+                    <p className='text-gray-800 text-sm font-bold mb-0 capitalize'>
+                        {review.userinfo.name}
                     </p>
                     <div className='flex items-center mt-1'>
-                        <p className='mb-0 text-gray-700 text-sm'>{review.user.reviews} review</p>
-                        <p className='mb-0 text-gray-700 ml-4 flex items-center'><FaMapMarkerAlt className='inline mr-2'/>{review.user.location}</p>
+                        <p className='mb-0 text-gray-700 text-sm'>{review.userinfo.count_reviews} review</p>
+                        {
+                            review.userinfo.location && (
+                                <p className='mb-0 text-gray-700 ml-4 flex items-center'><FaMapMarkerAlt className='inline mr-2'/>{review.userinfo.location}</p>
+                            )
+                        }
                     </div>
-                </a>
+                </Link>
             </div>
 
             <div className='py-2 border-b border-b-2'>
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center'>
                         <Rating className="inline-flex" rating={review.rating}/>
-                        {
-                            review.company.is_verified ? (
+                        {/* {
+                            review.business.email_verified_at ? (
                                 <div className='ml-3 flex items-center'>
                                     <FaCheckCircle className='text-gray-500'/>
                                     <p className='ml-1 mb-0'>Verified</p>
@@ -33,15 +39,15 @@ export default function ReviewCard({review}) {
                             ):(
                                 <></>
                             )
-                        }
+                        } */}
                     </div>
-                    <p className='mb-0 text-sm'>A day ago</p>
+                    <p className='mb-0 text-sm'>{moment(review.date_experience).fromNow()}</p>
                 </div>
                 <div className='mt-3'>
-                    <a href={"/reviews/review/" + review.review_id} className='block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
-                    <pre className="text-black whitespace-pre-wrap font-medium">{review.comment}</pre>
+                    <a href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
+                    <pre className="text-black whitespace-pre-wrap font-medium min-h-16">{review.description}</pre>
                 </div>
-                <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{review.date}</p>
+                <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>
             </div>
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>
@@ -52,20 +58,20 @@ export default function ReviewCard({review}) {
                 <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
             </div>
             {
-                review.reply?.length && (
+                review.reply?.comment.length && (
                 <div className='mt-3 bg-[#F1F1E8] rounded-lg border-l-4 p-3 border-blue-500 flex'>
                     <div><FaReply className='text-gray-700 mt-1'/></div>
                     <div className='ml-3 flex-grow'>
                         <div className='flex items-center justify-between'>
-                            <a className='text-sm text-gray-800 font-bold no-underline'>
-                            Reply from {review.company.name}
-                            </a>
+                            <span className='text-sm text-gray-800 font-bold'>
+                            Reply from <a className='text-sm text-gray-800 font-bold'>{review.business.company_name}</a>
+                            </span>
                             <p className='mb-0 text-sm'>
-                            Updated 7 hours ago
+                            Updated {moment(review.reply.updated_at).fromNow()}
                             </p>
                         </div>
 
-                        <pre className="mt-3 text-black text-sm whitespace-pre-wrap font-medium">{review.reply[0].comment}</pre>
+                        <pre className="mt-3 text-black text-sm whitespace-pre-wrap min-h-24 font-medium">{review.reply.comment}</pre>
                     </div>
                 </div>
                 )

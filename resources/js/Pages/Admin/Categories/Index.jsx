@@ -64,7 +64,7 @@ const Index = ({ categories }) => {
                                         <th scope="col">No</th>
                                         <th scope="col">Icon</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Sub Count</th>
+                                        <th scope="col">Sub Categories</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>

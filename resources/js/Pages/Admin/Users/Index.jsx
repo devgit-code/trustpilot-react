@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import { BsTrashFill } from "react-icons/bs"
+import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { CgMenuBoxed } from "react-icons/cg";
 
 import jsPDF from 'jspdf';
@@ -209,14 +209,17 @@ const Index = () => {
                                     {users.map((user, index) => (
                                         <tr key={user.id}>
                                             <td data-label="No">{index + 1}</td>
-                                            <td data-label="">
-                                                <div className='inline-flex items-center' style={{height: '64px'}}>
+                                            <td data-label="flex justify-center">
+                                                <div className='relative inline-flex items-center' style={{height: '64px'}}>
                                                     <img
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }}
                                                         src={user.profile?.image ? `/storage/images/profile/${user.profile.image}` : profileNotPreviewImg}
                                                         alt="preview image"
                                                     />
+                                                    {!user.email_verified_at && (
+                                                        <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
+                                                    )}
                                                 </div>
                                             </td>
                                             <td data-label="name">{user.name}</td>
@@ -225,7 +228,7 @@ const Index = () => {
                                             <td data-label="">
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
-                                                        <Link href={route('admin.users.show', user.id)}>
+                                                        <Link href={route('admin.users.show', {id : user.id, page:pagination.current_page})}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>

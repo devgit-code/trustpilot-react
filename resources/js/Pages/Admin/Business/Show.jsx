@@ -9,12 +9,12 @@ import ReviewTable from '@/Components/ReviewTable';
 
 import profileNotLogo from '@/../images/company-logo.png';
 
-const Show = ({ business }) => {
+const Show = ({ business, has_reviews }) => {
     const table_setting = {
         title: 'Reviews',
         url: '/api/admin/businesses/' + business.id,
         show_link: 'admin.reviews.show',
-        header_name:'business'
+        header_name:'user'
     }
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
@@ -37,7 +37,7 @@ const Show = ({ business }) => {
     };
 
     return (
-        <div className="content-wrapper m-3">
+        <div className="content-wrapper m-3 mx-5">
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-body">
@@ -184,7 +184,7 @@ const Show = ({ business }) => {
                                             className="form-control mt-2"
                                             name="description"
                                             id="description"
-                                            rows="4"
+                                            rows="6"
                                             disabled
                                             style={{ height: "auto" }}
                                             value={data.description}
@@ -251,9 +251,13 @@ const Show = ({ business }) => {
                     </div>
                 </div>
 
-                <div className='mt-3 p-3 card'>
-                    <ReviewTable setting={table_setting}/>
-                </div>
+                {
+                    has_reviews !== 0 && (
+                        <div className='mt-3 p-3 card'>
+                            <ReviewTable setting={table_setting}/>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

@@ -1,18 +1,15 @@
 import React, { useRef } from 'react';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import CompanyCard from '@/Components/Frontend/CompanyCard';
+import { Link, usePage, } from '@inertiajs/react';
 
 import "./Style.css"
-import {
-    Link,
-    usePage,
-} from '@inertiajs/react';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import CompanyCard from '@/Components/Frontend/CompanyCard';
 
 
 const CompanyList = ({title, link, data}) => {
 
     return (
-        <div className="container-md bg-white">
+        <div className="container-md bg-white mb-5">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
                 <h2 className="text-center text-2xl font-extrabold my-2">{title}</h2>
@@ -24,9 +21,9 @@ const CompanyList = ({title, link, data}) => {
                 </div>
             </div>
 
-            <div className="relative flex items-center pt-3">
+            <div className="relative flex items-center pt-3 ">
                 {/* flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth */}
-                <div className="flex lg:grid lg:grid-cols-4 lg:w-full gap-4 pb-5 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
+                <div className="flex lg:grid lg:grid-cols-4 pb-5 px-2 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                     {data.map((item, index) => (
                         <CompanyCard
                             key={index}

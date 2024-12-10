@@ -31,7 +31,7 @@ class ProfileController extends Controller
     public function logo_update(Request $request)
     {
         $request->validate([
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         $business = auth('business')->user();

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage  } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
 import InputError from '@/Components/InputError';
@@ -12,12 +12,15 @@ import "cropperjs/dist/cropper.css";
 import ImageCropper from "@/Components/ImageCropper";
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
-const Show = ({ user, userProfile }) => {
+const Show = ({ user, userProfile, has_reviews }) => {
+    const { props } = usePage();
+    const page = props.page || 1;
+    console.log('c----', page)
     const table_setting = {
         title: 'Reviews',
         url: '/api/admin/users/' + user.id,
         show_link: 'admin.reviews.show',
-        header_name:'user'
+        header_name:'business'
     }
 
     const [show, setShow] = useState(false);
@@ -66,7 +69,7 @@ const Show = ({ user, userProfile }) => {
 
     return (
         <>
-            <div className="content-wrapper m-3">
+            <div className="content-wrapper m-3 mx-5">
                 <div className="card p-3">
                     <div className='flex items-center justify-between'>
                         <div>
@@ -74,7 +77,7 @@ const Show = ({ user, userProfile }) => {
                         </div>
                         <Link
                             as="button"
-                            href={route('admin.users.index')}
+                            href={route('admin.users.index', {page})}
                             className="btn btn-primary mb-3" >
                             Back
                         </Link>
@@ -208,9 +211,13 @@ const Show = ({ user, userProfile }) => {
                     )}
                 </div>
 
-                <div className='mt-3 p-3 card'>
-                    <ReviewTable setting={table_setting}/>
-                </div>
+                {
+                    has_reviews !== 0 && (
+                        <div className='mt-3 p-3 card'>
+                            <ReviewTable setting={table_setting}/>
+                        </div>
+                    )
+                }
             </div>
         </>
     );

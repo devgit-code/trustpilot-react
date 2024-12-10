@@ -6,7 +6,6 @@ import { usePage } from "@inertiajs/react";
 
 const FrontendLayout = ({ children }) => {
     const { auth } = usePage().props
-
     return (
         <>
             <Navigation auth = {auth}/>

@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
+import { Link, usePage, } from '@inertiajs/react';
 
-
-const categories =[
-    {
-        title: 'Animals & Pets',
-        slug: 'animals_pets',
-        count: 45,
-    },
-    {
-        title: 'Cats & Dogs',
-        slug: 'cats_dogs',
-        count: 2145,
-    },
-]
-
-
-export default function RelatedCategory() {
+export default function RelatedCategory({categories}) {
     return (
         <div className="">
             <h3 className="font-semibold text-lg">Related categories</h3>
@@ -23,10 +9,10 @@ export default function RelatedCategory() {
                 <ul className="text-gray-700 text-sm mt-2 p-0 w-full">
                     {categories.map((item, index) => (
                     <li key={index} className="border-b border-gray-200 py-1 last:border-0">
-                        <a href="#" className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
-                            <span>{item.title}</span>
-                            <span className='mr-2'>{item.count}</span>
-                        </a>
+                        <Link href={route('categories.detail', item.id)} className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
+                            <span className='capitalize text-gray-700'>{item.name}</span>
+                            <span className='mr-2'>{item.businesses_count}</span>
+                        </Link>
                     </li>
                     ))}
                 </ul>

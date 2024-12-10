@@ -39,6 +39,7 @@ class AdminCategoryController extends Controller
             $imageName = "category-" . now()->timestamp . "." . $extension;
             $path = $request->file('image')->storeAs('images/category', $imageName, 'public');
             $validated['image'] = $path; // Add the avatar path to the validated data
+            $validated['slug'] = Str::slug($validated['name']);
         }
 
         $category = Category::create($validated);
@@ -68,6 +69,7 @@ class AdminCategoryController extends Controller
         ]);
 
         $category->name = $request->input('name');
+        $category->slug = Str::slug($request->input('name'));
 
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();

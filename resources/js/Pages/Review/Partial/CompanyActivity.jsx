@@ -43,10 +43,10 @@ const CompanyActivity = () => {
         <div className="p-3 border rounded bg-white">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold">Company activity</h2>
-                <a href="#" className="text-blue-600 hover:underline text-sm">
+                <h2 className="text-xl font-semibold">Company Activity</h2>
+                {/* <a href="#" className="text-blue-600 hover:underline text-sm">
                 See all
-                </a>
+                </a> */}
             </div>
 
             {/* Activity List */}

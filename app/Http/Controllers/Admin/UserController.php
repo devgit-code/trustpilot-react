@@ -79,6 +79,7 @@ class UserController extends Controller
         return Inertia::render('Admin/Users/Show', [
             'user' => $user,
             'userProfile' => $user->profile,
+            'has_reviews' => count($user->reviews)
         ]);
     }
 

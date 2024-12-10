@@ -18,7 +18,13 @@ class SubCategoryController extends Controller
     public function index(String $id)
     {
         $category = Category::find($id);
-        $subCategories = SubCategory::with('category')->where('category_id', $id)->get();
+        $subCategories = SubCategory::withCount('businesses')->with(['category'])->where('category_id', $id)->get();
+
+        // $subCategories = $subCategories->map(function ($category, $index) {
+        //     $category['count_businesses'] = count($category->businesses);
+        //     return $category;
+        // });
+
         return Inertia::render('Admin/SubCategories/Index', compact('category', 'subCategories'));
     }
 
@@ -48,6 +54,7 @@ class SubCategoryController extends Controller
             $imageName = "sub-category-" . now()->timestamp . "." . $extension;
             $path = $request->file('image')->storeAs('images/category', $imageName, 'public');
             $validated['image'] = $path; // Add the avatar path to the validated data
+            $validated['slug'] = Str::slug($validated['name']);
         }
 
         SubCategory::create($validated);
@@ -87,6 +94,7 @@ class SubCategoryController extends Controller
         ]);
 
         $subCategory->name = $request->name;
+        $subCategory->slug = Str::slug($request->name);
 
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();

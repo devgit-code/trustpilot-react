@@ -120,7 +120,7 @@ export default function UserSettingForm({className = '', userProfile}) {
                         height="128"
                     />
                     <div className="profile_text ml-5">
-                        <span className="d-block fs-5 mb-0 text-gray-800">{auth.user.name}</span>
+                        <span className="d-block fs-5 mb-0 text-gray-800 capitalize">{auth.user.name}</span>
                         <span className="d-block fs-6 text-gray-700">{auth.user.email}</span>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ export default function CompanyRelated() {
                     companies.map((_, index) => (
                         <li className="flex" key={index}>
                             <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                <img src={logo} alt={'People who loo'} className="w-20 object-cover rounded border-2 border-white" />
+                                <img src={logo} alt={'People who loo'} className="max-w-20 max-h-20 object-cover rounded" />
                             </div>
                             <div className="ml-3 ">
                                 <a href="/reviews/company/name" className="no-underline pt-1 font-semibold">{'People who look ' + index}</a>

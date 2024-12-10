@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('name')->unique();
-            $table->string('slug')->nullable();
-            $table->string('status')->nullable();
-            $table->string('image')->nullable();
+            $table->string('image');
+            $table->string('slug');
             $table->timestamps();
         });
     }

@@ -37,18 +37,7 @@ class AdminDashboardController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            "name" => "required|max:255"
-        ]);
 
-        $creationData = [
-            "name" => $request->input('name'),
-            "status" => $request->input('status')
-        ];
-
-        City::create($creationData);
-
-        return redirect()->route('cities.index');
     }
 
 
@@ -63,29 +52,13 @@ class AdminDashboardController extends Controller
 
     public function edit(string $id)
     {
-        $city = City::find($id);
-        $state = State::find($id);
-        return Inertia::render('Cities/Edit', [
-            'city' => $city, 'state' => $state
-        ]);
+
     }
 
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            "name" => "required|max:255"
-        ]);
 
-        $city = City::findOrFail($id);
-
-        $updateData = [
-            "name" => $request->input('name'),
-            "status" => $request->input('status')
-        ];
-
-        $city->update($updateData);
-        return redirect()->route('state.cities', ['state'=> $city->state_id]);
     }
 
 
