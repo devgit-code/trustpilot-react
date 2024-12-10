@@ -97,6 +97,7 @@ class WebReviewController extends Controller
 
         $reviews = Review::where('business_id', $business->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+            ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
             ->get();
 
@@ -151,6 +152,7 @@ class WebReviewController extends Controller
 
         $reviews = Review::where('user_id', $user->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+            ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
             ->get();
 
