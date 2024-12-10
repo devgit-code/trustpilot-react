@@ -84,6 +84,16 @@ class Business extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(BusinessProfile::class);
     }
 
+    public function trustscore()
+    {
+        return number_format($this->reviews->avg('rating'), 1);
+    }
+
+    public function count_reviews()
+    {
+        return count($this->reviews);
+    }
+
     public function businessCategories()
     {
         return $this->hasMany(BusinessCategory::class)->with('subCategory');

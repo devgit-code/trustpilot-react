@@ -4,56 +4,9 @@ import { Head, Link } from '@inertiajs/react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import ReviewCard from './RecentCompanyReviewCard.jsx';
 
-const reviews = [
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Liquid Expat Mortgages',
-            website: 'liquidexpatmortgages.com',
-        },
-        sub_cats: 'Christmas store',
-    },
-    {
-        review_id: '233',
-        user: {
-            name: 'Se kang',
-            avatar: null
-        },
-        rating: 2,
-        comment: 'Like very well',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Treetime',
-            website: 'liquidexpatmortgages.com',
-        },
-        sub_cats: 'Christmas store, Gift shop',
-    },
-    {
-        review_id: '2332',
-        user: {
-            name: 'Rekha Sundavadra',
-            avatar_url: null
-        },
-        rating: 5,
-        comment: 'Anastacia has been nothing but fantastic. She has been very quick with communication and the speed at which she works at is outstanding. Any enquiries we have had...',
-        company: {
-            logo: 'https://via.placeholder.com/40', // Replace with actual logo URL
-            name: 'Unique Wishes Dance',
-            website: 'liquidexpatmortgages.com',
-        },
-        sub_cats: 'Christmas store.Gift shop.Coperation shop.Gift shop.Coperation shop',
-    },
-];
 
-const RecentCompanyReviews = () => {
-
+const RecentCompanyReviews = ({ reviews }) => {
+console.log('dd----', reviews)
     return (
         <div className="">
             {/* Title */}

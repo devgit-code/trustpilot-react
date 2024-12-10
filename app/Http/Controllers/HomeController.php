@@ -25,7 +25,7 @@ class HomeController extends Controller
             return $business;
         });
 
-        $reviews = Review::latest()->take(8)->get();
+        $reviews = Review::with('reply')->latest()->take(8)->get();
         $reviews = $reviews->map(function ($review, $index) {
             $review['user'] = [
                 'name'=>$review->user->name,

@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
+use App\Models\Business;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Inertia\Inertia;
+use NumberFormatter;
 
 class CategoryController extends Controller
 {
@@ -49,41 +51,16 @@ class CategoryController extends Controller
             $query->withCount('businesses');
         }])->findOrFail($category_id);
 
-        $category1 = Category::with(['subCategories.businesses.reviews' => function ($query) {
-            // Get the latest 5 reviews for businesses
-            $query->latest()->limit(5);
-        }])->findOrFail($category_id);
-
-        $latestReviews = [];
-        foreach ($category1->subCategories as $subCategory) {
-            // Loop through each business in the subcategory
-            foreach ($subCategory->businesses as $business) {
-                // Loop through the reviews of the business
-                foreach ($business->reviews as $review) {
-                    // Add the review with business info
-                    $latestReviews[] = [
-                        'business_name' => $business->name,
-                        'review_content' => $review->content,
-                        'created_at' => $review->created_at,
-                        'rating' => $review->rating,
-                        'business_logo' => $business->logo ?? 'default_logo.jpg', // Example logo
-                    ];
-                }
-            }
-        }
-        // $reviews = Review::whereIn('sub_category_id', function ($query) use ($category_id) {
-        //     $query->select('id')
-        //         ->from('sub_categories')
-        //         ->where('category_id', $category_id);
-        // })
-        // ->latest() // Order by created_at in descending order
-        // ->take(5)  // Limit the results to 5
-        // ->get();
+        $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
+        $businesses = Business::with(['profile', 'trustscore', 'count_reviews'])->whereHas('businessCategories', function ($query) use ($subCategory_ids) {
+            $query->whereIn('sub_category_id', $subCategory_ids);
+        })->paginate(10); // Paginate the results
 
         return Inertia::render('Category/Detail', [
             'data' => [
                 'category' => $category,
                 'related_categoreies' => $subCategories->subcategories,
+                'companies' => $businesses,
             ]
         ]);
     }
@@ -96,20 +73,52 @@ class CategoryController extends Controller
             $query->withCount('businesses');
         }])->findOrFail($subCategory->category_id);
 
-// dd($subCategory->category->name);
-        $reviews = Review::whereIn('business_id', function ($query) use ($sub_category_id) {
-                $query->select('id') // Get business IDs
-                    ->from('business_categories')
-                    ->where('sub_category_id', $sub_category_id);
-            })
-            ->latest() // Order reviews by created_at in descending order
-            ->take(5)  // Limit the results to the latest 5
-            ->get();
+        $paginate = Business::query()->with(['profile'])->whereHas('businessCategories', function ($query) use ($sub_category_id) {
+            $query->where('sub_category_id', $sub_category_id);
+        })->paginate(10); // Paginate the results
+
+        $businesses = collect($paginate->items())->map(function ($business, $index) {
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
+            $business['reviews_count'] = count($business->reviews);
+            return $business;
+        });
+
+
+        $reviews = Review::with('reply')->latest()->take(3)->get();
+        $reviews = $reviews->map(function ($review, $index) {
+            $review['user'] = [
+                'name'=>$review->user->name,
+                'avatar'=>$review->user->profile?->image,
+            ];
+            $review['company'] = [
+                'id'=>$review->business->id,
+                'name'=>$review->business->company_name,
+                'website'=>$review->business->website,
+                'logo'=>$review->business->profile?->logo,
+                'trustscore'=>number_format($review->business->reviews->avg('rating'), 1),
+                'count_reviews'=>count($review->business->reviews),
+            ];
+            return $review;
+        });
 
         return Inertia::render('Category/Detail', [
             'data' => [
                 'sub_category' => $subCategory,
                 'related_categoreies' => $subCategories->subcategories,
+                'companies' => $businesses,
+                'pagination' => [
+                    'current_page' => $paginate->currentPage(),
+                    'last_page' => $paginate->lastPage(),
+                    'per_page' => $paginate->perPage(),
+                    'total' => $paginate->total(),
+                    'links' => [
+                        'first' => $paginate->url(1),
+                        'last' => $paginate->url($paginate->lastPage()),
+                        'next' => $paginate->nextPageUrl(),
+                        'prev' => $paginate->previousPageUrl(),
+                    ],
+                ],
+                'recent_reviews' => $reviews
             ]
         ]);
     }
