@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
-import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
-import { FaReply, FaFlag } from "react-icons/fa"
 import moment from "moment";
 import Rating from '@/Components/Ratings';
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
+import { CgMenuBoxed } from "react-icons/cg";
 
 export default function ReviewTable({setting}){
     const [filters, setFilters] = useState({ sort_by_date: "desc", rating: "", search:"", page:1 });
@@ -202,7 +202,7 @@ export default function ReviewTable({setting}){
                                             <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                 <li className="edit">
                                                     <Link href={route(setting.show_link, item.id)}>
-                                                        <FaReply  className='text-primary fs-4 me-2' />
+                                                        <CgMenuBoxed  className='text-primary fs-4 me-2' />
                                                     </Link>
                                                 </li>
                                                 {/* {

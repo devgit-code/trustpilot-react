@@ -82,6 +82,7 @@ class BusinessController extends Controller
         return Inertia::render('Admin/Business/Show', [
             'business' => $business,
             'has_reviews' => count($business->reviews),
+            'trustscore' => number_format($business->reviews->avg('rating'), 1),
         ]);
     }
 

@@ -79,7 +79,7 @@ const Index = ({ blogs }) => {
                                                     <tr key={blog.id} className="border-bottom-secondary align-middle">
                                                         <td>{index + 1}</td>
                                                         <td>{blog.title}</td>
-                                                        <td>{moment(blog.created_at)}</td>
+                                                        <td>{moment(blog.created_at).format("MMM D, YYYY")}</td>
                                                         <td>
                                                             <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                                 <li className="edit">

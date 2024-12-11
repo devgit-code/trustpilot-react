@@ -34,7 +34,7 @@ const Show = ({ review, userTotalReviews }) => {
     };
 
     return (
-        <div className="content-wrapper m-3 flex justify-center">
+        <div className="content-wrapper m-5 flex justify-center">
             <div className="col-lg-8">
                 <div className="card">
                     <div className="card-body">

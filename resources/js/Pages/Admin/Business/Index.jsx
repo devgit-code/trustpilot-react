@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import Rating from '@/Components/Ratings';
+import Rating from '@/Components/RatingAverage';
 
 import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
@@ -137,7 +137,7 @@ const Index = () => {
                                         <th>No</th>
                                         <th>Logo</th>
                                         <th>Name</th>
-                                        <th>Trustscore</th>
+                                        <th>Score</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -174,8 +174,8 @@ const Index = () => {
                                             <td>{item.company_name}</td>
                                             <td>
                                                 <div className='inline-flex items-center'>
-                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={Number(item.trustscore)}/>
-                                                    <span className='ml-2 text-gray-800'>{item.trustscore} ({item.reviews_count})</span>
+                                                    <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
+                                                    <span className='ml-2 text-gray-800'>({item.reviews_count} reviews)</span>
                                                 </div>
                                             </td>
                                             <td>

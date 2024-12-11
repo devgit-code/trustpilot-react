@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link , router, usePage } from '@inertiajs/react';
 
-import AdminLayout from '@/Layouts/adminLayout';
-import { BsTrashFill, BsPlusCircleFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
-import { FaReply  } from "react-icons/fa"
 import moment from "moment";
 import Swal from 'sweetalert2';
-import Rating from '@/Components/Ratings';
+import Rating from '@/Components/RatingAverage';
+import AdminLayout from '@/Layouts/adminLayout';
+import { BsTrashFill, BsPlusCircleFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
+import { CgMenuBoxed } from "react-icons/cg";
+import { FaRegThumbsUp } from 'react-icons/fa';
 
 const Index = () => {
     const [filters, setFilters] = useState({ sort_by_date: "desc", rating: "", search:"", page:1 });
@@ -179,13 +180,12 @@ const Index = () => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th>No</th>
+                                        <th>Title</th>
                                         <th>Business</th>
-                                        <th>Rating</th>
                                         <th>User</th>
-                                        <th>Date</th>
-                                        <th>Useful</th>
-                                        <th>Status</th>
-                                        <th>Detail</th>
+                                        <th>Date Experience</th>
+                                        <th>Rating/Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -209,27 +209,26 @@ const Index = () => {
                                             {reviews.map((item, index) => (
                                             <tr className="border-bottom-secondary align-middle" key={item.id}>
                                                 <td>{index + 1}</td>
-                                                {/* <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td> */}
-                                                <td>{item.business.company_name}</td>
+                                                <td>{item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}</td>
+                                                <td>{item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name}</td>
+                                                <td className='capitalize'>{item.user.name.length > 12 ? `${item.user.name.slice(0, 12)}...` : item.user.name}</td>
+                                                <td>{moment(item.date_experience).format("M/DD, YYYY")}</td>
                                                 <td>
-                                                    <div className='inline-flex items-center'>
-                                                        <Rating className="inline-flex" width="w-5" height="w-5" rating={item.rating}/>
-                                                        {/* <span className='ml-2 text-gray-800'>({item.rating})</span> */}
+                                                    <div className='flex items-center'>
+                                                        <div className='inline-flex items-center'>
+                                                            <Rating className="inline-flex px-2" width="w-5" height="w-5" rating={item.rating}/>
+                                                        </div>
+                                                        <span className={`ml-2 badge flex ${item.status ? 'bg-danger' : 'bg-success'}`}>
+                                                            <FaRegThumbsUp  className='inline mr-1'/>
+                                                            ({item.useful})
+                                                        </span>
                                                     </div>
-                                                </td>
-                                                <td>{item.user.name}</td>
-                                                <td>{moment(item.date_experience).fromNow()}</td>
-                                                <td>{item.useful}</td>
-                                                <td>
-                                                    <span className={`badge ${item.status ? 'text-danger' : 'text-success'}`}>
-                                                        {item.status ? 'Flag' : 'Normal'}
-                                                    </span>
                                                 </td>
                                                 <td>
                                                     <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                         <li className="edit">
                                                             <Link href={route('admin.reviews.show', item.id)}>
-                                                                <FaReply  className='text-primary fs-4 me-2' />
+                                                                <CgMenuBoxed  className='text-primary fs-4 me-2' />
                                                             </Link>
                                                         </li>
                                                         <form
