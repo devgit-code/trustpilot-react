@@ -51,9 +51,9 @@ const SubCategoryEdit = ({ subCategory, category, onClose }) => {
             <div className="row justify-center">
                 <div className="col-lg-8">
                     <div className='flex items-center'>
-                        <Link href={route('admin.categories.index')} className='text-gray-700 font-bold no-underline hover:underline capitalize'>Categories</Link>
+                        <Link href={route('admin.categories.index')} className='text-gray-500 font-bold no-underline hover:underline capitalize'>Categories</Link>
                         <RiArrowRightSLine className='m-2'/>
-                        <Link href={route('admin.sub_categories.index', category.id)}className='text-gray-700 font-bold no-underline hover:underline capitalize'>{category.name}</Link>
+                        <Link href={route('admin.sub_categories.index', category.id)}className='text-gray-800 font-bold no-underline hover:underline capitalize'>{category.name}</Link>
                     </div>
 
                     <div className='card p-3 mt-2'>

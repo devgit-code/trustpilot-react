@@ -150,9 +150,18 @@ const Index = () => {
                                         <>
                                         {businesses.map((item, index) => (
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
-                                            <td>{index + 1}</td>
-                                            <td className='flex justify-center'>
-                                                <div className='flex justify-center items-center border' style={{height: '64px', width: '64px'}}>
+                                            <td>
+                                                <div className="relative inline-flex">
+                                                    <p className={`mb-0 px-3 aspect-[1/1] flex items-center ${item.email_verified_at ? "bg-primary" : "bg-danger"} rounded text-gray-100`}>{index+1}</p>
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                        className="absolute -top-2 -right-2">
+                                                        <path fill={`${item.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                                                        <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
+                                                    </svg>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className='inline-flex justify-center items-center border' style={{height: '64px', width: '64px'}}>
                                                 {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
@@ -164,7 +173,7 @@ const Index = () => {
                                                             alt="category-logo"
                                                             className=''
                                                             style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                        {!item.email_verified_at && (
+                                                        {!item.profile?.logo && (
                                                             <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
                                                         )}
                                                     </div>

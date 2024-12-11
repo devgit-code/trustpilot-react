@@ -84,24 +84,32 @@ const Show = ({ user, userProfile, has_reviews }) => {
                         <div className="card p-3">
                             <div className='flex items-center justify-between'>
                                 <div>
-                                    <h3 className="pro_heading">View User</h3>
+                                    <h4 className="card_title">View User <a className='font-bold text-gray-800 capitalize italic'>{user.name}</a></h4>
                                 </div>
 
-                                <Link href={route('admin.dashboard')} onClick={handleBack} className="btn btn-primary" type="button">
-                                    Back
-                                </Link>
+                                <div className='space-x-2'>
+                                    <button onClick={handleBack} className="btn btn-success" type="button">
+                                        Edit
+                                    </button>
+                                    <Link href={route('admin.dashboard')} onClick={handleBack} className="btn btn-primary" type="button">
+                                        Back
+                                    </Link>
+                                </div>
                             </div>
-                            <form onSubmit={handleSubmit} className="modal_form">
-                                <div className='row gx-6'>
+                            <div>
+                                <p className={`${user.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                        className="inline mr-1">
+                                        <path fill={`${user.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                                        <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
+                                    </svg>
+                                    <span className='text-gray-700 uppercase text-xs font-bold'>{user.email_verified_at ? 'Active' : 'Inactive'}</span>
+                                </p>
+                            </div>
+                            <form onSubmit={handleSubmit} className="modal_form mt-4">
+                                <div className='row gx-6 mb-3'>
                                     <div className="col-lg-6 space-y-5">
-                                        <p className={`${user.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                className="inline mr-1">
-                                                <path fill={`${user.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
-                                                <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
-                                            </svg>
-                                            <span className='text-gray-700 uppercase text-xs font-bold'>{user.email_verified_at ? 'Active' : 'Inactive'}</span>
-                                        </p>
+                                        <h5 className="card-title">User Info</h5>
                                         <div>
                                             <InputLabel htmlFor="name" value="Name" />
 
@@ -136,7 +144,8 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                             <InputError className="mt-2" message={errors.email} />
                                         </div>
                                     </div>
-                                    <div className="col-lg-6 space-y-5 my-3">
+                                    <div className="col-lg-6 space-y-5">
+                                        <h5 className="card-title">User Profile</h5>
                                         <img
                                             ref={previewImageRef}
                                             className=""

@@ -22,7 +22,7 @@ function CompanyCard({ id, company_name, website, trustscore, count_reviews, ema
                     {website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}
                 </p>
                 <div className="flex items-center">
-                    <Rating className="inline-flex" rating={trustscore}/>
+                    <Rating className="inline-flex" rating={Number(trustscore)}/>
                     <span className="text-sm font-semibold text-gray-700 ml-1">{trustscore}</span>
                     <span className="text-xs ml-2 text-gray-500">({count_reviews})</span>
                 </div>

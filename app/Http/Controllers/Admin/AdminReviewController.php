@@ -94,6 +94,8 @@ class AdminReviewController extends Controller
         return Inertia::render('Admin/Review/Show', [
             'review' => $review,
             'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
+            'count_reviews' => count($review->business->reviews),
+            'trustscore' => number_format($review->business->reviews->avg('rating'), 1),
         ]);
     }
 

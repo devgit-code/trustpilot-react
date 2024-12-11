@@ -22,11 +22,11 @@ const Index = ({ subCategory }) => {
             <div className="row justify-center">
                 <div className="col-lg-8">
                     <div className='flex items-center'>
-                        <Link href={route('admin.categories.index')} className='text-gray-700 font-bold no-underline hover:underline capitalize'>Categories</Link>
+                        <Link href={route('admin.categories.index')} className='text-gray-500 font-bold no-underline hover:underline capitalize'>Categories</Link>
                         <RiArrowRightSLine className='m-2'/>
-                        <Link href={route('admin.sub_categories.index', subCategory.category.id)}className='text-gray-700 font-bold no-underline hover:underline capitalize'>{subCategory.category.name}</Link>
+                        <Link href={route('admin.sub_categories.index', subCategory.category.id)}className='text-gray-500 font-bold no-underline hover:underline capitalize'>{subCategory.category.name}</Link>
                         <RiArrowRightSLine className='m-2'/>
-                        <Link href={route('admin.sub_categories.edit', subCategory.id)}className='text-gray-700 font-bold no-underline hover:underline capitalize'>{subCategory.name}</Link>
+                        <Link href={route('admin.sub_categories.detail', subCategory.id)}className='text-gray-800 font-bold no-underline hover:underline capitalize'>{subCategory.name}</Link>
                     </div>
                     <div className="card p-3 mt-2">
                         <div className="flex items-center justify-between">
@@ -88,7 +88,7 @@ const Index = ({ subCategory }) => {
                                                         <td>
                                                             <div className='inline-flex items-center'>
                                                                 <RatingAverage className='inline' rating={business.trustscore}/>
-                                                                <span className='ml-2 text-gray-700'>({business.count_reviews})</span>
+                                                                <span className='ml-2 text-gray-700'>({business.count_reviews} reviews)</span>
                                                             </div>
                                                         </td>
                                                     </tr>

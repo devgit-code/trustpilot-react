@@ -55,119 +55,128 @@ const Show = ({ business, has_reviews, trustscore }) => {
                             <div className="card-body">
                                 <div className='flex items-center justify-between'>
                                     <div className=''>
-                                        <h4 className="card-title">View Business <a className='font-bold text-gray-800'>{business.company_name}</a></h4>
+                                        <h4 className="card-title">View Business <a className='font-bold text-gray-800 capitalize italic'>{business.company_name}</a></h4>
                                     </div>
 
                                     <Link href={route('admin.dashboard')} onClick={handleBack} className="btn btn-primary" type="button">
                                         Back
                                     </Link>
                                 </div>
+                                <div className='flex items-center mt-3'>
+                                    <div className=''>
+                                        <p className={`${business.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                className="inline mr-1">
+                                                <path fill={`${business.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                                                <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
+                                            </svg>
+                                            <span className='text-gray-700 uppercase text-xs font-bold'>{business.email_verified_at ? 'Verified Company' : 'Unverified Company'}</span>
+                                        </p>
+                                    </div>
+                                    <div className='ml-4 flex items-center'>
+                                        <RatingAverage className="inline-flex px-2" width="w-6" height="w-6" rating={trustscore}/>
+                                        <span className='ml-2 text-gray-800'>({has_reviews} reviews)</span>
+                                    </div>
+                                </div>
                                 <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
-                                    <div className='row'>
+                                    <div className='row mb-3'>
                                         <div className='col-lg-6 space-y-5'>
-                                            <div className=''>
-                                                <p className={`${business.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                                        className="inline mr-1">
-                                                        <path fill={`${business.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
-                                                        <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
-                                                    </svg>
-                                                    <span className='text-gray-700 uppercase text-xs font-bold'>{business.email_verified_at ? 'Verified Company' : 'Unverified Company'}</span>
-                                                </p>
-                                            </div>
-                                                <div className='inline-flex items-center'>
-                                                    <RatingAverage className="inline-flex px-2" width="w-6" height="w-6" rating={trustscore}/>
-                                                    <span className='ml-2 text-gray-800'>({has_reviews} reviews)</span>
+                                            <div className=' space-y-4'>
+                                                <h4 className="card-title">Business Info</h4>
+                                                <div>
+                                                    <InputLabel htmlFor="company_name" value="Company Name" />
+
+                                                    <TextInput
+                                                        id="company_name"
+                                                        name="company_name"
+                                                        className="mt-1 block w-full"
+                                                        value={data.company_name}
+                                                        onChange={(e)=>setData('company_name', e.target.value)}
+                                                        required
+                                                        isFocused
+                                                        disabled
+                                                        autoComplete="company name"
+                                                    />
+
+                                                    <InputError className="mt-2" message={errors.company_name} />
                                                 </div>
 
-                                            <div>
-                                                <InputLabel htmlFor="company_name" value="Company Name" />
+                                                <div>
+                                                    <InputLabel htmlFor="website" value="Company Domain" />
 
-                                                <TextInput
-                                                    id="company_name"
-                                                    name="company_name"
-                                                    className="mt-1 block w-full"
-                                                    value={data.company_name}
-                                                    onChange={(e)=>setData('company_name', e.target.value)}
-                                                    required
-                                                    isFocused
-                                                    disabled
-                                                    autoComplete="company name"
-                                                />
+                                                    <TextInput
+                                                        id="website"
+                                                        name="website"
+                                                        type="url"
+                                                        className="mt-1 block w-full"
+                                                        value={data.website}
+                                                        onChange={(e)=>setData('website', e.target.value)}
+                                                        disabled
+                                                        required
+                                                        autoComplete="website"
+                                                    />
 
-                                                <InputError className="mt-2" message={errors.company_name} />
+                                                    <InputError className="mt-2" message={errors.website} />
+                                                </div>
+
+                                                <div>
+                                                    <InputLabel htmlFor="first_name" value="First Name" />
+
+                                                    <TextInput
+                                                        id="first_name"
+                                                        name="first_name"
+                                                        className="mt-1 block w-full"
+                                                        value={data.first_name}
+                                                        onChange={(e)=>setData('first_name', e.target.value)}
+                                                        disabled
+                                                        required
+                                                        autoComplete="first_name"
+                                                    />
+
+                                                    <InputError className="mt-2" message={errors.first_name} />
+                                                </div>
+
+                                                <div>
+                                                    <InputLabel htmlFor="last_name" value="Last Name" />
+
+                                                    <TextInput
+                                                        id="last_name"
+                                                        name="last_name"
+                                                        className="mt-1 block w-full"
+                                                        value={data.last_name}
+                                                        onChange={(e)=>setData('last_name', e.target.value)}
+                                                        disabled
+                                                        required
+                                                        autoComplete="last name"
+                                                    />
+
+                                                    <InputError className="mt-2" message={errors.last_name} />
+                                                </div>
+
+                                                <div>
+                                                    <InputLabel htmlFor="job_title" value="Job Title" />
+
+                                                    <TextInput
+                                                        id="job_title"
+                                                        name="job_title"
+                                                        className="mt-1 block w-full"
+                                                        value={data.job_title}
+                                                        onChange={(e)=>setData('job_title', e.target.value)}
+                                                        disabled
+                                                        required
+                                                        autoComplete="job_title"
+                                                    />
+
+                                                    <InputError className="mt-2" message={errors.job_title} />
+                                                </div>
                                             </div>
+                                            <div className='mt-5 space-y-4'>
+                                                <h5 className="card-title">Business Category</h5>
 
-                                            <div>
-                                                <InputLabel htmlFor="website" value="Company Domain" />
-
-                                                <TextInput
-                                                    id="website"
-                                                    name="website"
-                                                    type="url"
-                                                    className="mt-1 block w-full"
-                                                    value={data.website}
-                                                    onChange={(e)=>setData('website', e.target.value)}
-                                                    disabled
-                                                    required
-                                                    autoComplete="website"
-                                                />
-
-                                                <InputError className="mt-2" message={errors.website} />
-                                            </div>
-
-                                            <div>
-                                                <InputLabel htmlFor="first_name" value="First Name" />
-
-                                                <TextInput
-                                                    id="first_name"
-                                                    name="first_name"
-                                                    className="mt-1 block w-full"
-                                                    value={data.first_name}
-                                                    onChange={(e)=>setData('first_name', e.target.value)}
-                                                    disabled
-                                                    required
-                                                    autoComplete="first_name"
-                                                />
-
-                                                <InputError className="mt-2" message={errors.first_name} />
-                                            </div>
-
-                                            <div>
-                                                <InputLabel htmlFor="last_name" value="Last Name" />
-
-                                                <TextInput
-                                                    id="last_name"
-                                                    name="last_name"
-                                                    className="mt-1 block w-full"
-                                                    value={data.last_name}
-                                                    onChange={(e)=>setData('last_name', e.target.value)}
-                                                    disabled
-                                                    required
-                                                    autoComplete="last name"
-                                                />
-
-                                                <InputError className="mt-2" message={errors.last_name} />
-                                            </div>
-
-                                            <div>
-                                                <InputLabel htmlFor="job_title" value="Job Title" />
-
-                                                <TextInput
-                                                    id="job_title"
-                                                    name="job_title"
-                                                    className="mt-1 block w-full"
-                                                    value={data.job_title}
-                                                    onChange={(e)=>setData('job_title', e.target.value)}
-                                                    disabled
-                                                    required
-                                                    autoComplete="job_title"
-                                                />
-
-                                                <InputError className="mt-2" message={errors.job_title} />
                                             </div>
                                         </div>
-                                        <div className='col-lg-6 space-y-5 my-3'>
+                                        <div className='col-lg-6 space-y-4'>
+                                            <h5 className="card-title">Business Profile</h5>
                                             {/* <div>
                                                 <input
                                                     // ref={inputRef}
@@ -215,7 +224,7 @@ const Show = ({ business, has_reviews, trustscore }) => {
                                             </div>
 
                                             <div>
-                                                <InputLabel htmlFor="email" value="email" />
+                                                <InputLabel htmlFor="email" value="Email" />
 
                                                 <TextInput
                                                     id="email"

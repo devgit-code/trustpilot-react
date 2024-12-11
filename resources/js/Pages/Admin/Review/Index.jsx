@@ -5,7 +5,7 @@ import moment from "moment";
 import Swal from 'sweetalert2';
 import Rating from '@/Components/RatingAverage';
 import AdminLayout from '@/Layouts/adminLayout';
-import { BsTrashFill, BsPlusCircleFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
+import { BsTrashFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
 import { CgMenuBoxed } from "react-icons/cg";
 import { FaRegThumbsUp } from 'react-icons/fa';
 
@@ -237,10 +237,8 @@ const Index = () => {
                                                         >
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <li className="delete d-flex align-items-center">
-
                                                                 <button type="submit" className="border-0 bg-transparent">
                                                                     <BsTrashFill className="text-danger fs-4" />
-
                                                                 </button>
                                                             </li>
                                                         </form>
