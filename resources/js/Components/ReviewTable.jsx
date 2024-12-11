@@ -149,7 +149,7 @@ export default function ReviewTable({setting}){
                     </div>
                 </div>
 
-                <div className="table-responsive text-center">
+                <div className="table-responsive text-center mt-2">
                     <table className="table">
                         <thead>
                             <tr className="border-bottom-primary">

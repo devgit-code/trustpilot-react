@@ -4,11 +4,13 @@ import { Link, router, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/adminLayout';
 import Rating from '@/Components/RatingAverage';
 
+import logo from "@/../images/company-logo.png"
+import Swal from 'sweetalert2';
 import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
-import Swal from 'sweetalert2';
-import logo from "@/../images/company-logo.png"
+import { MdOutlineUnpublished } from "react-icons/md"
+import { VscWorkspaceUntrusted } from "react-icons/vsc"
 
 
 const Index = () => {
@@ -110,7 +112,6 @@ const Index = () => {
 
     return (
         <div className='content-wrapper m-3'>
-
             <div className="row">
                 <div className="col-sm-12">
                     <div className="card">
@@ -137,6 +138,7 @@ const Index = () => {
                                         <th>No</th>
                                         <th>Logo</th>
                                         <th>Name</th>
+                                        <th>Categories</th>
                                         <th>Score</th>
                                         <th>Actions</th>
                                     </tr>
@@ -152,12 +154,15 @@ const Index = () => {
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
                                             <td>
                                                 <div className="relative inline-flex">
-                                                    <p className={`mb-0 px-3 aspect-[1/1] flex items-center ${item.email_verified_at ? "bg-primary" : "bg-danger"} rounded text-gray-100`}>{index+1}</p>
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    <p className={`mb-0 text-gray-700 px-3 aspect-[1/1] ${!item.email_verified_at && 'bg-red-100 flex items-center rounded text-gray-100'}`}>{index+1}</p>
+                                                    {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                                         className="absolute -top-2 -right-2">
                                                         <path fill={`${item.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
                                                         <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
-                                                    </svg>
+                                                    </svg> */}
+                                                    {!item.email_verified_at && (
+                                                        <MdOutlineUnpublished className='text-lg text-danger absolute -top-1 -right-1' />
+                                                    )}
                                                 </div>
                                             </td>
                                             <td>
@@ -180,11 +185,32 @@ const Index = () => {
                                                 )}
                                                 </div>
                                             </td>
-                                            <td>{item.company_name}</td>
+                                            <td>{item.company_name.length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name}</td>
+                                            <td>
+                                                <div>
+                                                    {
+                                                        item.categories.length === 0 ? (
+                                                            <span className='text-gray-700 text-sm'>No category</span>
+                                                        ):(
+                                                            <ul className='list-styled m-0 p-0' style={{listStyle:'disc'}}>
+                                                                {
+                                                                    item.categories.map((category, index) => (
+                                                                        <li key={index} className='text-left p-0'>
+                                                                            <span className={`text-xs capitalize ${category.is_primary === 1 ? 'bg-primary p-1 rounded text-gray-100':'text-gray-500'} `}>
+                                                                            {category.sub_category.name}
+                                                                            </span>
+                                                                        </li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        )
+                                                    }
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div className='inline-flex items-center'>
                                                     <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
-                                                    <span className='ml-2 text-gray-800'>({item.reviews_count} reviews)</span>
+                                                    <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
                                                 </div>
                                             </td>
                                             <td>

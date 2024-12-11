@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
+use App\Models\User;
+use App\Models\UserProfile;
 use App\Models\Review;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -83,8 +84,6 @@ class UserController extends Controller
         ]);
     }
 
-
-
     public function apiDetail(Request $request, string $id)
     {
         $user = User::where('id', $id)->with('profile')->first();
@@ -139,7 +138,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+
     }
+
     public function userRoles($id)
     {
         $user = User::with('roles')->findOrFail($id);
@@ -173,17 +174,69 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, String $user)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-            'password' => ['nullable', 'string', 'min:8'],
-        ]);
+        $user = User::findOrFail($user);
+        $userProfile = $user->userProfile;
 
-        $user->update($validatedData);
+        $name = $request->input('name');
+        if (
+            $user->name !== $name
+        ) {
+            $user->name = $name;
 
-        return redirect()->route('admin.users.index');
+            $user->save();
+        }
+
+        if (!$userProfile) {
+            $userProfile = new UserProfile();
+            $userProfile->user_id = $user->id;
+        }
+
+        $address = $request->input('address');
+        $phone = $request->input('phone');
+
+        if (
+            $userProfile->address !== $address ||
+            $userProfile->phone !== $phone
+        ) {
+            $existingUserProfile = UserProfile::where('user_id', $user->id)->first();
+
+            if ($existingUserProfile) {
+                $existingUserProfile->address = $address;
+                $existingUserProfile->phone = $phone;
+
+                if ($request->filled('croppedImage')) {
+                    $extension = explode('/', mime_content_type($request->croppedImage))[1];
+                    $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
+                    Storage::disk('public')->put(
+                        'images/profile/' . $imageName,
+                        file_get_contents($request->croppedImage)
+                    );
+                    $existingUserProfile["image"] = $imageName;
+                }
+
+                $existingUserProfile->save();
+            } else {
+                $userProfile->address = $address;
+                $userProfile->phone = $phone;
+
+                if ($request->filled('croppedImage')) {
+                    $extension = explode('/', mime_content_type($request->croppedImage))[1];
+                    $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
+                    Storage::disk('public')->put(
+                        'images/profile/' . $imageName,
+                        file_get_contents($request->croppedImage)
+                    );
+                    $userProfile["image"] = $imageName;
+                }
+
+                $userProfile->save();
+            }
+            return redirect()->route('admin.users.show', $user)->with('status', 'Profile information updated successfully');
+        }
+
+        return redirect()->route('admin.users.show', $user);
     }
 
     public function destroy(User $user)

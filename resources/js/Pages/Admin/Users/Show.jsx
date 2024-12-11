@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm, Link, usePage  } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
@@ -13,8 +13,6 @@ import ImageCropper from "@/Components/ImageCropper";
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
 const Show = ({ user, userProfile, has_reviews }) => {
-    const { props } = usePage();
-    const page = props.page || 1;
     const table_setting = {
         title: 'Reviews',
         url: '/api/admin/users/' + user.id,
@@ -22,59 +20,99 @@ const Show = ({ user, userProfile, has_reviews }) => {
         header_name:'business'
     }
 
+    const [isEdit, setIsEdit] = useState(false);
     const [show, setShow] = useState(false);
     const [image, setImage] = useState(null);
+    const inputRef = useRef(null);
     const previewImageRef = useRef(null);
     const croppedImageRef = useRef(null);
-    const inputRef = useRef(null);
-    const { data, setData, patch, errors } = useForm({
+
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
-        phone: userProfile?.phone || '',
         email: user.email,
+        phone: userProfile?.phone || '',
+        address: userProfile?.address || '',
         croppedImage: userProfile?.image || '',
-        address: userProfile?.address || ''
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        data.croppedImage = croppedImageRef.current.value;
-        patch(route("user_profile.update"), data, { forceFormData: true });
-    };
-
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === "phone" && value.length > 10) {
-            return;
-          }
-        setData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+        const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+        setData('phone', input);
     };
 
     const handleImageChange = (e) => {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            setImage(e.target.result);
-            setShow(true);
-        };
-        reader.readAsDataURL(inputRef.current.files[0]);
+        const file = inputRef.current?.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                setImage(e.target.result);
+                setShow(true);
+            };
+            reader.readAsDataURL(inputRef.current.files[0]);
+        }else{//
+        }
     };
 
     const setCroppedImage = (data) => {
         previewImageRef.current.setAttribute("src", data);
         croppedImageRef.current.setAttribute("value", data);
+        setShow(false);
+        setImage(null);
     };
+
+    const handleCancelCrop = () => {
+        inputRef.current.value = '';
+        setShow(false);
+        setImage(null);
+    }
 
     const handleBack = (e) => {
         e.preventDefault();
-        // Navigate back if possible, otherwise go to the fallback route
+
         if (window.history.length > 1) {
             window.history.back();
         } else {
             Inertia.visit(fallbackRoute);
         }
     };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+
+        setData({
+            name: user.name,
+            email: user.email,
+            croppedImage: userProfile?.image || '',
+            phone: userProfile?.phone || '',
+            address: userProfile?.address || ''
+        })
+        previewImageRef.current.setAttribute("src", userProfile?.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg);
+        setIsEdit(false)
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        data.croppedImage = croppedImageRef.current.value;
+        patch(route("admin.users.update", user.id), data, {
+            forceFormData: true,
+        });
+    };
+
+    // Reset form after successful update
+    useEffect(() => {
+        if (recentlySuccessful) {
+            setIsEdit(false)
+            if (inputRef.current) {
+                inputRef.current.value = null;
+            }
+
+            // Reset the cropped image reference
+            if (croppedImageRef.current) {
+                croppedImageRef.current = null;
+            }
+        }
+    }, [recentlySuccessful]);
 
     return (
         <>
@@ -88,9 +126,13 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                 </div>
 
                                 <div className='space-x-2'>
-                                    <button onClick={handleBack} className="btn btn-success" type="button">
-                                        Edit
-                                    </button>
+                                    {
+                                        !isEdit && (
+                                            <button onClick={()=>setIsEdit(true)} className={`btn btn-success`} type="button">
+                                                Edit User
+                                            </button>
+                                        )
+                                    }
                                     <Link href={route('admin.dashboard')} onClick={handleBack} className="btn btn-primary" type="button">
                                         Back
                                     </Link>
@@ -119,8 +161,7 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                                 value={data.name}
                                                 onChange={(e) => setData('name', e.target.value)}
                                                 required
-                                                disabled
-                                                isFocused
+                                                disabled={!isEdit}
                                                 autoComplete="name"
                                             />
 
@@ -134,18 +175,39 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                                 id="email"
                                                 type="email"
                                                 className="mt-1 block w-full bg-gray-100"
-                                                value={data.email}
-                                                onChange={(e) => setData('email', e.target.value)}
-                                                required
+                                                value={user.email}
                                                 disabled
-                                                autoComplete="username"
                                             />
-
-                                            <InputError className="mt-2" message={errors.email} />
                                         </div>
                                     </div>
                                     <div className="col-lg-6 space-y-5">
                                         <h5 className="card-title">User Profile</h5>
+
+                                        {
+                                            isEdit && (
+                                                <div>
+                                                    <label className="pb-2 fw-medium">
+                                                        Upload Image
+                                                    </label>
+                                                    <input
+                                                        ref={inputRef}
+                                                        className="form-control"
+                                                        id="image-file"
+                                                        name="image"
+                                                        type="file"
+                                                        aria-label="file example"
+                                                        onChange={handleImageChange}
+                                                    />
+                                                    <input
+                                                        type="hidden"
+                                                        ref={croppedImageRef}
+                                                        name="croppedImage"
+                                                    />
+                                                </div>
+
+                                            )
+                                        }
+
                                         <img
                                             ref={previewImageRef}
                                             className=""
@@ -153,12 +215,6 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                             alt="preview image"
                                             width="128"
                                             height="128"
-                                        />
-
-                                        <input
-                                            type="hidden"
-                                            ref={croppedImageRef}
-                                            name="croppedImage"
                                         />
 
                                         <div>
@@ -170,9 +226,7 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                                 className="mt-1 block w-full"
                                                 value={data.phone}
                                                 onChange={handleInputChange}
-                                                // required
-                                                disabled
-                                                // isFocused
+                                                disabled={!isEdit}
                                                 autoComplete="phone"
                                                 maxLength={12}
                                             />
@@ -185,7 +239,7 @@ const Show = ({ user, userProfile, has_reviews }) => {
 
                                             <TextInput
                                                 id="address"
-                                                disabled
+                                                disabled={!isEdit}
                                                 name="address"
                                                 className="mt-1 block w-full"
                                                 value={data.address}
@@ -195,35 +249,28 @@ const Show = ({ user, userProfile, has_reviews }) => {
 
                                             <InputError className="mt-2" message={errors.address} />
                                         </div>
-                                        {/* <div className="row">
-                                            <div className="col">
-                                                <div className="mb-3">
-                                                    <label className="pb-2 fw-medium">
-                                                        Upload Profile Image
-                                                    </label>
-                                                    <input
-                                                        ref={inputRef}
-                                                        className="form-control"
-                                                        id="image-file"
-                                                        name="image"
-                                                        type="file"
-                                                        aria-label="file example"
-                                                        onChange={handleImageChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </div>
 
-                                {/* <button type="submit" className="update_btn">
-                                    Update
-                                </button> */}
+                                {
+                                    isEdit && (
+                                        <div className='mt-3'>
+                                            <button type="submit" className="btn btn-danger">
+                                                Change
+                                            </button>
+                                            <button onClick={handleCancel} className="ml-3 btn btn-success">
+                                                Cancel
+                                            </button>
+                                        </div>
+
+                                    )
+                                }
                             </form>
                             {show && (
                                 <ImageCropper
                                     image={image}
                                     setCroppedImage={setCroppedImage}
+                                    onClose={handleCancelCrop}
                                     aspectRatio={1}
                                 />
                             )}

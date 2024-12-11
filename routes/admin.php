@@ -111,6 +111,7 @@ Route::group([
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
+    Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
 
@@ -121,7 +122,7 @@ Route::group([
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
