@@ -38,7 +38,7 @@ const CategoryEdit = ({ category, onClose }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        post(route('admin.categories.update', category.id), {
+        post(route('admin.categories.update', blog.id), {
             onSuccess: () => {
                 // onClose();
             },

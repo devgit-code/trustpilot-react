@@ -114,6 +114,7 @@ Route::group([
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
+    Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');

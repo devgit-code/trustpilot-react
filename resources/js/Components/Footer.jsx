@@ -27,19 +27,19 @@ const Footer = () => {
                                 <h6 className="text-lg-start text-center text-lg fw-bold text-zinc-400">About</h6>
                                 <ul className="list-unstyled">
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > About us</Link>
+                                        <Link href={route('blogs.index')} className="no-underline text-white hover:underline" > About us</Link>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Jobs</Link>
+                                        <p className="no-underline text-white hover:underline" > Jobs</p>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Contact</Link>
+                                        <p className="no-underline text-white hover:underline" > Contact</p>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Blog</Link>
+                                        <p className="no-underline text-white hover:underline" > Blog</p>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > How Trustpilot works</Link>
+                                        <p className="no-underline text-white hover:underline" > How Trustpilot works</p>
                                     </li>
                                 </ul>
                             </div>
@@ -50,30 +50,27 @@ const Footer = () => {
                                         <Link href="#" className="no-underline text-white hover:underline" > Trust in reviews</Link>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Help center</Link>
+                                        <p className="no-underline text-white hover:underline" > Help center</p>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Login</Link>
+                                        <p className="no-underline text-white hover:underline" > Login</p>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Sign up</Link>
+                                        <p className="no-underline text-white hover:underline" > Sign up</p>
                                     </li>
                                 </ul>
                             </div>
                             <div className="col-lg-3">
-                                <h6 className="text-lg-start text-center text-lg fw-bold text-zinc-400">Businesses</h6>
+                                <h6 className="text-lg-start text-center text-lg fw-bold text-zinc-400">For Business</h6>
                                 <ul className="list-unstyled">
+                                    <li className="text-lg-start text-sm text-center py-3">
+                                        <Link href={route('admin.login')} className="no-underline text-white hover:underline" >Login Business</Link>
+                                    </li>
                                     <li className="text-lg-start text-sm text-center py-3">
                                         <Link href={route('admin.register')} className="no-underline text-white hover:underline" >Register Business</Link>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Products</Link>
-                                    </li>
-                                    <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Plans & pricing</Link>
-                                    </li>
-                                    <li className="text-lg-start text-sm text-center py-3">
-                                        <Link href="#" className="no-underline text-white hover:underline" > Blog for business</Link>
+                                        <Link className="no-underline text-white hover:underline" > Claim Business</Link>
                                     </li>
                                 </ul>
                             </div>
@@ -89,10 +86,10 @@ const Footer = () => {
                     </div>
                     <div className="py-5 text-md">
                         <Link href="#" className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white pr-4 hover:underline" > Legal</Link>
-                        <Link href="#" className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Privacy policy</Link>
-                        <Link href="#" className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Terms & conditions</Link>
-                        <Link href="#" className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Guidelines for reviewers</Link>
-                        <Link href="#" className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Cookie preference</Link>
+                        <p className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Privacy policy</p>
+                        <p className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Terms & conditions</p>
+                        <p className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Guidelines for reviewers</p>
+                        <p className="sm:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" > Cookie preference</p>
                     </div>
 
                 </Container>

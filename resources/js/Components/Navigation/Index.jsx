@@ -24,7 +24,7 @@ export default function Navigation({auth}) {
                         <div className="list-unstyled sm:hidden block">
                             <Link href={route('reviews.write')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Write a review</Link>
                             <Link href={route('categories.index')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Categories</Link>
-                            <Link href={route('aboutus')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Blog</Link>
+                            <Link href={route('blogs.index')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Blog</Link>
                             <hr className="hr text-white" />
                             {auth && auth.user ? (
                                 <>
@@ -46,7 +46,7 @@ export default function Navigation({auth}) {
                         <div className="flex h-full">
                             <NavLink href={route('reviews.write')} active={route().current('reviews.write')} className="butn" > Write a review </NavLink>
                             <NavLink href={route('categories.index')} active={route().current('categories.index')} className="butn" > Categories </NavLink>
-                            <NavLink href={route('aboutus')} active={route().current('aboutus')} className="butn" > About us </NavLink>
+                            <NavLink href={route('blogs.index')} active={route().current('blogs.index')} className="butn" > About us </NavLink>
                         </div>
                         {auth && auth.user ? (
                             <>

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WebReviewController;
+use App\Http\Controllers\BlogController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -72,25 +73,8 @@ Route::group([
         ->name('reviews.detail');
 
     // blogs
-    Route::get('/aboutus', function(){
-        return Inertia::render('About/Index');
-    })->name('aboutus');
-
-    Route::get('/aboutus/trends-in-trust', function(){
-        return Inertia::render('About/BlogCategory', [
-            'title' => "Trends in Trust"
-        ]);
-    })->name('aboutus.trends');
-
-    Route::get('/aboutus/reviews-matter', function(){
-        return Inertia::render('About/BlogCategory' ,[
-            'title' => "Reviews Matter"
-        ]);
-    })->name('aboutus.reviews');
-
-    Route::get('/aboutus/{detail}', function(){
-        return Inertia::render('About/Detail');
-    })->name('aboutus.detail');
+    Route::get('/aboutus', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/aboutus/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 });
 
 

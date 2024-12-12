@@ -1,21 +1,28 @@
 import React from "react";
+import { Head, Link } from '@inertiajs/react';
+
+import moment from 'moment';
 import Rating from '@/Components/Ratings';
 
-function BlogCard({ title, name, date}) {
+function BlogCard({ id, title, image, created_at}) {
     return (
-        <div className="bg-white rounded-lg mx-3 p-2 mb-3" style={{minWidth: '280px'}}>
-            <a href="/aboutus/detail" className="no-underline">
-                <img src="/storage/images/blog/donating-unwanted-items.webp" alt={name} className="w-full aspect-[1/1] object-cover" />
-            </a>
-            <div className="mt-3">
-                <a href={'/aboutus/' + title.toLowerCase().replace(/\s+/g, '-')} className="no-underline text-blue-500 font-bold text-sm">
-                {title}
-                </a>
+        <div className="bg-white rounded-lg mx-3 p-2 mb-3" style={{minWidth: '240px'}}>
+            <div className="min-h-[80px]">
+                <Link href={route('blogs.show', id)} className="no-underline text-blue-500 text-2xl font-extrabold ">
+                    {title.length > 30 ? `${title.slice(0, 30)}...` : title}
+                </Link>
             </div>
-            <div className="py-3">
-                <a href="/aboutus/detail" className="no-underline mt-2 text-black text-2xl font-bold">{name}</a>
+            <div className="h-[240px]">
+                <Link href={route('blogs.show', id)} className="no-underline">
+                    <img src={`/storage/${image}`}
+                        alt="blog-logo"
+                        className='w-full aspect-[1/1] object-cover'
+                        // style={{ maxWidth: '128px', maxHeight: '128px' }}
+                    />
+                    {/* <img src="/storage/images/blog/donating-unwanted-items.webp" alt={name} className="w-full aspect-[1/1] object-cover" /> */}
+                </Link>
             </div>
-            <p className="text-gray-700 text-xs">{date}</p>
+            <p className="mt-3 mr-2 text-gray-700 text-base text-right">{moment(created_at).format('M/DD, Y')}</p>
         </div>
     );
 }

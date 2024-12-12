@@ -8,13 +8,13 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import BlogEditor from './BlogEditor';
 
-const Create = ({ }) => {
+const Edit = ({ blog }) => {
     const [preview, setPreview] = useState(null); // Preview URL
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         image:null,
-        title: '',
-        content: '',
+        title: blog.title || '',
+        content: blog.content || '',
     });
 
     // Handle file input change
@@ -38,7 +38,7 @@ const Create = ({ }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        post(route('admin.blogs.store'), {
+        post(route('admin.blogs.update', blog.id), {
             onSuccess: () => {
                 // onClose();
             },
@@ -52,7 +52,7 @@ const Create = ({ }) => {
                 <div className="col-lg-8 card p-3 ">
                     <div className='flex items-center justify-between'>
                         <div>
-                            <h4>Write Blog</h4>
+                            <h4>Edit Blog</h4>
                         </div>
 
                         <Link href={route('admin.blogs.index')} className="btn btn-primary">
@@ -95,11 +95,16 @@ const Create = ({ }) => {
                         </div>
 
                         <div className='mt-2 min-h-[128px]'>
-                            {preview && (
+                            {preview ? (
                                 <>
                                    <p className='text-gray-700'>Preview:</p>
                                    <img src={preview} alt="Image Preview" style={{ maxWidth: '128px', maxHeight: '128px' }} />
                                 </>
+                            ):(
+                                <img src={`/storage/${blog.image}`}
+                                    alt="blog-symbol"
+                                    className='inline'
+                                    style={{ maxWidth: '128px', maxHeight: '128px' }} />
                             )}
                         </div>
 
@@ -119,11 +124,12 @@ const Create = ({ }) => {
                             <InputError className="mt-2" message={errors.content} />
                         </div>
 
-
                         {/* <BlogEditor /> */}
 
+
+
                         <PrimaryButton className="mt-3 ml-2 bg-success" disabled={processing}>
-                            Save
+                            Update
                         </PrimaryButton>
                     </form>
 
@@ -133,6 +139,6 @@ const Create = ({ }) => {
     );
 };
 
-export default Create;
+export default Edit;
 
-Create.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;
+Edit.layout = (Page) => <AdminLayout>{Page}</AdminLayout>;
