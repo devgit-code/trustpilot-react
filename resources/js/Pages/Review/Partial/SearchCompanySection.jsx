@@ -1,13 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link, usePage,} from '@inertiajs/react';
+
 import { IoSearchOutline, IoClose } from "react-icons/io5";
 import { BsDot } from "react-icons/bs";
 
+import company_logo from "@/../images/company-logo.png"
+import AddCompanyModal from './AddCompanyModal';
 import RatingAverage from '@/Components/RatingAverage';
 import RatingTotal from '@/Components/RatingTotal';
-import company_logo from "@/../images/company-logo.png"
 
 function SearchSection() {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(!open);
+
     const [filters, setFilters] = useState({query:""});
     const [results, setResults] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -95,10 +100,10 @@ function SearchSection() {
                                             <p className="text-md text-gray-800 mb-0">It might not be listed on Trustpilot yet. Add it and be the first to write a review.</p>
                                         </div>
 
-                                        <Link href="#"
-                                            className="no-underline text-blue-500 text-sm font-bold border-1 border-blue-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-blue-200 hover:text-gray-800">
+                                        <button onClick={handleOpen}
+                                            className="no-underline text-gray-200 text-sm font-bold bg-blue-500 border-1 border-blue-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-blue-300 hover:text-gray-800">
                                             Add Company
-                                        </Link>
+                                        </button>
                                     </div>
                                 </li>
                             ):(
@@ -150,6 +155,12 @@ function SearchSection() {
                     )}
                 </div>
             </div>
+
+
+            <AddCompanyModal
+                show={open}
+                onHide={handleOpen}
+            />
         </div>
     );
 }

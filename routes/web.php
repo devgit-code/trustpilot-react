@@ -42,6 +42,9 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
+    Route::post('/company', [HomeController::class, 'store'])
+        ->name('company.add');
+
     Route::get('/search', [HomeController::class, 'search'])
         ->name('search');
 

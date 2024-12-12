@@ -66,9 +66,13 @@ export default function Show({ blog, other_blogs }) {
                     <div className='mt-5 mb-3 mx-auto md:w-[80%]'>
                         <div className='flex items-center justify-between'>
                             <h2 className="text-3xl font-bold mt-3">Read more articles</h2>
-                            <Link href={route('blogs.index')} className='no-underline text-lg font-bold hover:underline '>
-                                See all
+
+                            <Link href={route('blogs.index')} className="no-underline inline px-4 py-2 ml-4 bg-blue-500 border border-blue-500 text-sm text-bold text-white rounded-full hover:bg-blue-400">
+                            See all
                             </Link>
+                            {/* <Link href={route('blogs.index')} className='no-underline text-lg font-bold hover:underline '>
+                                See all
+                            </Link> */}
                         </div>
 
                         <div className="relative flex items-center mt-3">

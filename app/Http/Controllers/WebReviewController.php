@@ -138,7 +138,7 @@ class WebReviewController extends Controller
             ]
         ];
 
-        $recent_businesses = Business::latest()->take(3)->get();
+        $recent_businesses = Business::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
         $recent_businesses = $recent_businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);

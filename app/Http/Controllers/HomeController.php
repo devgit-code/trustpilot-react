@@ -103,4 +103,15 @@ class HomeController extends Controller
     {
 
     }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'website' => ['required', 'string', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $business = Business::create($validatedData);
+        return redirect()->route('reviews.company', $business->id);
+    }
 }

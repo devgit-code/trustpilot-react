@@ -8,7 +8,7 @@ const BlogList = ({ blogs}) => {
         <div className="container-md bg-white">
             {/* Title */}
             <div className="relative flex justify-between gap-2">
-                <h2 className="text-center text-3xl font-bold my-2">Take your 3 minutes to read!</h2>
+                <h2 className="text-center text-3xl font-bold my-2">Take only 3 minutes to read!</h2>
             </div>
 
             <div className="relative flex items-center pt-3">
