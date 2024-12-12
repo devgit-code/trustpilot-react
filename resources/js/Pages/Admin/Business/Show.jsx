@@ -303,9 +303,10 @@ const Show = ({ business, has_reviews, trustscore }) => {
                                                 </div>
                                             ):(
                                                 <div>
-                                                    <p className='text-gray-700'>{business.profile?.logo ? 'Company Logo' : 'No Business logo'}</p>
+                                                    <p className='text-gray-700'>{business.profile?.logo ? '' : 'No Business logo'}</p>
                                                     <img src={business.profile?.logo ? `/storage/images/logo/${business.profile.logo}` : profileNotLogo}
                                                         alt="Business-logo"
+                                                        className='border'
                                                         style={{ maxWidth: '200px', maxHeight: '200px' }} />
                                                 </div>
                                             )}

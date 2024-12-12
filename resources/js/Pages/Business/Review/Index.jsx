@@ -14,9 +14,11 @@ const Index = () => {
 
     return (
         <div className='content-wrapper m-3'>
-            <div className="row m-1">
-                <div className="col-sm-12 card p-3">
-                    <ReviewTable setting={setting}/>
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className=' card p-3'>
+                        <ReviewTable setting={setting}/>
+                    </div>
                 </div>
             </div>
         </div>

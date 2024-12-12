@@ -23,53 +23,56 @@ const Create = () => {
     };
 
     return (
-        <div className="m-3 content-wrapper">
-            <div className="col-lg-12">
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">Create Product</h4>
-                        <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
-                            <div>
-                                <InputLabel htmlFor="name" value="Name" />
+        <div className="content-wrapper m-4">
+            <div className="row justify-center">
+                <div className="col-lg-10">
+                    <div className="card">
+                        <div className="card-body">
 
-                                <TextInput
-                                    id="name"
-                                    name="name"
-                                    className="mt-1 block w-full"
-                                    value={data.name}
-                                    onChange={(e)=>setData('name', e.target.value)}
-                                    // required
-                                    isFocused
-                                    autoComplete="name"
-                                />
+                            <h4 className="card-title">Create Product</h4>
+                            <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
+                                <div>
+                                    <InputLabel htmlFor="name" value="Name" />
 
-                                <InputError className="mt-2" message={errors.name} />
-                            </div>
+                                    <TextInput
+                                        id="name"
+                                        name="name"
+                                        className="mt-1 block w-full"
+                                        value={data.name}
+                                        onChange={(e)=>setData('name', e.target.value)}
+                                        // required
+                                        isFocused
+                                        autoComplete="name"
+                                    />
 
-                            <div>
-                                <InputLabel htmlFor="description" value="Description" />
+                                    <InputError className="mt-2" message={errors.name} />
+                                </div>
 
-                                <TextInput
-                                    id="description"
-                                    name="description"
-                                    className="mt-1 block w-full"
-                                    value={data.description}
-                                    onChange={(e)=>setData('description', e.target.value)}
-                                    // required
-                                />
+                                <div>
+                                    <InputLabel htmlFor="description" value="Description" />
 
-                                <InputError className="mt-2" message={errors.description} />
-                            </div>
+                                    <TextInput
+                                        id="description"
+                                        name="description"
+                                        className="mt-1 block w-full"
+                                        value={data.description}
+                                        onChange={(e)=>setData('description', e.target.value)}
+                                        // required
+                                    />
 
-                            <div>
-                                <button type="submit" className="btn btn-primary m-2" disabled={processing}>
-                                    Create
-                                </button>
-                                <a href={route('business.products.index')} className="btn btn-danger" type="button">
-                                    Back
-                                </a>
-                            </div>
-                        </form>
+                                    <InputError className="mt-2" message={errors.description} />
+                                </div>
+
+                                <div>
+                                    <button type="submit" className="btn btn-primary m-2" disabled={processing}>
+                                        Create
+                                    </button>
+                                    <a href={route('business.products.index')} className="btn btn-danger" type="button">
+                                        Back
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

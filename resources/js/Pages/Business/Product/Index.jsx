@@ -29,7 +29,7 @@ const Index = ({products}) => {
         <div className='content-wrapper m-3'>
 
             <div className="row">
-                <div className="col-sm-12">
+                <div className="col-lg-12">
                     <div className="card">
                         <div className="m-3 row align-items-center">
                             <div className="col-lg-6 col-md-12">

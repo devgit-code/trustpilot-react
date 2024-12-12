@@ -52,7 +52,7 @@ export default function ReviewCard({ review }) {
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>
                     <button className='flex items-center text-gray-400'><FaRegThumbsUp className='inline mr-2'/>Useful</button>
-                    <button className='flex items-center text-gray-400'><FaShareAlt className='inline mr-2'/>Share</button>
+                    {/* <button className='flex items-center text-gray-400'><FaShareAlt className='inline mr-2'/>Share</button> */}
                 </div>
 
                 <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
