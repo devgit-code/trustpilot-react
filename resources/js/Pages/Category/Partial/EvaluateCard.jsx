@@ -4,12 +4,16 @@ import { Link, usePage, } from '@inertiajs/react';
 import company_logo from "@/../images/company-logo.png"
 import Rating from '@/Components/Ratings';
 
-function EvaluateCard({ id, website, name, trustscore, count_reviews, email_verified_at, logo}) {
+function EvaluateCard({ id, website, company_name, trustscore, count_reviews, email_verified_at, logo}) {
     return (
         <Link href={route('reviews.evaluate', id)} className="no-underline">
             <div className="bg-white rounded-lg p-4 mx-3 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '240px'}}>
-                <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                    <img src={logo ? `/storage/images/logo/${logo}` : company_logo} alt={name} className="max-w-20 max-h-20 object-cover rounded" />
+                <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
+                    <img
+                        src={logo ? `/storage/images/logo/${logo}` : company_logo}
+                        alt={name}
+                        className="max-w-19 max-h-19 object-cover rounded"
+                        style={{ maxWidth: '76px', maxHeight: '76px' }}/>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                         className="absolute -top-2 -right-2">
                         <path fill={`${email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
@@ -17,7 +21,7 @@ function EvaluateCard({ id, website, name, trustscore, count_reviews, email_veri
                     </svg>
                 </div>
 
-                <h3 className="mt-2 text-black text-lg font-semibold mb-0">{name}</h3>
+                <h3 className="mt-2 text-black text-lg font-semibold mb-0 h-[56px]">{company_name.length > 40 ? `${company_name.slice(0, 40)}...` : company_name}</h3>
                 <p className="text-sm text-gray-500 mb-1">
                     {website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}
                 </p>

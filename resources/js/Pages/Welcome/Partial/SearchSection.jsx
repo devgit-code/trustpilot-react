@@ -146,7 +146,7 @@ function SearchSection() {
                                                                         <img
                                                                             src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
                                                                             alt={company.name}
-                                                                            className="w-12 object-cover rounded" />
+                                                                            className="max-w-11 max-h-11 object-cover rounded" />
                                                                     </div>
 
                                                                     <div className='ml-3 flex flex-col justify-start'>

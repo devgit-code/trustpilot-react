@@ -191,7 +191,7 @@ const Index = () => {
                                         <tr key={user.id}>
                                             <td data-label="No">{index + 1}</td>
                                             <td data-label="flex justify-center">
-                                                <div className='relative inline-flex items-center' style={{height: '64px'}}>
+                                                <div className='relative inline-flex items-center' style={{height: '68px'}}>
                                                     <img
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }}

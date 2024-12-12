@@ -21,7 +21,7 @@ export default function CompanyRelated({companies}) {
                     companies.map((company, index) => (
                         <li className="flex" key={index}>
                             <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                <img src={company.profile?.logo ? `/storage/images/logo/${company.profile.logo}` : company_logo} alt={company.company_name} className="max-w-18 max-h-18 object-cover" />
+                                <img src={company.profile?.logo ? `/storage/images/logo/${company.profile.logo}` : company_logo} alt={company.company_name} className="max-w-19 max-h-19 object-cover" />
                             </div>
                             <div className="ml-3">
                                 <Link href={route('reviews.company', company.id)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>

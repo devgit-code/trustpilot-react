@@ -46,7 +46,11 @@ export default function Header({company_name, company_email, profile, primary_bu
                     <div className="p-2">
                         <div className='flex gap-16'>
                             <div className="hidden sm:inline-flex items-center justify-center w-36 h-36 border rounded">
-                                <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="max-w-36 max-h-36 object-cover" />
+                                <img
+                                    src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo}
+                                    alt={company_name}
+                                    className="object-cover"
+                                    style={{ maxWidth: '150px', maxHeight: '150px' }} />
                             </div>
                             <div className="mt-2 flex-1">
                                 <p className='text-3xl text-gray-800 font-black mb-0'>{company_name}</p>

@@ -55,7 +55,7 @@ const CategoryGridItems = ({ categories }) => {
                     }
                     {categories.map((category, index) => (
                         <div key={index} className="flex flex-shrink-0 flex-col items-center group justify-center pr-4 text-center hover:cursor-pointer">
-                            <div className="flex items-center justify-center w-6 h-6">
+                            <div className="flex items-center justify-center w-7 h-7">
                                 <img src={`/storage/${category.image}`}
                                     alt="category-logo"
                                     className='inline max-w-6 max-h-6'

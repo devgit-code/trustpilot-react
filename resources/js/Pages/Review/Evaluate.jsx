@@ -88,7 +88,11 @@ export default function Evaluate({ company }) {
                         <div className='max-w-screen-sm w-full flex items-center'>
                             <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
                                 <Link href={route('reviews.company', company.id)}>
-                                    <img src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo} alt={company.name} className="max-w-20 max-h-20 object-cover rounded" />
+                                    <img
+                                        src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
+                                        alt={company.name}
+                                        className="object-cover rounded"
+                                        style={{ maxWidth: '80px', maxHeight: '80px' }}/>
                                 </Link>
                             </div>
                             <div className='ml-5'>

@@ -166,7 +166,7 @@ const Index = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className='inline-flex justify-center items-center border' style={{height: '64px', width: '64px'}}>
+                                                <div className='inline-flex justify-center items-center border' style={{height: '68px', width: '68px'}}>
                                                 {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"

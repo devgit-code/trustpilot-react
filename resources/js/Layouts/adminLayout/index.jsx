@@ -16,10 +16,10 @@ const AdminLayout = ({ children }) => {
                 <meta name="csrf-token" content="{{ csrf_token() }}" />
             </Head>
             {/* Bootstrap icons */}
-            <link
+            {/* <link
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-            />
+            /> */}
 
             <div id="main">
                 <Sidebar auth={auth}/>

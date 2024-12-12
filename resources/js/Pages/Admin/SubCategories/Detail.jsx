@@ -72,7 +72,7 @@ const Index = ({ subCategory }) => {
                                                         <td>
                                                         {business.logo ? (
                                                             <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                                                <img src={`/storage/images/logo/${business.logo}`} alt={business.company_name} className="max-w-20 max-h-20 object-cover rounded" />
+                                                                <img src={`/storage/images/logo/${business.logo}`} alt={business.company_name} className="max-w-19 max-h-19 object-cover rounded" />
                                                             </div>
                                                         ):(
                                                             <>No image</>

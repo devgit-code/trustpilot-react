@@ -23,7 +23,11 @@ export default function CompanyItem({index, company}){
             <Link href={route('reviews.company', company.id)} className='no-underline'>
                 <div className="flex p-3 gap-4">
                     <div className="inline-flex items-center w-20 h-20">
-                        <img src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo} alt={company.company_name} className="w-20 object-cover" />
+                        <img
+                            src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
+                            alt={company.company_name}
+                            className="object-cover"
+                            style={{ maxWidth: '80px', maxHeight: '80px' }} />
                     </div>
                     <div className=''>
                         <h3 className="text-lg text-black font-semibold m-0">{company.company_name}</h3>
