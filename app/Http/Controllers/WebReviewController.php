@@ -191,15 +191,20 @@ class WebReviewController extends Controller
         $user = auth()->user()->id;
 
         if($user == $review->user_id)
-            return redirect()->back()->withFlash('message', 'same-user-error');
+        {
+            session()->flash('warning', 'This review is written by you.');
+            return redirect()->back();
+        }
 
         $status = ReviewThumb::where('review_id', $review->id)
             ->where('thumb', true)
             ->where('user_id', $user)
             ->first();
 
-        if($status)
-            return redirect()->back()->withFlash('message', 'already-user-error');
+        if($status){
+            session()->flash('warning', 'You already reported this review');
+            return redirect()->back();
+        }
 
         $creationData = [
             "review_id" => $review->id,
@@ -216,7 +221,7 @@ class WebReviewController extends Controller
         $user = auth()->user()->id;
 
         if($user == $review->user_id){
-            session()->flash('message', 'Cannot from Same user');
+            session()->flash('warning', 'This review is written by you.');
             return redirect()->back();
         }
 
@@ -226,7 +231,7 @@ class WebReviewController extends Controller
             ->first();
 
         if($status){
-            session()->flash('message', 'You already did this');
+            session()->flash('message', 'You already flagged this review');
             return redirect()->back();
         }
 

@@ -64,8 +64,8 @@ function SearchSection() {
     }, [filters]);
 
     const handleClickSearch = () => {
-        if(filters.query)
-            window.location.replace('/search?query=' + filters.query)
+        // if(filters.query)
+        //     window.location.replace('/search?query=' + filters.query)
     }
 
     return (

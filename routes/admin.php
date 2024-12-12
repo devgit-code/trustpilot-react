@@ -29,7 +29,7 @@ use App\Http\Controllers\Admin\BlogController;
 // admin auth
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['user-guest', 'business.guest'],
+    'middleware' => ['business.guest'],
     'as' => 'admin.'
 ], function () {
 
