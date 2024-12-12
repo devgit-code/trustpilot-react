@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 
 import moment from 'moment'
 import UserAvatar from '@/Components/UserAvatar';
@@ -51,11 +51,21 @@ export default function ReviewCard({ review }) {
             </div>
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>
-                    <button className='flex items-center text-gray-400'><FaRegThumbsUp className='inline mr-2'/>Useful</button>
+                    <Link
+                        href={route('reviews.review.thumbup', review.id)}
+                        method="post"
+                        as="button"
+                        className="flex items-center text-gray-600"
+                    ><FaRegThumbsUp className='inline mr-2'/>Useful</Link>
                     {/* <button className='flex items-center text-gray-400'><FaShareAlt className='inline mr-2'/>Share</button> */}
                 </div>
 
-                <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
+                <Link
+                    href={route('reviews.review.thumbdown', review.id)}
+                    method="post"
+                    as="button"
+                    className="flex items-center text-gray-600"
+                ><FaFlag className='inline italic'/></Link>
             </div>
             {
                 review.reply?.comment.length && (

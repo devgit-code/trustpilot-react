@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Review;
+use App\Models\ReviewThumb;
 use App\Models\Business;
 use App\Models\User;
 use Inertia\Inertia;
@@ -183,5 +184,59 @@ class WebReviewController extends Controller
     public function update(Request $request)
     {
 
+    }
+
+    public function thumbup(Request $request, Review $review)
+    {
+        $user = auth()->user()->id;
+
+        if($user == $review->user_id)
+            return redirect()->back()->withFlash('message', 'same-user-error');
+
+        $status = ReviewThumb::where('review_id', $review->id)
+            ->where('thumb', true)
+            ->where('user_id', $user)
+            ->first();
+
+        if($status)
+            return redirect()->back()->withFlash('message', 'already-user-error');
+
+        $creationData = [
+            "review_id" => $review->id,
+            "user_id" => $user,
+            "thumb" => true,
+        ];
+
+        ReviewThumb::create($creationData);
+        return redirect()->back()->with('status', 'success');
+    }
+
+    public function thumbdown(Request $request, Review $review)
+    {
+        $user = auth()->user()->id;
+
+        if($user == $review->user_id){
+            session()->flash('message', 'Cannot from Same user');
+            return redirect()->back();
+        }
+
+        $status = ReviewThumb::where('review_id', $review->id)
+            ->where('thumb', false)
+            ->where('user_id', $user)
+            ->first();
+
+        if($status){
+            session()->flash('message', 'You already did this');
+            return redirect()->back();
+        }
+
+        $creationData = [
+            "review_id" => $review->id,
+            "user_id" => $user,
+            "thumb" => false,
+        ];
+
+        ReviewThumb::create($creationData);
+        return redirect()->back()->with('status', 'success');
     }
 }

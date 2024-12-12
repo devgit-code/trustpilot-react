@@ -63,8 +63,8 @@ const Show = ({ review, userTotalReviews, count_reviews, trustscore }) => {
                                 {/* <FaRegThumbsUp  className='inline mr-1'/> */}
                                 Useful ({review.useful})
                             </span>
-                            <span className={`badge ${review.status === 0 ? 'bg-success' : 'bg-danger'}`}>
-                                {review.status === 0 ? 'normal' : 'flagged'}
+                            <span className={`badge ${review.flag === 0 ? 'bg-success' : 'bg-danger'}`}>
+                                {review.flag === 0 ? 'normal' : 'flag'} ({review.flag})
                             </span>
                         </div>
                         <div className='p-4 bg-white border rounded mt-2'>

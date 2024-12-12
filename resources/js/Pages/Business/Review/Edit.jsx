@@ -9,7 +9,7 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import Alert from '@/Components/Alert';
 
-const Edit = ({ review, userTotalReviews, status }) => {
+const Edit = ({ review, userTotalReviews, status, useful, flag }) => {
     const { data, setData, put, errors } = useForm({
         reply: review.reply?.comment || '',
     })
@@ -55,8 +55,8 @@ const Edit = ({ review, userTotalReviews, status }) => {
                             </div>
 
                             <div className='py-2 flex items-center justify-between'>
-                                <p className='mb-0 text-base text-gray-700'>Useful ({'12'})</p>
-                                <p className='mb-0 text-base text-gray-700'>Flags ({'12'})</p>
+                                <p className='mb-0 text-base text-gray-700'>Useful ({useful})</p>
+                                <p className='mb-0 text-base text-gray-700'>Flags ({flag})</p>
                             </div>
                         </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Business;
 use App\Http\Controllers\Controller;
 use App\Models\Reply;
 use App\Models\Review;
+use App\Models\ReviewThumb;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -111,10 +112,14 @@ class ReviewController extends Controller
         $review = Review::with(['user', 'user.profile', 'reply'])->findOrFail($id);
 
         $userTotalReviews = Review::where('user_id', $review->user_id)->count();
+        $useful = ReviewThumb::where('review_id', $review->id)->where('thumb', true)->count();
+        $flag = ReviewThumb::where('review_id', $review->id)->where('thumb', false)->count();
 
         return Inertia::render('Business/Review/Edit', [
             'review' => $review,
             'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
+            'useful' => $useful, // Pass total count to the frontend
+            'flag' => $flag, // Pass total count to the frontend
         ])->with('status', session('status'));
     }
 

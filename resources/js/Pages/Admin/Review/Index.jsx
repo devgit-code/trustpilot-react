@@ -7,7 +7,7 @@ import Rating from '@/Components/RatingAverage';
 import AdminLayout from '@/Layouts/adminLayout';
 import { BsTrashFill, BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
 import { CgMenuBoxed } from "react-icons/cg";
-import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 
 const Index = () => {
     const [filters, setFilters] = useState({ sort_by_date: "desc", rating: "", search:"", page:1 });
@@ -212,15 +212,17 @@ const Index = () => {
                                                 <td>{item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}</td>
                                                 <td>{item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name}</td>
                                                 <td className='capitalize'>{item.user.name.length > 12 ? `${item.user.name.slice(0, 12)}...` : item.user.name}</td>
-                                                <td>{moment(item.date_experience).format("M/DD, YYYY")}</td>
+                                                <td>{moment(item.date_experience).format("M/DD, y")}</td>
                                                 <td>
                                                     <div className='flex items-center'>
                                                         <div className='inline-flex items-center'>
                                                             <Rating className="inline-flex px-2" width="w-5" height="w-5" rating={item.rating}/>
                                                         </div>
-                                                        <span className={`ml-2 badge flex ${item.status ? 'bg-danger' : 'bg-success'}`}>
-                                                            <FaRegThumbsUp  className='inline mr-1'/>
+                                                        <span className={`ml-2 badge flex ${item.flag === 0 ? 'bg-success' : 'bg-danger'}`}>
+                                                            <FaRegThumbsUp  className='inline'/>
                                                             ({item.useful})
+                                                            {/* <FaRegThumbsDown  className='inline ml-1'/>
+                                                            ({item.flag}) */}
                                                         </span>
                                                     </div>
                                                 </td>
