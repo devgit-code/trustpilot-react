@@ -30,7 +30,7 @@ export default function Detail({data, current_page=1}) {
                                 {/* subcategories */}
                             </div>
                             <div className='bg-white border rounded p-4 mb-4'>
-                                <RelatedCategory categories={data.related_categoreies}/>
+                                <RelatedCategory category={data.sub_category} categories={data.related_categoreies}/>
                             </div>
                         </div>
                         <div className="col-lg-8 px-3 mt-3">

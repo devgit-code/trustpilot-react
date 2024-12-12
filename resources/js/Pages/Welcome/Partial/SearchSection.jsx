@@ -82,8 +82,8 @@ function SearchSection() {
                     {/* Modal-like Overlay */}
                     {isDropdownVisible && (
                         <div
-                        className="fixed inset-0 bg-black opacity-25 z-10"
-                        onClick={() => setIsDropdownVisible(false)} // Close dropdown on overlay click
+                            className="fixed inset-0 bg-black opacity-25 z-10"
+                            onClick={() => setIsDropdownVisible(false)} // Close dropdown on overlay click
                         ></div>
                     )}
 
@@ -95,7 +95,7 @@ function SearchSection() {
                             placeholder="Search company or category"
                             className={`w-full py-3 px-5 shadow-lg text-gray-700 ${isDropdownVisible ? ('rounded-t-[2rem] focus:border-none') : 'rounded-[2rem]'}`}
                         />
-                        <button onClick={handleClickSearch}
+                        <button
                             className="no-underline absolute top-1/2 right-3 transform -translate-y-1/2 bg-blue-500 text-white rounded-full p-2">
                             <IoSearchOutline className='text-xl'/>
                         </button>
@@ -108,7 +108,9 @@ function SearchSection() {
                                         className="p-2"
                                     >
                                         <div className='flex items-center gap-4'>
-                                            <div className="flex-1 ml-4 text-left">
+                                            <p className="text-lg w-full text-gray-800 font-bold mb-1 text-center">No match results</p>
+
+                                            {/* <div className="flex-1 ml-4 text-left">
                                                 <p className="text-lg text-gray-800 font-bold mb-1">Can't find a company?</p>
                                                 <p className="text-md text-gray-800 mb-0">It might not be listed on Trustpilot yet. Add it and be the first to write a review.</p>
                                             </div>
@@ -116,7 +118,7 @@ function SearchSection() {
                                             <Link href="#"
                                                 className="no-underline text-blue-500 text-sm font-bold border-1 border-blue-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-blue-200 hover:text-gray-800">
                                                 Add Company
-                                            </Link>
+                                            </Link> */}
                                         </div>
                                     </li>
                                 </ul>
@@ -127,7 +129,7 @@ function SearchSection() {
                                         {
                                             !results.length ? (
                                                 <li className="p-2 cursor-pointer hover:bg-blue-100">
-                                                No match results
+                                                No company
                                                 </li>
                                             ):(
                                                 <>
@@ -168,7 +170,7 @@ function SearchSection() {
                                         {
                                             !results2.length ? (
                                                 <li className="p-2 cursor-pointer hover:bg-blue-100">
-                                                No match results
+                                                No category
                                                 </li>
                                             ):(
                                                 <>

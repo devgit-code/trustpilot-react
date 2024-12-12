@@ -48,6 +48,11 @@ const CategoryGridItems = ({ categories }) => {
             <div className="relative flex items-center pt-3">
                 {/* Icon Grid - Horizontal Scroll on Mobile */}
                 <div ref={containerRef} className="flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth">
+                    {
+                        categories.length == 0 && (
+                            <p className='text-center text-gray-600 font-bold text-lg'>No category</p>
+                        )
+                    }
                     {categories.map((category, index) => (
                         <div key={index} className="flex flex-shrink-0 flex-col items-center group justify-center pr-4 text-center hover:cursor-pointer">
                             <div className="flex items-center justify-center w-6 h-6">

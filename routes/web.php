@@ -71,13 +71,6 @@ Route::group([
     Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
-    Route::post('/reviews/review/{review}/useful', [WebReviewController::class, 'thumbup'])
-        ->name('reviews.review.thumbup')->middleware('auth');
-
-    Route::post('/reviews/review/{review}/flag', [WebReviewController::class, 'thumbdown'])
-        ->name('reviews.review.thumbdown')->middleware('auth');
-
-
     // blogs
     Route::get('/aboutus', function(){
         return Inertia::render('About/Index');

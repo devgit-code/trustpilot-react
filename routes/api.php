@@ -31,6 +31,9 @@ Route::middleware([])->group(function () {
     Route::get('/companies', [WebReviewController::class, 'apiSearchCompany']);
     Route::get('/categories', [CategoryController::class, 'apiSearchCategory']);
 
+    Route::get('/reviews/useful', [WebReviewController::class, 'thumbup'])->middleware('auth');
+    Route::get('/reviews/flag', [WebReviewController::class, 'thumbdown'])->middleware('auth');
+
     Route::get('/business/reviews', [ReviewController::class, 'apiIndex']);
 
     Route::get('/admin/reviews', [AdminReviewController::class, 'apiIndex']);

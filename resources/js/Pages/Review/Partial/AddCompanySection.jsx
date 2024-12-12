@@ -70,7 +70,7 @@ const AddCompanySection = () => {
                 </div>
 
                 <div className="flex md:justify-end justify-center">
-                    <button className="m-4 bg-none text-sky-500 text-sm text-bold border-1 border-solid border-sky-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-sky-200 hover:text-black"
+                    <button className="m-4 bg-none text-gray-200 text-sm text-bold border-1 border-solid bg-blue-500 border-sky-500 px-4 py-2 rounded-full hover:border-gray-500 hover:bg-sky-200 hover:text-black"
                         onClick={handleOpen}>
                         Add Company
                     </button>

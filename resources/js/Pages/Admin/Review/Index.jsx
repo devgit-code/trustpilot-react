@@ -214,7 +214,7 @@ const Index = () => {
                                                 <td className='capitalize'>{item.user.name.length > 12 ? `${item.user.name.slice(0, 12)}...` : item.user.name}</td>
                                                 <td>{moment(item.date_experience).format("M/DD, y")}</td>
                                                 <td>
-                                                    <div className='flex items-center'>
+                                                    <div className='inline-flex items-center'>
                                                         <div className='inline-flex items-center'>
                                                             <Rating className="inline-flex px-2" width="w-5" height="w-5" rating={item.rating}/>
                                                         </div>

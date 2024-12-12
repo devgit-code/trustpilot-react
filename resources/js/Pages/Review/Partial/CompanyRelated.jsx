@@ -1,60 +1,47 @@
 import React, { useState } from "react";
+import { Link, usePage } from '@inertiajs/react'
 
 import Rating from '@/Components/Ratings'
-import logo from '@/../images/company-logo.png'
+import company_logo from "@/../images/company-logo.png"
 import { FaCheckCircle } from "react-icons/fa";
+import { BsFillExclamationOctagonFill } from "react-icons/bs"
 
-const companies = [
-    {
-        name: 'DuGood',
-        rating: {
-            avg: 4.7,
-            total: 230
-        },
-        website: 'www.com',
-        img: 'www.com',
-    },
-    {
-        name: 'DuGood',
-        rating: {
-            avg: 4.7,
-            total: 230
-        },
-        website: 'www.com',
-        img: 'www.com',
-    },
-    {
-        name: 'DuGood',
-        rating: {
-            avg: 4.7,
-            total: 230
-        },
-        website: 'www.com',
-        img: 'www.com',
-    },
-]
-
-export default function CompanyRelated() {
+export default function CompanyRelated({companies}) {
     return (
         <div className="p-3 bg-white border rounded">
-            <h2 className="text-xl font-semibold">People who looked at this company also looked at</h2>
+            <h2 className="text-xl font-semibold">Recent companies</h2>
 
-            <ul className='pl-0 flex flex-col mt-2 gap-3'>
+            <ul className='pl-0 flex flex-col mt-4 gap-3'>
+            {
+                companies.length === 0 && (
+                    <li className="text-center text-lg text-gray-600 font-bold">No company</li>
+                )
+            }
                 {
-                    companies.map((_, index) => (
+                    companies.map((company, index) => (
                         <li className="flex" key={index}>
                             <div className="relative inline-flex items-center w-20 h-20 border-2 bordered rounded">
-                                <img src={logo} alt={'People who loo'} className="max-w-20 max-h-20 object-cover rounded" />
+                                <img src={company.profile?.logo ? `/storage/images/logo/${company.profile.logo}` : company_logo} alt={company.company_name} className="max-w-18 max-h-18 object-cover" />
                             </div>
-                            <div className="ml-3 ">
-                                <a href="/reviews/company/name" className="no-underline pt-1 font-semibold">{'People who look ' + index}</a>
-                                <div className="mt-2 flex">
-                                    <Rating rating={4.8} />
-                                    <span className="ml-2 text-sm">1245</span>
+                            <div className="ml-3">
+                                <Link href={route('reviews.company', company.id)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
+                                <div className="mt-1 flex">
+                                    <Rating rating={Number(company.trustscore)} />
+                                    <span className="ml-2 text-sm">{company.trustscore} /{company.count_reviews}</span>
                                 </div>
-                                <div className="mt-2 flex items-center">
-                                    <span><FaCheckCircle /></span>
-                                    <span className="text-sm ml-2">Verified</span>
+                                <div className="mt-2 flex">
+                                    {
+                                        !company.profile?.logo && (
+                                            <p className={`inline-flex text-sm items-center mb-0 mr-3`}>
+                                                <BsFillExclamationOctagonFill className='text-danger text-base'/>
+                                                <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>
+                                            </p>
+                                        )
+                                    }
+                                    <p className={`inline-flex text-sm items-center mb-0`}>
+                                        <FaCheckCircle className={`inline ${company.email_verified_at && 'text-success'} mr-1`}/>
+                                        <span className='text-gray-700 text-xs font-bold'>{company.email_verified_at ? 'Verified' : 'Unverified'}</span>
+                                    </p>
                                 </div>
                             </div>
                         </li>

@@ -21,12 +21,17 @@ const RecentCompanyReviews = ({ reviews }) => {
 
             <div className="relative flex items-center pt-3 mb-5">
                 <div className="flex lg:grid lg:grid-cols-3 lg:w-full gap-3 px-3 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth pb-5">
-                    {reviews.map((item, index) => (
-                        <ReviewCard
-                            key={index}
-                            {...item}
-                        />
-                    ))}
+                {
+                    reviews.length == 0 && (
+                        <p className='text-center text-gray-700 text-lg'>No company</p>
+                    )
+                }
+                {reviews.map((item, index) => (
+                    <ReviewCard
+                        key={index}
+                        {...item}
+                    />
+                ))}
                 </div>
             </div>
         </div>

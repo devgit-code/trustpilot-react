@@ -35,11 +35,9 @@ export default function Company({ data }) {
                             </div>
 
                             <div className='flex flex-col gap-4'>
-                                <CompanyActivity />
-
                                 <CompanyInfo {...data.company}/>
 
-                                <CompanyRelated />
+                                <CompanyRelated companies={data.related_companies}/>
                             </div>
                         </div>
                     </div>

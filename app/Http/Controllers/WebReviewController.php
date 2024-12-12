@@ -35,6 +35,7 @@ class WebReviewController extends Controller
 
         $businesses = Business::where('role', 'owner')
             ->where('company_name', 'like', '%' . $searchTerm . '%')
+            ->orWhere('website', 'like', '%' . $searchTerm . '%')
             ->orderBy('created_at', 'desc') // Order by creation date, optional
             ->limit(5) // Limit to 5 results
             ->get();
@@ -113,6 +114,15 @@ class WebReviewController extends Controller
             return $review;
         });
 
+        $replyReviews = Review::where('business_id', $id)
+            ->where('rating', '<', 3)
+            ->with('reply')
+            ->get();
+
+        $countReply = $replyReviews->filter(function ($review){
+            return $review->reply !== null;
+        })->count();
+
         $business['rating_statistic'] = [
             'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
@@ -122,12 +132,25 @@ class WebReviewController extends Controller
                     'count' => $item->count,
                 ];
             }),
+            'low_reviews' => [
+                'count_reviews' => count($replyReviews),
+                'count_replies' => $countReply,
+            ]
         ];
+
+        $recent_businesses = Business::latest()->take(3)->get();
+        $recent_businesses = $recent_businesses->map(function ($business, $index) {
+            $business['logo'] = $business->profile?->logo;
+            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
+            $business['count_reviews'] = count($business->reviews);
+            return $business;
+        });
 
         return Inertia::render('Review/Company', [
             'data' =>[
                 'reviews' => $reviews,
                 'company' => $business,
+                'related_companies' => $recent_businesses,
             ]
         ]);
     }
@@ -186,14 +209,18 @@ class WebReviewController extends Controller
 
     }
 
-    public function thumbup(Request $request, Review $review)
+    public function thumbup(Request $request)
     {
+        $id = $request->input('id', '');
+        $review = Review::findOrFail($id);
+
         $user = auth()->user()->id;
 
-        if($user == $review->user_id)
-        {
-            session()->flash('warning', 'This review is written by you.');
-            return redirect()->back();
+        if($user == $review->user_id){
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'This review is written by you',
+            ]);
         }
 
         $status = ReviewThumb::where('review_id', $review->id)
@@ -202,8 +229,10 @@ class WebReviewController extends Controller
             ->first();
 
         if($status){
-            session()->flash('warning', 'You already reported this review');
-            return redirect()->back();
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'You already reported this review',
+            ]);
         }
 
         $creationData = [
@@ -213,16 +242,24 @@ class WebReviewController extends Controller
         ];
 
         ReviewThumb::create($creationData);
-        return redirect()->back()->with('status', 'success');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Thanks for your report',
+        ]);
     }
 
-    public function thumbdown(Request $request, Review $review)
+    public function thumbdown(Request $request)
     {
+        $id = $request->input('id', '');
+        $review = Review::findOrFail($id);
+
         $user = auth()->user()->id;
 
         if($user == $review->user_id){
-            session()->flash('warning', 'This review is written by you.');
-            return redirect()->back();
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'This review is written by you',
+            ]);
         }
 
         $status = ReviewThumb::where('review_id', $review->id)
@@ -231,8 +268,10 @@ class WebReviewController extends Controller
             ->first();
 
         if($status){
-            session()->flash('message', 'You already flagged this review');
-            return redirect()->back();
+            return response()->json([
+                'status' => 'warning',
+                'message' => 'You already flagged this review',
+            ]);
         }
 
         $creationData = [
@@ -242,6 +281,9 @@ class WebReviewController extends Controller
         ];
 
         ReviewThumb::create($creationData);
-        return redirect()->back()->with('status', 'success');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Thanks for your report',
+        ]);
     }
 }

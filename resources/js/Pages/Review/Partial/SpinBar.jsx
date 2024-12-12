@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import company_logo from "@/../images/company-logo.png"
-import { FaExternalLinkAlt } from "react-icons/fa";
 import Rating from '@/Components/Ratings';
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { BsFillExclamationOctagonFill } from "react-icons/bs"
+import { LuMessagesSquare } from "react-icons/lu";
 
-
-export default function SpinBar({id, profile, company_name, website, email_verified_at, rating_statistic }) {
+export default function SpinBar({id, profile, company_email, company_name, website, email_verified_at, rating_statistic }) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -36,15 +37,31 @@ export default function SpinBar({id, profile, company_name, website, email_verif
                                     </svg>
                                 </div>
                                 <div className="">
-                                    <p className='text-2xl text-gray-800 font-extrabold mb-0'>{company_name}</p>
+                                    <div className='text-2xl text-gray-800 font-extrabold mb-0'>
+                                        {company_name}
+                                        {
+                                            !profile?.logo && (
+                                                <p className={`ml-3 bg-red-100 py-1 px-2 rounded inline-flex text-sm items-center mb-0`}>
+                                                    <BsFillExclamationOctagonFill className='text-danger text-base'/>
+                                                    <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>
+                                                </p>
+                                            )
+                                        }
+                                    </div>
                                     <div className='flex items-center mt-3'>
                                         <Rating rating={Number(rating_statistic.avg)}/>
-                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg}</span>
+                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="px-3 flex flex-col justify-end items-end">
+                            {/* <div className='flex justify-center'>
+                                <p className='text-gray-700'>
+                                    <LuMessagesSquare className='inline mr-3'/>
+                                    Replied to {rating_statistic.low_reviews.count_replies} out of {rating_statistic.low_reviews.count_reviews} negative reviews
+                                </p>
+                            </div> */}
                             <div className='flex gap-4'>
                                 <a href={website} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>

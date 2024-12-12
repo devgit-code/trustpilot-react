@@ -5,8 +5,50 @@ import moment from 'moment'
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCircle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 export default function ReviewCard({ review }) {
+
+    const handleUseful = async (e, id) => {
+        e.preventDefault()
+
+        try {
+            const queryString = new URLSearchParams({id: id}).toString();
+            const response = await fetch(`/api/reviews/useful?${queryString}`);
+            const data = await response.json();
+
+            if(data.status == 'success')
+                toast.success(data.message);
+            else
+                toast.warning(data.message);
+        } catch (error) {
+            toast.error('An error occurred!');
+            console.error("Error fetching reviews:", error);
+        } finally {
+
+        }
+    }
+
+    const handleFlag = async (e, id) => {
+        e.preventDefault()
+
+        try {
+            const queryString = new URLSearchParams({id: id}).toString();
+            const response = await fetch(`/api/reviews/flag?${queryString}`);
+            const data = await response.json();
+
+            if(data.status == 'success')
+                toast.success(data.message);
+            else
+                toast.warning(data.message);
+        } catch (error) {
+            toast.error('An error occurred!');
+            console.error("Error fetching reviews:", error);
+        } finally {
+
+        }
+    }
+
     return (
         <div className='p-4 bg-white border rounded'>
             <div className=' pb-3 border-b border-b-2 flex items-center'>
@@ -52,8 +94,9 @@ export default function ReviewCard({ review }) {
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>
                     <Link
-                        href={route('reviews.review.thumbup', review.id)}
-                        method="post"
+                        // href={route('reviews.review.thumbup', review.id)}
+                        // method="post"
+                        onClick={(e)=>handleUseful(e, review.id)}
                         as="button"
                         className="flex items-center text-gray-600"
                     ><FaRegThumbsUp className='inline mr-2'/>Useful</Link>
@@ -61,8 +104,7 @@ export default function ReviewCard({ review }) {
                 </div>
 
                 <Link
-                    href={route('reviews.review.thumbdown', review.id)}
-                    method="post"
+                    onClick={(e)=>handleFlag(e, review.id)}
                     as="button"
                     className="flex items-center text-gray-600"
                 ><FaFlag className='inline italic'/></Link>

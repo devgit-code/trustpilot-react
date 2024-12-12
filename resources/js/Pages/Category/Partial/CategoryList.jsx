@@ -24,6 +24,11 @@ function CategoryList({categories}) {
         //grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto
         /**MasonryLayout */
         <div className="md:columns-2 lg:columns-3 xl:columns-4 gap-4 p-2">
+            {
+                items.length == 0 && (
+                    <p className='text-center font-bold text-xl py-5 text-gray-600'>No category</p>
+                )
+            }
             {items.map((item, index) => (
                 <div key={index} className="mb-4 break-inside-avoid ">
                 {item}

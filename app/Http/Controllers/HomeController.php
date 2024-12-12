@@ -60,6 +60,7 @@ class HomeController extends Controller
 
         $businesses = Business::where('role', 'owner')
             ->where('company_name', 'like', '%' . $searchTerm . '%')
+            ->orWhere('website', 'like', '%' . $searchTerm . '%')
             ->orderBy('created_at', 'desc') // Order by creation date, optional
             ->limit(5) // Limit to 5 results
             ->get();

@@ -24,6 +24,11 @@ const CompanyList = ({title, link, data}) => {
             <div className="relative flex items-center pt-3 ">
                 {/* flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth */}
                 <div className="flex lg:grid lg:grid-cols-4 pb-5 px-2 lg:w-full gap-4 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
+                    {
+                        data.length == 0 && (
+                            <p className='text-center text-gray-600 font-bold text-lg'>No company</p>
+                        )
+                    }
                     {data.map((item, index) => (
                         <CompanyCard
                             key={index}
