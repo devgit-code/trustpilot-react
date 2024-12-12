@@ -8,9 +8,15 @@ import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCirc
 import { toast } from 'react-toastify';
 
 export default function ReviewCard({ review }) {
+    const { auth } = usePage().props;
 
     const handleUseful = async (e, id) => {
         e.preventDefault()
+
+        if(!auth.user){
+            toast.error('Please login first');
+            return;
+        }
 
         try {
             const queryString = new URLSearchParams({id: id}).toString();
@@ -31,6 +37,12 @@ export default function ReviewCard({ review }) {
 
     const handleFlag = async (e, id) => {
         e.preventDefault()
+
+        if(!auth.user){
+            toast.error('Please login first');
+            return;
+        }
+
 
         try {
             const queryString = new URLSearchParams({id: id}).toString();

@@ -214,6 +214,13 @@ class WebReviewController extends Controller
         $id = $request->input('id', '');
         $review = Review::findOrFail($id);
 
+        if(!Auth::check()){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Please Login first',
+            ]);
+        }
+
         $user = auth()->user()->id;
 
         if($user == $review->user_id){
