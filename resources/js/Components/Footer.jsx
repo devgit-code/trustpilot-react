@@ -16,10 +16,10 @@ const Footer = () => {
             <footer className="bg-dark pt-5 text-white">
                 <Container fluid="lg">
                     <div className="py-5">
-                        <a href={route('home')} className="sm:inline-block sm:justify-start flex justify-center p-1">
+                        <Link href={route('home')} className="sm:inline-block sm:justify-start flex justify-center p-1">
                             <img src={logo} alt="logo" style={{height:"2.1rem"}}/>
                             {/* <span className="text-white fw-bold fs-4"> TOPNTECH </span> */}
-                        </a>
+                        </Link>
                     </div>
                     <div className="pb-100">
                         <div className="row">
@@ -70,7 +70,7 @@ const Footer = () => {
                                         <Link href={route('admin.register')} className="no-underline text-white hover:underline" >Register Business</Link>
                                     </li>
                                     <li className="text-lg-start text-sm text-center py-3">
-                                        <Link className="no-underline text-white hover:underline" > Claim Business</Link>
+                                        <Link href={route('admin.claim')} className="no-underline text-white hover:underline" > Claim Business</Link>
                                     </li>
                                 </ul>
                             </div>

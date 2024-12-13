@@ -33,20 +33,17 @@ Route::group([
     'as' => 'admin.'
 ], function () {
 
-    Route::get('/register', [RegisteredUserController::class, 'admin_create'])
-            ->name('register');
-
+    Route::get('/register', [RegisteredUserController::class, 'admin_create']) ->name('register');
     Route::post('/register', [RegisteredUserController::class, 'admin_store']);
 
     Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
-
     Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])
-                ->name('password.request');
+    Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])
-                ->name('password.email');
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])->name('password.email');
 });
 
 Route::group([

@@ -1,14 +1,30 @@
 import { Head, Link, useForm } from '@inertiajs/react';
 import React, {useState, useEffect} from 'react';
 
+import Select from "react-select";
 import AdminGuestLayout from '@/Layouts/AdminGuestLayout';
 import InputError from '@/Components/InputError';
-import fav from '@/../images/favicon.png'
 import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 
-export default function Register() {
+const customStyles = {
+  input: (provided) => ({
+    ...provided,
+    boxShadow: "none", // Remove any focus shadow
+    border: "none", // Remove the input border
+    outline: "none", // Remove the browser outline
+  }),
+};
+
+export default function Claim({ businesses }) {
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const formattedData = businesses.map((business) => ({
+        value: business.id, // Map the ID to the "value" field
+        label: business.website, // Map the name to the "label" field
+    }));
+
     const { data, setData, post, processing, errors, reset } = useForm({
         website: '',
         company_name: '',
@@ -22,6 +38,10 @@ export default function Register() {
         remember: false,
     });
 
+    const handleSelectChange = (option) => {
+        setSelectedOption(option);
+    };
+
     useEffect(() => {
         return () => {
             reset('password', 'password_confirmation');
@@ -30,9 +50,8 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
-        //api verify website at first
 
-        post(route('admin.register'));
+        post(route('admin.claim'));
     };
 
     return (
@@ -50,34 +69,27 @@ export default function Register() {
                         </Link>
 
                         <Link
-                            href={route('admin.claim')}
+                            href={route('admin.register')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Claim Business
+                            Business not exist?
                         </Link>
                     </div>
 
-                    <div className="flex justify-center mt-3">
-                        <Link href={route('home')} className="mt-2"><img src={fav} alt="logo" style={{height:"8rem"}}/></Link>
-                    </div>
-                    <h3 className='text-center my-4'>Register Business</h3>
+                    <h3 className='text-center my-4'>Claim Business</h3>
 
                     <form onSubmit={submit} className="space-y-4 mt-4">
-                        <div  className="mt-4">
-                            <TextInput
-                                id="website"
-                                type="text"
-                                name="website"
-                                value={data.website}
-                                className="mt-1 block w-full"
-                                autoComplete="website"
-                                placeholder="Website example.com"
-                                isFocused={true}
-                                onChange={(e) => setData('website', e.target.value)}
-                                required
-                            />
+                        <div>
 
-                            <InputError message={errors.website} className="mt-2" />
+                            <Select
+                                options={formattedData}
+                                value={selectedOption}
+                                styles={customStyles}
+                                onChange={handleSelectChange}
+                                placeholder="Select unclaimed Business..."
+                                isClearable
+                                className="w-64 inline"
+                            />
                         </div>
 
                         <div className="mt-4">
@@ -199,7 +211,7 @@ export default function Register() {
                             <InputError message={errors.password_confirmation} className="mt-2" />
                         </div>
 
-                        <button disabled={processing} type="submit" className="w-full mt-4 p-2 bg-black text-white rounded-lg">Submit</button>
+                        <button disabled={processing} type="submit" className="w-full mt-4 p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-600">Submit</button>
                     </form>
                 </div>
             </AdminGuestLayout>

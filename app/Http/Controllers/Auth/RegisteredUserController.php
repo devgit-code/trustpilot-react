@@ -53,7 +53,6 @@ class RegisteredUserController extends Controller
         return redirect()->route('verification.notice');;
     }
 
-
     public function admin_create(): Response
     {
         return Inertia::render('Admin/Auth/Register');
@@ -62,12 +61,12 @@ class RegisteredUserController extends Controller
     public function admin_store(Request $request): RedirectResponse
     {
         $request->validate([
-            'website' => 'required|url',
+            'website' => 'required|url|unique:'.Business::class,
             'company_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
-            'company_email' => 'required|string|email|max:255|unique:'.Business::class,
+            'company_email' => 'required|string|email|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -89,5 +88,39 @@ class RegisteredUserController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
         return redirect()->route('admin.verification.notice');
+    }
+
+    public function admin_claim(): Response
+    {
+        $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
+
+        return Inertia::render('Admin/Auth/Claim', compact('businesses'));
+    }
+
+    public function admin_claim_store(Request $request)
+    {
+        $business = Business::findOrFail($request->input('id'));
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'job_title' => 'required|string|max:255',
+            'company_email' => 'required|string|email|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $business->name = $request->input('name');
+
+        $business->save();
+
+        // event(new Registered($business));
+        Auth::guard('business')->login($business);
+        // $request->session()->regenerate();
+
+        $business->sendEmailVerificationNotification();
+
+        // return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('admin.verification.notice');
+
     }
 }
