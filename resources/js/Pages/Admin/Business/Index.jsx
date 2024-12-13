@@ -185,7 +185,9 @@ const Index = () => {
                                                 )}
                                                 </div>
                                             </td>
-                                            <td>{item.company_name.length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name}</td>
+                                            <td>{
+                                                item.company_name //length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name
+                                            }</td>
                                             <td>
                                                 <div>
                                                     {

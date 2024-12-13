@@ -1,20 +1,46 @@
-import AdminLayout from '@/Layouts/adminLayout';
+import React, { useState } from 'react';
 import { Link, useForm } from '@inertiajs/react';
-import React from 'react';
 
+import AdminLayout from '@/Layouts/adminLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
 const Edit = ({ product }) => {
-    const { data, setData, put, errors } = useForm({
+    const [preview, setPreview] = useState(null); // Preview URL
+
+    const { data, setData, post, errors, clearErrors } = useForm({
         name: product.name || '',
-        description: product.description || '',
+        image:null,
+        // description: product.description || '',
     })
+
+    // Handle file input change
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setData('image', file);
+        clearErrors();
+
+        // Generate preview URL
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreview(reader.result);
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            // setPreview(null);
+        }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('business.products.update', product.id), data);
+
+        post(route('business.products.update', product.id), {
+            onSuccess: () => {
+                // onClose();
+            },
+        });
     };
 
     return (
@@ -42,7 +68,7 @@ const Edit = ({ product }) => {
                                     <InputError className="mt-2" message={errors.name} />
                                 </div>
 
-                                <div>
+                                {/* <div>
                                     <InputLabel htmlFor="description" value="Description" />
 
                                     <TextInput
@@ -55,8 +81,39 @@ const Edit = ({ product }) => {
                                     />
 
                                     <InputError className="mt-2" message={errors.description} />
+                                </div> */}
+
+                                <div className='my-4'>
+                                    <input
+                                        // ref={inputRef}
+                                        className="form-control"
+                                        id="image-file"
+                                        name="image"
+                                        type="file"
+                                        aria-label="file example"
+                                        onChange={handleFileChange}
+                                    />
+
+                                    <InputError className="mt-2" message={errors.image} />
                                 </div>
 
+                                {preview ? (
+                                    <div className='mt-2'>
+                                        <p className='text-gray-700'>Preview:</p>
+                                        <img src={preview} alt="Image Preview" style={{ maxWidth: '128px', maxHeight: '128px' }} />
+                                    </div>
+                                ):(
+                                    <>
+                                    {product.image ? (
+                                        <img src={`/storage/${product.image}`}
+                                            alt="product-logo"
+                                            className='inline'
+                                            style={{ maxWidth: '128px', maxHeight: '128px' }} />
+                                    ):(
+                                        <>No image</>
+                                    )}
+                                    </>
+                                )}
                                 <div>
                                     <button type="submit" className="btn btn-primary mr-3">
                                         Update

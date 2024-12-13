@@ -115,12 +115,14 @@ const SubCategoriesCreate = ({ category, onClose }) => {
                                 <InputError className="mt-2" message={errors.image} />
                             </div>
 
-                            {preview && (
-                                <div className='mt-2'>
-                                    <p className='text-gray-700'>Preview:</p>
-                                    <img src={preview} alt="Image Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                </div>
-                            )}
+                            <div className='mt-2 min-h-16'>
+                                {preview && (
+                                    <>
+                                        <p className='text-gray-700'>Preview:</p>
+                                        <img src={preview} alt="Image Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                    </>
+                                )}
+                            </div>
 
                             <div className='mt-4'>
                                 <button type="submit" className="btn btn-primary">

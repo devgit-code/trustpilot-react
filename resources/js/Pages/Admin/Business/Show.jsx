@@ -201,7 +201,7 @@ const Show = ({ business, has_reviews, trustscore }) => {
                                                         id="company_email"
                                                         name="company_email"
                                                         className="mt-1 block w-full bg-gray-100"
-                                                        value={business.company_email}
+                                                        value={business.company_email ?? ''}
                                                         disabled
                                                     />
                                                 </div>

@@ -109,8 +109,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // $business->fill($validated);
         $business->name = $request->input('name');
-
         $business->save();
 
         // event(new Registered($business));

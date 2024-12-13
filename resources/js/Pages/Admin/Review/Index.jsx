@@ -209,9 +209,15 @@ const Index = () => {
                                             {reviews.map((item, index) => (
                                             <tr className="border-bottom-secondary align-middle" key={item.id}>
                                                 <td>{index + 1}</td>
-                                                <td>{item.title.length > 20 ? `${item.title.slice(0, 20)}...` : item.title}</td>
-                                                <td>{item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name}</td>
-                                                <td className='capitalize'>{item.user.name.length > 12 ? `${item.user.name.slice(0, 12)}...` : item.user.name}</td>
+                                                <td>{
+                                                    item.title //.length > 20 ? `${item.title.slice(0, 20)}...` : item.title
+                                                }</td>
+                                                <td>{
+                                                    item.business.company_name //.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
+                                                }</td>
+                                                <td className='capitalize'>{
+                                                    item.user.name //.length > 12 ? `${item.user.name.slice(0, 12)}...` : item.user.name
+                                                }</td>
                                                 <td>{moment(item.date_experience).format("M/DD, y")}</td>
                                                 <td>
                                                     <div className='inline-flex items-center'>

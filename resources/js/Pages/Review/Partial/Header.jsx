@@ -50,7 +50,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                                     src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo}
                                     alt={company_name}
                                     className="object-cover"
-                                    style={{ maxWidth: '150px', maxHeight: '150px' }} />
+                                    style={{ maxWidth: '144px', maxHeight: '144px' }} />
                             </div>
                             <div className="mt-2 flex-1">
                                 <p className='text-3xl text-gray-800 font-black mb-0'>{company_name}</p>

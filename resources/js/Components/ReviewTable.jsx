@@ -185,9 +185,9 @@ export default function ReviewTable({setting}){
                                         <td>
                                         {
                                             setting.header_name == 'user' ?
-                                                item.user.name.length > 15 ? `${item.user.name.slice(0, 15)}...` : item.user.name
+                                                item.user.name //.length > 15 ? `${item.user.name.slice(0, 15)}...` : item.user.name
                                                 :
-                                                item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
+                                                item.business.company_name //.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
                                         }
                                         </td>
                                         <td>
@@ -196,8 +196,12 @@ export default function ReviewTable({setting}){
                                                 {/* <span className='ml-2 text-gray-800'>({item.rating})</span> */}
                                             </div>
                                         </td>
-                                        <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td>
-                                        <td>{moment(item.date_experience).fromNow()}</td>
+                                        <td>
+                                        {
+                                            item.title //.length > 15 ? `${item.title.slice(0, 15)}...` : item.title
+                                        }
+                                        </td>
+                                        <td>{moment(item.date_experience).format('M/DD, Y')}</td>
                                         <td>
                                             <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                 <li className="edit">

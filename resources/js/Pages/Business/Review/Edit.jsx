@@ -87,7 +87,7 @@ const Edit = ({ review, userTotalReviews, status, useful, flag }) => {
 
                             <div className='mt-3 space-x-3'>
                                 <button type="submit" className="btn btn-primary">
-                                    Reply
+                                    Write Reply
                                 </button>
                                 <Link href={route('business.reviews.index')} className="btn btn-danger" type="button">
                                     Back

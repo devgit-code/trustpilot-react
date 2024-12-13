@@ -70,7 +70,7 @@ const Index = ({categories, sub_categories}) => {
                                     onChange={handleSelectChange}
                                     placeholder="Select a sub category..."
                                     isClearable
-                                    className="w-64 inline"
+                                    className="w-64 inline capitalize"
                                 />
 
                                 <div className="ml-4 text-center text-lg-end">

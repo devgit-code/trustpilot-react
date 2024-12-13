@@ -81,6 +81,7 @@ Route::group([
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
+    Route::post('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::resource('categories', CategoryController::class);
     Route::post('/categories/primary', [CategoryController::class, 'primary'])->name('categories.primary');
     Route::resource('reviews', ReviewController::class);

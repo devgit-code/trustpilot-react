@@ -37,6 +37,7 @@ const CategoriesCreate = ({ onClose }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         post(route('admin.categories.store'), {
             onSuccess: () => {
                 // onClose();
@@ -87,12 +88,14 @@ const CategoriesCreate = ({ onClose }) => {
                             <InputError className="mt-2" message={errors.image} />
                         </div>
 
-                        {preview && (
-                            <div className='mt-2'>
-                                <p className='text-gray-700'>Preview:</p>
-                                <img src={preview} alt="Image Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                            </div>
-                        )}
+                        <div className='mt-2 min-h-16'>
+                            {preview && (
+                                <>
+                                    <p className='text-gray-700'>Preview:</p>
+                                    <img src={preview} alt="Image Preview" style={{ maxWidth: '64px', maxHeight: '64px' }} />
+                                </>
+                            )}
+                        </div>
 
                         <div className='mt-2'>
                             <button type="submit" className="btn btn-primary m-2">
