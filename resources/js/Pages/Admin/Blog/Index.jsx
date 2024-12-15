@@ -39,11 +39,11 @@ const Index = ({ blogs }) => {
     return (
         <div className="container-wrapper m-3">
             <div className="row">
-                <div className="col-sm-12">
+                <div className="col-lg-12">
                     <div className="card p-3">
                         <div className=" g-3 d-flex align-items-center justify-between">
                             <div className="">
-                                <h3 className="m-0 text-center text-lg-start">blogs</h3>
+                                <h3 className="m-0 text-center text-lg-start">Blogs</h3>
                             </div>
                             <div className="flex items-center">
                                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
@@ -61,6 +61,7 @@ const Index = ({ blogs }) => {
                                 <thead>
                                     <tr className="border-bottom-primary">
                                         <th scope="col">No</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Actions</th>
@@ -69,7 +70,7 @@ const Index = ({ blogs }) => {
                                 <tbody id="myTable">
                                     {blogs.length == 0 ? (
                                         <tr className='text-center'>
-                                            <td colSpan="4">There is no data</td>
+                                            <td colSpan="5">There is no data</td>
                                         </tr>
                                     ):(
                                         <>
@@ -78,8 +79,18 @@ const Index = ({ blogs }) => {
                                                 .map((blog, index) => (
                                                     <tr key={blog.id} className="border-bottom-secondary align-middle">
                                                         <td>{index + 1}</td>
-                                                        <td>{blog.title}</td>
-                                                        <td>{moment(blog.created_at)}</td>
+                                                        <td>
+                                                        {blog.image ? (
+                                                            <img src={`/storage/${blog.image}`}
+                                                                alt="blog-logo"
+                                                                className='inline'
+                                                                style={{ maxWidth: '128px', maxHeight: '128px' }} />
+                                                        ):(
+                                                            <>No image</>
+                                                        )}
+                                                        </td>
+                                                        <td className='capitalize'>{blog.title}</td>
+                                                        <td>{moment(blog.created_at).format("MMM D, YYYY")}</td>
                                                         <td>
                                                             <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                                 <li className="edit">
@@ -87,13 +98,13 @@ const Index = ({ blogs }) => {
                                                                     >
                                                                         <FontAwesomeIcon
                                                                             icon={faPenToSquare}
-                                                                            className="fs-4 me-2 text-primary"
+                                                                            className="fs-5 me-2 text-primary"
                                                                         />
                                                                     </Link>
                                                                 </li>
                                                                 <li className="delete">
                                                                     <Link as="button" method="delete" onClick={(event) => handleDelete(event, blog.id)}>
-                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
+                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-5 text-danger' />
                                                                     </Link>
                                                                 </li>
                                                             </ul>

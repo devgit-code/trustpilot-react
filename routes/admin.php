@@ -29,24 +29,21 @@ use App\Http\Controllers\Admin\BlogController;
 // admin auth
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['user-guest', 'business.guest'],
+    'middleware' => ['business.guest'],
     'as' => 'admin.'
 ], function () {
 
-    Route::get('/register', [RegisteredUserController::class, 'admin_create'])
-            ->name('register');
-
+    Route::get('/register', [RegisteredUserController::class, 'admin_create']) ->name('register');
     Route::post('/register', [RegisteredUserController::class, 'admin_store']);
 
     Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
-
     Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])
-                ->name('password.request');
+    Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])
-                ->name('password.email');
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])->name('password.email');
 });
 
 Route::group([
@@ -84,6 +81,7 @@ Route::group([
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
+    Route::post('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::resource('categories', CategoryController::class);
     Route::post('/categories/primary', [CategoryController::class, 'primary'])->name('categories.primary');
     Route::resource('reviews', ReviewController::class);
@@ -111,8 +109,10 @@ Route::group([
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
+    Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
+    Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/roles/{id}', [UserController::class, 'userRoles'])->name('users.roles');
@@ -121,7 +121,7 @@ Route::group([
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
@@ -144,5 +144,6 @@ Route::group([
     Route::get('/sub_categories/category/{id}/edit', [SubCategoryController::class, 'edit'])->name('sub_categories.edit');
     Route::post('/sub_categories/category/{id}', [SubCategoryController::class, 'update'])->name('sub_categories.update');
     Route::delete('/sub_categories/{sub_category}', [SubCategoryController::class, 'destroy'])->name('sub_categories.destroy');
+    Route::get('/sub_categories/sub_category/{id}/detail', [SubCategoryController::class, 'detail'])->name('sub_categories.detail');
 
 });

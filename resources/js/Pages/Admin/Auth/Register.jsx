@@ -8,7 +8,7 @@ import TextInput from '@/Components/TextInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import InputLabel from '@/Components/InputLabel';
 
-export default function Contact() {
+export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         website: '',
         company_name: '',
@@ -30,6 +30,7 @@ export default function Contact() {
 
     const submit = (e) => {
         e.preventDefault();
+        //api verify website at first
 
         post(route('admin.register'));
     };
@@ -38,8 +39,24 @@ export default function Contact() {
         <>
             <AdminGuestLayout>
                 <Head title="Business Register" />
-
                 <div className="p-8 bg-gray-50 rounded-3xl">
+
+                    <div className="flex items-center justify-between mt-4">
+                        <Link
+                            href={route('admin.login')}
+                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Go to Login
+                        </Link>
+
+                        <Link
+                            href={route('admin.claim')}
+                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                            Claim Business
+                        </Link>
+                    </div>
+
                     <div className="flex justify-center mt-3">
                         <Link href={route('home')} className="mt-2"><img src={fav} alt="logo" style={{height:"8rem"}}/></Link>
                     </div>
@@ -54,7 +71,7 @@ export default function Contact() {
                                 value={data.website}
                                 className="mt-1 block w-full"
                                 autoComplete="website"
-                                placeholder="Website"
+                                placeholder="Website example.com"
                                 isFocused={true}
                                 onChange={(e) => setData('website', e.target.value)}
                                 required
@@ -183,17 +200,6 @@ export default function Contact() {
                         </div>
 
                         <button disabled={processing} type="submit" className="w-full mt-4 p-2 bg-black text-white rounded-lg">Submit</button>
-
-                        <div>
-                            <p className="text-sm text-gray-600 mt-4">
-                                By clicking above you accept our <a href="#" className="text-blue-600">Privacy Policy</a> and agree to receive emails or calls from us.
-                                You can unsubscribe at any time. Trustpilot's calls may be recorded for training and quality purposes.
-                            </p>
-                            <p className="text-sm text-gray-600">
-                                This site is protected by reCAPTCHA and the Google <a href="#" className="text-blue-600">Privacy Policy</a> and
-                                <a href="#" className="text-blue-600"> Terms of Service</a> apply.
-                            </p>
-                        </div>
                     </form>
                 </div>
             </AdminGuestLayout>

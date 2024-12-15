@@ -110,7 +110,7 @@ class ProfileController extends Controller
     {
         $request->validate([
             "company_name" => "required|string|max:255",
-            "website" => "required|url",
+            // "website" => "required|url",
         ]);
 
         $business = auth('business')->user();
@@ -122,16 +122,13 @@ class ProfileController extends Controller
         }
 
         $company_name = $request->input('company_name');
-        $website = $request->input('website');
         $description = $request->input('description');
 
         if (
             $business->company_name !== $company_name ||
-            $business->website !== $website ||
             $businessProfile->description !== $description
         ) {
             $business->company_name = $company_name;
-            $business->website = $website;
             $business->save();
 
             $businessProfile->description = $description;

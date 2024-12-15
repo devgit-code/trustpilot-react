@@ -14,27 +14,6 @@ import AccountTab from './Partial/AccountTab'
 import ContactTab from './Partial/ContactTab'
 
 const Index = ({businessProfile, activeTab, business}) => {
-    // const handleDelete = (event, id) => {
-    //     event.preventDefault();
-
-    //     confirmAlert({
-    //         title: 'Are you sure?',
-    //         message: "You won't be able to revert this!",
-    //         buttons: [
-    //             {
-    //                 label: 'Yes',
-    //                 onClick: () => {
-    //                     router.delete(route('business.roles.destroy', id));
-    //                 },
-    //             },
-    //             {
-    //                 label: 'No',
-    //                 onClick: () => { },
-    //             },
-    //         ],
-    //     });
-    // };
-
     return (
         <div className="content-wrapper m-3">
             <div className="col-lg-12">

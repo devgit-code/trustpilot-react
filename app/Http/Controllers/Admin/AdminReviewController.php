@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
+use App\Models\ReviewThumb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -47,21 +48,27 @@ class AdminReviewController extends Controller
         $query->orderBy('date_experience', $sortOrder);
 
         // Paginate the results
-        $reviews = $query->paginate(10, ['*'], 'page', $page);
+        $data = $query->paginate(10, ['*'], 'page', $page);
+
+        $reviews = collect($data->items())->map(function($review, $index) {
+            $review['flag'] = ReviewThumb::where('review_id', $review->id)->where('thumb', false)->count();
+            $review['useful'] = ReviewThumb::where('review_id', $review->id)->where('thumb', true)->count();
+            return $review;
+        });
 
         return response()->json([
-            'reviews' => $reviews->items(),
+            'reviews' => $reviews,
             'filters' => $request->only('sort_by_date', 'rating'),
             'pagination' => [
-                'current_page' => $reviews->currentPage(),
-                'last_page' => $reviews->lastPage(),
-                'per_page' => $reviews->perPage(),
-                'total' => $reviews->total(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'per_page' => $data->perPage(),
+                'total' => $data->total(),
                 'links' => [
-                    'first' => $reviews->url(1),
-                    'last' => $reviews->url($reviews->lastPage()),
-                    'next' => $reviews->nextPageUrl(),
-                    'prev' => $reviews->previousPageUrl(),
+                    'first' => $data->url(1),
+                    'last' => $data->url($data->lastPage()),
+                    'next' => $data->nextPageUrl(),
+                    'prev' => $data->previousPageUrl(),
                 ],
             ],
         ]);
@@ -91,9 +98,14 @@ class AdminReviewController extends Controller
         $review = Review::with(['user', 'user.profile', 'reply', 'business', 'business.profile'])->findOrFail($id);
         $userTotalReviews = Review::where('user_id', $review->user_id)->count();
 
+        $review['flag'] = ReviewThumb::where('review_id', $review->id)->where('thumb', false)->count();
+        $review['useful'] = ReviewThumb::where('review_id', $review->id)->where('thumb', true)->count();
+
         return Inertia::render('Admin/Review/Show', [
             'review' => $review,
             'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
+            'count_reviews' => count($review->business->reviews),
+            'trustscore' => number_format($review->business->reviews->avg('rating'), 1),
         ]);
     }
 

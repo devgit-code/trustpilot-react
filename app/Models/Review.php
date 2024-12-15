@@ -29,4 +29,9 @@ class Review extends Model
     {
         return $this->hasOne(Reply::class);
     }
+
+    public function thumbs()
+    {
+        return $this->hasMany(ReviewThumb::class);
+    }
 }

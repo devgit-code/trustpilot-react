@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
-import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
-import { FaReply, FaFlag } from "react-icons/fa"
 import moment from "moment";
 import Rating from '@/Components/Ratings';
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs"
+import { CgMenuBoxed } from "react-icons/cg";
 
 export default function ReviewTable({setting}){
     const [filters, setFilters] = useState({ sort_by_date: "desc", rating: "", search:"", page:1 });
@@ -149,7 +149,7 @@ export default function ReviewTable({setting}){
                     </div>
                 </div>
 
-                <div className="table-responsive text-center">
+                <div className="table-responsive text-center mt-2">
                     <table className="table">
                         <thead>
                             <tr className="border-bottom-primary">
@@ -185,9 +185,9 @@ export default function ReviewTable({setting}){
                                         <td>
                                         {
                                             setting.header_name == 'user' ?
-                                                item.user.name.length > 15 ? `${item.user.name.slice(0, 15)}...` : item.user.name
+                                                item.user.name //.length > 15 ? `${item.user.name.slice(0, 15)}...` : item.user.name
                                                 :
-                                                item.business.company_name.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
+                                                item.business.company_name //.length > 15 ? `${item.business.company_name.slice(0, 15)}...` : item.business.company_name
                                         }
                                         </td>
                                         <td>
@@ -196,13 +196,17 @@ export default function ReviewTable({setting}){
                                                 {/* <span className='ml-2 text-gray-800'>({item.rating})</span> */}
                                             </div>
                                         </td>
-                                        <td>{item.title.length > 15 ? `${item.title.slice(0, 15)}...` : item.title}</td>
-                                        <td>{moment(item.date_experience).fromNow()}</td>
+                                        <td>
+                                        {
+                                            item.title //.length > 15 ? `${item.title.slice(0, 15)}...` : item.title
+                                        }
+                                        </td>
+                                        <td>{moment(item.date_experience).format('M/DD, Y')}</td>
                                         <td>
                                             <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                 <li className="edit">
                                                     <Link href={route(setting.show_link, item.id)}>
-                                                        <FaReply  className='text-primary fs-4 me-2' />
+                                                        <CgMenuBoxed  className='text-primary fs-4 me-2' />
                                                     </Link>
                                                 </li>
                                                 {/* {

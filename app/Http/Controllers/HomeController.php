@@ -60,6 +60,7 @@ class HomeController extends Controller
 
         $businesses = Business::where('role', 'owner')
             ->where('company_name', 'like', '%' . $searchTerm . '%')
+            ->orWhere('website', 'like', '%' . $searchTerm . '%')
             ->orderBy('created_at', 'desc') // Order by creation date, optional
             ->limit(5) // Limit to 5 results
             ->get();
@@ -101,5 +102,16 @@ class HomeController extends Controller
     public function update(Request $request)
     {
 
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'website' => ['required', 'string', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $business = Business::create($validatedData);
+        return redirect()->route('reviews.company', $business->id);
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('job_title')->nullable();
             $table->string('role')->default('owner');
-            $table->string('company_email')->unique();
+            $table->string('company_email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken(); // Token for "remember me" functionality

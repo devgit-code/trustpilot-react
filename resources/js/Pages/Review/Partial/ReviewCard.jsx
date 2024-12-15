@@ -1,12 +1,66 @@
 import React from 'react';
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 
 import moment from 'moment'
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCircle } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 export default function ReviewCard({ review }) {
+    const { auth } = usePage().props;
+
+    const handleUseful = async (e, id) => {
+        e.preventDefault()
+
+        if(!auth.user){
+            toast.error('Please login first');
+            return;
+        }
+
+        try {
+            const queryString = new URLSearchParams({id: id}).toString();
+            const response = await fetch(`/api/reviews/useful?${queryString}`);
+            const data = await response.json();
+
+            if(data.status == 'success')
+                toast.success(data.message);
+            else
+                toast.warning(data.message);
+        } catch (error) {
+            toast.error('An error occurred!');
+            console.error("Error fetching reviews:", error);
+        } finally {
+
+        }
+    }
+
+    const handleFlag = async (e, id) => {
+        e.preventDefault()
+
+        if(!auth.user){
+            toast.error('Please login first');
+            return;
+        }
+
+
+        try {
+            const queryString = new URLSearchParams({id: id}).toString();
+            const response = await fetch(`/api/reviews/flag?${queryString}`);
+            const data = await response.json();
+
+            if(data.status == 'success')
+                toast.success(data.message);
+            else
+                toast.warning(data.message);
+        } catch (error) {
+            toast.error('An error occurred!');
+            console.error("Error fetching reviews:", error);
+        } finally {
+
+        }
+    }
+
     return (
         <div className='p-4 bg-white border rounded'>
             <div className=' pb-3 border-b border-b-2 flex items-center'>
@@ -51,11 +105,21 @@ export default function ReviewCard({ review }) {
             </div>
             <div className='flex items-center justify-between mt-2'>
                 <div className='flex gap-9'>
-                    <button className='flex items-center text-gray-400'><FaRegThumbsUp className='inline mr-2'/>Useful</button>
-                    <button className='flex items-center text-gray-400'><FaShareAlt className='inline mr-2'/>Share</button>
+                    <Link
+                        // href={route('reviews.review.thumbup', review.id)}
+                        // method="post"
+                        onClick={(e)=>handleUseful(e, review.id)}
+                        as="button"
+                        className="flex items-center text-gray-600"
+                    ><FaRegThumbsUp className='inline mr-2'/>Useful</Link>
+                    {/* <button className='flex items-center text-gray-400'><FaShareAlt className='inline mr-2'/>Share</button> */}
                 </div>
 
-                <button className='flex items-center text-gray-600'><FaFlag className='inline italic'/></button>
+                <Link
+                    onClick={(e)=>handleFlag(e, review.id)}
+                    as="button"
+                    className="flex items-center text-gray-600"
+                ><FaFlag className='inline italic'/></Link>
             </div>
             {
                 review.reply?.comment.length && (

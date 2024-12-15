@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import Rating from '@/Components/Ratings';
+import Rating from '@/Components/RatingAverage';
 
+import logo from "@/../images/company-logo.png"
+import Swal from 'sweetalert2';
 import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
-import Swal from 'sweetalert2';
-import logo from "@/../images/company-logo.png"
+import { MdOutlineUnpublished } from "react-icons/md"
+import { VscWorkspaceUntrusted } from "react-icons/vsc"
 
 
 const Index = () => {
@@ -110,9 +112,8 @@ const Index = () => {
 
     return (
         <div className='content-wrapper m-3'>
-
             <div className="row">
-                <div className="col-sm-12">
+                <div className="col-lg-12">
                     <div className="card">
                         <div className="m-3 flex items-center justify-between">
                             <div className="">
@@ -137,7 +138,9 @@ const Index = () => {
                                         <th>No</th>
                                         <th>Logo</th>
                                         <th>Name</th>
-                                        <th>Trustscore</th>
+                                        {/* <th>Products</th> */}
+                                        <th>Categories</th>
+                                        <th>Score</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -150,9 +153,21 @@ const Index = () => {
                                         <>
                                         {businesses.map((item, index) => (
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
-                                            <td>{index + 1}</td>
-                                            <td className='flex justify-center'>
-                                                <div className='flex justify-center items-center border' style={{height: '64px', width: '64px'}}>
+                                            <td>
+                                                <div className="relative inline-flex">
+                                                    <p className={`mb-0 text-gray-700 px-3 aspect-[1/1] ${!item.email_verified_at && 'bg-red-100 flex items-center rounded text-gray-100'}`}>{index+1}</p>
+                                                    {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                        className="absolute -top-2 -right-2">
+                                                        <path fill={`${item.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                                                        <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
+                                                    </svg> */}
+                                                    {!item.email_verified_at && (
+                                                        <MdOutlineUnpublished className='text-lg text-danger absolute -top-1 -right-1' />
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div className='inline-flex justify-center items-center border' style={{height: '68px', width: '68px'}}>
                                                 {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
@@ -164,25 +179,52 @@ const Index = () => {
                                                             alt="category-logo"
                                                             className=''
                                                             style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                        {!item.email_verified_at && (
+                                                        {!item.profile?.logo && (
                                                             <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
                                                         )}
                                                     </div>
                                                 )}
                                                 </div>
                                             </td>
-                                            <td>{item.company_name}</td>
+                                            <td>{
+                                                item.company_name //length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name
+                                            }</td>
+                                            {/* <td>{item.count_products}</td> */}
                                             <td>
-                                                <div className='inline-flex items-center'>
-                                                    <Rating className="inline-flex" width="w-5" height="w-5" rating={Number(item.trustscore)}/>
-                                                    <span className='ml-2 text-gray-800'>{item.trustscore} ({item.reviews_count})</span>
+                                                <div>
+                                                    {
+                                                        item.categories.length === 0 ? (
+                                                            <span className='text-gray-700 text-sm'>No category</span>
+                                                        ):(
+                                                            <ul className='list-styled m-0 p-0' style={{listStyle:'disc'}}>
+                                                                {
+                                                                    item.categories.map((category, index) => (
+                                                                        <li key={index} className='text-left p-0'>
+                                                                            <span className={`text-xs capitalize ${category.is_primary === 1 ? 'bg-primary p-1 rounded text-gray-100':'text-gray-500'} `}>
+                                                                            {category.sub_category.name}
+                                                                            </span>
+                                                                        </li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        )
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <div className='inline-flex items-center'>
+                                                        <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
+                                                        <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
+                                                    </div>
+                                                    <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <a href={item.website} target="_blank">
-                                                            <FaExternalLinkAlt className='text-success fs-4 me-2' />
+                                                            <FaExternalLinkAlt className='text-success fs-6 me-2' />
                                                         </a>
                                                     </li>
                                                     <li className="edit">
@@ -192,7 +234,7 @@ const Index = () => {
                                                     </li>
                                                     <li className="delete">
                                                         <Link onClick={(e) => handleDelete(e, item.id)}>
-                                                            <BsTrashFill className='text-danger fs-4 me-2' />
+                                                            <BsTrashFill className='text-danger fs-5 me-2' />
                                                         </Link>
                                                     </li>
                                                 </ul>

@@ -5,13 +5,14 @@ import moment from 'moment';
 import AdminLayout from '@/Layouts/adminLayout';
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
+import RatingAverage from '@/Components/RatingAverage';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import { FaReply } from 'react-icons/fa';
+import { FaReply, FaRegThumbsUp } from 'react-icons/fa';
 
 import businessProfilelogo from '@/../images/company-logo.png';
 
-const Show = ({ review, userTotalReviews }) => {
+const Show = ({ review, userTotalReviews, count_reviews, trustscore }) => {
     const { auth } = usePage().props;
     const { data, setData, put, errors } = useForm({
         reply: review.reply?.comment || '',
@@ -34,12 +35,12 @@ const Show = ({ review, userTotalReviews }) => {
     };
 
     return (
-        <div className="content-wrapper m-3 flex justify-center">
+        <div className="content-wrapper m-5 flex justify-center">
             <div className="col-lg-8">
                 <div className="card">
                     <div className="card-body">
                         <div className='flex items-center justify-between'>
-                            <div >
+                            <div className=''>
                                 <h5 className="card-title">Review For
                                     <Link
                                         href={route('admin.businesses.show', review.business.id)}
@@ -53,7 +54,20 @@ const Show = ({ review, userTotalReviews }) => {
                                 Back
                             </Link>
                         </div>
-                        <div className='p-4 bg-white border rounded mt-4'>
+                        <div className='ml-1 flex items-center'>
+                            <RatingAverage className="inline-flex px-2" width="w-6" height="w-6" rating={trustscore}/>
+                            <span className='ml-2 text-gray-800'>({count_reviews} reviews)</span>
+                        </div>
+                        <div className='mt-4 flex items-center justify-between'>
+                            <span className='ml-2 text-gray-700'>
+                                {/* <FaRegThumbsUp  className='inline mr-1'/> */}
+                                Useful ({review.useful})
+                            </span>
+                            <span className={`badge ${review.flag === 0 ? 'bg-success' : 'bg-danger'}`}>
+                                {review.flag === 0 ? 'normal' : 'flag'} ({review.flag})
+                            </span>
+                        </div>
+                        <div className='p-4 bg-white border rounded mt-2'>
                             <div className='flex items-center justify-between'>
                                 <div className='flex items-center'>
                                     <Rating className="inline-flex" rating={review.rating}/>
@@ -76,21 +90,19 @@ const Show = ({ review, userTotalReviews }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <div className="flex items-center mx-auto bg-white" style={{width:'64px', height:'64px'}}>
+                                    <div className="flex items-center mx-auto bg-white w-20 h-20 border">
                                     {
                                         review.business.profile?.logo ? (
                                             <img
                                                 src={`/storage/images/logo/${review.business.profile.logo}`}
                                                 alt="business-logo"
-                                                className="mx-auto"
-                                                width="100"
+                                                className="mx-auto max-w-20 max-h-20"
                                             />
                                         ):(
                                             <img
                                                 src={businessProfilelogo}
                                                 alt="business-logo"
-                                                className="mx-auto"
-                                                width="100"
+                                                className="mx-auto max-w-20 max-h-20"
                                             />
                                         )
                                     }

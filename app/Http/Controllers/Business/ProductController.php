@@ -29,17 +29,23 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            "name" => "required|max:255"
+        $validated = $request->validate([
+            "name" => "required|string|max:255",
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
-        $creationData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-            "business_id" => auth('business')->user()->id,
-        ];
+        $business = auth('business')->user();
+        $validated['business_id'] = $business->id;
 
-        Product::create($creationData);
+        // Handle the avatar upload if it exists
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $validated['image'] = $path; // Add the avatar path to the validated data
+        }
+
+        $product = Product::create($validated);
 
         return redirect()->route('business.products.index');
     }
@@ -63,17 +69,22 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            "name" => "required|max:255"
+            "name" => "required|max:255",
         ]);
 
         $product = Product::findOrFail($id);
 
-        $updateData = [
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-        ];
+        $product->name = $request->input('name');
 
-        $product->update($updateData);
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $product->image = $path; // Add the avatar path to the validated data
+        }
+
+        $product->save();
+
         return redirect()->route('business.products.index');
     }
 

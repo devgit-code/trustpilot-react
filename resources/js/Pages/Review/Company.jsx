@@ -10,6 +10,7 @@ import PaginationList from './Partial/PaginationList.jsx'
 import CompanyInfo from './Partial/CompanyInfo.jsx'
 import CompanyActivity from './Partial/CompanyActivity.jsx'
 import CompanyRelated from './Partial/CompanyRelated.jsx'
+import ProductList from './Partial/ProductList.jsx'
 
 export default function Company({ data }) {
     return (
@@ -26,6 +27,8 @@ export default function Company({ data }) {
                         <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
+                                    <ProductList products={data.company.products}/>
+
                                     <ClickableWrite company_name={data.company.id}/>
 
                                     <Filter ratings={data.company.rating_statistic}/>
@@ -35,11 +38,9 @@ export default function Company({ data }) {
                             </div>
 
                             <div className='flex flex-col gap-4'>
-                                <CompanyActivity />
-
                                 <CompanyInfo {...data.company}/>
 
-                                <CompanyRelated />
+                                <CompanyRelated companies={data.related_companies}/>
                             </div>
                         </div>
                     </div>

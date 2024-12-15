@@ -17,7 +17,6 @@ class BlogController extends Controller
         $blogs = Blog::all();
 
         return Inertia::render('Admin/Blog/Index', compact('blogs'));
-
     }
 
     public function create()
@@ -27,34 +26,70 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        logger($request);
-
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|unique:blogs,title|max:255',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'content' => 'required|string',
         ]);
 
-        $blog = Blog::create($validated);
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "blog-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/blog', $imageName, 'public');
+            $validated['image'] = $path; // Add the avatar path to the validated data
+            // $validated['slug'] = Str::slug($validated['title']);
+        }
 
-        return response()->json([
-            'message' => 'Blog post saved successfully.',
-            'blog' => $blog,
-        ], 200);
+        $category = Blog::create($validated);
+
+        return redirect()->route('admin.blogs.index')
+            ->with('message', 'Blog created successfully.');
     }
 
-    public function edit(String $id)
+    public function edit(Blog $blog)
     {
-
+        return Inertia::render('Admin/Blog/Edit', [
+            'blog' => $blog
+        ]);
     }
 
     public function update(Request $request, $id)
     {
+        $blog = Blog::findOrFail($id);
+        $validated = $request->validate([
+            'title' => [
+                'required',
+                'string',
+                Rule::unique('blogs', 'title')->ignore($blog->id),
+            ],
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            'content' => 'required|string',
+        ]);
+
+        $blog->title = $request->input('title');
+        $blog->content = $request->input('content');
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "blog-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/blog', $imageName, 'public');
+            $blog->image = $path; // Add the avatar path to the validated data
+        }
+
+        $blog->save();
+
+        return redirect()->route('admin.blogs.index')
+            ->with('message', 'Blog updated successfully.');
 
     }
 
 
     public function destroy(Blog $blog)
     {
+        $blog->delete();
+
+        return redirect()->route('admin.blogs.index')
+            ->with('success', 'Blog deleted successfully.');
 
     }
 }

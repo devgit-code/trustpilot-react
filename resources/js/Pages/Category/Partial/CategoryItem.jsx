@@ -20,10 +20,10 @@ function CategoryItem({ id, title, icon, color, items }) {
                     href={route('categories.show', id)}
                     className={`w-full flex items-center justify-between rounded-t-lg text-center p-2 border border-gray-600 text-gray-800`}
                     >
-                    <div className="flex items-center justify-center w-6 h-6">
+                    <div className="flex items-center justify-center w-7 h-7">
                         <img src={`/storage/${icon}`}
                             alt="category-logo"
-                            className='inline max-w-6 max-h-6'
+                            className='inline max-w-6 max-h-6 object-cover'
                             // style={{ maxWidth: '32px', maxHeight: '32px' }}
                             />
                     </div>
@@ -54,10 +54,10 @@ function CategoryItem({ id, title, icon, color, items }) {
             <div className="rounded-lg border-1 bg-white hidden md:block">
                 <Link href={route('categories.show', id)} className='no-underline text-gray-800'>
                     <div className={`rounded-t-lg text-center p-4 ${colorClasses[color]}`}>
-                        <div className="inline-flex items-center justify-center w-6 h-6">
+                        <div className="inline-flex items-center justify-center w-7 h-7">
                             <img src={`/storage/${icon}`}
                                 alt="category-logo"
-                                className='inline max-w-6 max-h-6'
+                                className='inline max-w-6 max-h-6 object-cover'
                                 />
                         </div>
                         <h2 className="text-lg font-semibold capitalize">{title}</h2>

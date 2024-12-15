@@ -10,7 +10,7 @@ import TextInput from '@/Components/TextInput';
 export default function HomeTab({business, businessProfile}){
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
-        website: business.website,
+        // website: business.website,
         description: businessProfile?.description || '',
     });
 
@@ -46,11 +46,24 @@ export default function HomeTab({business, businessProfile}){
                     id="website"
                     name="website"
                     type="url"
-                    className="mt-1 block w-full"
-                    value={data.website}
-                    onChange={(e)=>setData('website', e.target.value)}
-                    required
-                    autoComplete="website"
+                    className="mt-1 block w-full bg-gray-100"
+                    value={business.website}
+                    disabled
+                />
+
+                <InputError className="mt-2" message={errors.website} />
+            </div>
+
+            <div>
+                <InputLabel htmlFor="cmail" value="Company Domain" />
+
+                <TextInput
+                    id="cmail"
+                    name="cmail"
+                    type="url"
+                    className="mt-1 block w-full bg-gray-100"
+                    value={business.company_email}
+                    disabled
                 />
 
                 <InputError className="mt-2" message={errors.website} />
@@ -63,7 +76,7 @@ export default function HomeTab({business, businessProfile}){
                     className="form-control mt-2"
                     name="description"
                     id="description"
-                    rows="4"
+                    rows="10"
                     style={{ height: "auto" }}
                     value={data.description}
                     placeholder='Tell your customers what makes you unique. We recommend writing at least 200 words about your company. '

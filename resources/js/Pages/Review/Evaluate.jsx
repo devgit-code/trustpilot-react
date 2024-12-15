@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { Link, Head, useForm } from '@inertiajs/react';
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import company_logo from "@/../images/company-logo.png"
@@ -86,13 +86,19 @@ export default function Evaluate({ company }) {
                 <div className='bg-whtie border-b '>
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full flex items-center'>
-                            <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
-                                <img src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo} alt={company.name} className="max-w-20 max-h-20 object-cover rounded" />
-                            </div>
+                            <Link href={route('reviews.company', company.id)}>
+                                <div className='inline-flex items-center justify-center w-20 h-20 rounded border'>
+                                    <img
+                                        src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
+                                        alt={company.name}
+                                        className="object-cover"
+                                        style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                                </div>
+                            </Link>
                             <div className='ml-5'>
-                                <p className='text-gray-800 text-xl font-extrabold'>
+                                <Link href={route('reviews.company', company.id)} className='text-gray-800 text-xl font-extrabold pb-3'>
                                     {company.company_name}
-                                </p>
+                                </Link>
                                 <p className='mb-0 text-gray-700'>{company.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</p>
                             </div>
                         </div>

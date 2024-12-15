@@ -19,47 +19,59 @@ export default function CompanyInfo({company_name, profile, primary_business_cat
             {/* Description */}
             <div className="mb-4 ">
                 <p className='text-gray-800 text-sm font-medium min-h-10'>
-                {profile?.description ?? 'Not set'}
+                {profile?.description ?? 'No description'}
                 </p>
             </div>
 
             <hr className="my-4" />
 
             {/* Contact Section */}
-            <div className="mb-4">
+            <div className="">
                 <h3 className="text-lg font-semibold">Contact</h3>
                 <ul className="mt-2 space-y-3 pl-0 text-sm">
                     <li className="flex items-center">
                         <span className="text-gray-500 text-lg mr-2"><CiAt /></span>
-                        <a
-                            href={profile?.email ? `mailto::${profile?.email}`: '#'} //mailto:community@eecu.org
-                            className="text-blue-600 hover:underline"
-                            >
-                            {profile?.email ?? 'Not set'}
-                        </a>
+                        {
+                            profile?.email ? (
+                                <a
+                                    href={`mailto::${profile.email}`} //mailto:community@eecu.org
+                                    className='no-underline text-blue-600  hover:underline'
+                                    >
+                                    {profile.email}
+                                </a>
+
+                            ):(
+                                <p className='mb-0 text-gray-600'>No email</p>
+                            )
+                        }
                     </li>
                     <li className="flex items-center">
                         <span className="text-gray-500 text-lg mr-2"><HiOutlinePhone /></span>
-                        <a
-                            href={profile?.phone ? `tel:+${profile?.phone}`: '#'} //tel:+18178820800
-                            className="text-blue-600 hover:underline"
-                            >
-                            {profile?.phone ?? 'Not set'}
-                        </a>
+                        {
+                            profile?.phone ? (
+                                <a
+                                    href={`tel:+${profile.phone}`} //mailto:community@eecu.org
+                                    className='no-underline text-blue-600  hover:underline'
+                                    >
+                                    {profile.phone}
+                                </a>
+
+                            ):(
+                                <p className='mb-0 text-gray-600'>No phone</p>
+                            )
+                        }
                     </li>
                     <li className="flex">
                         <span className="text-gray-500 text-lg mr-2"><CiLocationOn /></span>
                         <address className="not-italic capitalize">
-                        {profile?.location ?? 'Not set'}
+                        {profile?.location ?? 'No address'}
                         </address>
                     </li>
                 </ul>
             </div>
 
-            <hr className="my-4" />
-
             {/* Category Section */}
-            <div>
+            {/* <div>
                 <h3 className="text-lg font-semibold">Category</h3>
                 <p className="mt-2 text-sm text-gray-700">
                 <strong>{company_name}</strong> is{" "}
@@ -67,7 +79,7 @@ export default function CompanyInfo({company_name, profile, primary_business_cat
                 companies in the category{" "}
                 <span><a href="#" className='text-blue-600 underline'>{primary_business_category?.sub_category.category.name}</a></span> on Eniyi.
                 </p>
-            </div>
+            </div> */}
         </div>
     )
 }

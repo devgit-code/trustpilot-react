@@ -7,7 +7,6 @@ import { CgMenuBoxed } from "react-icons/cg";
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { confirmAlert } from 'react-confirm-alert';
 import Swal from 'sweetalert2';
 import profileNotPreviewImg from '@/../images/profile-not-found.png';
 
@@ -80,7 +79,6 @@ const Index = () => {
         doc.save('user_details.pdf');
     };
 
-
     const handleDelete = (event, userId) => {
         event.preventDefault();
 
@@ -99,23 +97,6 @@ const Index = () => {
             }
         });
     };
-
-        // confirmAlert({
-        //     title: 'Are you sure?',
-        //     message: "You won't be able to revert this!",
-        //     buttons: [
-        //         {
-        //             label: 'Yes',
-        //             onClick: () => {
-        //                 router.delete(route('admin.sub_categories.destroy', { id }));
-        //             },
-        //         },
-        //         {
-        //             label: 'No',
-        //             onClick: () => { },
-        //         },
-        //     ],
-        // });
 
     const goToNextPage = () => {
         if (pagination.current_page < pagination.last_page) {
@@ -194,7 +175,7 @@ const Index = () => {
                                 <th>Avatar</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Total Reviews</th>
+                                <th>Reviews</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -210,7 +191,7 @@ const Index = () => {
                                         <tr key={user.id}>
                                             <td data-label="No">{index + 1}</td>
                                             <td data-label="flex justify-center">
-                                                <div className='relative inline-flex items-center' style={{height: '64px'}}>
+                                                <div className='relative inline-flex items-center' style={{height: '68px'}}>
                                                     <img
                                                         className='inline'
                                                         style={{ maxWidth: '64px', maxHeight: '64px' }}
@@ -229,18 +210,16 @@ const Index = () => {
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <Link href={route('admin.users.show', {id : user.id, page:pagination.current_page})}>
-                                                            <CgMenuBoxed className='text-primary fs-4 me-2' />
+                                                            <CgMenuBoxed className='text-primary fs-5 me-2' />
                                                         </Link>
                                                     </li>
                                                     <li>
                                                         <Link
                                                             as="button"
-                                                            // href={route('admin.users.destroy', user.id)}
                                                             onClick={(event)=>handleDelete(event, user.id)}
                                                             className="dropdown-item"
-                                                            // method="delete"
                                                         >
-                                                            <BsTrashFill className="text-danger fs-4" />
+                                                            <BsTrashFill className="text-danger fs-5" />
                                                         </Link>
                                                     </li>
                                                 </ul>

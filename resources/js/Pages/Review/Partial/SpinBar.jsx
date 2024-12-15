@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import company_logo from "@/../images/company-logo.png"
-import { FaExternalLinkAlt } from "react-icons/fa";
 import Rating from '@/Components/Ratings';
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { BsFillExclamationOctagonFill } from "react-icons/bs"
+import { LuMessagesSquare } from "react-icons/lu";
 
-
-export default function SpinBar({id, profile, company_name, website, email_verified_at, rating_statistic }) {
+export default function SpinBar({id, profile, company_email, company_name, website, email_verified_at, rating_statistic }) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -28,7 +29,11 @@ export default function SpinBar({id, profile, company_name, website, email_verif
                         <div className="p-2">
                             <div className='flex gap-4'>
                                 <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
-                                    <img src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo} alt={company_name} className="max-w-20 max-h-20 object-cover rounded" />
+                                    <img
+                                        src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo}
+                                        alt={company_name}
+                                        className="object-cover rounded"
+                                        style={{ maxWidth: '80px', maxHeight: '80px' }}/>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                         className="absolute -top-2 -right-2">
                                         <path fill={`${email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
@@ -36,15 +41,31 @@ export default function SpinBar({id, profile, company_name, website, email_verif
                                     </svg>
                                 </div>
                                 <div className="">
-                                    <p className='text-2xl text-gray-800 font-extrabold mb-0'>{company_name}</p>
+                                    <div className='text-2xl text-gray-800 font-extrabold mb-0'>
+                                        {company_name}
+                                        {
+                                            !profile?.logo && (
+                                                <p className={`ml-3 bg-red-100 py-1 px-2 rounded inline-flex text-sm items-center mb-0`}>
+                                                    <BsFillExclamationOctagonFill className='text-danger text-base'/>
+                                                    <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>
+                                                </p>
+                                            )
+                                        }
+                                    </div>
                                     <div className='flex items-center mt-3'>
                                         <Rating rating={Number(rating_statistic.avg)}/>
-                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg}</span>
+                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="px-3 flex flex-col justify-end items-end">
+                            {/* <div className='flex justify-center'>
+                                <p className='text-gray-700'>
+                                    <LuMessagesSquare className='inline mr-3'/>
+                                    Replied to {rating_statistic.low_reviews.count_replies} out of {rating_statistic.low_reviews.count_reviews} negative reviews
+                                </p>
+                            </div> */}
                             <div className='flex gap-4'>
                                 <a href={website} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>

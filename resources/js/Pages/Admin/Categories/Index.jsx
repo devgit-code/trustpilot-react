@@ -100,7 +100,7 @@ const Index = ({ categories }) => {
                                                             <ul className="action d-flex align-items-center list-unstyled justify-content-center m-0 space-x-2">
                                                                 <li className="view">
                                                                     <Link href={route('admin.sub_categories.index', category.id)}>
-                                                                        <FaFolderOpen className='fs-3 me-2 text-success' />
+                                                                        <FaFolderOpen className='fs-5 me-2 text-success' />
                                                                     </Link>
                                                                 </li>
                                                                 <li className="edit">
@@ -108,13 +108,13 @@ const Index = ({ categories }) => {
                                                                     >
                                                                         <FontAwesomeIcon
                                                                             icon={faPenToSquare}
-                                                                            className="fs-4 me-2 text-primary"
+                                                                            className="fs-5 me-2 text-primary"
                                                                         />
                                                                     </Link>
                                                                 </li>
                                                                 <li className="delete">
                                                                     <Link as="button" method="delete" onClick={(event) => handleDelete(event, category.id)}>
-                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
+                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-5 text-danger' />
                                                                     </Link>
                                                                 </li>
                                                             </ul>
