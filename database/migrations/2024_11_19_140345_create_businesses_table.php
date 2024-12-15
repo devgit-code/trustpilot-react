@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
-            $table->string('website')->unique();
+            $table->string('website');
             $table->string('company_name');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('job_title')->nullable();
             $table->string('role')->default('owner');
-            $table->string('company_email')->unique()->nullable();
+            $table->string('company_email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken(); // Token for "remember me" functionality

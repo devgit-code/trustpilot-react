@@ -17,7 +17,11 @@ export default function Navigation({auth}) {
         <>
             <Navbar collapseOnSelect expand="sm" className="bg-dark p-0">
                 <Container fluid="lg">
-                    <Navbar.Brand ><Link href={route('home')}><img src={logo} alt="logo" className="my-1" style={{height:"2.2rem"}}/></Link></Navbar.Brand>
+                    <Navbar.Brand >
+                        <Link href={route('home')}>
+                            <img src={logo} alt="logo" className="my-1" style={{height:"2.2rem"}}/>
+                        </Link>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" className="bg-white"/>
 
                     <Navbar.Collapse id="responsive-navbar-nav " className="">

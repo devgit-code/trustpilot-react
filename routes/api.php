@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware([])->group(function () {
     Route::get('/home', [HomeController::class, 'apiSearchHome']);
+    Route::get('/addcompany', [HomeController::class, 'apiAddCompany']);
     Route::get('/companies', [WebReviewController::class, 'apiSearchCompany']);
     Route::get('/categories', [CategoryController::class, 'apiSearchCategory']);
 

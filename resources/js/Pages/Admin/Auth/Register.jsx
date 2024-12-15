@@ -71,7 +71,7 @@ export default function Register() {
                                 value={data.website}
                                 className="mt-1 block w-full"
                                 autoComplete="website"
-                                placeholder="Website example.com"
+                                placeholder="Domain like 'example.com.tr'"
                                 isFocused={true}
                                 onChange={(e) => setData('website', e.target.value)}
                                 required

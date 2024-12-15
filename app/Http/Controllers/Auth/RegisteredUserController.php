@@ -58,10 +58,37 @@ class RegisteredUserController extends Controller
         return Inertia::render('Admin/Auth/Register');
     }
 
+    public function extractCompanyName($url) {
+        // Parse the URL to get the host
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (!$host) {
+            return 'Example'; // Return null if the URL is invalid
+        }
+
+        // Remove 'www.' or other common subdomains
+        $host = preg_replace('/^www\./', '', $host);
+
+        // Split the host into parts
+        $parts = explode('.', $host);
+
+        // Handle domains with multi-segment TLDs (e.g., '.com.tr', '.co.uk')
+        if (count($parts) > 2) {
+            $companyName = $parts[count($parts) - 3]; // Get the second-to-last segment
+        } else {
+            $companyName = $parts[0]; // Get the first part of the domain
+        }
+
+        return $companyName;
+    }
+
     public function admin_store(Request $request): RedirectResponse
     {
         $request->validate([
-            'website' => 'required|url|unique:'.Business::class,
+            'website' => [
+                'required',
+                'regex:/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/'
+            ],
             'company_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -70,8 +97,25 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $businesses = Business::where('role', 'owner')
+            ->where('website', 'like', '%' . $request->input('website', ''))
+            ->get();
+
+        if(count($businesses))
+        {
+            return redirect()->back()->withErrors(['website'=>'Already registered domain'])->withInput();
+        }
+
+        $scriptPath = base_path('screen_check.js');
+        $command = "node $scriptPath ".$request->website;
+        $output = shell_exec($command);
+
+        if(trim($output) == 'false'){
+            return redirect()->back()->withErrors(['website'=>'Domain cannot reach'])->withInput();
+        }
+
         $business = Business::create([
-            'website' => $request->website,
+            'website' => 'https://' . $request->website,
             'company_name' => $request->company_name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -79,6 +123,10 @@ class RegisteredUserController extends Controller
             'company_email' => $request->company_email,
             'password' => Hash::make($request->password),
         ]);
+
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         // event(new Registered($business));
         Auth::guard('business')->login($business);
@@ -99,8 +147,8 @@ class RegisteredUserController extends Controller
 
     public function admin_claim_store(Request $request)
     {
-        $business = Business::findOrFail($request->input('id'));
         $validated = $request->validate([
+            'id' => 'required',
             'company_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -108,15 +156,17 @@ class RegisteredUserController extends Controller
             'company_email' => 'required|string|email|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $business = Business::findOrFail($request->input('id'));
 
-        // $business->fill($validated);
-        $business->name = $request->input('name');
+        $business->fill($validated);
+        // $business->name = $request->input('name');
         $business->save();
 
-        // event(new Registered($business));
-        Auth::guard('business')->login($business);
-        // $request->session()->regenerate();
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        Auth::guard('business')->login($business);
         $business->sendEmailVerificationNotification();
 
         // return redirect(RouteServiceProvider::HOME);
