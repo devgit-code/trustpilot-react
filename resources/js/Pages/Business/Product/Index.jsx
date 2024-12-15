@@ -89,7 +89,7 @@ const Index = ({products}) => {
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <Link href={route('business.products.edit', item.id)}>
-                                                            <FaEdit className='text-primary fs-4 me-2' />
+                                                            <FaEdit className='text-primary fs-5 me-2' />
                                                         </Link>
                                                     </li>
                                                     <form
@@ -101,7 +101,7 @@ const Index = ({products}) => {
                                                         <li className="delete d-flex align-items-center">
 
                                                             <button type="submit" className="border-0 bg-transparent">
-                                                                <BsTrashFill className="text-danger fs-4" />
+                                                                <BsTrashFill className="text-danger fs-5" />
 
                                                             </button>
                                                         </li>

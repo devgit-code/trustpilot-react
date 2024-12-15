@@ -38,6 +38,7 @@ class BusinessController extends Controller
         $businesses = collect($data->items())->map(function ($business, $index) {
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
             $business['reviews_count'] = count($business->reviews);
+            $business['count_products'] = count($business->products);
             $business['categories'] = $business->businessCategories;
             return $business;
         });
@@ -85,6 +86,7 @@ class BusinessController extends Controller
             'business' => $business,
             'has_reviews' => count($business->reviews),
             'trustscore' => number_format($business->reviews->avg('rating'), 1),
+            'products' => $business->products,
         ]);
     }
 
@@ -150,6 +152,7 @@ class BusinessController extends Controller
     {
 
     }
+
     public function change(Request $request, string $business)
     {
         $business = Business::findOrFail($business);

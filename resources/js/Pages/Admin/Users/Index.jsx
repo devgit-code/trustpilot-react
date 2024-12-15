@@ -210,7 +210,7 @@ const Index = () => {
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <Link href={route('admin.users.show', {id : user.id, page:pagination.current_page})}>
-                                                            <CgMenuBoxed className='text-primary fs-4 me-2' />
+                                                            <CgMenuBoxed className='text-primary fs-5 me-2' />
                                                         </Link>
                                                     </li>
                                                     <li>
@@ -219,7 +219,7 @@ const Index = () => {
                                                             onClick={(event)=>handleDelete(event, user.id)}
                                                             className="dropdown-item"
                                                         >
-                                                            <BsTrashFill className="text-danger fs-4" />
+                                                            <BsTrashFill className="text-danger fs-5" />
                                                         </Link>
                                                     </li>
                                                 </ul>

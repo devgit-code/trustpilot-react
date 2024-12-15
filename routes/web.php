@@ -75,6 +75,12 @@ Route::group([
     Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
+    Route::get('/reviews/product/{id}', [WebReviewController::class, 'product'])
+        ->name('reviews.product');
+
+    Route::middleware('auth')->get('/reviews/evaluate/{product}/product', [WebReviewController::class, 'evaluateProduct'])
+        ->name('reviews.evaluate.product');
+
     // blogs
     Route::get('/aboutus', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('/aboutus/{blog}', [BlogController::class, 'show'])->name('blogs.show');

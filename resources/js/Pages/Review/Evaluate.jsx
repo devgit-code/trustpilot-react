@@ -86,15 +86,15 @@ export default function Evaluate({ company }) {
                 <div className='bg-whtie border-b '>
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full flex items-center'>
-                            <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
-                                <Link href={route('reviews.company', company.id)}>
+                            <Link href={route('reviews.company', company.id)}>
+                                <div className='inline-flex items-center justify-center w-20 h-20 rounded border'>
                                     <img
                                         src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
                                         alt={company.name}
-                                        className="object-cover rounded"
+                                        className="object-cover"
                                         style={{ maxWidth: '80px', maxHeight: '80px' }}/>
-                                </Link>
-                            </div>
+                                </div>
+                            </Link>
                             <div className='ml-5'>
                                 <Link href={route('reviews.company', company.id)} className='text-gray-800 text-xl font-extrabold pb-3'>
                                     {company.company_name}

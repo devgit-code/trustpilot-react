@@ -98,13 +98,13 @@ const Index = ({ blogs }) => {
                                                                     >
                                                                         <FontAwesomeIcon
                                                                             icon={faPenToSquare}
-                                                                            className="fs-4 me-2 text-primary"
+                                                                            className="fs-5 me-2 text-primary"
                                                                         />
                                                                     </Link>
                                                                 </li>
                                                                 <li className="delete">
                                                                     <Link as="button" method="delete" onClick={(event) => handleDelete(event, blog.id)}>
-                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-4 text-danger' />
+                                                                        <FontAwesomeIcon icon={faTrashCan} className='fs-5 text-danger' />
                                                                     </Link>
                                                                 </li>
                                                             </ul>

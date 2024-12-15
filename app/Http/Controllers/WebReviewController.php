@@ -87,7 +87,7 @@ class WebReviewController extends Controller
 
     public function company(Request $request, String $id)
     {
-        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category'])->findOrFail($id);
+        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->findOrFail($id);
 
         $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();
@@ -156,6 +156,21 @@ class WebReviewController extends Controller
     }
 
     public function detail(Request $request, String $id)
+    {
+        $review = Review::with(['reply'])->findOrFail($id);
+        $review['userinfo'] = [
+            'id' => $review->user->id,
+            'name' => $review->user->name,
+            'avatar' => $review->user->profile->image,
+        ];
+        $review['business'] = $review->business;
+
+        return Inertia::render('Review/Detail', [
+            'review'=>$review
+        ]);
+    }
+
+    public function product(Request $request, String $id)
     {
         $review = Review::with(['reply'])->findOrFail($id);
         $review['userinfo'] = [

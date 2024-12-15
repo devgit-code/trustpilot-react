@@ -138,6 +138,7 @@ const Index = () => {
                                         <th>No</th>
                                         <th>Logo</th>
                                         <th>Name</th>
+                                        {/* <th>Products</th> */}
                                         <th>Categories</th>
                                         <th>Score</th>
                                         <th>Actions</th>
@@ -188,6 +189,7 @@ const Index = () => {
                                             <td>{
                                                 item.company_name //length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name
                                             }</td>
+                                            {/* <td>{item.count_products}</td> */}
                                             <td>
                                                 <div>
                                                     {
@@ -210,16 +212,19 @@ const Index = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className='inline-flex items-center'>
-                                                    <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
-                                                    <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
+                                                <div>
+                                                    <div className='inline-flex items-center'>
+                                                        <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
+                                                        <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
+                                                    </div>
+                                                    <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p>
                                                 </div>
                                             </td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
                                                         <a href={item.website} target="_blank">
-                                                            <FaExternalLinkAlt className='text-success fs-4 me-2' />
+                                                            <FaExternalLinkAlt className='text-success fs-6 me-2' />
                                                         </a>
                                                     </li>
                                                     <li className="edit">
@@ -229,7 +234,7 @@ const Index = () => {
                                                     </li>
                                                     <li className="delete">
                                                         <Link onClick={(e) => handleDelete(e, item.id)}>
-                                                            <BsTrashFill className='text-danger fs-4 me-2' />
+                                                            <BsTrashFill className='text-danger fs-5 me-2' />
                                                         </Link>
                                                     </li>
                                                 </ul>
