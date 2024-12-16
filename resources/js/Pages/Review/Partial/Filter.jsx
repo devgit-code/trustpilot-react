@@ -29,14 +29,18 @@ export default function FilterReview({ ratings }) {
         setCheckedRating(updatedChecked); // Update the state
     };
 
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat('en-US').format(number);
+    };
+
     // const totalRatings = ratings.reduce((sum, rating) => sum + rating.count, 0)
 
     return (
         <div className="p-3 bg-white border rounded">
             <h3 className='text-xl font-bold'>Reviews</h3>
-            <p className=''>total</p>
+            <p className='ml-3 text-gray-500'>{formatNumber(ratings.total)} total</p>
 
-            <div className='mt-2 pb-3 border-b-2'>
+            <div className='mt-2 pb-3'>
                 <div className="space-y-6">
                 {[...Array(5)].map((_, index) => {
                     const percentage = ratings.stars[index] ? ((ratings.stars[index].count / ratings.total) * 100).toFixed(1) : 0;
@@ -45,7 +49,7 @@ export default function FilterReview({ ratings }) {
                             onClick={()=>handleCheckboxChange(index)}>
                             <input
                                 type="checkbox"
-                                className="form-checkbox h-5 w-5 text-gray-600 rounded bg-gray-50
+                                className="hidden form-checkbox h-5 w-5 text-gray-600 rounded bg-gray-50
                                     group-hover:bg-blue-100
                                     group-active:bg-blue-300
                                     group-focus:ring-2 group-focus:ring-blue-500
@@ -76,7 +80,7 @@ export default function FilterReview({ ratings }) {
                 </div>
             </div>
 
-            <div className='flex items-center justify-between my-3'>
+            {/* <div className=' border-t-2 pt-3 flex items-center justify-between my-3'>
                 <button className='no-underline p-1 px-4 border border-blue-400 rounded group hover:bg-blue-100 hover:border-blue-200'>
                     <div className='flex items-center justify-between text-sm'>
                         <p className='text-blue-600 mb-1'>
@@ -96,7 +100,7 @@ export default function FilterReview({ ratings }) {
                         </div>
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

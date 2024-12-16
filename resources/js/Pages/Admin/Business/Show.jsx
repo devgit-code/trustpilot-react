@@ -5,6 +5,7 @@ import AdminLayout from '@/Layouts/adminLayout';
 import BusinessInfo from './Partial/BusinessInfo';
 import ReviewTable from '@/Components/ReviewTable';
 import SearchBar from '@/Components/SearchBar';
+import ProductList from './Partial/ProductList';
 import Swal from 'sweetalert2';
 import { BsTrashFill } from "react-icons/bs"
 import { FaEdit } from "react-icons/fa"
@@ -24,11 +25,13 @@ const Show = ({ business, has_reviews, trustscore, products }) => {
         <div className="content-wrapper m-4">
             <div className="row justify-center">
                 <div className="col-lg-10">
-                    <div className="card">
+                    <div className="card mb-3">
                         <div className="card-body">
                             <BusinessInfo business={business} trustscore={trustscore} has_reviews={has_reviews}/>
                         </div>
                     </div>
+
+                    <ProductList products={products} className='mt-5'/>
 
                     {
                         has_reviews !== 0 && (
@@ -38,68 +41,7 @@ const Show = ({ business, has_reviews, trustscore, products }) => {
                         )
                     }
 
-                    <div className='mt-3 p-3 card'>
-                        <div className="m-3 flex items-center justify-between">
-                            <div className="col-lg-6 col-md-12">
-                                <h3 className="m-0 text-center text-lg-start">Products</h3>
-                            </div>
-                            <div className="flex items-center">
-                                <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                            </div>
-                        </div>
-                        {/* <ProductTable products={products} /> */}
-                        <div className="table-responsive text-center">
-                            <table className="table">
-                                <thead>
-                                    <tr className="border-bottom-primary">
-                                        <th>No</th>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        {/* <th>Description</th> */}
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {products.length == 0 ? (
-                                        <tr className='text-center'>
-                                            <td colSpan="4">There is no product</td>
-                                        </tr>
-                                    ):(
-                                        <>
-                                        {products
-                                        .filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                                        .map((item, index) => (
-                                        <tr className="border-bottom-secondary align-middle" key={item.id}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                            {item.image ? (
-                                                <img src={`/storage/${item.image}`}
-                                                    alt="item-logo"
-                                                    className='inline'
-                                                    style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                            ):(
-                                                <>No image</>
-                                            )}
-                                            </td>
-                                            <td>{item.name}</td>
-                                            <td>
-                                                <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
-                                                    <li className="edit">
-                                                        <Link href={route('admin.businesses.edit', item.id)}>
-                                                            <CgMenuBoxed  className='text-primary fs-4 me-2' />
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        ))
-                                        }
-                                        </>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

@@ -94,8 +94,16 @@ class WebReviewController extends Controller
         $averageRating = $reviews->average('rating');
         $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
             ->groupBy('rating')
-            ->orderBy('rating', 'desc')
             ->get();
+
+        $stars = array_fill(0, 5, ['count' => 0]);
+        foreach ($ratingCounts as $data) {
+            $rating = $data['rating'];
+            $count = $data['count'];
+
+            // Set the count for the corresponding rating in the stars array
+            $stars[$rating - 1]['count'] = $count;
+        }
 
         $reviews = Review::where('business_id', $business->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
@@ -126,12 +134,7 @@ class WebReviewController extends Controller
         $business['rating_statistic'] = [
             'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
-            'stars' => $ratingCounts->map(function ($item) {
-                return [
-                    'rating' => $item->rating,
-                    'count' => $item->count,
-                ];
-            }),
+            'stars' => $stars,
             'low_reviews' => [
                 'count_reviews' => count($replyReviews),
                 'count_replies' => $countReply,

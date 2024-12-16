@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // DB::statement('ALTER TABLE products AUTO_INCREMENT = 1;');
+        DB::statement('ALTER TABLE products AUTO_INCREMENT = 1;');
     }
 
     /**
