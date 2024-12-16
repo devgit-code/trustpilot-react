@@ -53,7 +53,7 @@ const ProductList = ({ products }) => {
                 <div ref={containerRef}
                     className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (
-                        <div key={index} className="w-1/6 min-w-[120px] h-30 group bg-white rounded-lg mb-3 flex flex-col items-center justify-between">
+                        <div key={index} className="w-1/6 min-w-[120px] h-30 group bg-white rounded-lg flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
                                 <img src={`/storage/${product.image}`}
                                     alt="product-logo"
@@ -61,7 +61,7 @@ const ProductList = ({ products }) => {
                                     style={{ maxWidth: '48px', maxHeight: '48px' }} />
                             </div>
                             <p  className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</p>
-                            <p className='text-gray-700 '>50 reviews</p>
+                            <p className='text-gray-700 text-sm'>50 reviews</p>
                         </div>
                     ))}
                 </div>

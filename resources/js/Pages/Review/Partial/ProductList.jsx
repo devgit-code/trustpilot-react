@@ -55,12 +55,14 @@ const ProductList = ({ products }) => {
                     {products.map((product, index) => (
                         <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-3 flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
-                                <img src={`/storage/${product.image}`}
-                                    alt="product-logo"
-                                    className='max-h-12 max-w-12 object-cover broder-1 rounded'
-                                    style={{ maxWidth: '48px', maxHeight: '48px' }} />
+                                <Link href={route('reviews.evaluate.product', product.id)} className="block group-hover:underline" >
+                                    <img src={`/storage/${product.image}`}
+                                        alt="product-logo"
+                                        className='max-h-12 max-w-12 object-cover broder-1 rounded'
+                                        style={{ maxWidth: '48px', maxHeight: '48px' }} />
+                                </Link>
                             </div>
-                            <Link href={route('reviews.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</Link>
+                            <Link href={route('reviews.evaluate.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</Link>
                         </div>
                     ))}
                 </div>
