@@ -6,8 +6,8 @@ import Rating from '@/Components/Ratings';
 
 function BlogCard({ id, title, image, created_at}) {
     return (
-        <div className="bg-white rounded-lg mx-3 p-2 mb-3" style={{minWidth: '240px'}}>
-            <div className="h-[240px]">
+        <div className="bg-white rounded-lg" style={{minWidth: '200px'}}>
+            <div className="">
                 <Link href={route('blogs.show', id)} className="no-underline">
                     <img src={`/storage/${image}`}
                         alt="blog-logo"
@@ -18,8 +18,8 @@ function BlogCard({ id, title, image, created_at}) {
                 </Link>
             </div>
 
-            <div className="">
-                <Link href={route('blogs.show', id)} className="no-underline text-blue-500 text-2xl font-extrabold ">
+            <div className="mt-1">
+                <Link href={route('blogs.show', id)} className="no-underline text-blue-500 text-xl font-extrabold ">
                     {title}
                 </Link>
             </div>

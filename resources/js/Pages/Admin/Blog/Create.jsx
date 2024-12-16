@@ -111,7 +111,7 @@ const Create = ({ }) => {
                         <div className='mt-2'>
                             <InputLabel htmlFor="content" value="Content" />
                             {/* <Editor /> */}
-                            <BlogEditor id="content" theme="snow" value={value} onChange={setValue} className='mt-2'/>
+                            <BlogEditor name="content" theme="snow" value={value} onChange={setValue} className='mt-1'/>
 
                             <InputError className="mt-16" message={errors.content} />
                         </div>
