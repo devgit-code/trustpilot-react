@@ -28,7 +28,7 @@ const Edit = ({ review, userTotalReviews, status, useful, flag }) => {
                         <h4 className="card-title">Detail</h4>
                         <div className='p-4 bg-white border rounded'>
                             <div className='pb-3 border-b border-b-2 flex items-center'>
-                                <UserAvatar user={review.user} avatar={review.user?.profile.image} width='3rem' height='3rem'/>
+                                <UserAvatar user={review.user} avatar={review.user?.profile?.image} width='3rem' height='3rem'/>
                                 <div className='ml-3'>
                                     <p className='text-gray-800 text-sm font-bold mb-0'>
                                         {review.user.name}

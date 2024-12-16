@@ -7,8 +7,13 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import BlogEditor from './BlogEditor';
+import Editor from './Partial/Editor';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 const Create = ({ }) => {
+    const [value, setValue] = useState('');
+
     const [preview, setPreview] = useState(null); // Preview URL
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
@@ -37,6 +42,8 @@ const Create = ({ }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        data.content = value;
 
         post(route('admin.blogs.store'), {
             onSuccess: () => {
@@ -79,7 +86,7 @@ const Create = ({ }) => {
                         </div>
 
                         <div className='mt-4'>
-                            <InputLabel htmlFor="image-file" value="Set symbolic Image for Blog" />
+                            <InputLabel htmlFor="image-file" value="Set Image for Blog" />
 
                             <input
                                 // ref={inputRef}
@@ -106,25 +113,16 @@ const Create = ({ }) => {
                         <div className='mt-2'>
                             <InputLabel htmlFor="content" value="Content" />
 
-                            <TextInput
-                                id="content"
-                                name="content"
-                                className="mt-1 block w-full"
-                                value={data.content}
-                                onChange={(e)=>setData('content', e.target.value)}
-                                required
-                                autoComplete="content"
-                            />
+                            <ReactQuill id="content" theme="snow" value={value} onChange={setValue} className='mt-2 h-60'/>
 
-                            <InputError className="mt-2" message={errors.content} />
+                            <InputError className="mt-16" message={errors.content} />
                         </div>
 
-
-                        {/* <BlogEditor /> */}
-
-                        <PrimaryButton className="mt-3 ml-2 bg-success" disabled={processing}>
-                            Save
-                        </PrimaryButton>
+                        <div>
+                            <PrimaryButton className="mt-5 ml-2 bg-success" disabled={processing}>
+                                Save
+                            </PrimaryButton>
+                        </div>
                     </form>
 
                 </div>

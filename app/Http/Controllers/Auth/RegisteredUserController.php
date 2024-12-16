@@ -103,7 +103,7 @@ class RegisteredUserController extends Controller
 
         if(count($businesses))
         {
-            return redirect()->back()->withErrors(['website'=>'Already registered domain'])->withInput();
+            return redirect()->back()->withErrors(['website'=>'Already registered domain.'])->withInput();
         }
 
         $scriptPath = base_path('screen_check.js');
@@ -111,7 +111,7 @@ class RegisteredUserController extends Controller
         $output = shell_exec($command);
 
         if(trim($output) == 'false'){
-            return redirect()->back()->withErrors(['website'=>'Domain cannot reach'])->withInput();
+            return redirect()->back()->withErrors(['website'=>'Domain not exist.'])->withInput();
         }
 
         $business = Business::create([

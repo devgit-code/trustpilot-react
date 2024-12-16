@@ -28,7 +28,7 @@ export default function ContactTab({businessProfile}){
     return (
         <form onSubmit={submit} className="mt-6 space-y-6 mx-3">
             <div>
-                <InputLabel htmlFor="email" value="email" />
+                <InputLabel htmlFor="email" value="Email" />
 
                 <TextInput
                     id="email"
