@@ -6,10 +6,8 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import BlogEditor from './BlogEditor';
+import BlogEditor from './Partial/BlogEditor';
 import Editor from './Partial/Editor';
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
 
 const Create = ({ }) => {
     const [value, setValue] = useState('');
@@ -112,8 +110,8 @@ const Create = ({ }) => {
 
                         <div className='mt-2'>
                             <InputLabel htmlFor="content" value="Content" />
-
-                            <ReactQuill id="content" theme="snow" value={value} onChange={setValue} className='mt-2 h-60'/>
+                            {/* <Editor /> */}
+                            <BlogEditor id="content" theme="snow" value={value} onChange={setValue} className='mt-2'/>
 
                             <InputError className="mt-16" message={errors.content} />
                         </div>
