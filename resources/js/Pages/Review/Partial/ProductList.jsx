@@ -7,14 +7,14 @@ const ProductList = ({ products }) => {
 
     const scrollLeft = () => {
         if (containerRef.current) {
-            const containerWidth = containerRef.current.offsetWidth - 50;
+            const containerWidth = containerRef.current.offsetWidth / 2;
             containerRef.current.scrollBy({ left: -containerWidth, behavior: 'smooth' });
         }
     };
 
     const scrollRight = () => {
         if (containerRef.current) {
-            const containerWidth = containerRef.current.offsetWidth - 50;
+            const containerWidth = containerRef.current.offsetWidth / 2;
             containerRef.current.scrollBy({ left: containerWidth, behavior: 'smooth' });
         }
     };
@@ -26,11 +26,12 @@ const ProductList = ({ products }) => {
                 <h2 className="text-center text-xl font-bold mb-6">Products</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
-                    <div className="hidden md:inline-flex items-center justify-center">
+                    <div className="flex items-center justify-center">
                         <button
                             onClick={scrollLeft}
                             className="inline-flex items-center justify-center mr-2 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 z-10">
-                            <FiArrowLeft size={20} />
+                            <FiArrowLeft size={20}
+                            disabled={products.length < 6}/>
                         </button>
                         <button
                             onClick={scrollRight}
@@ -41,17 +42,18 @@ const ProductList = ({ products }) => {
                 </div>
             </div>
 
-            <div className="relative flex items-center pt-3">
-                {/* Icon Grid - Horizontal Scroll on Mobile */}
-                <div ref={containerRef} className="row lg:w-full overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
-                {/* <div ref={containerRef} className="flex gap-4 overflow-x-scroll-important md:overflow-hidden-important scroll-smooth"> */}
-                    {
-                        products.length == 0 && (
-                            <p className='text-center text-gray-600 font-bold text-lg'>No Products</p>
-                        )
-                    }
+            <div className="relative mt-3">
+                {
+                    products.length === 0 && (
+                        <div className="flex items-center justify-center h-24 text-gray-800">
+                        No products
+                        </div>
+                    )
+                }
+                <div ref={containerRef}
+                    className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (
-                        <div key={index} className="col-lg-2 flex flex-shrink-0 flex-col items-center group justify-center text-center hover:cursor-pointer">
+                        <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-3 flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
                                 <img src={`/storage/${product.image}`}
                                     alt="product-logo"

@@ -1,52 +1,84 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 
-const PhoneNumberInput = ({ onChange }) => {
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [countryCode, setCountryCode] = useState("+1"); // Default country code
 
-    const handlePhoneChange = (e) => {
-        const input = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-        setPhoneNumber(input);
+const CardContainer = ({ cards }) => {
+  const containerRef = useRef(null);
 
-        if (onChange) {
-            onChange(`${countryCode}${input}`);
-        }
-    };
+  const scroll = (direction) => {
+    const scrollAmount = 300; // Adjust scroll amount as needed
+    if (containerRef.current) {
+      containerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
-    const handleCountryCodeChange = (e) => {
-        setCountryCode(e.target.value);
-
-        if (onChange) {
-            onChange(`${e.target.value}${phoneNumber}`);
-        }
-    };
-
-    return (
-        <div className="flex items-center space-x-2">
-            {/* Country Code Selector */}
-            <select
-                value={countryCode}
-                onChange={handleCountryCodeChange}
-                className="p-2 border rounded"
-            >
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+91">🇮🇳 +91</option>
-                <option value="+61">🇦🇺 +61</option>
-                {/* Add more country codes as needed */}
-            </select>
-
-            {/* Phone Number Input */}
-            <input
-                type="text"
-                value={phoneNumber}
-                onChange={handlePhoneChange}
-                placeholder="Enter phone number"
-                className="p-2 border rounded flex-1"
-                maxLength={15} // Adjust maximum length as needed
-            />
+  return (
+    <div className="relative">
+      {/* If no cards, show 'No Cards' message */}
+      {cards.length === 0 ? (
+        <div className="flex items-center justify-center h-40 text-gray-500">
+          No cards
         </div>
-    );
+      ) : (
+        <div className="relative">
+          {/* Left Scroll Button */}
+          {cards.length > 4 && (
+            <button
+              onClick={() => scroll("left")}
+              className="absolute left-0 z-10 bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300"
+            >
+              &#8592;
+            </button>
+          )}
+
+          {/* Cards Container */}
+          <div
+            ref={containerRef}
+            className={`flex items-center gap-5 ${
+              cards.length < 4 ? "justify-center" : "justify-start"
+            } overflow-hidden`}
+          >
+            {cards.map((card) => (
+              <div
+                key={card.id}
+                className="w-1/4 min-w-[200px] h-60 bg-white rounded-lg shadow p-4 mb-3 flex flex-col items-center justify-between"
+              >
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-32 object-cover rounded"
+                />
+                <h3 className="text-lg font-bold">{card.title}</h3>
+                <p className="text-sm text-gray-500">{card.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Scroll Button */}
+          {cards.length > 4 && (
+            <button
+              onClick={() => scroll("right")}
+              className="absolute right-0 z-10 bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300"
+            >
+              &#8594;
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default PhoneNumberInput;
+const mockCards = [
+];
+
+const Index = () => {
+    return (
+        <>
+            <CardContainer cards={mockCards}/>
+        </>
+    )
+}
+export default Index;
