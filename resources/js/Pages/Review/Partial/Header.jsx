@@ -33,11 +33,17 @@ export default function Header({company_name, company_email, profile, primary_bu
                     {
                         primary_business_category && (
                             <>
-                                <div>
-                                    <span className='text-gray-800 text-sm capitalize'>{primary_business_category.sub_category.category.name} </span>
+                                <div className='flex items-center'>
+                                    <Link href={route('categories.show', primary_business_category.sub_category.category.id)}
+                                        className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
+                                        {primary_business_category.sub_category.category.name}
+                                    </Link>
                                     &gt;
                                 </div>
-                                <span className='ml-2 text-gray-200 font-bold text-sm bg-primary rounded px-2 py-1'>{primary_business_category.sub_category.name}</span>
+                                <Link href={route('categories.detail', primary_business_category.sub_category.id)}
+                                    className='text-gray-200 text-sm capitalize no-underline hover:underline ml-3 bg-primary rounded px-2 py-1'>
+                                    {primary_business_category.sub_category.name}
+                                </Link>
                             </>
                         )
                     }
