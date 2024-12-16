@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Business;
@@ -53,7 +54,6 @@ class HomeController extends Controller
         ]);
     }
 
-
     public function apiSearchHome(Request $request)
     {
         $searchTerm = $request->input('query', '');
@@ -87,6 +87,84 @@ class HomeController extends Controller
             'companies' => $businesses,
             'categories' => $results,
         ]);
+    }
+
+    public function extractCompanyName($url) {
+        // Parse the URL to get the host
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (!$host) {
+            return 'Example'; // Return null if the URL is invalid
+        }
+
+        // Remove 'www.' or other common subdomains
+        $host = preg_replace('/^www\./', '', $host);
+
+        // Split the host into parts
+        $parts = explode('.', $host);
+
+        // Handle domains with multi-segment TLDs (e.g., '.com.tr', '.co.uk')
+        if (count($parts) > 2) {
+            $companyName = $parts[count($parts) - 3]; // Get the second-to-last segment
+        } else {
+            $companyName = $parts[0]; // Get the first part of the domain
+        }
+
+        return $companyName;
+    }
+
+    public function apiAddCompany(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'url' => [
+                    'required',
+                    'regex:/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/'
+                ],
+            ]);
+
+            $searchTerm = $request->input('url', '');
+
+            $businesses = Business::where('role', 'owner')
+                ->where('website', 'like', '%' . $searchTerm)
+                ->get();
+
+            if(count($businesses))
+            {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Already Registered Company',
+                ]);
+            }
+
+            $scriptPath = base_path('screen_check.js');
+            $command = "node $scriptPath ".$searchTerm;
+            $output = shell_exec($command);
+
+            if(trim($output) == 'false'){
+                return response()->json([
+                    'success' => false,
+                    'message' => "Can't find the website.",
+                ], 200);
+            }
+
+            $company_name = $this->extractCompanyName('https://' . $searchTerm);
+
+            $businesss = Business::create([
+                'website' => 'https://' . $searchTerm,
+                'company_name' => ucfirst($company_name),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => $businesss->id,
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The url field format is invalid.',
+            ], 422);
+        }
     }
 
     public function search()

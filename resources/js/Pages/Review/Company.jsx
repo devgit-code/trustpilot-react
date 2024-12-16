@@ -24,7 +24,7 @@ export default function Company({ data }) {
 
                 <div className="p-2 bg-[#FCFBF3]">
                     <div className='container-sm my-2'>
-                        <div className="p-2 grid sm:grid-cols-3 gap-4 grid-cols-1 mb-3">
+                        <div className="p-2 grid lg:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
                                     <ProductList products={data.company.products}/>

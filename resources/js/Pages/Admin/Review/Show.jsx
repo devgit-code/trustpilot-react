@@ -76,7 +76,7 @@ const Show = ({ review, userTotalReviews, count_reviews, trustscore }) => {
                             </div>
                             <div className='mt-3 flex items-center justify-between'>
                                 <div className='flex items-center'>
-                                    <UserAvatar user={review.user} avatar={review.user?.profile.image} width='3rem' height='3rem'/>
+                                    <UserAvatar user={review.user} avatar={review.user?.profile?.image} width='3rem' height='3rem'/>
                                     <div className='no-underline ml-3'>
                                         <Link
                                             href={route('admin.users.show', review.user.id)}

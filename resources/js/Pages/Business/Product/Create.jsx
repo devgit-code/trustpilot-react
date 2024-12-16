@@ -49,7 +49,7 @@ const Create = () => {
                     <div className="card">
                         <div className="card-body">
 
-                            <h4 className="card-title">Add New Product</h4>
+                            <h4 className="card-title">New Product</h4>
                             <form onSubmit={handleSubmit} className="mt-6 space-y-6 mx-3">
                                 <div>
                                     <InputLabel htmlFor="name" value="Name" />
@@ -108,7 +108,7 @@ const Create = () => {
 
                                 <div>
                                     <button type="submit" className="btn btn-primary m-2" disabled={processing}>
-                                        Create
+                                        Add
                                     </button>
                                     <Link href={route('business.products.index')} className="btn btn-danger" type="button">
                                         Back

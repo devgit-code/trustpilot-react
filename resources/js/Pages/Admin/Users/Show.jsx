@@ -176,6 +176,7 @@ const Show = ({ user, userProfile, has_reviews }) => {
                                                 type="email"
                                                 className="mt-1 block w-full bg-gray-100"
                                                 value={user.email}
+                                                autoComplete="email"
                                                 disabled
                                             />
                                         </div>

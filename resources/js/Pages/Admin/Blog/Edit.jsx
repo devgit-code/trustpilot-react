@@ -6,15 +6,16 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import BlogEditor from './BlogEditor';
+import BlogEditor from './Partial/BlogEditor';
 
 const Edit = ({ blog }) => {
+    const [value, setValue] = useState(blog.content || '');
     const [preview, setPreview] = useState(null); // Preview URL
 
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         image:null,
         title: blog.title || '',
-        content: blog.content || '',
+        content: '',
     });
 
     // Handle file input change
@@ -37,6 +38,8 @@ const Edit = ({ blog }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        data.content = value;
 
         post(route('admin.blogs.update', blog.id), {
             onSuccess: () => {
@@ -79,7 +82,7 @@ const Edit = ({ blog }) => {
                         </div>
 
                         <div className='mt-4'>
-                            <InputLabel htmlFor="image-file" value="Set symbolic Image for Blog" />
+                            <InputLabel htmlFor="image-file" value="Set Image for Blog" />
 
                             <input
                                 // ref={inputRef}
@@ -111,24 +114,12 @@ const Edit = ({ blog }) => {
                         <div className='mt-2'>
                             <InputLabel htmlFor="content" value="Content" />
 
-                            <TextInput
-                                id="content"
-                                name="content"
-                                className="mt-1 block w-full"
-                                value={data.content}
-                                onChange={(e)=>setData('content', e.target.value)}
-                                required
-                                autoComplete="content"
-                            />
+                            <BlogEditor id="content" theme="snow" value={value} onChange={setValue} className='mt-2'/>
 
                             <InputError className="mt-2" message={errors.content} />
                         </div>
 
-                        {/* <BlogEditor /> */}
-
-
-
-                        <PrimaryButton className="mt-3 ml-2 bg-success" disabled={processing}>
+                        <PrimaryButton className="mt-16 ml-2 bg-success" disabled={processing}>
                             Update
                         </PrimaryButton>
                     </form>

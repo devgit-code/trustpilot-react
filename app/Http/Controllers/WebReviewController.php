@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Models\ReviewThumb;
 use App\Models\Business;
 use App\Models\User;
+use App\Models\Product;
 use Inertia\Inertia;
 
 class WebReviewController extends Controller
@@ -94,8 +95,16 @@ class WebReviewController extends Controller
         $averageRating = $reviews->average('rating');
         $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
             ->groupBy('rating')
-            ->orderBy('rating', 'desc')
             ->get();
+
+        $stars = array_fill(0, 5, ['count' => 0]);
+        foreach ($ratingCounts as $data) {
+            $rating = $data['rating'];
+            $count = $data['count'];
+
+            // Set the count for the corresponding rating in the stars array
+            $stars[$rating - 1]['count'] = $count;
+        }
 
         $reviews = Review::where('business_id', $business->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
@@ -126,12 +135,7 @@ class WebReviewController extends Controller
         $business['rating_statistic'] = [
             'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
-            'stars' => $ratingCounts->map(function ($item) {
-                return [
-                    'rating' => $item->rating,
-                    'count' => $item->count,
-                ];
-            }),
+            'stars' => $stars,
             'low_reviews' => [
                 'count_reviews' => count($replyReviews),
                 'count_replies' => $countReply,
@@ -156,21 +160,6 @@ class WebReviewController extends Controller
     }
 
     public function detail(Request $request, String $id)
-    {
-        $review = Review::with(['reply'])->findOrFail($id);
-        $review['userinfo'] = [
-            'id' => $review->user->id,
-            'name' => $review->user->name,
-            'avatar' => $review->user->profile->image,
-        ];
-        $review['business'] = $review->business;
-
-        return Inertia::render('Review/Detail', [
-            'review'=>$review
-        ]);
-    }
-
-    public function product(Request $request, String $id)
     {
         $review = Review::with(['reply'])->findOrFail($id);
         $review['userinfo'] = [
@@ -307,5 +296,40 @@ class WebReviewController extends Controller
             'status' => 'success',
             'message' => 'Thanks for your report',
         ]);
+    }
+
+    public function evaluateProduct(Request $request, String $id)
+    {
+        $product = Product::findOrFail($id);
+        $business = Business::with('profile')->findOrFail($product->business_id);
+
+        return Inertia::render('Review/Product', [
+            'product' => $product,
+            'company' => $business,
+        ]);
+    }
+
+    public function storeProduct(Request $request)
+    {
+        $request->validate([
+            "title" => "required|max:255",
+            "description" => "required|string",
+            "business_id" => "required",
+            "rating" => "required",
+            "date" => "required|date",
+        ]);
+
+        $creationData = [
+            "title" => $request->input('title'),
+            "description" => $request->input('description'),
+            "business_id" => $request->input('business_id'),
+            "user_id" => auth()->user()->id,
+            "date_experience" => $request->input('date'),
+            "rating" => $request->input('rating'),
+        ];
+
+        Review::create($creationData);
+
+        return redirect()->route('reviews.company', $request->input('business_id'));
     }
 }

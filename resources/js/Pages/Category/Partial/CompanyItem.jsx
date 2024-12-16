@@ -10,7 +10,6 @@ import ContactPopup from './ContactPopup';
 import ReviewCard from './RecentCompanyReviewCard.jsx';
 
 export default function CompanyItem({index, company}){
-
     const [expandedReview, setExpandedReview] = useState(null);
 
     // Toggle review expansion
@@ -43,9 +42,9 @@ export default function CompanyItem({index, company}){
             </Link>
             <div className="border-t flex justify-between items-center px-3 py-1">
                 <div className='flex items-center'>
-                    <ContactPopup />
+                    <ContactPopup contact={company.profile} website={company.website}/>
                     <span className='ml-2 text-sm border-l text-gray-900 pl-3'>
-                    {company.profile?.location?.length > 15 ? `${company.profile.location.slice(0, 15)}...` : company.profile.location}
+                    {company.profile?.location}
                     </span>
                 </div>
 

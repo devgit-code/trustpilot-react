@@ -2,6 +2,7 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 
 import moment from 'moment';
+import DOMPurify from "dompurify";
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import Header from './Partial/Header.jsx';
 import BlogCard from './Partial/BlogCard.jsx';
@@ -9,58 +10,33 @@ import Article from './Partial/Article.jsx';
 
 import { FaFacebookSquare, FaTwitterSquare, FaLinkedin } from "react-icons/fa";
 
-const blog = {
-    category:'Trends in Trust',
-    name:"Smart spring cleaning: Getting rid of unwanted household items, ethically",
-    image: '/url',
-    date: '2024-01-25',
-    author: {
-        name: 'Joseph Russell',
-        job: "Content Strategist",
-        bio:"Joseph spends his days helping eCommerce companies understand the power of reviews and what they can do for their businesses in terms of conversion, SEO, and reputation management. When he's not focused on tech marketing, he enjoys a nice glass of wine, a good book, and making sure he's sending better memes than anyone else in his friend group."
-    }
-};
-
-const related_blogs = [
-    {
-        name:"Parcel delivery",
-        image: '/url',
-        date: '2024-01-25'
-    },
-    {
-        name:"Honey delivery is perfect",
-        image: '/url',
-        date: '2022-01-25'
-    },
-    {
-        name:"Parcel delivery",
-        image: '/url',
-        date: '2024-01-25'
-    },
-    {
-        name:"Honey delivery is perfect",
-        image: '/url',
-        date: '2022-01-25'
-    },
-]
 
 export default function Show({ blog, other_blogs }) {
+    const sanitizedContent = DOMPurify.sanitize(blog.content);
+
     return (
         <>
             <FrontendLayout>
                 <Head title='Detail' />
 
                 <div className='container-md p-2'>
-                    <div className='md:w-[80%] mx-auto text-center mt-5'>
+                    <div className='md:w-[60%] mx-auto text-center mt-5'>
                         <h2 className='mt-3 text-5xl'>{blog.title}</h2>
-                        <p className='mt-4 text-gray-500'>{moment(blog.created_at).format('M/DD, Y')}</p>
+                        <p className='mt-4 text-gray-500'>{moment(blog.created_at).format('dddd, MMMM DD, YYYY')}</p>
                     </div>
 
-                    <div className='mx-auto md:w-[60%]'>
-
-                        <div className='mt-3'>
-                            <Article />
+                    <div className='mx-auto md:w-[40%]'>
+                        <div className=''>
+                            <img src={`/storage/${blog.image}`}
+                                alt="blog-logo"
+                                className='w-full object-cover'
+                                // style={{ maxWidth: '128px', maxHeight: '128px' }}
+                            />
                         </div>
+                    </div>
+
+                    <div className='mt-5 mx-auto md:w-[50%]'>
+                        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
                     </div>
 
                     <div className='mt-5 mb-3 mx-auto md:w-[80%]'>

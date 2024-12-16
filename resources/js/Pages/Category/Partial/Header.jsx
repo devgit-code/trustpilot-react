@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link, router, usePage } from '@inertiajs/react';
 
 function Header({category}) {
     return (
@@ -6,7 +7,13 @@ function Header({category}) {
             <div className='container-md'>
                 <p className='pl-3 text-black capitalize'>
                     {category.category && (
-                        <>{category.category.name} &gt; {category.name}</>
+                        <>
+                            <Link href={route('categories.show', category.category.id)}
+                                className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
+                                {category.category.name}
+                            </Link>
+                             &gt; {category.name}
+                        </>
                     )}
                 </p>
                 <div className="flex justify-center w-full">

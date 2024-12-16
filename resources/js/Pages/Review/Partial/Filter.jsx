@@ -11,13 +11,30 @@ const colors = [
     'group-hover:bg-red-500',
 ];
 
-const ratings = [
-    { stars: 5, count: 870 },
-    { stars: 4, count: 120 },
-    { stars: 3, count: 70 },
-    { stars: 2, count: 40 },
-    { stars: 1, count: 20 },
-];
+const Tooltip = ({ text, children }) => {
+    const [show, setShow] = useState(false);
+
+    return (
+        <div
+            className="relative block"
+            onMouseEnter={() => setShow(true)}
+            onMouseLeave={() => setShow(false)}
+            >
+            {show && (
+                <div
+                className="absolute bottom-full mb-2 bg-white border text-black text-sm px-2 py-1 rounded "
+                style={{
+                    left: "50%",
+                    transform: "translateX(-50%)", // Center the tooltip
+                }}
+                >
+                {text}
+                </div>
+            )}
+            {children}
+        </div>
+    );
+};
 
 export default function FilterReview({ ratings }) {
     const [checkedRating, setCheckedRating] = useState([false, false, false, false, false])
@@ -29,54 +46,60 @@ export default function FilterReview({ ratings }) {
         setCheckedRating(updatedChecked); // Update the state
     };
 
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat('en-US').format(number);
+    };
+
     // const totalRatings = ratings.reduce((sum, rating) => sum + rating.count, 0)
 
     return (
         <div className="p-3 bg-white border rounded">
             <h3 className='text-xl font-bold'>Reviews</h3>
-            <p className=''>total</p>
+            <p className='ml-3 text-gray-500'>{formatNumber(ratings.total)} total</p>
 
-            <div className='mt-2 pb-3 border-b-2'>
+            <div className='mt-2 pb-3'>
                 <div className="space-y-6">
                 {[...Array(5)].map((_, index) => {
-                    const percentage = ratings.stars[index] ? ((ratings.stars[index].count / ratings.total) * 100).toFixed(1) : 0;
+                    const percentage = ratings.stars[4-index] ? ((ratings.stars[4-index].count / ratings.total) * 100).toFixed(1) : 0;
                     return (
-                        <div key={index} className="flex group items-center space-x-4 hover:cursor-pointer"
-                            onClick={()=>handleCheckboxChange(index)}>
-                            <input
-                                type="checkbox"
-                                className="form-checkbox h-5 w-5 text-gray-600 rounded bg-gray-50
-                                    group-hover:bg-blue-100
-                                    group-active:bg-blue-300
-                                    group-focus:ring-2 group-focus:ring-blue-500
-                                    checked:bg-blue-500
-                                    "
-                                id={`star-${index+1}`}
-                                checked={checkedRating[index]}
-                                onChange={() => handleCheckboxChange(index)}
-                                />
-                            <label
-                                htmlFor={`star-${index+1}`}
-                                className="text-sm text-gray-800 whitespace-nowrap w-16"
-                                >
-                                {index+1}-star
-                            </label>
-                            <div className="relative w-full bg-gray-200 rounded-md overflow-hidden">
-                                <div
-                                    className={`h-3 bg-gray-900 ${colors[index]} rounded-md`}
-                                    style={{ width: `${percentage}%` }}
-                                ></div>
+                        <Tooltip key={index} text={`${ratings.stars[4-index].count} of ${ratings.total} reviews`} className='flex'>
+                            <div className="flex group items-center space-x-4 hover:cursor-pointer"
+                                onClick={()=>handleCheckboxChange(5-index)}>
+                                <input
+                                    type="checkbox"
+                                    className="hidden form-checkbox h-5 w-5 text-gray-600 rounded bg-gray-50
+                                        group-hover:bg-blue-100
+                                        group-active:bg-blue-300
+                                        group-focus:ring-2 group-focus:ring-blue-500
+                                        checked:bg-blue-500
+                                        "
+                                    id={`star-${5-index}`}
+                                    checked={checkedRating[5-index]}
+                                    onChange={() => handleCheckboxChange(5-index)}
+                                    />
+                                <label
+                                    htmlFor={`star-${5-index}`}
+                                    className="text-sm text-gray-800 whitespace-nowrap w-16"
+                                    >
+                                    {5-index}-star
+                                </label>
+                                <div className="relative w-full bg-gray-200 rounded-md overflow-hidden">
+                                    <div
+                                        className={`h-3 bg-gray-900 ${colors[index]} rounded-md`}
+                                        style={{ width: `${percentage}%` }}
+                                    ></div>
+                                </div>
+                                <div className="text-sm text-gray-800 w-10 text-right">
+                                {(percentage < 0 && percentage < 1) ? "<1" : Math.round(percentage)}%
+                                </div>
                             </div>
-                            <div className="text-sm text-gray-800 w-10 text-right">
-                            {percentage}%
-                            </div>
-                        </div>
+                        </Tooltip>
                     );
                 })}
                 </div>
             </div>
 
-            <div className='flex items-center justify-between my-3'>
+            {/* <div className=' border-t-2 pt-3 flex items-center justify-between my-3'>
                 <button className='no-underline p-1 px-4 border border-blue-400 rounded group hover:bg-blue-100 hover:border-blue-200'>
                     <div className='flex items-center justify-between text-sm'>
                         <p className='text-blue-600 mb-1'>
@@ -96,7 +119,7 @@ export default function FilterReview({ ratings }) {
                         </div>
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

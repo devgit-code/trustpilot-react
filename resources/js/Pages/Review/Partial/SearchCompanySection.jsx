@@ -81,6 +81,7 @@ function SearchSection() {
                         <IoSearchOutline className='text-xl'/>
                     </button>
                     <input
+                        id="search"
                         type="text"
                         value={filters.query}
                         onChange={handleInputChange}

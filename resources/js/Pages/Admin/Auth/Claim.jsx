@@ -26,6 +26,7 @@ export default function Claim({ businesses }) {
     }));
 
     const { data, setData, post, processing, errors, reset } = useForm({
+        id: '',
         website: '',
         company_name: '',
         first_name: '',
@@ -40,6 +41,7 @@ export default function Claim({ businesses }) {
 
     const handleSelectChange = (option) => {
         setSelectedOption(option);
+        setData('id', option.value)
     };
 
     useEffect(() => {
@@ -90,6 +92,7 @@ export default function Claim({ businesses }) {
                                 isClearable
                                 className="w-64 inline"
                             />
+                            <InputError message={errors.id} className="mt-2" />
                         </div>
 
                         <div className="mt-4">
