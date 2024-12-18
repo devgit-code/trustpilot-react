@@ -165,7 +165,7 @@ class WebReviewController extends Controller
         $review['userinfo'] = [
             'id' => $review->user->id,
             'name' => $review->user->name,
-            'avatar' => $review->user->profile->image,
+            'avatar' => $review->user->profile?->image,
         ];
         $review['business'] = $review->business;
 

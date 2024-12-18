@@ -118,7 +118,7 @@ export default function Evaluate({ company }) {
                                     </div>
                                     {star && (
                                         <>
-                                            <div className='mt-2'>
+                                            <div className='mt-3'>
                                                 <p className='text-gray-800 text-lg font-bold'>
                                                     Tell us more about your experience
                                                 </p>
@@ -133,6 +133,9 @@ export default function Evaluate({ company }) {
                                             </div>
 
                                             <div>
+                                                <p className='mt-3 text-gray-800 text-lg font-bold'>
+                                                    Title of Review
+                                                </p>
                                                 <div className="mt-3 relative w-full">
                                                     <input
                                                         type="text"
@@ -153,7 +156,7 @@ export default function Evaluate({ company }) {
                                                 <InputError className="mt-2" message={errors.title} />
                                             </div>
 
-                                            <div className='mt-2'>
+                                            <div className='mt-3'>
                                                 <p className='text-gray-800 text-lg font-bold'>
                                                     Date of experience
                                                 </p>

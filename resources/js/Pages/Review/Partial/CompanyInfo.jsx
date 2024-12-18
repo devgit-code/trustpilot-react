@@ -4,7 +4,7 @@ import { CiAt } from "react-icons/ci";
 import { HiOutlinePhone } from "react-icons/hi2";
 import { CiLocationOn } from "react-icons/ci";
 
-export default function CompanyInfo({company_name, profile, primary_business_category}) {
+export default function CompanyInfo({company_name, company_email, first_name, last_name, job_title, profile, primary_business_category}) {
 
     return (
         <div className="p-4 border rounded bg-white">
@@ -22,6 +22,19 @@ export default function CompanyInfo({company_name, profile, primary_business_cat
                 {profile?.description ?? 'No description'}
                 </p>
             </div>
+
+            {/* Company Info */}
+            <div className="mb-4 ">
+                <h3 className="text-lg font-semibold">Company</h3>
+                <p className='text-gray-800 text-sm font-medium mb-1'>
+                {company_email && `Mail: ${company_email}`}
+                </p>
+                <p className='text-gray-800 text-sm font-medium'>
+                {(first_name || last_name) && `${first_name} ${last_name}`}
+                {(job_title) && ` (${job_title})`}
+                </p>
+            </div>
+
 
             <hr className="my-4" />
 

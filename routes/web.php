@@ -93,7 +93,7 @@ Route::group([
     Route::post('/reviews', [WebReviewController::class, 'store'])
         ->name('reviews.store');
 
-    Route::post('/reviews', [WebReviewController::class, 'storeProduct'])
+    Route::post('/reviews/product', [WebReviewController::class, 'storeProduct'])
         ->name('reviews.product.store');
 
 });

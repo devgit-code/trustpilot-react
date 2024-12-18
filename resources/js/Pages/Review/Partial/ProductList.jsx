@@ -43,13 +43,6 @@ const ProductList = ({ products }) => {
             </div>
 
             <div className="relative mt-3">
-                {
-                    products.length === 0 && (
-                        <div className="flex items-center justify-center h-24 text-gray-800">
-                        No products
-                        </div>
-                    )
-                }
                 <div ref={containerRef}
                     className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (

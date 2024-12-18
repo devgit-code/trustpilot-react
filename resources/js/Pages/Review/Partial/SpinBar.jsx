@@ -23,7 +23,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
     return (
         <>
         {isVisible && (
-            <div className={`sticky top-0 z-10 bg-gray-50 p-1 border-b text-white shadow-md transition-all duration-500 ease-out`}>
+            <div className={`sticky top-0 z-10 bg-gray-50 p-1 border-b text-white shadow-md transition-all duration-500 ease-out z-20`}>
                 <div className='container-lg '>
                     <div className='my-1 grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div className="p-2">
