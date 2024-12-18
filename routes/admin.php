@@ -89,9 +89,9 @@ Route::group([
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
+    Route::post('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
     Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');
-    Route::put('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
     Route::post('/profile/update/logo', [ProfileController::class, 'logo_update'])->name('profile.update.logo');
 
 });

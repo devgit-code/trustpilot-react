@@ -1,6 +1,6 @@
-import { Transition } from '@headlessui/react';
+import React, { useState,} from 'react';
 import { Link, router, usePage, useForm } from '@inertiajs/react';
-import React from 'react';
+import { Transition } from '@headlessui/react';
 
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -8,16 +8,18 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
 export default function HomeTab({business, businessProfile}){
-    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing, recentlySuccessful, clearErrors } = useForm({
         company_name: business.company_name,
+        first_name: business.first_name,
+        last_name: business.last_name,
+        job_title: business.job_title,
         // website: business.website,
-        description: businessProfile?.description || '',
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("business.profile.update.home"), data);
+        post(route("business.profile.update.home"), data);
     };
 
     return (
@@ -33,7 +35,7 @@ export default function HomeTab({business, businessProfile}){
                     onChange={(e)=>setData('company_name', e.target.value)}
                     required
                     isFocused
-                    autoComplete="company_name"
+                    autoComplete="company name"
                 />
 
                 <InputError className="mt-2" message={errors.company_name} />
@@ -70,20 +72,52 @@ export default function HomeTab({business, businessProfile}){
             </div>
 
             <div>
-                <InputLabel htmlFor="description" value="Description" />
+                <InputLabel htmlFor="first_name" value="First Name" />
 
-                <textarea
-                    className="form-control mt-2"
-                    name="description"
-                    id="description"
-                    rows="10"
-                    style={{ height: "auto" }}
-                    value={data.description}
-                    placeholder='Tell your customers what makes you unique. We recommend writing at least 200 words about your company. '
-                    onChange={(e) => setData('description', e.target.value)}
-                ></textarea>
+                <TextInput
+                    id="first_name"
+                    name="first_name"
+                    className="mt-1 block w-full"
+                    value={data.first_name}
+                    onChange={(e)=>setData('first_name', e.target.value)}
+                    required
+                    isFocused
+                    autoComplete="first_name"
+                />
 
-                <InputError className="mt-2" message={errors.description} />
+                <InputError className="mt-2" message={errors.first_name} />
+            </div>
+
+            <div>
+                <InputLabel htmlFor="last_name" value="Last Name" />
+
+                <TextInput
+                    id="last_name"
+                    name="last_name"
+                    className="mt-1 block w-full"
+                    value={data.last_name}
+                    onChange={(e)=>setData('last_name', e.target.value)}
+                    required
+                    autoComplete="last name"
+                />
+
+                <InputError className="mt-2" message={errors.last_name} />
+            </div>
+
+            <div>
+                <InputLabel htmlFor="job_title" value="Job Title" />
+
+                <TextInput
+                    id="job_title"
+                    name="job_title"
+                    className="mt-1 block w-full"
+                    value={data.job_title}
+                    onChange={(e)=>setData('job_title', e.target.value)}
+                    required
+                    autoComplete="job_title"
+                />
+
+                <InputError className="mt-2" message={errors.job_title} />
             </div>
 
             <div className="flex items-center gap-4">
