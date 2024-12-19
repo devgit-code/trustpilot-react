@@ -123,7 +123,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
             <div className='flex items-center mt-3'>
                 <div className='flex space-x-3'>
                     {
-                        !business.profile?.logo && (
+                        !business.company_email && (
                             <p className={`bg-red-200 mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                                 <BsFillExclamationOctagonFill className='text-danger text-lg'/>
                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed Company</span>

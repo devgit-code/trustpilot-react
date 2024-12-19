@@ -39,7 +39,8 @@ Route::group([
     Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
 
-    Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    // Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::get('/claim/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
     Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');

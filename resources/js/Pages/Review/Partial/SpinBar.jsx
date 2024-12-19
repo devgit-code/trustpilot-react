@@ -44,7 +44,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                     <div className='text-2xl text-gray-800 font-extrabold mb-0'>
                                         {company_name}
                                         {
-                                            !profile?.logo && (
+                                            !company_email && (
                                                 <p className={`ml-3 bg-red-100 py-1 px-2 rounded inline-flex text-sm items-center mb-0`}>
                                                     <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                     <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>

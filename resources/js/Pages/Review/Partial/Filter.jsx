@@ -60,7 +60,7 @@ export default function FilterReview({ ratings }) {
             <div className='mt-2 pb-3'>
                 <div className="space-y-6">
                 {[...Array(5)].map((_, index) => {
-                    const percentage = ratings.stars[4-index] ? ((ratings.stars[4-index].count / ratings.total) * 100).toFixed(1) : 0;
+                    const percentage = (ratings.total !== 0 && ratings.stars[4-index]) ? ((ratings.stars[4-index].count / ratings.total) * 100).toFixed(1) : 0;
                     return (
                         <Tooltip key={index} text={`${ratings.stars[4-index].count} of ${ratings.total} reviews`} className='flex'>
                             <div className="flex group items-center space-x-4 hover:cursor-pointer"

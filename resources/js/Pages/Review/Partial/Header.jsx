@@ -73,7 +73,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                                 </div>
                                 <div className='mt-2 flex items-center'>
                                     {
-                                        !profile?.logo && (
+                                        !company_email && (
                                             <p className={`bg-red-100 py-2 px-3 rounded-sm bg-gray-100 inline-flex text-sm items-center mr-3 mb-0`}>
                                                 <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed</span>

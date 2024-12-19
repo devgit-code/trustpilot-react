@@ -138,11 +138,16 @@ class RegisteredUserController extends Controller
         return redirect()->route('admin.verification.notice');
     }
 
-    public function admin_claim(): Response
+    public function admin_claim(Request $request, String $website = null): Response
     {
         $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
 
-        return Inertia::render('Admin/Auth/Claim', compact('businesses'));
+        $selected_business = null;
+        if($website){
+            $selected_business = Business::where('website', $request->website)->first();
+        }
+
+        return Inertia::render('Admin/Auth/Claim', compact('businesses'))->with('selected_option', $selected_business);
     }
 
     public function admin_claim_store(Request $request)
