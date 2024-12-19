@@ -70,6 +70,7 @@ function SearchSection() {
                         <IoSearchOutline className='text-xl'/>
                     </button>
                     <input
+                        id="search"
                         type="text"
                         placeholder="Search"
                         value={filters.query}

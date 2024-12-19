@@ -138,6 +138,7 @@ export default function Evaluate({ company }) {
                                                 </p>
                                                 <div className="mt-3 relative w-full">
                                                     <input
+                                                        id="title"
                                                         type="text"
                                                         ref={inputRef}
                                                         value={data.title}

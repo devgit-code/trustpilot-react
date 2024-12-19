@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Head, Link } from '@inertiajs/react';
-import RatingClick from '@/Components/RatingClick.jsx';
+import { Head, Link, useForm } from '@inertiajs/react';
 
+import RatingClick from '@/Components/RatingClick.jsx';
 import user from '@/../images/profile-not-found.png'
 
 export default function ClickableWrite({value}){
+    const { get } = useForm();
+
     const handleRatingClick = (rating) => {
-        window.location.replace('/evaluate/'+ value+'?star='+rating)
+        get(route('reviews.evaluate', value)+'?star='+rating)
     }
 
     return (

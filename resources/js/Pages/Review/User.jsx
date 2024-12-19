@@ -29,11 +29,11 @@ export default function Detail({data}) {
                 </div>
 
                 <div className="p-2 bg-[#FCFBF3]">
-                    <div className='container-sm flex justify-center'>
+                    <div className='container-sm '>
                         <div className='mt-3 grid gap-5 mb-5'>
                             {
                                 data.reviews.map((review, index) => (
-                                    <div key={index} className='max-w-screen-sm lg:min-w-screen-sm'>
+                                    <div key={index} className='max-w-screen-sm lg:ml-32'>
                                         <p className='p-2 text-sm text-gray-700'>Review of
                                             <Link href={route('reviews.company', review.website)} className='ml-2 hover:no-underline'>{review.business_name}</Link>
                                         </p>

@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link, usePage,} from '@inertiajs/react';
+import { Link, usePage, useForm } from '@inertiajs/react';
 
 import { IoSearchOutline } from "react-icons/io5";
 import { BsDot } from "react-icons/bs";
 import { BsArrowRight } from "react-icons/bs";
+import { toast, Slide  } from 'react-toastify';
 
 import RatingAverage from '@/Components/RatingAverage';
 import RatingTotal from '@/Components/RatingTotal';
@@ -12,14 +13,17 @@ import company_logo from "@/../images/company-logo.png"
 
 
 function SearchSection() {
+    const [search, setSearch] = useState('');
     const [filters, setFilters] = useState({query:""});
     const [results, setResults] = useState([]);
     const [results2, setResults2] = useState([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+    const { get } = useForm();
 
     const handleInputChange = (e) => {
         const value = e.target.value;
+        setSearch(value)
 
         if(!value){
             setIsDropdownVisible(false);
@@ -30,6 +34,43 @@ function SearchSection() {
             query: value,
         }));
     };
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
+
+        if(!search) return;
+
+        const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,}$/;
+        if(!domainRegex.test(search)){
+            toast.warning(
+                "Input Domain is not valid!", {
+                    transition: Slide,
+                    hideProgressBar: true,
+                }
+            )
+            return;
+        }
+
+        // setIsLoading(true);
+        try {
+            const queryString = new URLSearchParams({url:search}).toString();
+            const response = await fetch(`/api/addcompany?${queryString}`);
+            const data = await response.json();
+            if(data.success == false){
+                toast.warning(
+                    "Can't reach to this domain"
+                )
+            }else{
+                //success to redirect to company review
+                get(route('reviews.company', data.message))
+            }
+
+        } catch (error) {
+            console.error("Error fetching reviews:", error);
+        } finally {
+            // setIsLoading(false);
+        }
+    }
 
     const handleResultClick = (name) => {
         setFilters((prevFilters) => ({
@@ -89,6 +130,7 @@ function SearchSection() {
 
                     <div className="relative max-w-lg z-20 md:max-w-xl mx-auto">
                         <input
+                            id="search"
                             type="text"
                             value={filters.query}
                             onChange={handleInputChange}
@@ -96,6 +138,7 @@ function SearchSection() {
                             className={`w-full py-3 px-5 shadow-lg text-gray-700 ${isDropdownVisible ? ('rounded-t-[2rem] focus:border-none') : 'rounded-[2rem]'}`}
                         />
                         <button
+                            onClick={handleSearch}
                             className="no-underline absolute top-1/2 right-3 transform -translate-y-1/2 bg-blue-500 text-white rounded-full p-2">
                             <IoSearchOutline className='text-xl'/>
                         </button>
