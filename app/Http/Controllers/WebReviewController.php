@@ -69,6 +69,7 @@ class WebReviewController extends Controller
             "description" => "required|string",
             "business_id" => "required",
             "rating" => "required",
+            "is_product" => "required",
             "date" => "required|date",
         ]);
 
@@ -79,6 +80,7 @@ class WebReviewController extends Controller
             "user_id" => auth()->user()->id,
             "date_experience" => $request->input('date'),
             "rating" => $request->input('rating'),
+            "is_product" => (int)$request->input('is_product'),
         ];
 
         Review::create($creationData);
@@ -301,12 +303,12 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function evaluateProduct(Request $request, String $id)
+    public function evaluateProduct(Request $request, String $product, String $website)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($product);
         $business = Business::with('profile')->findOrFail($product->business_id);
 
-        return Inertia::render('Review/Product', [
+        return Inertia::render('Review/Evaluate', [
             'product' => $product,
             'company' => $business,
         ]);

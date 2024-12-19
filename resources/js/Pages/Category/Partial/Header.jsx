@@ -12,7 +12,8 @@ function Header({category}) {
                                 className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                 {category.category.name}
                             </Link>
-                             &gt; {category.name}
+                             &gt;
+                             <span className='ml-3 text-gray-700'>{category.name}</span>
                         </>
                     )}
                 </p>

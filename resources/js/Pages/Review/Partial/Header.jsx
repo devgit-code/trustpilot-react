@@ -41,7 +41,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                                     &gt;
                                 </div>
                                 <Link href={route('categories.detail', primary_business_category.sub_category.id)}
-                                    className='text-gray-200 text-sm capitalize no-underline hover:underline ml-3 bg-primary rounded px-2 py-1'>
+                                    className='text-gray-700 text-sm capitalize no-underline hover:underline ml-2'>
                                     {primary_business_category.sub_category.name}
                                 </Link>
                             </>

@@ -28,7 +28,7 @@ export default function Company({ data }) {
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
                                     {data.company.products.length !== 0 && (
-                                        <ProductList products={data.company.products}/>
+                                        <ProductList products={data.company.products} website={data.company.website}/>
                                     )}
 
                                     <ClickableWrite value={data.company.website}/>

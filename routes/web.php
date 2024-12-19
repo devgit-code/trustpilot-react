@@ -75,7 +75,7 @@ Route::group([
     // Route::get('/reviews/product/{id}', [WebReviewController::class, 'product'])
     //     ->name('reviews.product');
 
-    Route::middleware('auth')->get('/reviews/evaluate/{product}/product', [WebReviewController::class, 'evaluateProduct'])
+    Route::middleware('auth')->get('/evaluate/product/{product}/{website}', [WebReviewController::class, 'evaluateProduct'])
         ->name('reviews.evaluate.product');
 
     // blogs

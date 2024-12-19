@@ -144,7 +144,7 @@ export default function ReviewTable({setting}){
 
                         <button  type="button" className="btn btn-success"
                             onClick={handleSortDateClick}>
-                            Sort Date<span className='text-gray-100 text-xl'>{filters.sort_by_date == 'desc' ? <BsArrowDownShort className='inline'/>:<BsArrowUpShort className='inline'/>}</span>
+                            Date<span className='text-gray-100 text-xl'>{filters.sort_by_date == 'desc' ? <BsArrowDownShort className='inline'/>:<BsArrowUpShort className='inline'/>}</span>
                         </button>
                     </div>
                 </div>

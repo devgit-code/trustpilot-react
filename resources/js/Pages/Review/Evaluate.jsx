@@ -12,12 +12,13 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
 
-export default function Evaluate({ company }) {
+export default function Evaluate({ company, product }) {
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         title:'',
         description:'',
         business_id: company.id,
         rating: 0,
+        is_product: product?.id || 0,
         date: new Date().toISOString().split("T")[0]
     });
 
@@ -72,6 +73,14 @@ export default function Evaluate({ company }) {
                 // onClose();
             },
         });
+
+
+
+        // post(route('reviews.product.store'), {
+        //     onSuccess: () => {
+        //         // onClose();
+        //     },
+        // });
     };
 
     useEffect(()=>{
@@ -88,18 +97,30 @@ export default function Evaluate({ company }) {
                         <div className='max-w-screen-sm w-full flex items-center'>
                             <Link href={route('reviews.company', company.website)}>
                                 <div className='inline-flex items-center justify-center w-20 h-20 rounded border'>
+                                    {product ? (
+                                        <img
+                                            src={`/storage/${product.image}`}
+                                            alt={company.name}
+                                            className="object-cover"
+                                            style={{ maxWidth: '60px', maxHeight: '60px' }}/>
+                                    ):(
                                     <img
-                                        src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
-                                        alt={company.name}
-                                        className="object-cover"
-                                        style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                                            src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
+                                            alt={company.name}
+                                            className="object-cover"
+                                            style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                                    )}
                                 </div>
                             </Link>
                             <div className='ml-5'>
                                 <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-extrabold pb-3'>
                                     {company.company_name}
                                 </Link>
-                                <p className='mb-0 text-gray-700'>{company.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</p>
+                                {product?(
+                                    <p className='mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</p>
+                                ):(
+                                    <p className='mt-2 mb-0 text-gray-700'>{company.website}</p>
+                                )}
                             </div>
                         </div>
                     </div>
