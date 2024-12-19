@@ -13,11 +13,11 @@ import fav from '../../images/favicon.png'
 const Footer = () => {
     return (
         <>
-            <footer className="bg-dark pt-5 text-white">
+            <footer className="bg-dark p-5 text-white">
                 <Container fluid="lg">
                     <div className='row'>
                         <div className="col-lg-3">
-                            <Link href={route('home')} className="lg:inline-block lg:justify-start flex justify-center px-4 pb-5">
+                            <Link href={route('home')} className="lg:inline-block lg:justify-start flex justify-center px-4 pb-4">
                                 <img src={logo} alt="logo" style={{height:"2.1rem"}}/>
                                 {/* <span className="text-white fw-bold fs-4"> TOPNTECH </span> */}
                             </Link>
@@ -34,10 +34,10 @@ const Footer = () => {
                     </div>
                 </Container>
                 <hr className="my-2" />
-                <p className='mt-4 mx-3 text-center text-zinc-300'>At Eniyi.co, we are driven by a passion for technology and a commitment to providing innovative solutions that empower businesses to thrive in the digital age.</p>
-                <div className="text-zinc-300 pb-9 ml-9 text-center">
+                <p className='mt-4 mx-5 text-center text-zinc-300'>At Eniyi.co, we are driven by a passion for technology and a commitment to providing innovative solutions that empower businesses to thrive in the digital age.</p>
+                <div className="text-zinc-300 pb-5 ml-9 text-center">
                     You can contact us
-                    <a className="ml-2 fw-bold text-zinc-400 hover:text-gray-100" href="mailto:info@eniyi.co">
+                    <a className="ml-2 mb-0 fw-bold text-zinc-400 hover:text-gray-100" href="mailto:info@eniyi.co">
                     info@eniyi.co
                     </a>
                 </div>

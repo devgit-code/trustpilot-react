@@ -153,6 +153,14 @@ class BusinessController extends Controller
 
     }
 
+    public function verify(Request $request, string $business)
+    {
+        $business = Business::findOrFail($business);
+        $business->markEmailAsVerified();
+
+        return redirect()->route('admin.businesses.show', $business);
+    }
+
     public function change(Request $request, string $business)
     {
         $business = Business::findOrFail($business);

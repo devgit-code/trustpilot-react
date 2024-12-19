@@ -167,7 +167,7 @@ const Index = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className='inline-flex justify-center items-center border' style={{height: '68px', width: '68px'}}>
+                                                <div className='inline-flex justify-center items-center border' style={{height: '66px', width: '66px'}}>
                                                 {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
@@ -179,7 +179,7 @@ const Index = () => {
                                                             alt="category-logo"
                                                             className=''
                                                             style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                        {!item.profile?.logo && (
+                                                        {!item.company_email && (
                                                             <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
                                                         )}
                                                     </div>

@@ -103,8 +103,11 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
     return (
         <>
             <div className='flex items-center justify-between'>
-                <div className=''>
+                <div className='flex items-center'>
                     <h4 className="card-title">View Business <a className='font-bold text-gray-800 capitalize italic'>{business.company_name}</a></h4>
+                    {(!business.email_verified_at && business.company_email) && (
+                        <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
+                    )}
                 </div>
 
                 <div className='space-x-2'>

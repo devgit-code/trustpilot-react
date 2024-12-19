@@ -105,7 +105,7 @@ export default function Evaluate({ company }) {
                     </div>
                 </div>
 
-                <div className="p-2 bg-[#FCFBF3]">
+                <div className="p-4 bg-[#FCFBF3] h-full">
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full'>
                             <form onSubmit={handleSubmit}>
