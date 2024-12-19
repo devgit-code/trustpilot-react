@@ -166,21 +166,28 @@ class BusinessController extends Controller
         $business = Business::findOrFail($business);
         $businessProfile = $business->profile;
 
+        $company_email = $request->input('company_email');
         $company_name = $request->input('company_name');
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
         $job_title = $request->input('job_title');
 
         if (
+            $business->company_email !== $company_email ||
             $business->company_name !== $company_name ||
             $business->first_name !== $first_name ||
             $business->last_name !== $last_name ||
             $business->job_title !== $job_title
         ) {
+            $business->company_email = $company_email;
             $business->company_name = $company_name;
             $business->first_name = $first_name;
             $business->last_name = $last_name;
             $business->job_title = $job_title;
+
+            if ($business->isDirty('company_email')) {
+                $business->email_verified_at = null;
+            }
 
             $business->save();
         }
