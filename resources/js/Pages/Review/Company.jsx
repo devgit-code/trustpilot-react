@@ -31,7 +31,7 @@ export default function Company({ data }) {
                                         <ProductList products={data.company.products}/>
                                     )}
 
-                                    <ClickableWrite company_name={data.company.id}/>
+                                    <ClickableWrite value={data.company.website}/>
 
                                     <Filter ratings={data.company.rating_statistic}/>
 

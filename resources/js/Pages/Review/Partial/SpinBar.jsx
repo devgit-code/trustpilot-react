@@ -75,7 +75,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                         </p>
                                     </div>
                                 </a>
-                                <Link href={route('reviews.evaluate', id)} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
+                                <Link href={route('reviews.evaluate', website)} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
                                     <span className='text-sm font-bold text-gray-100 group-hover:text-gray-700 '>Write a review</span>
                                 </Link>
                             </div>

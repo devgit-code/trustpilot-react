@@ -116,7 +116,7 @@ function SearchSection() {
                                         onClick={() => handleResultClick('')}
                                         className="p-3 cursor-pointer hover:bg-blue-100"
                                     >
-                                        <Link href={route('reviews.evaluate', company.id)} className='text-gray-900 no-underline flex justify-between'>
+                                        <Link href={route('reviews.evaluate', company.website)} className='text-gray-900 no-underline flex justify-between'>
                                             <div className='flex items-center gap-4 w-full'>
                                                 <div className="relative inline-flex items-center w-12 h-12 rounded">
                                                     <img

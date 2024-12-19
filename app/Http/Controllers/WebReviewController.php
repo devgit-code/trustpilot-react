@@ -53,9 +53,9 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function evaluate(Request $request, String $id)
+    public function evaluate(Request $request, String $website)
     {
-        $business = Business::with(['profile'])->findOrFail($id);
+        $business = Business::with(['profile'])->where('website', $website)->first();
 
         return Inertia::render('Review/Evaluate', [
             'company' => $business
