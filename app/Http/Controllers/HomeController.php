@@ -151,13 +151,13 @@ class HomeController extends Controller
             $company_name = $this->extractCompanyName('https://' . $searchTerm);
 
             $businesss = Business::create([
-                'website' => 'https://' . $searchTerm,
+                'website' => $searchTerm,
                 'company_name' => ucfirst($company_name),
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => $businesss->id,
+                'message' => $businesss->website,
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
@@ -184,12 +184,6 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'website' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
-        ]);
 
-        $business = Business::create($validatedData);
-        return redirect()->route('reviews.company', $business->id);
     }
 }

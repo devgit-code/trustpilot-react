@@ -94,7 +94,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                     </div>
                     <div className="px-3 mb-5 md:mb-0">
                         <div className='flex w-full'>
-                            <a href={website} target="_blank" rel="noopener noreferrer"  className='no-underline w-full p-3 border border-blue-400 rounded group hover:bg-blue-200 hover:border-blue-200'>
+                            <a href={`https://${website}`} target="_blank" rel="noopener noreferrer"  className='no-underline w-full p-3 border border-blue-400 rounded group hover:bg-blue-200 hover:border-blue-200'>
                                 <div className='flex items-center justify-between text-sm'>
                                     <div className=''>
                                         <p className='text-blue-600 mb-1'>

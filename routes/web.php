@@ -42,9 +42,6 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    Route::post('/company', [HomeController::class, 'store'])
-        ->name('company.add');
-
     Route::get('/search', [HomeController::class, 'search'])
         ->name('search');
 
@@ -66,7 +63,7 @@ Route::group([
     Route::middleware('auth')->get('/reviews/evaluate/{company}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
-    Route::get('/reviews/company/{id}', [WebReviewController::class, 'company'])
+    Route::get('/reviews/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
     Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])

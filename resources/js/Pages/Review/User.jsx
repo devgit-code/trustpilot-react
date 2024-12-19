@@ -35,7 +35,7 @@ export default function Detail({data}) {
                                 data.reviews.map((review, index) => (
                                     <div key={index} className='max-w-screen-sm lg:min-w-screen-sm'>
                                         <p className='p-2 text-sm text-gray-700'>Review of
-                                            <Link href={route('reviews.company', review.business_id)} className='ml-2 hover:no-underline'>{review.business_name}</Link>
+                                            <Link href={route('reviews.company', review.website)} className='ml-2 hover:no-underline'>{review.business_name}</Link>
                                         </p>
 
                                         <div className='mt-3'>

@@ -140,7 +140,7 @@ function SearchSection() {
                                                             // onClick={() => handleResultClick(company.company_name)}
                                                             className="p-2 cursor-pointer hover:bg-blue-100"
                                                         >
-                                                            <Link href={route('reviews.company', company.id)} className='pl-2 text-gray-900 no-underline flex justify-between'>
+                                                            <Link href={route('reviews.company', company.website)} className='pl-2 text-gray-900 no-underline flex justify-between'>
                                                                 <div className='flex items-center'>
                                                                     <div className="relative inline-flex items-center w-12 h-12 rounded">
                                                                         <img

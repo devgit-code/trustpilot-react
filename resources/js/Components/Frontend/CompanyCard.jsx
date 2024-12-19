@@ -6,7 +6,7 @@ import Rating from '@/Components/Ratings';
 
 function CompanyCard({ id, company_name, website, trustscore, count_reviews, email_verified_at, logo}) {
     return (
-        <Link href={route('reviews.company', id)} className="no-underline">
+        <Link href={route('reviews.company', website)} className="no-underline">
             <div className="bg-white rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl p-4" style={{minWidth: '240px'}}>
                 <div className="relative inline-flex items-center justify-center w-20 h-20 border-2 bordered rounded">
                     <img

@@ -19,7 +19,7 @@ export default function CompanyItem({index, company}){
 
     return (
         <div className="bg-white border rounded-lg mb-4 hover:shadow-md">
-            <Link href={route('reviews.company', company.id)} className='no-underline'>
+            <Link href={route('reviews.company', company.website)} className='no-underline'>
                 <div className="flex p-3 gap-4">
                     <div className="inline-flex items-center w-20 h-20">
                         <img

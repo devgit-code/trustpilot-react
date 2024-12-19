@@ -95,7 +95,7 @@ export default function Product({ product, company }) {
                                         style={{ maxWidth: '80px', maxHeight: '80px' }}/>
                                 </div>
                                 <div className='ml-5'>
-                                    <Link href={route('reviews.company', company.id)} className='text-gray-800 text-xl font-extrabold pb-3'>
+                                    <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-extrabold pb-3'>
                                         {company.company_name}
                                     </Link>
                                     <p className='mt-3 mb-0 text-gray-700 capitalize'>{product.name}</p>

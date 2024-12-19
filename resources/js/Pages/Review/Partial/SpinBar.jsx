@@ -67,7 +67,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                 </p>
                             </div> */}
                             <div className='flex gap-4'>
-                                <a href={website} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
+                                <a href={`https://${website}`} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>
                                         <p className='text-blue-600 mb-1'>
                                             <FaExternalLinkAlt className='inline mr-2 text-sm group-hover:text-gray-600'/>

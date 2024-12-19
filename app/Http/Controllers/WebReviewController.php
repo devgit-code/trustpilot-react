@@ -83,12 +83,14 @@ class WebReviewController extends Controller
 
         Review::create($creationData);
 
-        return redirect()->route('reviews.company', $request->input('business_id'));
+        $business = Business::findOrFail($request->input('business_id'));
+
+        return redirect()->route('reviews.company', $business->website);
     }
 
-    public function company(Request $request, String $id)
+    public function company(Request $request, String $website)
     {
-        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->findOrFail($id);
+        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->where('website', $website)->first();
 
         $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();
@@ -123,7 +125,7 @@ class WebReviewController extends Controller
             return $review;
         });
 
-        $replyReviews = Review::where('business_id', $id)
+        $replyReviews = Review::where('business_id', $business->id)
             ->where('rating', '<', 3)
             ->with('reply')
             ->get();
@@ -142,7 +144,7 @@ class WebReviewController extends Controller
             ]
         ];
 
-        $recent_businesses = Business::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
+        $recent_businesses = Business::latest()->take(4)->where('id', '<>', $business->id)->take(3)->get();
         $recent_businesses = $recent_businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
@@ -193,6 +195,7 @@ class WebReviewController extends Controller
                 'location'=>$review->user->profile?->address,
             ];
             $review['business_name'] = $review->business->company_name;
+            $review['website'] = $review->business->website;
             return $review;
         });
 
@@ -330,6 +333,8 @@ class WebReviewController extends Controller
 
         Review::create($creationData);
 
-        return redirect()->route('reviews.company', $request->input('business_id'));
+        $business = Business::findOrFail($request->input('business_id'));
+
+        return redirect()->route('reviews.company', $business->website);
     }
 }

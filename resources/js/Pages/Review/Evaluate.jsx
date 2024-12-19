@@ -86,7 +86,7 @@ export default function Evaluate({ company }) {
                 <div className='bg-whtie border-b '>
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full flex items-center'>
-                            <Link href={route('reviews.company', company.id)}>
+                            <Link href={route('reviews.company', company.website)}>
                                 <div className='inline-flex items-center justify-center w-20 h-20 rounded border'>
                                     <img
                                         src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
@@ -96,7 +96,7 @@ export default function Evaluate({ company }) {
                                 </div>
                             </Link>
                             <div className='ml-5'>
-                                <Link href={route('reviews.company', company.id)} className='text-gray-800 text-xl font-extrabold pb-3'>
+                                <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-extrabold pb-3'>
                                     {company.company_name}
                                 </Link>
                                 <p className='mb-0 text-gray-700'>{company.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</p>

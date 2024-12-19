@@ -28,7 +28,7 @@ export default function CompanyRelated({companies}) {
                                     style={{ maxWidth: '76px', maxHeight: '76px' }}/>
                             </div>
                             <div className="ml-3">
-                                <Link href={route('reviews.company', company.id)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
+                                <Link href={route('reviews.company', company.website)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
                                 <div className="mt-1 flex">
                                     <Rating rating={Number(company.trustscore)} />
                                     <span className="ml-2 text-sm">{company.trustscore} /{company.count_reviews}</span>

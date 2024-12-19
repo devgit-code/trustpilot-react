@@ -98,7 +98,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $businesses = Business::where('role', 'owner')
-            ->where('website', 'like', '%' . $request->input('website', ''))
+            ->where('website', 'like', '%' . $request->input('website'))
             ->get();
 
         if(count($businesses))
@@ -115,7 +115,7 @@ class RegisteredUserController extends Controller
         }
 
         $business = Business::create([
-            'website' => 'https://' . $request->website,
+            'website' => $request->website,
             'company_name' => $request->company_name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
