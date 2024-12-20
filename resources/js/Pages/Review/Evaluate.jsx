@@ -105,7 +105,7 @@ export default function Evaluate({ company, product }) {
                                 </div>
                             </Link>
                             <div className='ml-5'>
-                                <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-extrabold pb-3'>
+                                <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-bold pb-3'>
                                     {company.company_name}
                                 </Link>
                                 {product?(
@@ -118,7 +118,7 @@ export default function Evaluate({ company, product }) {
                     </div>
                 </div>
 
-                <div className="p-4 bg-[#FCFBF3] h-full">
+                <div className="p-1 bg-[#FCFBF3] h-full">
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full'>
                             <form onSubmit={handleSubmit}>
@@ -196,7 +196,7 @@ export default function Evaluate({ company, product }) {
 
                                                 {/* Submit Button */}
                                                 <div className='mx-6 '>
-                                                    <button type="submit" className="bg-blue-600 text-white text-lg font-bold py-2 rounded-full w-full hover:bg-blue-700 transition">
+                                                    <button type="submit" className="bg-blue-600 text-white text-lg font-bold py-2 px-1 rounded-full w-full hover:bg-blue-700 transition">
                                                         Submit review
                                                     </button>
                                                 </div>

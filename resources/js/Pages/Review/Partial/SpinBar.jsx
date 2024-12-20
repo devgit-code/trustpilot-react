@@ -52,9 +52,9 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                             )
                                         }
                                     </div>
-                                    <div className='flex items-center mt-3'>
+                                    <div className='flex flex-col sm:flex-row mt-3 gap-2'>
                                         <Rating rating={Number(rating_statistic.avg)}/>
-                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
+                                        <span className='text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                     Replied to {rating_statistic.low_reviews.count_replies} out of {rating_statistic.low_reviews.count_reviews} negative reviews
                                 </p>
                             </div> */}
-                            <div className='flex gap-4'>
+                            <div className='flex flex-col sm:flex-row gap-2'>
                                 <a href={`https://${website}`} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>
                                         <p className='text-blue-600 mb-1'>

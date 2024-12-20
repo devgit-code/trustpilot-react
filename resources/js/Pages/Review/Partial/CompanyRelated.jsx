@@ -29,11 +29,11 @@ export default function CompanyRelated({companies}) {
                             </div>
                             <div className="ml-3">
                                 <Link href={route('reviews.company', company.website)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
-                                <div className="mt-1 flex">
+                                <div className="mt-1 flex flex-col sm:flex-row gap-2">
                                     <Rating rating={Number(company.trustscore)} />
-                                    <span className="ml-2 text-sm">{company.trustscore} /{company.count_reviews}</span>
+                                    <span className="text-sm">{company.trustscore} /{company.count_reviews}</span>
                                 </div>
-                                <div className="mt-2 flex">
+                                <div className="mt-2 flex flex-col sm:flex-row gap-2">
                                     {
                                         !company.company_email && (
                                             <p className={`inline-flex text-sm items-center mb-0 mr-3`}>

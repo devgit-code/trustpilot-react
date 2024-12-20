@@ -308,7 +308,31 @@ class WebReviewController extends Controller
         $product = Product::findOrFail($id);
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->findOrFail($product->business_id);
 
-        $reviews = Review::where('is_product', $id);
+        //product statistic
+        $product_reviews = Review::where('is_product', $id);
+        $totalCount = $product_reviews->count();
+        $averageRating = $product_reviews->average('rating');
+        $ratingCounts = $product_reviews->select('rating', DB::raw('count(*) as count'))
+            ->groupBy('rating')
+            ->get();
+
+        $stars = array_fill(0, 5, ['count' => 0]);
+        foreach ($ratingCounts as $data) {
+            $rating = $data['rating'];
+            $count = $data['count'];
+
+            // Set the count for the corresponding rating in the stars array
+            $stars[$rating - 1]['count'] = $count;
+        }
+
+        $product['rating_statistic'] = [
+            'avg' => number_format($averageRating, 1),
+            'total' => $totalCount,
+            'stars' => $stars,
+        ];
+
+        //business statistic
+        $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();
         $averageRating = $reviews->average('rating');
         $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
@@ -324,6 +348,26 @@ class WebReviewController extends Controller
             $stars[$rating - 1]['count'] = $count;
         }
 
+        $replyReviews = Review::where('business_id', $business->id)
+            ->where('rating', '<', 3)
+            ->with('reply')
+            ->get();
+
+        $countReply = $replyReviews->filter(function ($review){
+            return $review->reply !== null;
+        })->count();
+
+        $business['rating_statistic'] = [
+            'avg' => number_format($averageRating, 1),
+            'total' => $totalCount,
+            'stars' => $stars,
+            'low_reviews' => [
+                'count_reviews' => count($replyReviews),
+                'count_replies' => $countReply,
+            ]
+        ];
+
+        //reviews
         $reviews = Review::where('is_product', $id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
             ->orderBy('date_experience', 'desc')
@@ -340,12 +384,6 @@ class WebReviewController extends Controller
             ];
             return $review;
         });
-
-        $business['rating_statistic'] = [
-            'avg' => number_format($averageRating, 1),
-            'total' => $totalCount,
-            'stars' => $stars,
-        ];
 
         $recent_products = Product::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
         $recent_products = $recent_products->map(function ($product, $index) {

@@ -69,11 +69,11 @@ export default function ReviewCard({ review }) {
                     <p className='text-gray-800 text-sm font-bold mb-0 capitalize'>
                         {review.userinfo.name}
                     </p>
-                    <div className='flex items-center mt-1'>
+                    <div className='flex flex-col sm:flex-row gap-1 sm:gap-4 items-center mt-1'>
                         <p className='mb-0 text-gray-700 text-sm'>{review.userinfo.count_reviews} review</p>
                         {
                             review.userinfo.location && (
-                                <p className='mb-0 text-gray-700 ml-4 flex items-center'><FaMapMarkerAlt className='inline mr-2'/>{review.userinfo.location}</p>
+                                <p className='mb-0 text-gray-700 flex items-center'><FaMapMarkerAlt className='inline mr-1'/>{review.userinfo.location}</p>
                             )
                         }
                     </div>

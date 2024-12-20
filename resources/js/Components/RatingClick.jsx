@@ -17,7 +17,7 @@ export default function RatingClick({ className, star='0', onClick }) {
             <svg
                 key={index}
                 xmlns="http://www.w3.org/2000/svg"
-                className={`w-10 h-10 p-1 text-white ${
+                className={`w-8 h-8 p-1 text-white ${
                     index < (Math.floor(rating + 0.5))
                         ? rating < 1.8
                             ? 'bg-red-500'
