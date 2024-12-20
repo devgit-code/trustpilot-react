@@ -36,12 +36,12 @@ export default function Detail({data, current_page=1}) {
                         <div className="col-lg-8 px-3 mt-3">
                             <div className='mb-4'>
 
-                                <div className='mb-4 ml-2 flex items center justify-between'>
+                                <div className='mb-4 ml-2 flex flex-col sm:flex-row items-center justify-between'>
                                     <div className='flex items-center'>
                                         <p className='text-black text-sm'>{((current_page-1)*20+1)} - {current_page*20} of {2} results</p>
                                     </div>
-                                    <div className='flex items-center p-2 w-96'>
-                                        <label className='w-16'>Sort by</label>
+                                    <div className='flex items-center p-2'>
+                                        <label className=''>Sort</label>
                                         <select
                                             // value={sortBy}
                                             // onChange={(e) => setData('category_id', e.target.value)}

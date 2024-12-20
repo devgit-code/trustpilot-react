@@ -32,14 +32,14 @@ export default function Navigation({auth}) {
                             <hr className="hr text-white" />
                             {auth && auth.user ? (
                                 <>
-                                    <Link href="#" disabled className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > {auth.user.name}</Link>
+                                    <Link disabled className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > {auth.user.name}</Link>
                                     <Link href={route('profile')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Profile</Link>
-                                    <Link href={route('logout')} as="button" method="post" className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Logout</Link>
+                                    <Link href={route('logout')} as="button" method="post" className="w-full text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Logout</Link>
                                 </>
                             ):(
                                 <>
                                     <Link href={route('login')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue"> Login </Link>
-                                    <Link href={route('register')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue" > Register </Link>
+                                    <Link href={route('register')} className="block text-center py-2 no-underline text-white pr-4 bg-red hover:bg-blue w-full" > Register </Link>
                                 </>
                             )}
                         </div>

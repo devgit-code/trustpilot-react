@@ -50,8 +50,8 @@ export default function Header({company_name, company_email, profile, primary_bu
                 </div>
                 <div className='mt-3 grid md:grid-cols-[2fr_1fr] gap-4 grid-cols-1'>
                     <div className="p-2">
-                        <div className='flex gap-16'>
-                            <div className="hidden sm:inline-flex items-center justify-center w-36 h-36 border rounded">
+                        <div className='flex sm:flex-row flex-col gap-16'>
+                            <div className="sm:inline-flex items-center justify-center w-36 h-36 border rounded">
                                 <img
                                     src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo}
                                     alt={company_name}

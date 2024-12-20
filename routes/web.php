@@ -79,8 +79,8 @@ Route::group([
         ->name('reviews.evaluate.product');
 
     // blogs
-    Route::get('/aboutus', [BlogController::class, 'index'])->name('blogs.index');
-    Route::get('/aboutus/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 });
 
 

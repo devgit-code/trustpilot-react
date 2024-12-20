@@ -44,7 +44,7 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                     {
                         reply && (
                             <p className="text-gray-700 text-sm px-4 mt-3 h-[40px]">
-                                {reply?.comment?.length > 50 ? `${reply.comment.slice(0, 50)}...` : reply.comment}
+                                {reply?.comment?.length > 40 ? `${reply.comment.slice(0, 40)}...` : reply.comment}
                             </p>
                         )
                     }

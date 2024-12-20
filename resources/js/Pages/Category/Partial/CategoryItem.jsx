@@ -16,9 +16,8 @@ function CategoryItem({ id, title, icon, color, items }) {
         <div>
             {/* mobile view accordion */}
             <div className='md:hidden'>
-                <Link
-                    href={route('categories.show', id)}
-                    className={`w-full flex items-center justify-between rounded-t-lg text-center p-2 border border-gray-600 text-gray-800`}
+                <div
+                    className={`w-full flex items-center justify-between rounded-t-lg text-center p-2 border border-gray-600 `}
                     >
                     <div className="flex items-center justify-center w-7 h-7">
                         <img src={`/storage/${icon}`}
@@ -27,9 +26,9 @@ function CategoryItem({ id, title, icon, color, items }) {
                             // style={{ maxWidth: '32px', maxHeight: '32px' }}
                             />
                     </div>
-                    <h2 className="text-lg font-semibold capitalize">{title}</h2>
+                    <Link href={route('categories.show', id)} className="text-gray-800 text-lg font-semibold capitalize">{title}</Link>
                     <span onClick={toggleOpen} className='flex items-center text-xl'>{isOpen ? '-' : '+'}</span>
-                </Link>
+                </div>
                 {isOpen && (
                     <ul className="text-gray-700 text-sm px-4 mt-2">
                     {
@@ -41,7 +40,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                     }
                         {items.map((item, index) => (
                             <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                                <Link href={route('categories.detail', id)} className="pl-2 text-gray-700 capitalize">
+                                <Link href={route('categories.detail', item.id)} className="pl-2 text-gray-700 capitalize">
                                 {item.name}
                                 </Link>
                             </li>
