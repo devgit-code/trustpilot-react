@@ -3,13 +3,10 @@ import { Head, Link } from '@inertiajs/react';
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import ProductHeader from './Partial/ProductHeader.jsx'
-import SpinBar from './Partial/SpinBar.jsx'
 import ClickableWrite from './Partial/ClickableWrite.jsx'
 import Filter from './Partial/Filter.jsx'
 import PaginationList from './Partial/PaginationList.jsx'
-import CompanyInfo from './Partial/CompanyInfo.jsx'
-import CompanyActivity from './Partial/CompanyActivity.jsx'
-import CompanyRelated from './Partial/CompanyRelated.jsx'
+import ProductRecent from './Partial/ProductRecent.jsx'
 import ProductList from './Partial/ProductList.jsx'
 
 export default function Product({ data }) {
@@ -34,7 +31,7 @@ export default function Product({ data }) {
                             </div>
 
                             <div className='flex flex-col gap-4'>
-                                <CompanyRelated companies={data.related_companies}/>
+                                <ProductRecent products={data.recent_products}/>
                             </div>
                         </div>
                     </div>

@@ -46,7 +46,7 @@ const ProductList = ({ products, website }) => {
                 <div ref={containerRef}
                     className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (
-                        <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-3 flex flex-col items-center justify-between">
+                        <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-4 flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
                                 <Link href={route('reviews.product', product.id)} className="block group-hover:underline" >
                                     <img src={`/storage/${product.image}`}
@@ -55,7 +55,9 @@ const ProductList = ({ products, website }) => {
                                         style={{ maxWidth: '48px', maxHeight: '48px' }} />
                                 </Link>
                             </div>
-                            <Link href={route('reviews.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</Link>
+                            <Link href={route('reviews.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" >
+                             {product.name.length > 30 ? `${product.name.slice(0, 30)}...` : product.name}
+                             </Link>
                         </div>
                     ))}
                 </div>

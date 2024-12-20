@@ -324,7 +324,7 @@ class WebReviewController extends Controller
             $stars[$rating - 1]['count'] = $count;
         }
 
-        $reviews = Review::where('business_id', $business->id)
+        $reviews = Review::where('is_product', $id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
@@ -341,39 +341,25 @@ class WebReviewController extends Controller
             return $review;
         });
 
-        $replyReviews = Review::where('business_id', $business->id)
-            ->where('rating', '<', 3)
-            ->with('reply')
-            ->get();
-
-        $countReply = $replyReviews->filter(function ($review){
-            return $review->reply !== null;
-        })->count();
-
         $business['rating_statistic'] = [
             'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
             'stars' => $stars,
-            'low_reviews' => [
-                'count_reviews' => count($replyReviews),
-                'count_replies' => $countReply,
-            ]
         ];
 
-        $recent_businesses = Business::latest()->take(4)->where('id', '<>', $business->id)->take(3)->get();
-        $recent_businesses = $recent_businesses->map(function ($business, $index) {
-            $business['logo'] = $business->profile?->logo;
-            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
-            $business['count_reviews'] = count($business->reviews);
-            return $business;
-        });
+        $recent_products = Product::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
+        // $recent_products = $recent_products->map(function ($product, $index) {
+        //     $product['trustscore'] = number_format($product->reviews->avg('rating'), 1);
+        //     $product['count_reviews'] = count($product->reviews);
+        //     return $product;
+        // });
 
         return Inertia::render('Review/Product', [
             'data' =>[
                 'product' => $product,
                 'reviews' => $reviews,
                 'company' => $business,
-                'related_companies' => $recent_businesses,
+                'recent_products' => $recent_products,
             ]
         ]);
     }
