@@ -217,7 +217,7 @@ const Index = () => {
                                                         <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
                                                         <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
                                                     </div>
-                                                    <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p>
+                                                    {/* <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p> */}
                                                 </div>
                                             </td>
                                             <td>
@@ -228,7 +228,7 @@ const Index = () => {
                                                         </a>
                                                     </li>
                                                     <li className="edit">
-                                                        <Link href={route('admin.businesses.show', item.id)}>
+                                                        <Link href={route('admin.businesses.show', item.website)}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>

@@ -110,6 +110,7 @@ Route::group([
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
+    Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::post('/businesses/{business}/verify', [BusinessController::class, 'verify'])->name('businesses.verify');
     Route::resource('reviews', AdminReviewController::class);

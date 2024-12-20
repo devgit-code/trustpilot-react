@@ -35,7 +35,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                     {
                         items.length === 0 && (
                             <li className="text-red-700 py-3">
-                                No categories yet
+                                There is no category.
                             </li>
                         )
                     }
@@ -67,7 +67,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                 {
                     items.length === 0 && (
                         <li className="text-red-700 py-3">
-                            No categories yet
+                            There is no category.
                         </li>
                     )
                 }

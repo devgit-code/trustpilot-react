@@ -79,14 +79,22 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $website)
     {
-        $business = Business::where('id', $id)->with('profile', 'businessCategories')->first();
+        $business = Business::where('website', $website)->with('profile', 'businessCategories')->first();
+
+        $products = $business->products;
+        $products = $products->map(function ($product, $index) {
+            $product['trustscore'] = number_format(Review::where('is_product', $product->id)->avg('rating'), 1);
+            $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
+            return $product;
+        });
+
         return Inertia::render('Admin/Business/Show', [
             'business' => $business,
             'has_reviews' => count($business->reviews),
             'trustscore' => number_format($business->reviews->avg('rating'), 1),
-            'products' => $business->products,
+            'products' => $products,
         ]);
     }
 
