@@ -308,7 +308,7 @@ class WebReviewController extends Controller
         $product = Product::findOrFail($id);
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->findOrFail($product->business_id);
 
-        $reviews = Review::where('business_id', $business->id);
+        $reviews = Review::where('is_product', $id);
         $totalCount = $reviews->count();
         $averageRating = $reviews->average('rating');
         $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
@@ -348,11 +348,11 @@ class WebReviewController extends Controller
         ];
 
         $recent_products = Product::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
-        // $recent_products = $recent_products->map(function ($product, $index) {
-        //     $product['trustscore'] = number_format($product->reviews->avg('rating'), 1);
-        //     $product['count_reviews'] = count($product->reviews);
-        //     return $product;
-        // });
+        $recent_products = $recent_products->map(function ($product, $index) {
+            $product['trustscore'] = number_format(Review::where('is_product', $product->id)->get()->avg('rating'), 1);
+            $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
+            return $product;
+        });
 
         return Inertia::render('Review/Product', [
             'data' =>[

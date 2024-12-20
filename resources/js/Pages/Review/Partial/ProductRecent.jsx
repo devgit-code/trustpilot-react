@@ -29,8 +29,8 @@ export default function ProductRecent({products}) {
                             <div className="ml-3">
                                 <Link href={route('reviews.product', product.id)} className="no-underline pt-1 font-semibold">{product.name}</Link>
                                 <div className="mt-1 flex">
-                                    <Rating rating={Number(4)} />
-                                    <span className="ml-2 text-sm">{4} /{2}</span>
+                                    <Rating rating={Number(product.trustscore)} />
+                                    <span className="ml-2 text-sm">{product.trustscore} /{product.count_reviews}</span>
                                 </div>
                             </div>
                         </li>
