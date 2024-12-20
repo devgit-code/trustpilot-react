@@ -26,11 +26,11 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                 </div>
 
                 {/* User Avatar, Name, and Rating */}
-                <div className='m-2 border rounded min-h-[200px]'>
+                <div className='m-2 border rounded min-h-[160px]'>
                     <p className="text-gray-700 px-4 mt-3 text-sm">
                         {moment(date_experience).fromNow()}
                     </p>
-                    <div className="flex items-center px-1 pb-3">
+                    <div className="flex items-center px-1">
                         <div className="flex items-center justify-center">
                             <UserAvatar user={user} avatar={user.profile?.image}/>
                         </div>
@@ -43,8 +43,8 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                     </div>
                     {
                         reply && (
-                            <p className="text-gray-700 text-sm px-4 mt-3 h-[60px]">
-                                {reply?.comment?.length > 60 ? `${reply.comment.slice(0, 60)}...` : reply.comment}
+                            <p className="text-gray-700 text-sm px-4 mt-3 h-[40px]">
+                                {reply?.comment?.length > 50 ? `${reply.comment.slice(0, 50)}...` : reply.comment}
                             </p>
                         )
                     }
