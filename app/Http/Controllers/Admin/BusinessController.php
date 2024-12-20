@@ -245,6 +245,6 @@ class BusinessController extends Controller
     public function destroy(Business $business)
     {
         $business->delete();
-        return redirect()->route('admin.businesses.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('admin.businesses.index')->with('success', 'Business deleted successfully.');
     }
 }

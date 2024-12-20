@@ -98,7 +98,11 @@ export default function ReviewCard({ review }) {
                     <p className='mb-0 text-sm'>{moment(review.date_experience).fromNow()}</p>
                 </div>
                 <div className='mt-3'>
-                    <a href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
+                    <div className='flex'>
+                        <Link href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
+                            {review.title}
+                        </Link>
+                    </div>
                     <pre className="text-black whitespace-pre-wrap font-medium min-h-16">{review.description}</pre>
                 </div>
                 <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>

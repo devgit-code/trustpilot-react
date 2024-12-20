@@ -73,14 +73,6 @@ export default function Evaluate({ company, product }) {
                 // onClose();
             },
         });
-
-
-
-        // post(route('reviews.product.store'), {
-        //     onSuccess: () => {
-        //         // onClose();
-        //     },
-        // });
     };
 
     useEffect(()=>{
@@ -117,7 +109,7 @@ export default function Evaluate({ company, product }) {
                                     {company.company_name}
                                 </Link>
                                 {product?(
-                                    <p className='mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</p>
+                                    <Link href={route('reviews.product', product.id)} className='block no-underline hover:underline mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</Link>
                                 ):(
                                     <p className='mt-2 mb-0 text-gray-700'>{company.website}</p>
                                 )}

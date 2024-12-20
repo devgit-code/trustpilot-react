@@ -72,8 +72,8 @@ Route::group([
     Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
-    // Route::get('/reviews/product/{id}', [WebReviewController::class, 'product'])
-    //     ->name('reviews.product');
+    Route::get('/reviews/product/{id}', [WebReviewController::class, 'product'])
+        ->name('reviews.product');
 
     Route::middleware('auth')->get('/evaluate/product/{product}/{website}', [WebReviewController::class, 'evaluateProduct'])
         ->name('reviews.evaluate.product');
@@ -89,10 +89,6 @@ Route::group([
 ], function(){
     Route::post('/reviews', [WebReviewController::class, 'store'])
         ->name('reviews.store');
-
-    Route::post('/reviews/product', [WebReviewController::class, 'storeProduct'])
-        ->name('reviews.product.store');
-
 });
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

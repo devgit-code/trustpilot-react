@@ -31,7 +31,7 @@ export default function Company({ data }) {
                                         <ProductList products={data.company.products} website={data.company.website}/>
                                     )}
 
-                                    <ClickableWrite value={data.company.website}/>
+                                    <ClickableWrite url={route('reviews.evaluate', data.company.website)}/>
 
                                     <Filter ratings={data.company.rating_statistic}/>
 
