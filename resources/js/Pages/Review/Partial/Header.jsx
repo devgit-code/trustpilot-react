@@ -34,14 +34,14 @@ export default function Header({company_name, company_email, profile, primary_bu
                         primary_business_category && (
                             <>
                                 <div className='flex items-center'>
-                                    <Link href={route('categories.show', primary_business_category.sub_category.category.id)}
+                                    <Link href={route('categories.show', primary_business_category.sub_category.category.name)}
                                         className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                         {primary_business_category.sub_category.category.name}
                                     </Link>
                                     &gt;
                                 </div>
-                                <Link href={route('categories.detail', primary_business_category.sub_category.id)}
-                                    className='text-gray-200 text-sm capitalize no-underline hover:underline ml-3 bg-primary rounded px-2 py-1'>
+                                <Link href={route('categories.detail', {name:primary_business_category.sub_category.name, id:primary_business_category.sub_category.id})}
+                                    className='text-gray-700 text-sm capitalize no-underline hover:underline ml-2'>
                                     {primary_business_category.sub_category.name}
                                 </Link>
                             </>
@@ -50,13 +50,13 @@ export default function Header({company_name, company_email, profile, primary_bu
                 </div>
                 <div className='mt-3 grid md:grid-cols-[2fr_1fr] gap-4 grid-cols-1'>
                     <div className="p-2">
-                        <div className='flex gap-16'>
-                            <div className="hidden sm:inline-flex items-center justify-center w-36 h-36 border rounded">
+                        <div className='flex sm:flex-row flex-col sm:gap-16'>
+                            <div className="inline-flex items-center justify-center w-36 h-36 border rounded">
                                 <img
                                     src={profile?.logo ? `/storage/images/logo/${profile.logo}` : company_logo}
                                     alt={company_name}
                                     className="object-cover"
-                                    style={{ maxWidth: '144px', maxHeight: '144px' }} />
+                                    style={{ maxWidth: '142px', maxHeight: '142px' }} />
                             </div>
                             <div className="mt-2 flex-1">
                                 <p className='text-3xl text-gray-800 font-black mb-0'>{company_name}</p>
@@ -73,7 +73,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                                 </div>
                                 <div className='mt-2 flex items-center'>
                                     {
-                                        !profile?.logo && (
+                                        !company_email && (
                                             <p className={`bg-red-100 py-2 px-3 rounded-sm bg-gray-100 inline-flex text-sm items-center mr-3 mb-0`}>
                                                 <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed</span>
@@ -94,7 +94,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                     </div>
                     <div className="px-3 mb-5 md:mb-0">
                         <div className='flex w-full'>
-                            <a href={website} target="_blank" rel="noopener noreferrer"  className='no-underline w-full p-3 border border-blue-400 rounded group hover:bg-blue-200 hover:border-blue-200'>
+                            <a href={`https://${website}`} target="_blank" rel="noopener noreferrer"  className='no-underline w-full p-3 border border-blue-400 rounded group hover:bg-blue-200 hover:border-blue-200'>
                                 <div className='flex items-center justify-between text-sm'>
                                     <div className=''>
                                         <p className='text-blue-600 mb-1'>

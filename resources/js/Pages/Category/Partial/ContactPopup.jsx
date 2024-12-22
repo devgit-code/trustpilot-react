@@ -41,7 +41,7 @@ export default function ContactPopup({ website, contact}) {
                 {/* Contact Popup */}
                 {showPopup && (
                     <div className={`absolute ${position === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'}
-                         left-0 z-10 min-w-80 p-3 mt-2 bg-white border rounded-lg shadow-lg`}
+                         left-0 z-10 min-w-60 p-3 mt-2 bg-white border rounded-lg shadow-lg`}
                         ref={popupRef}>
                         <h3 className="text-lg font-semibold mb-4">Contact</h3>
                         <div className="flex items-center mb-3">

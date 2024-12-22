@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Business;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -90,7 +92,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // $business = Auth::guard('business')->user();
+        Review::where('is_product', $product->id)->delete();
+
         $product->delete();
-        return redirect()->route('business.products.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('business.products.index')->with('success', 'Product deleted successfully.');
     }
 }

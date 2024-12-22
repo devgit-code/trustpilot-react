@@ -167,7 +167,7 @@ const Index = () => {
                                                 </div>
                                             </td>
                                             <td>
-                                                <div className='inline-flex justify-center items-center border' style={{height: '68px', width: '68px'}}>
+                                                <div className='inline-flex justify-center items-center border' style={{height: '66px', width: '66px'}}>
                                                 {item.profile?.logo ? (
                                                     <img src={`/storage/images/logo/${item.profile.logo}`}
                                                         alt="category-logo"
@@ -179,7 +179,7 @@ const Index = () => {
                                                             alt="category-logo"
                                                             className=''
                                                             style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                        {!item.profile?.logo && (
+                                                        {!item.company_email && (
                                                             <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
                                                         )}
                                                     </div>
@@ -217,7 +217,7 @@ const Index = () => {
                                                         <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
                                                         <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
                                                     </div>
-                                                    <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p>
+                                                    {/* <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p> */}
                                                 </div>
                                             </td>
                                             <td>
@@ -228,7 +228,7 @@ const Index = () => {
                                                         </a>
                                                     </li>
                                                     <li className="edit">
-                                                        <Link href={route('admin.businesses.show', item.id)}>
+                                                        <Link href={route('admin.businesses.show', item.website)}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
                                                         </Link>
                                                     </li>

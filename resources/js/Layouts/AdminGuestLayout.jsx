@@ -13,7 +13,7 @@ export default function Guest({ children }) {
     const { auth } = usePage().props
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
 
             <Navbar collapseOnSelect expand="sm" className="bg-dark h-[65px]">
                 <Container fluid="lg">
@@ -21,13 +21,13 @@ export default function Guest({ children }) {
                 </Container>
             </Navbar>
 
-            <div className="flex sm:justify-center bg-[#29DB8F]">
+            <div className="flex flex-grow sm:justify-center bg-[#29DB8F]">
                 <div className="w-full sm:max-w-xl py-10 gap-8 bg-transparent rounded-lg overflow-hidden">
                     {children}
                 </div>
             </div>
 
             <Footer />
-        </>
+        </div>
     );
 }

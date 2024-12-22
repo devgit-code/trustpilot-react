@@ -28,14 +28,14 @@ export default function CompanyRelated({companies}) {
                                     style={{ maxWidth: '76px', maxHeight: '76px' }}/>
                             </div>
                             <div className="ml-3">
-                                <Link href={route('reviews.company', company.id)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
-                                <div className="mt-1 flex">
+                                <Link href={route('reviews.company', company.website)} className="no-underline pt-1 font-semibold">{company.company_name}</Link>
+                                <div className="mt-1 flex flex-col sm:flex-row gap-2">
                                     <Rating rating={Number(company.trustscore)} />
-                                    <span className="ml-2 text-sm">{company.trustscore} /{company.count_reviews}</span>
+                                    <span className="text-sm">{company.trustscore} /{company.count_reviews}</span>
                                 </div>
-                                <div className="mt-2 flex">
+                                <div className="mt-2 flex flex-col sm:flex-row gap-2">
                                     {
-                                        !company.profile?.logo && (
+                                        !company.company_email && (
                                             <p className={`inline-flex text-sm items-center mb-0 mr-3`}>
                                                 <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                 <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>

@@ -7,7 +7,7 @@ export default function PaginationList({reviews}) {
         <>
             {
                 reviews.length === 0 && (
-                    <p className='text-center text-lg font-bold text-gray-700'>There is any review yet in this company.</p>
+                    <p className='text-center text-lg font-bold text-gray-700 py-5'>There is no review.</p>
                 )
             }
             {

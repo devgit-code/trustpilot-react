@@ -10,7 +10,7 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
 
   return (
     <div className="bg-white text-black rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '200px'}}>
-        <Link href={route('reviews.detail', id)} className='no-underline'>
+        <Link href={route('reviews.detail', {website:company.website, id})} className='no-underline'>
             <div>
                 {/* Company Logo and Name */}
                 <div className="text-black m-2 px-2 min-h-[120px]" >
@@ -26,11 +26,11 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                 </div>
 
                 {/* User Avatar, Name, and Rating */}
-                <div className='m-2 border rounded min-h-[200px]'>
+                <div className='m-2 border rounded min-h-[160px]'>
                     <p className="text-gray-700 px-4 mt-3 text-sm">
                         {moment(date_experience).fromNow()}
                     </p>
-                    <div className="flex items-center px-1 pb-3">
+                    <div className="flex items-center px-1">
                         <div className="flex items-center justify-center">
                             <UserAvatar user={user} avatar={user.profile?.image}/>
                         </div>
@@ -43,8 +43,8 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
                     </div>
                     {
                         reply && (
-                            <p className="text-gray-700 text-sm px-4 mt-3 h-[60px]">
-                                {reply?.comment?.length > 60 ? `${reply.comment.slice(0, 60)}...` : reply.comment}
+                            <p className="text-gray-700 text-sm px-4 mt-3 h-[40px]">
+                                {reply?.comment?.length > 40 ? `${reply.comment.slice(0, 40)}...` : reply.comment}
                             </p>
                         )
                     }

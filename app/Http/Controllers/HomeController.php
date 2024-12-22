@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\Category;
@@ -16,7 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = SubCategory::all();
+        $categories = SubCategory::with('category')->get();
 
         $businesses = Business::latest()->take(4)->get();
         $businesses = $businesses->map(function ($business, $index) {
@@ -75,8 +76,10 @@ class HomeController extends Controller
         $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
             ->select('id', 'name', 'image', DB::raw('1 as is_category')); // Add is_category = 1 for categories
 
-        $sub_categories = SubCategory::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', 'image', DB::raw('0 as is_category')); // Add is_category = 1 for categories
+        $sub_categories = SubCategory::with('category')->where('name', 'like', '%' . $searchTerm . '%')
+            ->select('id', 'name', 'image', DB::raw('0 as is_category'));
+                // , DB::raw('(SELECT JSON_OBJECT("id", categories.id, "name", categories.name, "image", categories.image)
+                //   FROM categories WHERE categories.id = sub_categories.category_id) as category_data')); // Add is_category = 1 for categories
 
         $results = $categories->union($sub_categories)
             ->orderBy('name', 'asc') // Optional: Sort alphabetically
@@ -137,33 +140,60 @@ class HomeController extends Controller
                 ]);
             }
 
-            $scriptPath = base_path('screen_check.js');
-            $command = "node $scriptPath ".$searchTerm;
-            $output = shell_exec($command);
+            try {
+                $response = Http::timeout(10)->get('http://' . $searchTerm);
+                if($response->successful()){
+                    $company_name = $this->extractCompanyName('http://' . $searchTerm);
 
-            if(trim($output) == 'false'){
+                    $businesss = Business::create([
+                        'website' => $searchTerm,
+                        'company_name' => ucfirst($company_name),
+                    ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => $businesss->website,
+                    ], 200);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Can't reach the website.",
+                    ], 200);
+                }
+            } catch (\Exception $e) {
                 return response()->json([
                     'success' => false,
-                    'message' => "Can't find the website.",
+                    'message' => "Can't reach the website.",
                 ], 200);
             }
 
-            $company_name = $this->extractCompanyName('https://' . $searchTerm);
+            // $scriptPath = base_path('screen_check.js');
+            // $command = "node $scriptPath ".$searchTerm;
+            // $output = shell_exec($command);
 
-            $businesss = Business::create([
-                'website' => 'https://' . $searchTerm,
-                'company_name' => ucfirst($company_name),
-            ]);
+            // if(trim($output) == 'false'){
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => "Can't find the website.",
+            //     ], 200);
+            // }
 
-            return response()->json([
-                'success' => true,
-                'message' => $businesss->id,
-            ], 200);
+            // $company_name = $this->extractCompanyName('https://' . $searchTerm);
+
+            // $businesss = Business::create([
+            //     'website' => $searchTerm,
+            //     'company_name' => ucfirst($company_name),
+            // ]);
+
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => $businesss->website,
+            // ], 200);
         } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'The url field format is invalid.',
-            ], 422);
+            ], 200);
         }
     }
 
@@ -184,12 +214,6 @@ class HomeController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'website' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
-        ]);
 
-        $business = Business::create($validatedData);
-        return redirect()->route('reviews.company', $business->id);
     }
 }

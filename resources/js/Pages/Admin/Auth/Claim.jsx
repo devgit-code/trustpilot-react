@@ -1,5 +1,5 @@
-import { Head, Link, useForm } from '@inertiajs/react';
 import React, {useState, useEffect} from 'react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 import Select from "react-select";
 import AdminGuestLayout from '@/Layouts/AdminGuestLayout';
@@ -17,7 +17,8 @@ const customStyles = {
   }),
 };
 
-export default function Claim({ businesses }) {
+export default function Claim({ businesses}) {
+    const {selected_option } = usePage().props
     const [selectedOption, setSelectedOption] = useState(null);
 
     const formattedData = businesses.map((business) => ({
@@ -45,6 +46,14 @@ export default function Claim({ businesses }) {
     };
 
     useEffect(() => {
+        if(selected_option){
+            setSelectedOption({
+                value: selected_option.id,
+                label: selected_option.website,
+            });
+            setData('id', selected_option.id)
+        }
+
         return () => {
             reset('password', 'password_confirmation');
         };

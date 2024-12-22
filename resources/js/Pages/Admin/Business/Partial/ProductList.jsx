@@ -46,7 +46,7 @@ const ProductList = ({ products }) => {
                 {
                     products.length === 0 && (
                         <div className="flex items-center justify-center h-24 text-gray-800">
-                        No products
+                        There is no product.
                         </div>
                     )
                 }
@@ -54,14 +54,14 @@ const ProductList = ({ products }) => {
                     className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (
                         <div key={index} className="w-1/6 min-w-[120px] h-30 group bg-white rounded-lg flex flex-col items-center justify-between">
+                            <p  className="h-16 flex items-center text-center mb-0 no-underline text-black capitalize text-sm group-hover:underline" > {product.name.length > 35 ? `${product.name.slice(0, 35)}...` : product.name}</p>
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
                                 <img src={`/storage/${product.image}`}
                                     alt="product-logo"
                                     className='max-h-12 max-w-12 object-cover broder-1 rounded'
                                     style={{ maxWidth: '48px', maxHeight: '48px' }} />
                             </div>
-                            <p  className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</p>
-                            <p className='text-gray-700 text-sm'>50 reviews</p>
+                            {/* <p className='mt-2 mb-0 text-gray-700 text-sm'>{product.count_reviews} reviews</p> */}
                         </div>
                     ))}
                 </div>

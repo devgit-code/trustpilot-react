@@ -30,17 +30,17 @@ const Index = ({businessProfile, activeTab, business}) => {
                                     <HomeTab business={business} businessProfile={businessProfile}/>
                                 </div>
                             </Tab>
-                            <Tab eventKey="logo" title="Logo">
+                            {/* <Tab eventKey="logo" title="Logo">
                                 <div className='bg-white'>
                                     <LogoTab businessProfile={businessProfile}/>
                                 </div>
-                            </Tab>
-                            <Tab eventKey="account" title="Account">
+                            </Tab> */}
+                            {/* <Tab eventKey="account" title="Account">
                                 <div className='bg-white'>
                                     <AccountTab business={business}/>
                                 </div>
-                            </Tab>
-                            <Tab eventKey="contact" title="Contact Info">
+                            </Tab> */}
+                            <Tab eventKey="contact" title="Profile">
                                 <div className='bg-white'>
                                     <ContactTab businessProfile={businessProfile}/>
                                 </div>

@@ -114,37 +114,24 @@ class ProfileController extends Controller
         ]);
 
         $business = auth('business')->user();
-        $businessProfile = $business->profile;
-
-        if (!$businessProfile) {
-            $businessProfile = new BusinessProfile();
-            $businessProfile->business_id = $business->id;
-        }
 
         $company_name = $request->input('company_name');
-        $description = $request->input('description');
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $job_title = $request->input('job_title');
 
         if (
             $business->company_name !== $company_name ||
-            $businessProfile->description !== $description
+            $business->first_name !== $first_name ||
+            $business->last_name !== $last_name ||
+            $business->job_title !== $job_title
         ) {
             $business->company_name = $company_name;
+            $business->first_name = $first_name;
+            $business->last_name = $last_name;
+            $business->job_title = $job_title;
             $business->save();
 
-            $businessProfile->description = $description;
-            $businessProfile->save();
-
-            // $existingbusinessProfile = BusinessProfile::where('business_id', $business->id)->first();
-
-            // if ($existingbusinessProfile) {
-            //     $existingbusinessProfile->description = $description;
-
-            //     $existingbusinessProfile->save();
-            // } else {
-            //     $businessProfile->description = $description;
-
-            //     $businessProfile->save();
-            // }
         }
 
         return redirect()->route('business.profile.index');
@@ -185,6 +172,8 @@ class ProfileController extends Controller
             "email" => "nullable|email|max:255",
             "phone" => 'nullable|regex:/^\+?[0-9]{10,15}$/',
             "location" => "nullable|string|max:255",
+            "description" => "nullable|string",
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         $business = auth('business')->user();
@@ -195,18 +184,32 @@ class ProfileController extends Controller
             $businessProfile->business_id = $business->id;
         }
 
+
+        if (
+            $request->hasFile('image')
+        ) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "BusinessProfile-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/logo', $imageName, 'public');
+            $businessProfile["logo"] = $imageName;
+            $businessProfile->save();
+        }
+
         $email = $request->input('email');
         $phone = $request->input('phone');
         $location = $request->input('location');
+        $description = $request->input('description');
 
         if (
             $businessProfile->email !== $email ||
             $businessProfile->phone !== $phone ||
-            $businessProfile->location !== $location
+            $businessProfile->location !== $location ||
+            $businessProfile->description !== $description
         ) {
             $businessProfile->email = $email;
             $businessProfile->phone = $phone;
             $businessProfile->location = $location;
+            $businessProfile->description = $description;
 
             $businessProfile->save();
         }

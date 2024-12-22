@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import { Link, usePage, } from '@inertiajs/react';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, website }) => {
     const containerRef = useRef(null);
 
     const scrollLeft = () => {
@@ -43,26 +43,21 @@ const ProductList = ({ products }) => {
             </div>
 
             <div className="relative mt-3">
-                {
-                    products.length === 0 && (
-                        <div className="flex items-center justify-center h-24 text-gray-800">
-                        No products
-                        </div>
-                    )
-                }
                 <div ref={containerRef}
                     className={`flex items-center gap-3 ${products.length < 6 ? "justify-center" : "justify-start"} overflow-hidden`}>
                     {products.map((product, index) => (
-                        <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-3 flex flex-col items-center justify-between">
+                        <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-4 flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
-                                <Link href={route('reviews.evaluate.product', product.id)} className="block group-hover:underline" >
+                                <Link href={route('reviews.product', {website, name:product.name})} className="block group-hover:underline" >
                                     <img src={`/storage/${product.image}`}
                                         alt="product-logo"
                                         className='max-h-12 max-w-12 object-cover broder-1 rounded'
                                         style={{ maxWidth: '48px', maxHeight: '48px' }} />
                                 </Link>
                             </div>
-                            <Link href={route('reviews.evaluate.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" > {product.name}</Link>
+                            <Link href={route('reviews.product', {website, name:product.name} )} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" >
+                             {product.name.length > 30 ? `${product.name.slice(0, 30)}...` : product.name}
+                             </Link>
                         </div>
                     ))}
                 </div>

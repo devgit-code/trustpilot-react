@@ -79,14 +79,22 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $website)
     {
-        $business = Business::where('id', $id)->with('profile', 'businessCategories')->first();
+        $business = Business::where('website', $website)->with('profile', 'businessCategories')->first();
+
+        $products = $business->products;
+        $products = $products->map(function ($product, $index) {
+            $product['trustscore'] = number_format(Review::where('is_product', $product->id)->avg('rating'), 1);
+            $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
+            return $product;
+        });
+
         return Inertia::render('Admin/Business/Show', [
             'business' => $business,
             'has_reviews' => count($business->reviews),
             'trustscore' => number_format($business->reviews->avg('rating'), 1),
-            'products' => $business->products,
+            'products' => $products,
         ]);
     }
 
@@ -153,26 +161,41 @@ class BusinessController extends Controller
 
     }
 
+    public function verify(Request $request, string $business)
+    {
+        $business = Business::findOrFail($business);
+        $business->markEmailAsVerified();
+
+        return redirect()->route('admin.businesses.show', $business);
+    }
+
     public function change(Request $request, string $business)
     {
         $business = Business::findOrFail($business);
         $businessProfile = $business->profile;
 
+        $company_email = $request->input('company_email');
         $company_name = $request->input('company_name');
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
         $job_title = $request->input('job_title');
 
         if (
+            $business->company_email !== $company_email ||
             $business->company_name !== $company_name ||
             $business->first_name !== $first_name ||
             $business->last_name !== $last_name ||
             $business->job_title !== $job_title
         ) {
+            $business->company_email = $company_email;
             $business->company_name = $company_name;
             $business->first_name = $first_name;
             $business->last_name = $last_name;
             $business->job_title = $job_title;
+
+            if ($business->isDirty('company_email')) {
+                $business->email_verified_at = null;
+            }
 
             $business->save();
         }
@@ -230,6 +253,6 @@ class BusinessController extends Controller
     public function destroy(Business $business)
     {
         $business->delete();
-        return redirect()->route('admin.businesses.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('admin.businesses.index')->with('success', 'Business deleted successfully.');
     }
 }

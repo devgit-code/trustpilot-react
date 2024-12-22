@@ -19,7 +19,7 @@ export default function CompanyItem({index, company}){
 
     return (
         <div className="bg-white border rounded-lg mb-4 hover:shadow-md">
-            <Link href={route('reviews.company', company.id)} className='no-underline'>
+            <Link href={route('reviews.company', company.website)} className='no-underline'>
                 <div className="flex p-3 gap-4">
                     <div className="inline-flex items-center w-20 h-20">
                         <img
@@ -28,23 +28,22 @@ export default function CompanyItem({index, company}){
                             className="object-cover"
                             style={{ maxWidth: '80px', maxHeight: '80px' }} />
                     </div>
-                    <div className=''>
-                        <h3 className="text-lg text-black font-semibold m-0">{company.company_name}</h3>
-                        <p className="text-sm text-gray-500 no-underline m-0">{company.website} </p>
-                        <div className="flex items-center mt-2 text-gray-900">
+                    <div className='overflow-hidden'>
+                        <h3 className="text-lg text-black font-semibold m-0 break-words">{company.company_name}</h3>
+                        <p className="text-sm text-gray-500 no-underline m-0 break-words">{company.website} </p>
+                        <div className="flex flex-col sm:flex-row sm:items-center mt-2 gap-2 text-gray-900">
                             <Rating className="inline-flex" rating={Number(company.trustscore)}/>
-                            <span className="text-sm ml-1">Trustscore {company.trustscore} |</span>
-                            <span className="text-sm ml-2">{company.count_reviews} reviews</span>
+                            <span className="text-sm ml-1"> {company.trustscore} ({company.reviews_count} reviews)</span>
                         </div>
                         <p className="text-sm text-gray-500 pt-2 m-0 no-underline">{company.location} </p>
                     </div>
                 </div>
             </Link>
             <div className="border-t flex justify-between items-center px-3 py-1">
-                <div className='flex items-center'>
+                <div className='flex'>
                     <ContactPopup contact={company.profile} website={company.website}/>
-                    <span className='ml-2 text-sm border-l text-gray-900 pl-3'>
-                    {company.profile?.location}
+                    <span className='ml-2 text-sm border-l text-gray-800 pl-3'>
+                    {company.profile?.location?.length > 60 ? `${company.profile.location.slice(0, 60)}...` : company.profile.location}
                     </span>
                 </div>
 
@@ -62,7 +61,7 @@ export default function CompanyItem({index, company}){
             <div className="p-4 flex lg:grid lg:grid-cols-3 lg:w-full gap-2 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                 {company.latestReviews.map((review, reviewIndex) => (
                 <div key={reviewIndex} className="mt-1 border rounded hover:shadow">
-                    <Link href={route('reviews.detail', review.id)}  className='no-underline'>
+                    <Link href={route('reviews.detail', {website:company.website, id:review.id})}  className='no-underline'>
                         <div className='px-4 mt-2'>
                             <p className="text-gray-700 text-sm">
                                 5 hours ago

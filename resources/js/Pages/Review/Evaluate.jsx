@@ -12,12 +12,13 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 
 
-export default function Evaluate({ company }) {
+export default function Evaluate({ company, product }) {
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         title:'',
         description:'',
         business_id: company.id,
         rating: 0,
+        is_product: product?.id || 0,
         date: new Date().toISOString().split("T")[0]
     });
 
@@ -86,26 +87,38 @@ export default function Evaluate({ company }) {
                 <div className='bg-whtie border-b '>
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full flex items-center'>
-                            <Link href={route('reviews.company', company.id)}>
+                            <Link href={route('reviews.company', company.website)}>
                                 <div className='inline-flex items-center justify-center w-20 h-20 rounded border'>
+                                    {product ? (
+                                        <img
+                                            src={`/storage/${product.image}`}
+                                            alt={company.name}
+                                            className="object-cover"
+                                            style={{ maxWidth: '60px', maxHeight: '60px' }}/>
+                                    ):(
                                     <img
-                                        src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
-                                        alt={company.name}
-                                        className="object-cover"
-                                        style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                                            src={company.profile?.img ? `/storage/images/logo/${company.profile.img}` : company_logo}
+                                            alt={company.name}
+                                            className="object-cover"
+                                            style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                                    )}
                                 </div>
                             </Link>
                             <div className='ml-5'>
-                                <Link href={route('reviews.company', company.id)} className='text-gray-800 text-xl font-extrabold pb-3'>
+                                <Link href={route('reviews.company', company.website)} className='text-gray-800 text-xl font-bold pb-3'>
                                     {company.company_name}
                                 </Link>
-                                <p className='mb-0 text-gray-700'>{company.website.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, '')}</p>
+                                {product?(
+                                    <Link href={route('reviews.product', {website:company.website, name:product.name})} className='block no-underline hover:underline mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</Link>
+                                ):(
+                                    <p className='mt-2 mb-0 text-gray-700'>{company.website}</p>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="p-2 bg-[#FCFBF3]">
+                <div className="py-4 bg-[#FCFBF3] h-full">
                     <div className='container-sm p-4 flex justify-center'>
                         <div className='max-w-screen-sm w-full'>
                             <form onSubmit={handleSubmit}>
@@ -118,7 +131,7 @@ export default function Evaluate({ company }) {
                                     </div>
                                     {star && (
                                         <>
-                                            <div className='mt-2'>
+                                            <div className='mt-3'>
                                                 <p className='text-gray-800 text-lg font-bold'>
                                                     Tell us more about your experience
                                                 </p>
@@ -133,8 +146,12 @@ export default function Evaluate({ company }) {
                                             </div>
 
                                             <div>
+                                                <p className='mt-3 text-gray-800 text-lg font-bold'>
+                                                    Title of Review
+                                                </p>
                                                 <div className="mt-3 relative w-full">
                                                     <input
+                                                        id="title"
                                                         type="text"
                                                         ref={inputRef}
                                                         value={data.title}
@@ -153,7 +170,7 @@ export default function Evaluate({ company }) {
                                                 <InputError className="mt-2" message={errors.title} />
                                             </div>
 
-                                            <div className='mt-2'>
+                                            <div className='mt-3'>
                                                 <p className='text-gray-800 text-lg font-bold'>
                                                     Date of experience
                                                 </p>
@@ -179,7 +196,7 @@ export default function Evaluate({ company }) {
 
                                                 {/* Submit Button */}
                                                 <div className='mx-6 '>
-                                                    <button type="submit" className="bg-blue-600 text-white text-lg font-bold py-2 rounded-full w-full hover:bg-blue-700 transition">
+                                                    <button type="submit" className="bg-blue-600 text-white text-lg font-bold py-2 px-1 rounded-full w-full hover:bg-blue-700 transition">
                                                         Submit review
                                                     </button>
                                                 </div>

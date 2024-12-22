@@ -115,12 +115,14 @@ class ReviewController extends Controller
         $useful = ReviewThumb::where('review_id', $review->id)->where('thumb', true)->count();
         $flag = ReviewThumb::where('review_id', $review->id)->where('thumb', false)->count();
 
+        session()->flash('success', session('status'));
+
         return Inertia::render('Business/Review/Edit', [
             'review' => $review,
             'userTotalReviews' => $userTotalReviews, // Pass total count to the frontend
             'useful' => $useful, // Pass total count to the frontend
             'flag' => $flag, // Pass total count to the frontend
-        ])->with('status', session('status'));
+        ]);
     }
 
 
@@ -146,6 +148,6 @@ class ReviewController extends Controller
     public function destroy(Review $review)
     {
         $review->delete();
-        return redirect()->route('business.reviews.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('business.reviews.index')->with('success', 'Review deleted successfully.');
     }
 }

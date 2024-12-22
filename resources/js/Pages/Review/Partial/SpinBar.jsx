@@ -23,7 +23,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
     return (
         <>
         {isVisible && (
-            <div className={`sticky top-0 z-10 bg-gray-50 p-1 border-b text-white shadow-md transition-all duration-500 ease-out`}>
+            <div className={`sticky top-0 z-10 bg-gray-50 p-1 border-b text-white shadow-md transition-all duration-500 ease-out z-20`}>
                 <div className='container-lg '>
                     <div className='my-1 grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div className="p-2">
@@ -44,7 +44,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                     <div className='text-2xl text-gray-800 font-extrabold mb-0'>
                                         {company_name}
                                         {
-                                            !profile?.logo && (
+                                            !company_email && (
                                                 <p className={`ml-3 bg-red-100 py-1 px-2 rounded inline-flex text-sm items-center mb-0`}>
                                                     <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                     <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>
@@ -52,9 +52,9 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                             )
                                         }
                                     </div>
-                                    <div className='flex items-center mt-3'>
+                                    <div className='flex flex-col sm:flex-row mt-3 gap-2'>
                                         <Rating rating={Number(rating_statistic.avg)}/>
-                                        <span className='ml-4 text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
+                                        <span className='text-gray-500'>{rating_statistic.avg} ({rating_statistic.total} reviews)</span>
                                     </div>
                                 </div>
                             </div>
@@ -66,8 +66,8 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                     Replied to {rating_statistic.low_reviews.count_replies} out of {rating_statistic.low_reviews.count_reviews} negative reviews
                                 </p>
                             </div> */}
-                            <div className='flex gap-4'>
-                                <a href={website} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
+                            <div className='flex flex-col sm:flex-row gap-2'>
+                                <a href={`https://${website}`} target="_blank" rel="noopener noreferrer" className='no-underline p-1 px-4 border border-blue-400 rounded-full group hover:bg-blue-100 hover:border-blue-200'>
                                     <div className='flex items-center justify-between text-sm'>
                                         <p className='text-blue-600 mb-1'>
                                             <FaExternalLinkAlt className='inline mr-2 text-sm group-hover:text-gray-600'/>
@@ -75,7 +75,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                         </p>
                                     </div>
                                 </a>
-                                <Link href={route('reviews.evaluate', id)} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
+                                <Link href={route('reviews.evaluate', website)} className='no-underline bg-blue-500 p-1 px-4 border border-blue-400 group rounded-full hover:bg-blue-100 hover:border-blue-200'>
                                     <span className='text-sm font-bold text-gray-100 group-hover:text-gray-700 '>Write a review</span>
                                 </Link>
                             </div>

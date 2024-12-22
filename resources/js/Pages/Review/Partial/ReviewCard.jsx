@@ -69,11 +69,11 @@ export default function ReviewCard({ review }) {
                     <p className='text-gray-800 text-sm font-bold mb-0 capitalize'>
                         {review.userinfo.name}
                     </p>
-                    <div className='flex items-center mt-1'>
+                    <div className='flex flex-col sm:flex-row gap-1 sm:gap-4 items-center mt-1'>
                         <p className='mb-0 text-gray-700 text-sm'>{review.userinfo.count_reviews} review</p>
                         {
                             review.userinfo.location && (
-                                <p className='mb-0 text-gray-700 ml-4 flex items-center'><FaMapMarkerAlt className='inline mr-2'/>{review.userinfo.location}</p>
+                                <p className='mb-0 text-gray-700 flex items-center'><FaMapMarkerAlt className='inline mr-1'/>{review.userinfo.location}</p>
                             )
                         }
                     </div>
@@ -98,7 +98,11 @@ export default function ReviewCard({ review }) {
                     <p className='mb-0 text-sm'>{moment(review.date_experience).fromNow()}</p>
                 </div>
                 <div className='mt-3'>
-                    <a href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 no-underline hover:underline'>{review.title}</a>
+                    <div className='flex'>
+                        <Link href={route('reviews.detail', {website:review.business.website, id:review.id})} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
+                            {review.title}
+                        </Link>
+                    </div>
                     <pre className="text-black whitespace-pre-wrap font-medium min-h-16">{review.description}</pre>
                 </div>
                 <p className='text-sm text-gray-800'><span className='text-gray-800 font-bold mr-2'>Date of experience:</span>{moment(review.date_experience).format("MMM D, YYYY")}</p>

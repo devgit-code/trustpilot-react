@@ -27,9 +27,11 @@ export default function Company({ data }) {
                         <div className="p-2 grid lg:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
-                                    <ProductList products={data.company.products}/>
+                                    {data.company.products.length !== 0 && (
+                                        <ProductList products={data.company.products} website={data.company.website}/>
+                                    )}
 
-                                    <ClickableWrite company_name={data.company.id}/>
+                                    <ClickableWrite url={route('reviews.evaluate', data.company.website)}/>
 
                                     <Filter ratings={data.company.rating_statistic}/>
 

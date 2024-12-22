@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -98,7 +99,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $businesses = Business::where('role', 'owner')
-            ->where('website', 'like', '%' . $request->input('website', ''))
+            ->where('website', 'like', '%' . $request->input('website'))
             ->get();
 
         if(count($businesses))
@@ -106,43 +107,50 @@ class RegisteredUserController extends Controller
             return redirect()->back()->withErrors(['website'=>'Already registered domain.'])->withInput();
         }
 
-        $scriptPath = base_path('screen_check.js');
-        $command = "node $scriptPath ".$request->website;
-        $output = shell_exec($command);
+        try {
+            $response = Http::timeout(10)->get('http://' . $request->website);
 
-        if(trim($output) == 'false'){
-            return redirect()->back()->withErrors(['website'=>'Domain not exist.'])->withInput();
+            if($response->successful()){
+                $business = Business::create([
+                    'website' => $request->website,
+                    'company_name' => $request->company_name,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'job_title' => $request->job_title,
+                    'company_email' => $request->company_email,
+                    'password' => Hash::make($request->password),
+                ]);
+
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                // event(new Registered($business));
+                Auth::guard('business')->login($business);
+                // $request->session()->regenerate();
+
+                $business->sendEmailVerificationNotification();
+
+                // return redirect(RouteServiceProvider::HOME);
+                return redirect()->route('admin.verification.notice');
+            }else{
+                return redirect()->back()->withErrors(['website'=>"Can't reach the website."])->withInput();
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['website'=>"Can't reach the website."])->withInput();
         }
-
-        $business = Business::create([
-            'website' => 'https://' . $request->website,
-            'company_name' => $request->company_name,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'job_title' => $request->job_title,
-            'company_email' => $request->company_email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        // event(new Registered($business));
-        Auth::guard('business')->login($business);
-        // $request->session()->regenerate();
-
-        $business->sendEmailVerificationNotification();
-
-        // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('admin.verification.notice');
     }
 
-    public function admin_claim(): Response
+    public function admin_claim(Request $request, String $website = null): Response
     {
         $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
 
-        return Inertia::render('Admin/Auth/Claim', compact('businesses'));
+        $selected_business = null;
+        if($website){
+            $selected_business = Business::where('website', $request->website)->first();
+        }
+
+        return Inertia::render('Admin/Auth/Claim', compact('businesses'))->with('selected_option', $selected_business);
     }
 
     public function admin_claim_store(Request $request)

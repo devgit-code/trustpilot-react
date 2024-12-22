@@ -101,6 +101,6 @@ class CategoryController extends Controller
             }
         }
 
-        return redirect()->route('business.categories.index')->with('success', 'Role deleted successfully.');
+        return redirect()->route('business.categories.index');
     }
 }

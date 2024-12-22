@@ -8,11 +8,12 @@ function Header({category}) {
                 <p className='pl-3 text-black capitalize'>
                     {category.category && (
                         <>
-                            <Link href={route('categories.show', category.category.id)}
+                            <Link href={route('categories.show', category.category.name)}
                                 className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                 {category.category.name}
                             </Link>
-                             &gt; {category.name}
+                             &gt;
+                             <span className='ml-3 text-gray-700'>{category.name}</span>
                         </>
                     )}
                 </p>

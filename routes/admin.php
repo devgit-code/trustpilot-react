@@ -39,7 +39,8 @@ Route::group([
     Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
 
-    Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    // Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::get('/claim/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
     Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');
@@ -89,9 +90,9 @@ Route::group([
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
+    Route::post('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
     Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');
-    Route::put('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
+    Route::post('/profile/update/contact', [ProfileController::class, 'contact'])->name('profile.update.contact');
     Route::post('/profile/update/logo', [ProfileController::class, 'logo_update'])->name('profile.update.logo');
 
 });
@@ -109,7 +110,9 @@ Route::group([
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
+    Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
+    Route::post('/businesses/{business}/verify', [BusinessController::class, 'verify'])->name('businesses.verify');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
     Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');

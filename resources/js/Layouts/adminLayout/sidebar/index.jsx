@@ -41,8 +41,7 @@ export default function Sidebar({auth}) {
                     </div>
 
                     <div className="profile_text mt-3">
-                        <span className="d-block text-gray-300 fs-5 mb-0">{auth.user.first_name + ' ' + auth.user.last_name}</span>
-                        <span className="d-block text-gray-300 fs-6">{auth.user.company_email}</span>
+                        <span className="d-block text-gray-300 fs-6">{auth.user.company_name}</span>
                     </div>
                 </div>
                 {

@@ -13,6 +13,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
 
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
+        company_email: business.company_email,
         description: business.profile?.description || '',
         first_name: business.first_name || '',
         last_name: business.last_name || '',
@@ -46,6 +47,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
 
         setData({
             company_name: business.company_name,
+            company_email: business.company_email,
             first_name: business.first_name || '',
             last_name: business.last_name || '',
             job_title: business.job_title || '',
@@ -103,8 +105,9 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
     return (
         <>
             <div className='flex items-center justify-between'>
-                <div className=''>
+                <div className='flex items-center'>
                     <h4 className="card-title">View Business <a className='font-bold text-gray-800 capitalize italic'>{business.company_name}</a></h4>
+
                 </div>
 
                 <div className='space-x-2'>
@@ -122,8 +125,11 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
             </div>
             <div className='flex items-center mt-3'>
                 <div className='flex space-x-3'>
+                    {(!isEdit && business.company_email && !business.email_verified_at) && (
+                        <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
+                    )}
                     {
-                        !business.profile?.logo && (
+                        !business.company_email && (
                             <p className={`bg-red-200 mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                                 <BsFillExclamationOctagonFill className='text-danger text-lg'/>
                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed Company</span>
@@ -149,6 +155,22 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     <div className='col-lg-6 space-y-5'>
                         <div className=' space-y-4'>
                             <h5 className="card-title">Business Info</h5>
+
+                            <div>
+                                <InputLabel htmlFor="website" value="Company Domain" />
+
+                                <TextInput
+                                    id="website"
+                                    name="website"
+                                    type="url"
+                                    className="mt-1 block w-full bg-gray-100"
+                                    value={business.website}
+                                    disabled
+                                />
+
+                                <InputError className="mt-2" message={errors.website} />
+                            </div>
+
                             <div>
                                 <InputLabel htmlFor="company_name" value="Company Name" />
 
@@ -168,29 +190,17 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                             </div>
 
                             <div>
-                                <InputLabel htmlFor="website" value="Company Domain" />
-
-                                <TextInput
-                                    id="website"
-                                    name="website"
-                                    type="url"
-                                    className="mt-1 block w-full bg-gray-100"
-                                    value={business.website}
-                                    disabled
-                                />
-
-                                <InputError className="mt-2" message={errors.website} />
-                            </div>
-
-                            <div>
                                 <InputLabel htmlFor="company_email" value="Company Email" />
 
                                 <TextInput
+                                    type="email"
                                     id="company_email"
                                     name="company_email"
-                                    className="mt-1 block w-full bg-gray-100"
-                                    value={business.company_email ?? ''}
-                                    disabled
+                                    className="mt-1 block w-full"
+                                    value={data.company_email}
+                                    onChange={(e)=>setData('company_email', e.target.value)}
+                                    disabled={!isEdit}
+                                    autoComplete="company_email"
                                 />
                             </div>
 
@@ -374,7 +384,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     isEdit && (
                         <div className='mt-3'>
                             <button type="submit" className="btn btn-danger">
-                                Change
+                                Save
                             </button>
                             <button onClick={handleCancel} className="ml-3 btn btn-success">
                                 Cancel
