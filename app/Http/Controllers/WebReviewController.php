@@ -163,7 +163,7 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function detail(Request $request, String $id)
+    public function detail(Request $request, String $website, String $id)
     {
         $review = Review::with(['reply'])->findOrFail($id);
         $review['userinfo'] = [
@@ -303,13 +303,13 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function product(Request $request, String $id)
+    public function product(Request $request, String $website, String $name)
     {
-        $product = Product::findOrFail($id);
-        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->findOrFail($product->business_id);
+        $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->where('website', $website)->first();
+        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
 
         //product statistic
-        $product_reviews = Review::where('is_product', $id);
+        $product_reviews = Review::where('is_product', $product->id);
         $totalCount = $product_reviews->count();
         $averageRating = $product_reviews->average('rating');
         $ratingCounts = $product_reviews->select('rating', DB::raw('count(*) as count'))
@@ -335,18 +335,18 @@ class WebReviewController extends Controller
         $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();
         $averageRating = $reviews->average('rating');
-        $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
-            ->groupBy('rating')
-            ->get();
+        // $ratingCounts = $reviews->select('rating', DB::raw('count(*) as count'))
+        //     ->groupBy('rating')
+        //     ->get();
 
-        $stars = array_fill(0, 5, ['count' => 0]);
-        foreach ($ratingCounts as $data) {
-            $rating = $data['rating'];
-            $count = $data['count'];
+        // $stars = array_fill(0, 5, ['count' => 0]);
+        // foreach ($ratingCounts as $data) {
+        //     $rating = $data['rating'];
+        //     $count = $data['count'];
 
-            // Set the count for the corresponding rating in the stars array
-            $stars[$rating - 1]['count'] = $count;
-        }
+        //     // Set the count for the corresponding rating in the stars array
+        //     $stars[$rating - 1]['count'] = $count;
+        // }
 
         $replyReviews = Review::where('business_id', $business->id)
             ->where('rating', '<', 3)
@@ -360,7 +360,7 @@ class WebReviewController extends Controller
         $business['rating_statistic'] = [
             'avg' => number_format($averageRating, 1),
             'total' => $totalCount,
-            'stars' => $stars,
+            // 'stars' => $stars,
             'low_reviews' => [
                 'count_reviews' => count($replyReviews),
                 'count_replies' => $countReply,
@@ -368,7 +368,7 @@ class WebReviewController extends Controller
         ];
 
         //reviews
-        $reviews = Review::where('is_product', $id)
+        $reviews = Review::where('is_product', $product->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
@@ -385,7 +385,7 @@ class WebReviewController extends Controller
             return $review;
         });
 
-        $recent_products = Product::latest()->take(4)->where('id', '<>', $id)->take(3)->get();
+        $recent_products = Product::latest()->take(4)->where('id', '<>', $product->id)->take(3)->get();
         $recent_products = $recent_products->map(function ($product, $index) {
             $product['trustscore'] = number_format(Review::where('is_product', $product->id)->get()->avg('rating'), 1);
             $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
@@ -402,10 +402,10 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function evaluateProduct(Request $request, String $product, String $website)
+    public function evaluateProduct(Request $request, String $website, String $name)
     {
-        $product = Product::findOrFail($product);
-        $business = Business::with('profile')->findOrFail($product->business_id);
+        $business = Business::with('profile')->where('website', $website)->first();
+        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
 
         return Inertia::render('Review/Evaluate', [
             'product' => $product,

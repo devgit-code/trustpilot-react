@@ -224,7 +224,7 @@ function SearchSection() {
                                                             // onClick={() => handleResultClick(category.name)}
                                                             className="p-2 cursor-pointer hover:bg-blue-100"
                                                         >
-                                                            <Link href={category.is_category ? route('categories.show', category.id) : route('categories.detail', category.id)} className='ml-2 text-gray-900 no-underline flex items-center justify-beetween'>
+                                                            <Link href={category.is_category ? route('categories.show', category.name) : route('categories.detail', {name:category.name, id:category.id})} className='ml-2 text-gray-900 no-underline flex items-center justify-beetween'>
                                                                 <div className='flex items-center'>
                                                                     <div className="relative inline-flex items-center w-10 h-10 rounded">
                                                                         <img src={`/storage/${category.image}`}

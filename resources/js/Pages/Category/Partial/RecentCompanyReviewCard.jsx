@@ -10,7 +10,7 @@ const ReviewCard = ({ id, user, rating, reply, company, description, date_experi
 
   return (
     <div className="bg-white text-black rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '200px'}}>
-        <Link href={route('reviews.detail', id)} className='no-underline'>
+        <Link href={route('reviews.detail', {website:company.website, id})} className='no-underline'>
             <div>
                 {/* Company Logo and Name */}
                 <div className="text-black m-2 px-2 min-h-[120px]" >

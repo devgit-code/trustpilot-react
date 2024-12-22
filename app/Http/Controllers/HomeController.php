@@ -17,7 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = SubCategory::all();
+        $categories = SubCategory::with('category')->get();
 
         $businesses = Business::latest()->take(4)->get();
         $businesses = $businesses->map(function ($business, $index) {
@@ -76,8 +76,10 @@ class HomeController extends Controller
         $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
             ->select('id', 'name', 'image', DB::raw('1 as is_category')); // Add is_category = 1 for categories
 
-        $sub_categories = SubCategory::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', 'image', DB::raw('0 as is_category')); // Add is_category = 1 for categories
+        $sub_categories = SubCategory::with('category')->where('name', 'like', '%' . $searchTerm . '%')
+            ->select('id', 'name', 'image', DB::raw('0 as is_category'));
+                // , DB::raw('(SELECT JSON_OBJECT("id", categories.id, "name", categories.name, "image", categories.image)
+                //   FROM categories WHERE categories.id = sub_categories.category_id) as category_data')); // Add is_category = 1 for categories
 
         $results = $categories->union($sub_categories)
             ->orderBy('name', 'asc') // Optional: Sort alphabetically

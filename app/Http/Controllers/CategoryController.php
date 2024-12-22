@@ -31,7 +31,7 @@ class CategoryController extends Controller
         $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
             ->select('id', 'name', DB::raw('1 as is_category')); // Add is_category = 1 for categories
 
-        $sub_categories = SubCategory::where('name', 'like', '%' . $searchTerm . '%')
+        $sub_categories = SubCategory::with('category')->where('name', 'like', '%' . $searchTerm . '%')
             ->select('id', 'name', DB::raw('0 as is_category')); // Add is_category = 1 for categories
 
         $results = $categories->union($sub_categories)
@@ -44,12 +44,12 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function show(Request $request, String $category_id)
+    public function show(Request $request, String $category_name)
     {
-        $category = Category::find($category_id);
+        $category = Category::where('name', $category_name)->first();
         $subCategories = Category::with(['subcategories' => function ($query){
             $query->withCount('businesses');
-        }])->findOrFail($category_id);
+        }])->findOrFail($category->id);
 
         $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
         $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($subCategory_ids) {
@@ -102,7 +102,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function detail(Request $request, String $sub_category_id)
+    public function detail(Request $request, String $name, String $sub_category_id)
     {
         $subCategory = SubCategory::with(['category'])->find($sub_category_id);
 

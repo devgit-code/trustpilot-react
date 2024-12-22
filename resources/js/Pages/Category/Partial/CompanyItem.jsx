@@ -61,7 +61,7 @@ export default function CompanyItem({index, company}){
             <div className="p-4 flex lg:grid lg:grid-cols-3 lg:w-full gap-2 overflow-x-scroll-important lg:overflow-hidden-important scroll-smooth">
                 {company.latestReviews.map((review, reviewIndex) => (
                 <div key={reviewIndex} className="mt-1 border rounded hover:shadow">
-                    <Link href={route('reviews.detail', review.id)}  className='no-underline'>
+                    <Link href={route('reviews.detail', {website:company.website, id:review.id})}  className='no-underline'>
                         <div className='px-4 mt-2'>
                             <p className="text-gray-700 text-sm">
                                 5 hours ago

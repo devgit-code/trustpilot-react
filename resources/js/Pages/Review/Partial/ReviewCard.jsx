@@ -99,7 +99,7 @@ export default function ReviewCard({ review }) {
                 </div>
                 <div className='mt-3'>
                     <div className='flex'>
-                        <Link href={route('reviews.detail', review.id)} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
+                        <Link href={route('reviews.detail', {website:review.business.website, id:review.id})} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
                             {review.title}
                         </Link>
                     </div>

@@ -8,7 +8,7 @@ import Rating from '@/Components/Ratings';
 const ReviewCard = ({ id, user, rating, description, company }) => {
     return (
         <div className="bg-white text-black rounded-lg mb-5 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '250px'}}>
-            <Link href={route('reviews.detail', id)} className='no-underline'>
+            <Link href={route('reviews.detail', {website:company.website, id})} className='no-underline'>
                 {/* User Avatar, Name, and Rating */}
                 <div className="flex items-center gap-2 px-4 mt-3">
                     <div className="flex items-center justify-center">

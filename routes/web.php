@@ -46,15 +46,18 @@ Route::group([
         ->name('search');
 
     // category
-    Route::get('/categories', [CategoryController::class, 'index'])
+    Route::get('/kategory', [CategoryController::class, 'index'])
         ->name('categories.index');
 
-    Route::get('/categories/{category}', [CategoryController::class, 'show'])
+    Route::get('/kategory/{category}', [CategoryController::class, 'show'])
         ->name('categories.show');
 
-    Route::get('/categories/{sub_category}/detail', [CategoryController::class, 'detail'])
+    Route::get('/kategory/{name}/{id}/detail', [CategoryController::class, 'detail'])
         ->name('categories.detail');
 
+    // blogs
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
     // reviews
     Route::get('/writeareview', [WebReviewController::class, 'write'])
@@ -63,24 +66,21 @@ Route::group([
     Route::middleware('auth')->get('/evaluate/{website}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
-    Route::get('/reviews/{website}', [WebReviewController::class, 'company'])
+    Route::get('/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
     Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])
         ->name('reviews.user');
 
-    Route::get('/reviews/review/{id}', [WebReviewController::class, 'detail'])
+    Route::get('/yorum/{website}/{id}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
-    Route::get('/reviews/product/{id}', [WebReviewController::class, 'product'])
+    Route::get('/{website}/{name}', [WebReviewController::class, 'product'])
         ->name('reviews.product');
 
-    Route::middleware('auth')->get('/evaluate/product/{product}/{website}', [WebReviewController::class, 'evaluateProduct'])
+    Route::middleware('auth')->get('/evaluate/{website}/{name}/', [WebReviewController::class, 'evaluateProduct'])
         ->name('reviews.evaluate.product');
 
-    // blogs
-    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-    Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 });
 
 

@@ -34,13 +34,13 @@ export default function Header({company_name, company_email, profile, primary_bu
                         primary_business_category && (
                             <>
                                 <div className='flex items-center'>
-                                    <Link href={route('categories.show', primary_business_category.sub_category.category.id)}
+                                    <Link href={route('categories.show', primary_business_category.sub_category.category.name)}
                                         className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                         {primary_business_category.sub_category.category.name}
                                     </Link>
                                     &gt;
                                 </div>
-                                <Link href={route('categories.detail', primary_business_category.sub_category.id)}
+                                <Link href={route('categories.detail', {name:primary_business_category.sub_category.name, id:primary_business_category.sub_category.id})}
                                     className='text-gray-700 text-sm capitalize no-underline hover:underline ml-2'>
                                     {primary_business_category.sub_category.name}
                                 </Link>

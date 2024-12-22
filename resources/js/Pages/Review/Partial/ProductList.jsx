@@ -48,14 +48,14 @@ const ProductList = ({ products, website }) => {
                     {products.map((product, index) => (
                         <div key={index} className="w-1/6 min-w-[100px] h-24 group bg-white rounded-lg mb-4 flex flex-col items-center justify-between">
                             <div className="inline-flex items-center justify-center w-12 h-12 ">
-                                <Link href={route('reviews.product', product.id)} className="block group-hover:underline" >
+                                <Link href={route('reviews.product', {website, name:product.name})} className="block group-hover:underline" >
                                     <img src={`/storage/${product.image}`}
                                         alt="product-logo"
                                         className='max-h-12 max-w-12 object-cover broder-1 rounded'
                                         style={{ maxWidth: '48px', maxHeight: '48px' }} />
                                 </Link>
                             </div>
-                            <Link href={route('reviews.product', product.id)} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" >
+                            <Link href={route('reviews.product', {website, name:product.name} )} className="block text-center mt-3 no-underline text-black capitalize text-sm group-hover:underline" >
                              {product.name.length > 30 ? `${product.name.slice(0, 30)}...` : product.name}
                              </Link>
                         </div>

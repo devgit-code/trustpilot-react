@@ -22,16 +22,16 @@ export default function Product({ data }) {
                         <div className="p-2 grid lg:grid-cols-3 gap-4 grid-cols-1 mb-3">
                             <div className="col-span-2">
                                 <div className='flex flex-col gap-4'>
-                                    <ClickableWrite url={`/evaluate/product/${data.product.id}/${data.company.website}`}/>
+                                    <ClickableWrite url={`/evaluate/${data.company.website}/${data.product.name}`}/>
 
-                                    <Filter ratings={data.company.rating_statistic}/>
+                                    <Filter ratings={data.product.rating_statistic}/>
 
                                     <PaginationList reviews={data.reviews}/>
                                 </div>
                             </div>
 
                             <div className='flex flex-col gap-4'>
-                                <ProductRecent products={data.recent_products}/>
+                                <ProductRecent website={data.company.website} products={data.recent_products}/>
                             </div>
                         </div>
                     </div>

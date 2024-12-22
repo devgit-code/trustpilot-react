@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import React, { useState, useEffect, } from 'react';
+import { Link, Head } from '@inertiajs/react';
 
 import { GiBinoculars } from "react-icons/gi";
 import { FaQuoteLeft } from "react-icons/fa";
@@ -59,7 +59,7 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const query = queryParams.get("query");
-    console.log('here=======', query)
+
         setQuery(query);
     }, []);
 
@@ -92,12 +92,12 @@ export default function Search({page=1, count=327, category_name, sub_cat}) {
                             <div className='grid grid-cols-6 gap-4'>
                             {
                                 data.search_categories.slice(0,6).map((item, index) => (
-                                    <a key={index}
-                                        href={"/categories/category/" + item. label}
+                                    <Link key={index}
+                                        href={"/categories/category/" + item.label}
                                         className='no-underline border hover:bg-blue-200 rounded p-2 transition ease-in-out duration-150'>
                                         <p className=''>{item.icon}</p>
                                         <p className='mt-3 mb-0 pt-2 truncate text-sm text-gray-800 overflow-hidden'>{item.label}</p>
-                                    </a>
+                                    </Link>
                                 ))
                             }
                             </div>

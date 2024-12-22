@@ -96,7 +96,7 @@ function SearchSection() {
                                         // onClick={() => handleResultClick(result.name)}
                                         className="p-2 cursor-pointer hover:bg-gray-100"
                                     >
-                                        <Link href={result.is_category ? route('categories.show', result.id) : route('categories.detail', result.id)} className='text-gray-900 no-underline flex items-center justify-beetween'>
+                                        <Link href={result.is_category ? route('categories.show', result.name) : route('categories.detail', {name:result.name, id:result.id})} className='text-gray-900 no-underline flex items-center justify-beetween'>
                                             <div className='flex items-center'>
                                                 <span><HiOutlineArrowTopRightOnSquare /></span>
                                                 <p className='ml-4 mb-0 text-gray-800 capitalize'>

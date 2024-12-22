@@ -3,7 +3,7 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import "./Style.css"
 import { Link, usePage, } from '@inertiajs/react';
 
-const CategoryGridItems = ({ categories }) => {
+const CategoryGridItems = ({ name, categories }) => {
     const containerRef = useRef(null);
 
     const scrollLeft = () => {
@@ -62,7 +62,7 @@ const CategoryGridItems = ({ categories }) => {
                                     // style={{ maxWidth: '32px', maxHeight: '32px' }}
                                     />
                             </div>
-                            <Link href={route('categories.detail', category.id)} className="block text-center p-2 no-underline text-black capitalize text-sm group-hover:underline" > {category.name}</Link>
+                            <Link href={route('categories.detail', {name:category.name, id:category.id})} className="block text-center p-2 no-underline text-black capitalize text-sm group-hover:underline" > {category.name}</Link>
                         </div>
                     ))}
                 </div>

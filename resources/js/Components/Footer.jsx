@@ -37,7 +37,7 @@ const Footer = () => {
                 <p className='mt-4 sm:mx-5 text-center text-zinc-300'>At Eniyi.co, we are driven by a passion for technology and a commitment to providing innovative solutions that empower businesses to thrive in the digital age.</p>
                 <div className="text-zinc-300 pb-5 text-center">
                     You can contact us
-                    <a className="mb-0 fw-bold text-zinc-400 hover:text-gray-100" href="mailto:info@eniyi.co">
+                    <a className="ml-2 mb-0 fw-bold text-zinc-400 hover:text-gray-100" href="mailto:info@eniyi.co">
                     info@eniyi.co
                     </a>
                 </div>

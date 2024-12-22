@@ -26,7 +26,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                             // style={{ maxWidth: '32px', maxHeight: '32px' }}
                             />
                     </div>
-                    <Link href={route('categories.show', id)} className="text-gray-800 text-lg font-semibold capitalize">{title}</Link>
+                    <Link href={route('categories.show', title)} className="text-gray-800 text-lg font-semibold capitalize">{title}</Link>
                     <span onClick={toggleOpen} className='flex items-center text-xl'>{isOpen ? '-' : '+'}</span>
                 </div>
                 {isOpen && (
@@ -40,7 +40,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                     }
                         {items.map((item, index) => (
                             <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                                <Link href={route('categories.detail', item.id)} className="pl-2 text-gray-700 capitalize">
+                                <Link href={route('categories.detail', {name:item.name, id:item.id})} className="pl-2 text-gray-700 capitalize">
                                 {item.name}
                                 </Link>
                             </li>
@@ -51,7 +51,7 @@ function CategoryItem({ id, title, icon, color, items }) {
 
             {/*focus  */}
             <div className="rounded-lg border-1 bg-white hidden md:block">
-                <Link href={route('categories.show', id)} className='no-underline text-gray-800'>
+                <Link href={route('categories.show', title)} className='no-underline text-gray-800'>
                     <div className={`rounded-t-lg text-center p-4 ${colorClasses[color]}`}>
                         <div className="inline-flex items-center justify-center w-7 h-7">
                             <img src={`/storage/${icon}`}
@@ -72,7 +72,7 @@ function CategoryItem({ id, title, icon, color, items }) {
                 }
                     {items.map((item, index) => (
                     <li key={index} className="border-b border-gray-200 py-3 last:border-0">
-                        <Link href={route('categories.detail', item.id)} className="pl-2 no-underline text-gray-700 hover:underline capitalize pr-2">{item.name}</Link>
+                        <Link href={route('categories.detail', {name:item.name, id:item.id})} className="pl-2 no-underline text-gray-700 hover:underline capitalize pr-2">{item.name}</Link>
                     </li>
                     ))}
                 </ul>
