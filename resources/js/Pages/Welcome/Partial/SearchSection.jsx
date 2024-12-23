@@ -151,7 +151,7 @@ function SearchSection() {
                                         className="p-2"
                                     >
                                         <div className='flex items-center gap-4'>
-                                            <p className="text-lg w-full text-gray-800 font-bold mb-1 text-center">No match results</p>
+                                            <p className="text-lg w-full text-gray-800 font-bold mb-1 text-center">Press Search Icon to add domain</p>
 
                                             {/* <div className="flex-1 ml-4 text-left">
                                                 <p className="text-lg text-gray-800 font-bold mb-1">Can't find a company?</p>

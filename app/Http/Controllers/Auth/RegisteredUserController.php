@@ -121,6 +121,13 @@ class RegisteredUserController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
 
+                $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+                $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+                if ($emailDomain == $companyDomain) {
+                    $business->is_approved = 1;
+                    $business->save();
+                }
+
                 Auth::guard('web')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
@@ -169,6 +176,14 @@ class RegisteredUserController extends Controller
         $business->fill($validated);
         // $business->name = $request->input('name');
         $business->save();
+
+        // approve
+        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+        if ($emailDomain == $companyDomain) {
+            $business->is_approved = 1;
+            $business->save();
+        }
 
         Auth::guard('web')->logout();
         $request->session()->invalidate();

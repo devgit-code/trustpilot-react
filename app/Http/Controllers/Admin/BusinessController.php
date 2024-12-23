@@ -166,7 +166,23 @@ class BusinessController extends Controller
         $business = Business::findOrFail($business);
         $business->markEmailAsVerified();
 
-        return redirect()->route('admin.businesses.show', $business);
+        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+        if ($emailDomain == $companyDomain) {
+            $business->is_approved = 1;
+            $business->save();
+        }
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function approve(Request $request, string $business)
+    {
+        $business = Business::findOrFail($business);
+        $business->is_approved = 1;
+        $business->save();
+
+        return redirect()->route('admin.businesses.show', $business->website);
     }
 
     public function change(Request $request, string $business)
@@ -195,6 +211,7 @@ class BusinessController extends Controller
 
             if ($business->isDirty('company_email')) {
                 $business->email_verified_at = null;
+                $business->is_approved = 0;
             }
 
             $business->save();
@@ -243,10 +260,10 @@ class BusinessController extends Controller
 
                 $businessProfile->save();
             }
-            return redirect()->route('admin.businesses.show', $business)->with('status', 'Profile information updated successfully');
+            return redirect()->route('admin.businesses.show', $business->website)->with('status', 'Profile information updated successfully');
         }
 
-        return redirect()->route('admin.businesses.show', $business);
+        return redirect()->route('admin.businesses.show', $business->website);
 
     }
 

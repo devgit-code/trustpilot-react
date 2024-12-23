@@ -128,6 +128,9 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     {(!isEdit && business.company_email && !business.email_verified_at) && (
                         <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
                     )}
+                    {(!isEdit && business.email_verified_at && business.is_approved === 0) && (
+                        <Link href={route('admin.businesses.approve', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Approve This Email</Link>
+                    )}
                     {
                         !business.company_email && (
                             <p className={`bg-red-200 mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>

@@ -113,6 +113,7 @@ Route::group([
     Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::post('/businesses/{business}/verify', [BusinessController::class, 'verify'])->name('businesses.verify');
+    Route::post('/businesses/{business}/approve', [BusinessController::class, 'approve'])->name('businesses.approve');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
     Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');
