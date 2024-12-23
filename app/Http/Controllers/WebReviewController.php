@@ -163,9 +163,11 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function detail(Request $request, String $website, String $id)
+    public function detail(Request $request, String $website, String $title)
     {
-        $review = Review::with(['reply'])->findOrFail($id);
+        $business = Business::where('website', $website)->first();
+
+        $review = Review::with(['reply'])->where('business_id', $business->id)->where('title', $title)->first();
         $review['userinfo'] = [
             'id' => $review->user->id,
             'name' => $review->user->name,
@@ -178,9 +180,9 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function user(Request $request, String $id)
+    public function user(Request $request, String $name)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('name', $name)->first();
 
         $reviews = Review::where('user_id', $user->id)
             ->whereNotNull('user_id') // Optional: To ensure there is a linked user

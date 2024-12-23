@@ -46,13 +46,13 @@ Route::group([
         ->name('search');
 
     // category
-    Route::get('/kategory', [CategoryController::class, 'index'])
+    Route::get('/kategori', [CategoryController::class, 'index'])
         ->name('categories.index');
 
-    Route::get('/kategory/{category}', [CategoryController::class, 'show'])
+    Route::get('/kategori/{category}', [CategoryController::class, 'show'])
         ->name('categories.show');
 
-    Route::get('/kategory/{name}/{id}/detail', [CategoryController::class, 'detail'])
+    Route::get('/kategori/{name}/{id}/detail', [CategoryController::class, 'detail'])
         ->name('categories.detail');
 
     // blogs
@@ -69,10 +69,10 @@ Route::group([
     Route::get('/yorum/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
-    Route::get('/yorum/user/{id}', [WebReviewController::class, 'user'])
+    Route::get('/yorum/uye/{name}', [WebReviewController::class, 'user'])
         ->name('reviews.user');
 
-    Route::get('/yorum/{website}/{id}/detail', [WebReviewController::class, 'detail'])
+    Route::get('/yorum/{website}/{title}/detail', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
     Route::get('/yorum/{website}/{name}', [WebReviewController::class, 'product'])

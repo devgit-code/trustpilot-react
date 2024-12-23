@@ -6,11 +6,11 @@ import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 import logo from "@/../images/company-logo.png"
 
-const ReviewCard = ({ id, user, rating, reply, company, description, date_experience, trustscore, count_reviews }) => {
+const ReviewCard = ({ id, user, title, rating, reply, company, description, date_experience, trustscore, count_reviews }) => {
 
   return (
     <div className="bg-white text-black rounded-lg flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '200px'}}>
-        <Link href={route('reviews.detail', {website:company.website, id})} className='no-underline'>
+        <Link href={route('reviews.detail', {website:company.website, title})} className='no-underline'>
             <div>
                 {/* Company Logo and Name */}
                 <div className="text-black m-2 px-2 min-h-[120px]" >
