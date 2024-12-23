@@ -7,7 +7,6 @@ import company_logo from "@/../images/company-logo.png"
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 
 import ContactPopup from './ContactPopup';
-import ReviewCard from './RecentCompanyReviewCard.jsx';
 
 export default function CompanyItem({index, company}){
     const [expandedReview, setExpandedReview] = useState(null);

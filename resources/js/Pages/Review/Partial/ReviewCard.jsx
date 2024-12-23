@@ -8,6 +8,7 @@ import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCirc
 import { toast } from 'react-toastify';
 
 export default function ReviewCard({ review }) {
+    console.log('d-------', review)
     const { auth } = usePage().props;
 
     const handleUseful = async (e, id) => {
@@ -97,6 +98,12 @@ export default function ReviewCard({ review }) {
                     </div>
                     <p className='mb-0 text-sm'>{moment(review.date_experience).fromNow()}</p>
                 </div>
+                {
+                    review.is_product !== 0 && (
+                        <p className='mt-2 mb-0 text-gray-700 text-base'>Review for Product: <span className='text-gray-700 font-bold underline'>{review.product?.name}</span></p>
+                    )
+                }
+
                 <div className='mt-3'>
                     <div className='flex'>
                         <Link href={route('reviews.detail', {website:review.business.website, title:review.title})} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>

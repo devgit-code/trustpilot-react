@@ -26,7 +26,7 @@ export default function Product({ data }) {
 
                                     <Filter ratings={data.product.rating_statistic}/>
 
-                                    <PaginationList reviews={data.reviews}/>
+                                    <PaginationList pagination={data.pagination} reviews={data.reviews}/>
                                 </div>
                             </div>
 

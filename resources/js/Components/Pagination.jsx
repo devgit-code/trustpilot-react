@@ -24,7 +24,7 @@ export default function Pagination({ className, pagination }) {
                 <MdKeyboardArrowLeft className='inline'/>
             </Link>
 
-            <span className="px-4 py-2  rounded">
+            <span className="px-4 py-2 text-gray-700 rounded">
                 Page {current_page} of {last_page}
             </span>
 

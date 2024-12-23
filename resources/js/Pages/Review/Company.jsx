@@ -35,7 +35,7 @@ export default function Company({ data }) {
 
                                     <Filter ratings={data.company.rating_statistic}/>
 
-                                    <PaginationList reviews={data.reviews}/>
+                                    <PaginationList pagination={data.pagination} reviews={data.reviews}/>
                                 </div>
                             </div>
 
