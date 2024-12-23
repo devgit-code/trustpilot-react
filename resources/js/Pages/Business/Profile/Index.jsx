@@ -40,7 +40,7 @@ const Index = ({businessProfile, activeTab, business}) => {
                                     <AccountTab business={business}/>
                                 </div>
                             </Tab> */}
-                            <Tab eventKey="contact" title="Profile">
+                            <Tab eventKey="profile" title="Profile">
                                 <div className='bg-white'>
                                     <ContactTab businessProfile={businessProfile}/>
                                 </div>

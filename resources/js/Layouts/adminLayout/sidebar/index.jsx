@@ -14,7 +14,7 @@ export default function Sidebar({auth}) {
             <div className="px-4" style={{ maxWidth: "100%" }}>
                 <div className="profile text-center mb-5 position-relative">
                     {(auth.user.role == 'owner' && !auth.userProfileImage) && (
-                        <Link href={route("business.profile.logo")} className="no-underline text-blue-300 hover:underline hover:text-blue-500">Set your profile logo</Link>
+                        <Link href={route("business.profile.edit")} className="no-underline text-blue-300 hover:underline hover:text-blue-500">Set your profile logo</Link>
                     )}
                     <div className="mt-2 flex items-center mx-auto border border-gray-100 bg-white" style={{width:'102px', height:'102px'}}>
                     {

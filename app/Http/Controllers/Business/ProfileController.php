@@ -23,9 +23,9 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function logo()
+    public function profile()
     {
-        return redirect()->route('business.profile.index')->with('activeTab', 'logo');
+        return redirect()->route('business.profile.index')->with('activeTab', 'profile');
     }
 
     public function logo_update(Request $request)

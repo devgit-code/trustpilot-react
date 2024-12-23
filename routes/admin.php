@@ -88,7 +88,7 @@ Route::group([
     Route::resource('reviews', ReviewController::class);
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
+    Route::get('/profile/edit', [ProfileController::class, 'profile'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
     Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');

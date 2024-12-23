@@ -66,16 +66,16 @@ Route::group([
     Route::middleware('auth')->get('/evaluate/{website}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
-    Route::get('/{website}', [WebReviewController::class, 'company'])
+    Route::get('/yorum/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
-    Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])
+    Route::get('/yorum/user/{id}', [WebReviewController::class, 'user'])
         ->name('reviews.user');
 
-    Route::get('/yorum/{website}/{id}', [WebReviewController::class, 'detail'])
+    Route::get('/yorum/{website}/{id}/detail', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
 
-    Route::get('/{website}/{name}', [WebReviewController::class, 'product'])
+    Route::get('/yorum/{website}/{name}', [WebReviewController::class, 'product'])
         ->name('reviews.product');
 
     Route::middleware('auth')->get('/evaluate/{website}/{name}/', [WebReviewController::class, 'evaluateProduct'])
