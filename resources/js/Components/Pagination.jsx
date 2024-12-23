@@ -1,55 +1,47 @@
 import React, { useState } from 'react';
+import { Link } from '@inertiajs/react'
 
-export default function Pagination({ className, totalPages = 10, currentPage = 1, onPageChange }) {
-    const [page, setPage] = useState(currentPage);
+import { MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft , MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-    const handlePageClick = (pageNum) => {
-        setPage(pageNum);
-        if (onPageChange) onPageChange(pageNum);
-    };
-
-    const handlePreviousClick = () => {
-        if (page > 1) {
-        handlePageClick(page - 1);
-        }
-    };
-
-    const handleNextClick = () => {
-        if (page < totalPages) {
-        handlePageClick(page + 1);
-        }
-    };
+export default function Pagination({ className, pagination }) {
+    const { current_page, last_page, links } = pagination;
 
     return (
         <div className={`${className} `}>
             {/* Previous Button */}
-            <button
-                onClick={handlePreviousClick}
-                disabled={page === 1}
-                className={`py-2 px-4 text-sm rounded-l-md border bg-gray-50 ${page === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+            <Link
+                href={current_page > 1 ? links.first : '#'}
+                onClick={(e) => current_page === 1 && e.preventDefault()}
+                className={`py-2 px-3 no-underline text-sm rounded-l-md border bg-gray-50 ${current_page === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
             >
-                Previous
-            </button>
-
-            {/* Page Numbers */}
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNum) => (
-                <button
-                key={pageNum}
-                onClick={() => handlePageClick(pageNum)}
-                className={`p-2 px-3 text-sm border bg-gray-50 ${page === pageNum ? 'bg-blue-100 text-blue-600' : 'text-gray-700 hover:bg-gray-100'}`}
-                >
-                {pageNum}
-                </button>
-            ))}
-
-            {/* Next Button */}
-            <button
-                onClick={handleNextClick}
-                disabled={page === totalPages}
-                className={`py-2 px-4 text-sm rounded-r-md border bg-gray-50 ${page === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+                <MdKeyboardDoubleArrowLeft className='inline'/>
+            </Link>
+            <Link
+                href={links.prev || "#"}
+                onClick={(e) => !links.prev && e.preventDefault()}
+                className={`py-2 px-3 no-underline text-sm border bg-gray-50 ${!links.prev ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
             >
-                Next page
-            </button>
+                <MdKeyboardArrowLeft className='inline'/>
+            </Link>
+
+            <span className="px-4 py-2  rounded">
+                Page {current_page} of {last_page}
+            </span>
+
+            <Link
+                href={links.next || "#"}
+                onClick={(e) => !links.next && e.preventDefault()}
+                className={`py-2 px-3 no-underline text-sm border bg-gray-50 ${!links.next ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+            >
+                <MdKeyboardArrowRight className='inline'/>
+            </Link>
+            <Link
+                href={current_page < last_page ? links.last : '#'}
+                onClick={(e) => current_page === last_page && e.preventDefault()}
+                className={`py-2 px-3 no-underline text-sm rounded-r-md border bg-gray-50 ${current_page === last_page ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-100'}`}
+            >
+                <MdKeyboardDoubleArrowRight className='inline'/>
+            </Link>
         </div>
     );
 }

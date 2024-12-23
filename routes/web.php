@@ -60,7 +60,7 @@ Route::group([
     Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
     // reviews
-    Route::get('/writeareview', [WebReviewController::class, 'write'])
+    Route::get('/yorumyaz', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
     Route::middleware('auth')->get('/evaluate/{website}', [WebReviewController::class, 'evaluate'])

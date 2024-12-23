@@ -111,7 +111,6 @@ class WebReviewController extends Controller
         }
 
         $reviews = Review::where('business_id', $business->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
             ->get();
@@ -184,13 +183,15 @@ class WebReviewController extends Controller
     {
         $user = User::where('name', $name)->first();
 
-        $reviews = Review::where('user_id', $user->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+        $page = $request->input('page', 1); // Default to page 1
+
+        $reviews = Review::query()
+            ->where('user_id', $user->id)
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
-            ->get();
+            ->paginate(3, ['*'], 'page', $page);
 
-        $reviews = $reviews->map(function ($review, $index) {
+        $maps = collect($reviews->items())->map(function ($review, $index) {
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
@@ -205,12 +206,24 @@ class WebReviewController extends Controller
 
         return Inertia::render('Review/User', [
             'data'=>[
-                'reviews'=>$reviews,
+                'reviews'=>$maps,
                 'user'=>$user,
                 'userinfo'=>[
                     'avatar'=>$user->profile?->img,
                     'location'=>$user->profile?->address,
-                ]
+                ],
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'links' => [
+                        'first' => $reviews->url(1),
+                        'last' => $reviews->url($reviews->lastPage()),
+                        'next' => $reviews->nextPageUrl(),
+                        'prev' => $reviews->previousPageUrl(),
+                    ],
+                ],
             ]
         ]);
     }
@@ -371,7 +384,6 @@ class WebReviewController extends Controller
 
         //reviews
         $reviews = Review::where('is_product', $product->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
             ->get();

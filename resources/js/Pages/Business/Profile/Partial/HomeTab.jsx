@@ -81,7 +81,6 @@ export default function HomeTab({business, businessProfile}){
                     value={data.first_name}
                     onChange={(e)=>setData('first_name', e.target.value)}
                     required
-                    isFocused
                     autoComplete="first_name"
                 />
 

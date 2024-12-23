@@ -12,7 +12,7 @@ export default function PaginationList({ pagination,  companies}) {
                 {/* Company List */}
                 {
                     companies.length == 0 && (
-                        <p className='text-center text-gray-700 font-bold text-lg'>No company</p>
+                        <p className='text-center text-gray-700 font-bold text-lg'>There is no company.</p>
                     )
                 }
                 {companies.map((company, index) => (

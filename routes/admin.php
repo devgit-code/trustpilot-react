@@ -28,20 +28,20 @@ use App\Http\Controllers\Admin\BlogController;
 
 // admin auth
 Route::group([
-    'prefix' => 'admin',
+    'prefix' => 'firma',
     'middleware' => ['business.guest'],
     'as' => 'admin.'
 ], function () {
 
-    Route::get('/register', [RegisteredUserController::class, 'admin_create']) ->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'admin_store']);
+    Route::get('/kayit', [RegisteredUserController::class, 'admin_create']) ->name('register');
+    Route::post('/kayit', [RegisteredUserController::class, 'admin_store']);
 
-    Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
+    Route::get('/giris', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
+    Route::post('/giris', [AuthenticatedSessionController::class, 'admin_store']);
 
     // Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
-    Route::get('/claim/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
-    Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
+    Route::get('/sahibi/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::post('/sahibi', [RegisteredUserController::class, 'admin_claim_store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])->name('password.email');
