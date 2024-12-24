@@ -39,7 +39,6 @@ class BlogController extends Controller
             $imageName = "blog-" . now()->timestamp . "." . $extension;
             $path = $request->file('image')->storeAs('images/blog', $imageName, 'public');
             $validated['image'] = $path; // Add the avatar path to the validated data
-            // $validated['slug'] = Str::slug($validated['title']);
         }
 
         $category = Blog::create($validated);

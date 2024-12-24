@@ -9,7 +9,6 @@ use App\Http\Controllers\WebReviewController;
 use App\Http\Controllers\BlogController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,14 @@ use Inertia\Inertia;
 */
 
 Route::get('/test', function (Request $request) {
-    return Inertia::render('Auth/Test');
+    // $reviews = User::all();
+
+    // foreach($reviews as $review){
+    //     $review->slug = Str::slug($review->name);
+    //     $review->save();
+    // }
+
+    return 'ok';
 })->name('test');
 
 Route::get('/clear-cache', function () {
