@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Models\Review;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -184,6 +185,7 @@ class UserController extends Controller
             $user->name !== $name
         ) {
             $user->name = $name;
+            $user->slug = Str::slug($name);
 
             $user->save();
         }

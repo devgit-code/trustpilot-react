@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Business;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
@@ -38,6 +39,7 @@ class ProductController extends Controller
 
         $business = auth('business')->user();
         $validated['business_id'] = $business->id;
+        $validated['slug'] = Str::slug($validated['name']);
 
         // Handle the avatar upload if it exists
         if ($request->hasFile('image')) {
@@ -77,6 +79,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->name = $request->input('name');
+        $product->slug = Str::slug($request->input('name'));
 
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();

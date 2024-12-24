@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Review;
 use App\Models\ReviewThumb;
 use App\Models\Business;
@@ -75,6 +76,7 @@ class WebReviewController extends Controller
 
         $creationData = [
             "title" => $request->input('title'),
+            "slug" => Str::slug($request->input('title')),
             "description" => $request->input('description'),
             "business_id" => $request->input('business_id'),
             "user_id" => auth()->user()->id,

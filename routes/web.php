@@ -90,5 +90,6 @@ Route::group([
     Route::post('/reviews', [WebReviewController::class, 'store'])
         ->name('reviews.store');
 });
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

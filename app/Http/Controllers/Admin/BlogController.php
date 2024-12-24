@@ -32,6 +32,8 @@ class BlogController extends Controller
             'content' => 'required|string',
         ]);
 
+        $validated['slug'] = Str::slug($validated['title']);
+
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
             $imageName = "blog-" . now()->timestamp . "." . $extension;
@@ -67,6 +69,7 @@ class BlogController extends Controller
         ]);
 
         $blog->title = $request->input('title');
+        $blog->slug = Str::slug($request->input('title'));
         $blog->content = $request->input('content');
 
         if ($request->hasFile('image')) {
