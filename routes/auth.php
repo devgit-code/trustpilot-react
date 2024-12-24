@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware(['guest', 'business.guest'])->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    Route::get('kayit', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::post('kayit', [RegisteredUserController::class, 'store']);
+
+    Route::get('giris', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('giris', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

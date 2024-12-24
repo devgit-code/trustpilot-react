@@ -63,10 +63,10 @@ Route::group([
     Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
     // reviews
-    Route::get('/yorumyaz', [WebReviewController::class, 'write'])
+    Route::get('/firma/yorumyaz', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
-    Route::middleware('auth')->get('/yorumyaz/{website}', [WebReviewController::class, 'evaluate'])
+    Route::middleware('auth')->get('/firma/yorumyaz/{website}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
     Route::get('/{website}', [WebReviewController::class, 'company'])

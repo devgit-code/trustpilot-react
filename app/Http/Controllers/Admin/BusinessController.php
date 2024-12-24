@@ -7,6 +7,7 @@ use App\Models\Business;
 use App\Models\BusinessProfile;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class BusinessController extends Controller
@@ -70,9 +71,88 @@ class BusinessController extends Controller
         return Inertia::render('Admin/Business/Create');
     }
 
+    public function extractCompanyName($url) {
+        // Parse the URL to get the host
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (!$host) {
+            return 'Example'; // Return null if the URL is invalid
+        }
+
+        // Remove 'www.' or other common subdomains
+        $host = preg_replace('/^www\./', '', $host);
+
+        // Split the host into parts
+        $parts = explode('.', $host);
+
+        // Handle domains with multi-segment TLDs (e.g., '.com.tr', '.co.uk')
+        if (count($parts) > 2) {
+            $companyName = $parts[count($parts) - 3]; // Get the second-to-last segment
+        } else {
+            $companyName = $parts[0]; // Get the first part of the domain
+        }
+
+        return $companyName;
+    }
+
+    public function checkDomain(String $domain)
+    {
+        $pattern = '/^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/';
+
+        if (!preg_match($pattern, $domain)) {
+            return 'wrong domain input';
+        }
+
+        $businesses = Business::where('role', 'owner')
+            ->where('website', 'like', '%' . $domain)
+            ->get();
+
+        if(count($businesses))
+        {
+            return 'already exist domain';
+        }
+
+        try {
+            $response = Http::timeout(10)->get('http://' . $domain);
+
+            if($response->successful()){
+                $company_name = $this->extractCompanyName('http://' . $domain);
+
+                $businesss = Business::create([
+                    'website' => $domain,
+                    'company_name' => ucfirst($company_name),
+                ]);
+
+                return 'success';
+            }else{
+                return "can't reach to this site";
+            }
+        } catch (\Exception $e) {
+            return "can't reach to this site";
+        }
+
+    }
+
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'companies' => 'required',
+        ]);
 
+        $companiesArray = explode("\n", $validated['companies']);
+        $companiesArray = array_map('trim', $companiesArray);
+        $companiesArray = array_filter($companiesArray);
+
+        $results = array_map(function($domain) {
+            return [
+                'domain' => $domain,
+                'status' => $this->checkDomain($domain)
+            ];
+        }, $companiesArray);
+
+        return Inertia::render('Admin/Business/Create', [
+            'results' => $results
+        ]);
     }
 
 

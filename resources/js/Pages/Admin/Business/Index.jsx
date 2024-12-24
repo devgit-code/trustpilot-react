@@ -119,7 +119,12 @@ const Index = () => {
                             <div className="">
                                 <h3 className="m-0 text-center text-lg-start">Businesses</h3>
                             </div>
-                            <div className="">
+                            <div className="flex items-center">
+                                <Link href={route('admin.businesses.create')}
+                                    className="btn btn-success d-flex align-items-center border-0 mr-3"
+                                >
+                                    <span className="ms-2 text-white">Add Business</span>
+                                </Link>
                                 <input
                                     className="search border rounded"
                                     id="myInput"
