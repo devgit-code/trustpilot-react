@@ -16,7 +16,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('subcategories')->get();
+        $categories = Category::with('subcategories', 'subcategories.category')->get();
 
         return Inertia::render('Category/Index', [
             'categories' => $categories,
@@ -29,15 +29,35 @@ class CategoryController extends Controller
         $searchTerm = $request->input('query', '');
 
         $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', DB::raw('1 as is_category')); // Add is_category = 1 for categories
+            ->select(
+                'id',
+                'name',
+                'slug',
+                DB::raw('1 as is_category'),
+                DB::raw('NULL as parent_category')
+            ); // Add is_category = 1 for categories
 
-        $sub_categories = SubCategory::with('category')->where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', DB::raw('0 as is_category')); // Add is_category = 1 for categories
+        $sub_categories = SubCategory::where('sub_categories.name', 'like', '%' . $searchTerm . '%')
+            ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+            ->select(
+                'sub_categories.id',
+                'sub_categories.name',
+                'sub_categories.slug',
+                DB::raw('0 as is_category'),
+                DB::raw('JSON_OBJECT("id", categories.id, "name", categories.name, "slug", categories.slug, "image", categories.image) as parent_category')
+            ); // Add is_category = 1 for categories
 
         $results = $categories->union($sub_categories)
             ->orderBy('name', 'asc') // Optional: Sort alphabetically
             ->limit(5)
             ->get();
+
+        $results->transform(function ($item) {
+            if (isset($item->parent_category)) {
+                $item->parent_category = json_decode($item->parent_category, true); // Convert to an array
+            }
+            return $item;
+        });
 
         return response()->json([
             'categories' => $results,
@@ -46,7 +66,8 @@ class CategoryController extends Controller
 
     public function show(Request $request, String $category_name)
     {
-        $category = Category::where('name', $category_name)->first();
+        $category = Category::where('slug', $category_name)->first();
+
         $subCategories = Category::with(['subcategories' => function ($query){
             $query->withCount('businesses');
         }])->findOrFail($category->id);
@@ -102,16 +123,17 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function detail(Request $request, String $name, String $sub_category_id)
+    public function detail(Request $request, String $category, String $sub_category)
     {
-        $subCategory = SubCategory::with(['category'])->find($sub_category_id);
+        $category = Category::where('slug', $category)->first();
+        $subCategory = SubCategory::with(['category'])->where('category_id', $category->id)->where('slug', $sub_category)->first();
 
         $subCategories = Category::with(['subcategories' => function ($query){
             $query->withCount('businesses');
         }])->findOrFail($subCategory->category_id);
 
-        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($sub_category_id) {
-            $query->where('sub_category_id', $sub_category_id);
+        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($subCategory) {
+            $query->where('sub_category_id', $subCategory->id);
         })->get(); // Paginate the results
 
         $businesses = $businesses->map(function ($business, $index) {

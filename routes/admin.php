@@ -19,10 +19,8 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\AdminReviewController;
-use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Admin\BlogController;
 
 
@@ -127,13 +125,6 @@ Route::group([
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
-    Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
-    Route::post('/sponsors/updateOrder', [SponsorController::class, 'updateOrder'])->name('sponsors.updateOrder');
-    Route::resource('/sponsors', SponsorController::class);
-
-    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');

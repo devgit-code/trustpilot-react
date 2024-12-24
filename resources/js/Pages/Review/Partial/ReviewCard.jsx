@@ -8,7 +8,6 @@ import { FaRegThumbsUp, FaShareAlt, FaFlag, FaMapMarkerAlt, FaReply, FaCheckCirc
 import { toast } from 'react-toastify';
 
 export default function ReviewCard({ review }) {
-    console.log('d-------', review)
     const { auth } = usePage().props;
 
     const handleUseful = async (e, id) => {
@@ -66,7 +65,7 @@ export default function ReviewCard({ review }) {
         <div className='p-4 bg-white border rounded'>
             <div className=' pb-3 border-b border-b-2 flex items-center'>
                 <UserAvatar user={review.userinfo} avatar={review.userinfo.avatar} width='3rem' height='3rem'/>
-                <Link href={route('reviews.user', review.userinfo.name)} className='no-underline ml-3'>
+                <Link href={route('reviews.user', review.userinfo.slug)} className='no-underline ml-3'>
                     <p className='text-gray-800 text-sm font-bold mb-0 capitalize'>
                         {review.userinfo.name}
                     </p>
@@ -106,7 +105,7 @@ export default function ReviewCard({ review }) {
 
                 <div className='mt-3'>
                     <div className='flex'>
-                        <Link href={route('reviews.detail', {website:review.business.website, title:review.title})} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
+                        <Link href={route('reviews.detail', {website:review.business.website, title:review.slug})} className='capitalize block text-gray-700 text-xl font-bold p-2 px-4 no-underline hover:underline'>
                             {review.title}
                         </Link>
                     </div>

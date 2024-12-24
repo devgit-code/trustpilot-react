@@ -73,18 +73,38 @@ class HomeController extends Controller
             return $business;
         });
 
-        $categories = Category::where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', 'image', DB::raw('1 as is_category')); // Add is_category = 1 for categories
+        $categories = Category::where('categories.name', 'like', '%' . $searchTerm . '%') // Specify table name explicitly
+            ->select(
+                'id',
+                'name',
+                'slug',
+                'image',
+                DB::raw('1 as is_category'),
+                DB::raw('NULL as parent_category')
+            );
 
-        $sub_categories = SubCategory::with('category')->where('name', 'like', '%' . $searchTerm . '%')
-            ->select('id', 'name', 'image', DB::raw('0 as is_category'));
-                // , DB::raw('(SELECT JSON_OBJECT("id", categories.id, "name", categories.name, "image", categories.image)
-                //   FROM categories WHERE categories.id = sub_categories.category_id) as category_data')); // Add is_category = 1 for categories
+        $sub_categories = SubCategory::where('sub_categories.name', 'like', '%' . $searchTerm . '%') // Specify table name explicitly
+            ->join('categories', 'sub_categories.category_id', '=', 'categories.id')
+            ->select(
+                'sub_categories.id',
+                'sub_categories.name',
+                'sub_categories.slug',
+                'sub_categories.image',
+                DB::raw('0 as is_category'),
+                DB::raw('JSON_OBJECT("id", categories.id, "name", categories.name, "slug", categories.slug, "image", categories.image) as parent_category')
+            );
 
         $results = $categories->union($sub_categories)
-            ->orderBy('name', 'asc') // Optional: Sort alphabetically
+            ->orderBy('name', 'asc') // Sorting still works on the alias
             ->limit(3)
             ->get();
+
+        $results->transform(function ($item) {
+            if (isset($item->parent_category)) {
+                $item->parent_category = json_decode($item->parent_category, true); // Convert to an array
+            }
+            return $item;
+        });
 
         return response()->json([
             'companies' => $businesses,

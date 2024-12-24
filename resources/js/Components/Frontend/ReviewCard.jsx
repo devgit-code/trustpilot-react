@@ -5,10 +5,10 @@ import company_logo from "@/../images/company-logo.png"
 import UserAvatar from '@/Components/UserAvatar';
 import Rating from '@/Components/Ratings';
 
-const ReviewCard = ({ id, user, title, rating, description, company }) => {
+const ReviewCard = ({ id, user, title, slug, rating, description, company }) => {
     return (
         <div className="bg-white text-black rounded-lg mb-5 flex flex-col group border border-gray-200 hover:shadow-xl" style={{minWidth: '250px'}}>
-            <Link href={route('reviews.detail', {website:company.website, title})} className='no-underline'>
+            <Link href={route('reviews.detail', {website:company.website, title:slug})} className='no-underline'>
                 {/* User Avatar, Name, and Rating */}
                 <div className="flex items-center gap-2 px-4 mt-3">
                     <div className="flex items-center justify-center">

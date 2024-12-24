@@ -38,6 +38,7 @@ function SearchSection() {
             const queryString = new URLSearchParams(filters).toString();
             const response = await fetch(`/api/categories?${queryString}`);
             const data = await response.json();
+
             setResults(data.categories);
         } catch (error) {
             console.error("Error fetching reviews:", error);
@@ -96,7 +97,7 @@ function SearchSection() {
                                         // onClick={() => handleResultClick(result.name)}
                                         className="p-2 cursor-pointer hover:bg-gray-100"
                                     >
-                                        <Link href={result.is_category ? route('categories.show', result.name) : route('categories.detail', {name:result.name, id:result.id})} className='text-gray-900 no-underline flex items-center justify-beetween'>
+                                        <Link href={result.is_category ? route('categories.show', result.slug) : route('categories.detail', {category:result.parent_category.slug, sub_category:result.slug})} className='text-gray-900 no-underline flex items-center justify-beetween'>
                                             <div className='flex items-center'>
                                                 <span><HiOutlineArrowTopRightOnSquare /></span>
                                                 <p className='ml-4 mb-0 text-gray-800 capitalize'>

@@ -34,13 +34,13 @@ export default function ProductHeader({company, product}) {
                         company.primary_business_category && (
                             <div>
                                 <div className='inline-flex items-center'>
-                                    <Link href={route('categories.show', company.primary_business_category.sub_category.category.name)}
+                                    <Link href={route('categories.show', company.primary_business_category.sub_category.category.slug)}
                                         className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                         {company.primary_business_category.sub_category.category.name}
                                     </Link>
                                     &gt;
                                 </div>
-                                <Link href={route('categories.detail', {name:company.primary_business_category.sub_category.name, id:company.primary_business_category.sub_category.id})}
+                                <Link href={route('categories.detail', {category:company.primary_business_category.sub_category.category.slug, sub_category:company.primary_business_category.sub_category.slug})}
                                     className='inline text-gray-700 text-sm capitalize no-underline hover:underline mx-2'>
                                     {company.primary_business_category.sub_category.name}
                                 </Link>

@@ -5,7 +5,8 @@ import Rating from '@/Components/Ratings'
 import { FaCheckCircle } from "react-icons/fa";
 import { BsFillExclamationOctagonFill } from "react-icons/bs"
 
-export default function ProductRecent({products, website}) {
+export default function ProductRecent({products}) {
+    console.log('x---------------', products)
     return (
         <div className="p-3 bg-white border rounded">
             <h2 className="text-xl font-semibold">Recent Products</h2>
@@ -29,7 +30,7 @@ export default function ProductRecent({products, website}) {
                                 </div>
                             </div>
                             <div className="ml-3">
-                                <Link href={route('reviews.product', {website, name:product.name})} className="no-underline pt-1 font-semibold">{product.name}</Link>
+                                <Link href={route('reviews.product', {website:product.company.website, name:product.slug})} className="no-underline pt-1 font-semibold">{product.name}</Link>
                                 <div className="mt-1 flex flex-col sm:flex-row gap-2">
                                     <Rating rating={Number(product.trustscore)} />
                                     <span className="ml-2 text-sm">{product.trustscore} /{product.count_reviews}</span>

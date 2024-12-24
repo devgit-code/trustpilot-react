@@ -18,7 +18,7 @@ export default function RelatedCategory({category, categories}) {
                     categories.filter((item) => item.id!=category.id)
                     .map((item, index) => (
                         <li key={index} className="border-b border-gray-200 py-1 last:border-0">
-                            <Link href={route('categories.detail', {name:item.name, id:item.id})} className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
+                            <Link href={route('categories.detail', {category:category.slug, sub_category:item.slug})} className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
                                 <span className='capitalize text-gray-700'>{item.name}</span>
                                 <span className='mr-2'>{item.businesses_count}</span>
                             </Link>
@@ -26,7 +26,7 @@ export default function RelatedCategory({category, categories}) {
                     )) :
                     categories.map((item, index) => (
                         <li key={index} className="border-b border-gray-200 py-1 last:border-0">
-                            <Link href={route('categories.detail', {name:item.name, id:item.id})} className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
+                            <Link href={route('categories.detail', {category:category.slug, sub_category:item.slug})} className="pl-2 no-underline flex py-2 justify-between text-gray-700 rounded hover:bg-gray-100">
                                 <span className='capitalize text-gray-700'>{item.name}</span>
                                 <span className='mr-2'>{item.businesses_count}</span>
                             </Link>

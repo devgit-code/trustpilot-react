@@ -125,6 +125,7 @@ class WebReviewController extends Controller
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
@@ -187,10 +188,11 @@ class WebReviewController extends Controller
     {
         $business = Business::where('website', $website)->first();
 
-        $review = Review::with(['reply'])->where('business_id', $business->id)->where('title', $title)->first();
+        $review = Review::with(['reply'])->where('business_id', $business->id)->where('slug', $title)->first();
         $review['userinfo'] = [
             'id' => $review->user->id,
             'name' => $review->user->name,
+            'slug' => $review->user->slug,
             'avatar' => $review->user->profile?->image,
         ];
         $review['business'] = $review->business;
@@ -202,7 +204,7 @@ class WebReviewController extends Controller
 
     public function user(Request $request, String $name)
     {
-        $user = User::where('name', $name)->first();
+        $user = User::where('slug', $name)->first();
 
         $page = $request->input('page', 1); // Default to page 1
 
@@ -216,6 +218,7 @@ class WebReviewController extends Controller
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
@@ -345,7 +348,7 @@ class WebReviewController extends Controller
     public function product(Request $request, String $website, String $name)
     {
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->where('website', $website)->first();
-        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
+        $product = Product::where('business_id', $business->id)->where('slug', $name)->first();
 
         $page = $request->input('page', 1); // Default to page 1
 
@@ -419,6 +422,7 @@ class WebReviewController extends Controller
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
@@ -433,6 +437,7 @@ class WebReviewController extends Controller
         $recent_products = $recent_products->map(function ($product, $index) {
             $product['trustscore'] = number_format(Review::where('is_product', $product->id)->get()->avg('rating'), 1);
             $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
+            $product['company'] = Business::findOrFail($product->business_id);
             return $product;
         });
 
@@ -461,7 +466,7 @@ class WebReviewController extends Controller
     public function evaluateProduct(Request $request, String $website, String $name)
     {
         $business = Business::with('profile')->where('website', $website)->first();
-        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
+        $product = Product::where('business_id', $business->id)->where('slug', $name)->first();
 
         return Inertia::render('Review/Evaluate', [
             'product' => $product,

@@ -22,15 +22,9 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/test', function (Request $request) {
-    // $reviews = User::all();
-
-    // foreach($reviews as $review){
-    //     $review->slug = Str::slug($review->name);
-    //     $review->save();
-    // }
-
     return 'ok';
 })->name('test');
+
 
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
@@ -41,6 +35,9 @@ Route::get('/clear-cache', function () {
 	return "Cache is cleared";
 });
 
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+
 Route::group([
     'middleware' => ['business.guest'],
 ], function(){
@@ -48,8 +45,8 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    Route::get('/search', [HomeController::class, 'search'])
-        ->name('search');
+    // Route::get('/search', [HomeController::class, 'search'])
+    //     ->name('search');
 
     // category
     Route::get('/kategori', [CategoryController::class, 'index'])
@@ -58,7 +55,7 @@ Route::group([
     Route::get('/kategori/{category}', [CategoryController::class, 'show'])
         ->name('categories.show');
 
-    Route::get('/kategori/{name}/{id}/detail', [CategoryController::class, 'detail'])
+    Route::get('/kategori/{category}/{sub_category}', [CategoryController::class, 'detail'])
         ->name('categories.detail');
 
     // blogs
@@ -69,20 +66,20 @@ Route::group([
     Route::get('/yorumyaz', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
-    Route::middleware('auth')->get('/evaluate/{website}', [WebReviewController::class, 'evaluate'])
+    Route::middleware('auth')->get('/yorumyaz/{website}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
-    Route::get('/yorum/{website}', [WebReviewController::class, 'company'])
+    Route::get('/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
+
+    Route::get('/{website}/{name}', [WebReviewController::class, 'product'])
+        ->name('reviews.product');
 
     Route::get('/yorum/uye/{name}', [WebReviewController::class, 'user'])
         ->name('reviews.user');
 
-    Route::get('/yorum/{website}/{title}/detail', [WebReviewController::class, 'detail'])
+    Route::get('/{website}/yorum/{title}', [WebReviewController::class, 'detail'])
         ->name('reviews.detail');
-
-    Route::get('/yorum/{website}/{name}', [WebReviewController::class, 'product'])
-        ->name('reviews.product');
 
     Route::middleware('auth')->get('/evaluate/{website}/{name}/', [WebReviewController::class, 'evaluateProduct'])
         ->name('reviews.evaluate.product');
@@ -97,5 +94,4 @@ Route::group([
         ->name('reviews.store');
 });
 
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
+
