@@ -253,12 +253,12 @@ function SearchSection() {
                                             )
                                         }
                                     </ul>
-                                    <div className='px-4'>
+                                    {/* <div className='px-4'>
                                     <button onClick={handleClickSearch}
                                         className='w-full p-2 text-lg no-underline rounded-full group bg-blue-500 text-gray-50 hover:bg-blue-200 hover:text-gray-700'>
                                     Show all results<span className='ml-2 text-gray-50 group-hover:text-gray-700'><BsArrowRight className='inline'/></span>
                                     </button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             )
                         )}

@@ -70,6 +70,7 @@ class CategoryController extends Controller
 
         $subCategories = Category::with(['subcategories' => function ($query){
             $query->withCount('businesses');
+            $query->with('category');
         }])->findOrFail($category->id);
 
         $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
@@ -130,18 +131,8 @@ class CategoryController extends Controller
 
         $subCategories = Category::with(['subcategories' => function ($query){
             $query->withCount('businesses');
+            $query->with('category');
         }])->findOrFail($subCategory->category_id);
-
-        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($subCategory) {
-            $query->where('sub_category_id', $subCategory->id);
-        })->get(); // Paginate the results
-
-        $businesses = $businesses->map(function ($business, $index) {
-            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
-            $business['reviews_count'] = count($business->reviews);
-            return $business;
-        });
-
 
         $reviews = Review::with('reply')->latest()->take(3)->get();
         $reviews = $reviews->map(function ($review, $index) {
@@ -160,23 +151,100 @@ class CategoryController extends Controller
             return $review;
         });
 
+        $page = $request->input('page', 1); // Default to page 1
+        $sortBy = $request->input('sort', 'trustscore'); // Default to page 1
+        $score = $request->input('score', 'any'); // Default to page 1
+        $isVerified = $request->input('verified', false); // Default to page 1
+        $isClaimed = $request->input('claimed', false); // Default to page 1
+
+        $query = DB::table('businesses')
+            ->select(
+                'businesses.id',
+                'businesses.website',
+                'businesses.company_name',
+                'businesses.company_email',
+                'businesses.email_verified_at',
+                'business_profiles.logo as logo',
+                'business_profiles.email as profile_email',
+                'business_profiles.phone as profile_phone',
+                'business_profiles.location as profile_location',
+                DB::raw('COALESCE(AVG(reviews.rating), 0) AS avg_rating'),
+                DB::raw('COUNT(reviews.id) AS count_reviews'),
+                DB::raw('MAX(reviews.created_at) AS latest_review_timestamp'),
+            )
+            // Only join business_categories if sub_category_id is used
+            ->leftJoin('business_categories', 'business_categories.business_id', '=', 'businesses.id')
+            // Join reviews for the average rating
+            ->leftJoin('reviews', 'reviews.business_id', '=', 'businesses.id')
+            ->leftJoin('business_profiles', 'business_profiles.business_id', '=', 'businesses.id')
+            ->groupBy(
+                'businesses.id',
+                'businesses.website',
+                'businesses.company_name',
+                'businesses.company_email',
+                'businesses.email_verified_at',
+                'business_profiles.logo',
+                'business_profiles.email',
+                'business_profiles.phone',
+                'business_profiles.location',
+            );
+
+        $query->where('business_categories.sub_category_id', $subCategory->id);
+
+        if ($score === '3.0') {
+            $query->havingRaw('AVG(reviews.rating) >= 3');
+        } elseif ($score === '4.0') {
+            $query->havingRaw('AVG(reviews.rating) >= 4');
+        } elseif ($score === '4.5') {
+            $query->havingRaw('AVG(reviews.rating) >= 4.5');
+        }
+
+        // 3) Sorting
+        if ($sortBy === 'trustscore') {
+            // Sort by the computed average rating, desc
+            $query->orderByDesc(DB::raw('AVG(reviews.rating)'));
+        } elseif ($sortBy === 'highest') {
+            // Sort by business creation date, desc
+            $query->orderByDesc(DB::raw('COUNT(reviews.id)'));
+        } elseif ($sortBy === 'latest') {
+            // Sort by the latest review timestamp, desc
+            $query->orderByDesc(DB::raw('MAX(reviews.created_at)'));
+        }
+
+        if($isVerified){
+            $query->whereNotNull('businesses.email_verified_at');
+        }
+
+        if($isClaimed){
+            $query->whereNotNull('businesses.company_email');
+        }
+
+        $businesses = $query->paginate(3, ['*'], 'page', $page);
+
+        // $businesses = $businesses->map(function ($business, $index) {
+
+        //     // $business['trustscore'] = number_format($business->avg_rating, 1);
+        //     $business['profile'] = $business->avg_rating;
+        //     return $business;
+        // });
+
         return Inertia::render('Category/Detail', [
             'data' => [
                 'sub_category' => $subCategory,
                 'related_categoreies' => $subCategories->subcategories,
-                'companies' => $businesses,
-                // 'pagination' => [
-                //     'current_page' => $paginate->currentPage(),
-                //     'last_page' => $paginate->lastPage(),
-                //     'per_page' => $paginate->perPage(),
-                //     'total' => $paginate->total(),
-                //     'links' => [
-                //         'first' => $paginate->url(1),
-                //         'last' => $paginate->url($paginate->lastPage()),
-                //         'next' => $paginate->nextPageUrl(),
-                //         'prev' => $paginate->previousPageUrl(),
-                //     ],
-                // ],
+                'companies' => collect($businesses->items()),
+                'pagination' => [
+                    'current_page' => $businesses->currentPage(),
+                    'last_page' => $businesses->lastPage(),
+                    'per_page' => $businesses->perPage(),
+                    'total' => $businesses->total(),
+                    'links' => [
+                        'first' => $businesses->url(1),
+                        'last' => $businesses->url($businesses->lastPage()),
+                        'next' => $businesses->nextPageUrl(),
+                        'prev' => $businesses->previousPageUrl(),
+                    ],
+                ],
                 'recent_reviews' => $reviews
             ]
         ]);
