@@ -73,18 +73,6 @@ class CategoryController extends Controller
             $query->with('category');
         }])->findOrFail($category->id);
 
-        $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
-        $businesses = Business::with(['profile'])->whereHas('businessCategories', function ($query) use ($subCategory_ids) {
-            $query->whereIn('sub_category_id', $subCategory_ids);
-        })->get(); // Paginate the results
-
-        $businesses = $businesses->map(function ($business, $index) {
-            $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
-            $business['reviews_count'] = count($business->reviews);
-            return $business;
-        });
-
-
         $reviews = Review::with('reply')->latest()->take(3)->get();
         $reviews = $reviews->map(function ($review, $index) {
             $review['user'] = [
@@ -102,24 +90,97 @@ class CategoryController extends Controller
             return $review;
         });
 
+        $page = $request->input('page', 1); // Default to page 1
+        $sortBy = $request->input('sort', 'trustscore'); // Default to page 1
+        $score = $request->input('score', 'any'); // Default to page 1
+        $isVerified = $request->input('verified', false); // Default to page 1
+        $isClaimed = $request->input('claimed', false); // Default to page 1
+
+        $query = DB::table('businesses')
+            ->select(
+                'businesses.id',
+                'businesses.website',
+                'businesses.company_name',
+                'businesses.company_email',
+                'businesses.email_verified_at',
+                'business_profiles.logo as logo',
+                'business_profiles.email as profile_email',
+                'business_profiles.phone as profile_phone',
+                'business_profiles.location as profile_location',
+                DB::raw('COALESCE(AVG(reviews.rating), 0) AS avg_rating'),
+                DB::raw('COUNT(reviews.id) AS count_reviews'),
+                DB::raw('MAX(reviews.created_at) AS latest_review_timestamp'),
+            )
+            // Only join business_categories if sub_category_id is used
+            ->leftJoin('business_categories', 'business_categories.business_id', '=', 'businesses.id')
+            // Join reviews for the average rating
+            ->leftJoin('reviews', 'reviews.business_id', '=', 'businesses.id')
+            ->leftJoin('business_profiles', 'business_profiles.business_id', '=', 'businesses.id')
+            ->groupBy(
+                'businesses.id',
+                'businesses.website',
+                'businesses.company_name',
+                'businesses.company_email',
+                'businesses.email_verified_at',
+                'business_profiles.logo',
+                'business_profiles.email',
+                'business_profiles.phone',
+                'business_profiles.location',
+            );
+
+        $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
+        if (!empty($subCategory_ids)) {
+            $query->whereIn('business_categories.sub_category_id', $subCategory_ids);
+        }
+
+        if ($score === '3.0') {
+            $query->havingRaw('AVG(reviews.rating) >= 3');
+        } elseif ($score === '4.0') {
+            $query->havingRaw('AVG(reviews.rating) >= 4');
+        } elseif ($score === '4.5') {
+            $query->havingRaw('AVG(reviews.rating) >= 4.5');
+        }
+
+        // 3) Sorting
+        if ($sortBy === 'trustscore') {
+            // Sort by the computed average rating, desc
+            $query->orderByDesc(DB::raw('AVG(reviews.rating)'));
+        } elseif ($sortBy === 'highest') {
+            // Sort by business creation date, desc
+            $query->orderByDesc(DB::raw('COUNT(reviews.id)'));
+        } elseif ($sortBy === 'latest') {
+            // Sort by the latest review timestamp, desc
+            $query->orderByDesc(DB::raw('MAX(reviews.created_at)'));
+        }
+
+        if($isVerified){
+            $query->whereNotNull('businesses.email_verified_at');
+        }
+
+        if($isClaimed){
+            $query->whereNotNull('businesses.company_email');
+        }
+
+        $businesses = $query->paginate(10, ['*'], 'page', $page);
+
         return Inertia::render('Category/Detail', [
             'data' => [
                 'category' => $category,
                 'related_categoreies' => $subCategories->subcategories,
-                'companies' => $businesses,
-                // 'pagination' => [
-                //     'current_page' => $paginate->currentPage(),
-                //     'last_page' => $paginate->lastPage(),
-                //     'per_page' => $paginate->perPage(),
-                //     'total' => $paginate->total(),
-                //     'links' => [
-                //         'first' => $paginate->url(1),
-                //         'last' => $paginate->url($paginate->lastPage()),
-                //         'next' => $paginate->nextPageUrl(),
-                //         'prev' => $paginate->previousPageUrl(),
-                //     ],
-                // ],
-                'recent_reviews' => $reviews
+                'recent_reviews' => $reviews,
+                'companies' => collect($businesses->items()),
+                'pagination' => [
+                    'current_page' => $businesses->currentPage(),
+                    'last_page' => $businesses->lastPage(),
+                    'per_page' => $businesses->perPage(),
+                    'total' => $businesses->total(),
+                    'links' => [
+                        'first' => $businesses->url(1),
+                        'last' => $businesses->url($businesses->lastPage()),
+                        'next' => $businesses->nextPageUrl(),
+                        'prev' => $businesses->previousPageUrl(),
+                    ],
+                ],
             ]
         ]);
     }
@@ -219,7 +280,7 @@ class CategoryController extends Controller
             $query->whereNotNull('businesses.company_email');
         }
 
-        $businesses = $query->paginate(3, ['*'], 'page', $page);
+        $businesses = $query->paginate(10, ['*'], 'page', $page);
 
         // $businesses = $businesses->map(function ($business, $index) {
 
@@ -232,6 +293,7 @@ class CategoryController extends Controller
             'data' => [
                 'sub_category' => $subCategory,
                 'related_categoreies' => $subCategories->subcategories,
+                'recent_reviews' => $reviews,
                 'companies' => collect($businesses->items()),
                 'pagination' => [
                     'current_page' => $businesses->currentPage(),
@@ -245,7 +307,6 @@ class CategoryController extends Controller
                         'prev' => $businesses->previousPageUrl(),
                     ],
                 ],
-                'recent_reviews' => $reviews
             ]
         ]);
     }
