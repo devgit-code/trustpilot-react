@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('location')->nullable();
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
             $table->foreign('business_id')->references('id')->on('businesses')->onDelete('cascade');
         });
     }

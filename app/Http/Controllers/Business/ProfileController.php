@@ -171,6 +171,8 @@ class ProfileController extends Controller
         $request->validate([
             "email" => "nullable|email|max:255",
             "phone" => 'nullable|regex:/^\+?[0-9]{10,15}$/',
+            "country" => "nullable|string|max:255",
+            "city" => "nullable|string|max:255",
             "location" => "nullable|string|max:255",
             "description" => "nullable|string",
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
@@ -197,17 +199,23 @@ class ProfileController extends Controller
 
         $email = $request->input('email');
         $phone = $request->input('phone');
+        $country = $request->input('country');
+        $city = $request->input('city');
         $location = $request->input('location');
         $description = $request->input('description');
 
         if (
             $businessProfile->email !== $email ||
             $businessProfile->phone !== $phone ||
+            $businessProfile->country !== $country ||
+            $businessProfile->city !== $city ||
             $businessProfile->location !== $location ||
             $businessProfile->description !== $description
         ) {
             $businessProfile->email = $email;
             $businessProfile->phone = $phone;
+            $businessProfile->country = $country;
+            $businessProfile->city = $city;
             $businessProfile->location = $location;
             $businessProfile->description = $description;
 
