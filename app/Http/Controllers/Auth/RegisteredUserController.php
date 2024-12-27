@@ -141,7 +141,7 @@ class RegisteredUserController extends Controller
                 $business->sendEmailVerificationNotification();
 
                 // return redirect(RouteServiceProvider::HOME);
-                return redirect()->route('admin.verification.notice');
+                return redirect()->route('yonetici.verification.notice');
             }else{
                 return redirect()->back()->withErrors(['website'=>"Can't reach the website."])->withInput();
             }
@@ -195,7 +195,7 @@ class RegisteredUserController extends Controller
         $business->sendEmailVerificationNotification();
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('admin.verification.notice');
+        return redirect()->route('yonetici.verification.notice');
 
     }
 }

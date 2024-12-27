@@ -35,7 +35,7 @@ class EmailVerificationNotificationController extends Controller
 
             $business->sendEmailVerificationNotification();
 
-            return redirect()->route('admin.verification.notice')->with('status', 'verification-link-sent');
+            return redirect()->route('yonetici.verification.notice')->with('status', 'verification-link-sent');
         } else {
             return back()->with('error', 'No authenticated business user.');
         }

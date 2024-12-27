@@ -30,7 +30,7 @@ export default function Dashboard(props) {
                                             <i className="bi bi-three-dots-vertical"></i>
                                         </button>
                                         <ul className="dropdown-menu">
-                                            <li><Link className="dropdown-item" href={route('business.reviews.index')}>View</Link></li>
+                                            <li><Link className="dropdown-item" href={route('yonetici.reviews.index')}>View</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@ export default function Dashboard(props) {
                                             <i className="bi bi-three-dots-vertical"></i>
                                         </button>
                                         <ul className="dropdown-menu">
-                                            <li><Link className="dropdown-item" href={route('business.products.index')}>View</Link></li>
+                                            <li><Link className="dropdown-item" href={route('yonetici.products.index')}>View</Link></li>
                                         </ul>
                                     </div>
                                 </div>

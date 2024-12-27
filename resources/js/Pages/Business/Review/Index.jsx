@@ -7,7 +7,7 @@ const Index = () => {
     const setting = {
         title: 'Reviews',
         url: '/api/business/reviews',
-        show_link: 'business.reviews.edit',
+        show_link: 'yonetici.reviews.edit',
         header_name:'user',
         // has_flag: 'true'
     }

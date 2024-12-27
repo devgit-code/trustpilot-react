@@ -45,7 +45,7 @@ export default function ContactTab({businessProfile}){
         e.preventDefault();
 
         clearErrors();
-        post(route("business.profile.update.contact"), data, { forceFormData: true });
+        post(route("yonetici.profile.update.contact"), data, { forceFormData: true });
     };
 
     return (

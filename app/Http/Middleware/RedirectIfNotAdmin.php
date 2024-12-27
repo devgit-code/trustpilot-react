@@ -16,7 +16,7 @@ class RedirectIfNotAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if(auth('business')->user()->role != 'admin'){
-            return redirect()->route('business.dashboard');
+            return redirect()->route('yonetici.dashboard');
         }
 
         return $next($request);

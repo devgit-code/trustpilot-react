@@ -51,7 +51,7 @@ class CategoryController extends Controller
             $businessCat->save();
         }
 
-        return redirect()->route('business.categories.index');
+        return redirect()->route('yonetici.categories.index');
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoryController extends Controller
         $category->is_primary = true;
         $category->save();
 
-        return redirect()->route('business.categories.index');
+        return redirect()->route('yonetici.categories.index');
     }
 
     public function destroy(BusinessCategory $category)
@@ -101,6 +101,6 @@ class CategoryController extends Controller
             }
         }
 
-        return redirect()->route('business.categories.index');
+        return redirect()->route('yonetici.categories.index');
     }
 }

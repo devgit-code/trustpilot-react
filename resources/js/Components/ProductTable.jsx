@@ -42,12 +42,12 @@ export default function ProductTable({ products, show_link }){
                             <td>
                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                     <li className="edit">
-                                        <Link href={route('business.products.edit', item.id)}>
+                                        <Link href={route('yonetici.products.edit', item.id)}>
                                             <FaEdit className='text-primary fs-4 me-2' />
                                         </Link>
                                     </li>
                                     <form
-                                        // action={route('business.products.destroy', item.id)}
+                                        // action={route('yonetici.products.destroy', item.id)}
                                         onSubmit={(e) => handleDelete(e, item.id)}
                                         method="POST"
                                     >

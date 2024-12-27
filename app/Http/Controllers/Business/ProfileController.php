@@ -25,7 +25,7 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        return redirect()->route('business.profile.index')->with('activeTab', 'profile');
+        return redirect()->route('yonetici.profile.index')->with('activeTab', 'profile');
     }
 
     public function logo_update(Request $request)
@@ -57,7 +57,7 @@ class ProfileController extends Controller
             $businessProfile->save();
         }
 
-        return redirect()->route('business.profile.index')->with('acctiveTab', 'logo');
+        return redirect()->route('yonetici.profile.index')->with('acctiveTab', 'logo');
     }
 
     public function update(Request $request)
@@ -103,7 +103,7 @@ class ProfileController extends Controller
         //     }
         // }
 
-        return to_route('business.profile.index');
+        return to_route('yonetici.profile.index');
     }
 
     public function home(Request $request)
@@ -134,7 +134,7 @@ class ProfileController extends Controller
 
         }
 
-        return redirect()->route('business.profile.index');
+        return redirect()->route('yonetici.profile.index');
     }
 
     public function account(Request $request)
@@ -163,7 +163,7 @@ class ProfileController extends Controller
             $business->save();
         }
 
-        return redirect()->route('business.profile.index')->with('activeTab', 'account');
+        return redirect()->route('yonetici.profile.index')->with('activeTab', 'account');
     }
 
     public function contact(Request $request)
@@ -214,6 +214,6 @@ class ProfileController extends Controller
             $businessProfile->save();
         }
 
-        return redirect()->route('business.profile.index');
+        return redirect()->route('yonetici.profile.index');
     }
 }

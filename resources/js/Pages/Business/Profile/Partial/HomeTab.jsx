@@ -19,7 +19,7 @@ export default function HomeTab({business, businessProfile}){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("business.profile.update.home"), data);
+        post(route("yonetici.profile.update.home"), data);
     };
 
     return (

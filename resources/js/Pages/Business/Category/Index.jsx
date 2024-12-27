@@ -34,7 +34,7 @@ const Index = ({categories, sub_categories}) => {
     const handleAddClick = () => {
         if (selectedOption) {
             // onAddCategory(selectedOption);
-            router.post(route('business.categories.store'), {
+            router.post(route('yonetici.categories.store'), {
                 'id':selectedOption.value
             });
             setSelectedOption(null); // Reset the dropdown
@@ -42,11 +42,11 @@ const Index = ({categories, sub_categories}) => {
     };
 
     const handleSetAsPrimary = (id) => {
-        router.put(route('business.categories.update', id));
+        router.put(route('yonetici.categories.update', id));
     };
 
     const handleDelete = (id) => {
-        router.delete(route('business.categories.destroy', id));
+        router.delete(route('yonetici.categories.destroy', id));
     };
 
     useEffect(() => {

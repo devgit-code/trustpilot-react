@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
 
-        return redirect()->route('business.products.index');
+        return redirect()->route('yonetici.products.index');
     }
 
 
@@ -90,7 +90,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('business.products.index');
+        return redirect()->route('yonetici.products.index');
     }
 
     public function destroy(Product $product)
@@ -99,6 +99,6 @@ class ProductController extends Controller
         Review::where('is_product', $product->id)->delete();
 
         $product->delete();
-        return redirect()->route('business.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('yonetici.products.index')->with('success', 'Product deleted successfully.');
     }
 }

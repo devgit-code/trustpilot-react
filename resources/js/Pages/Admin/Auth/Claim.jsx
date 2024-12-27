@@ -62,7 +62,7 @@ export default function Claim({ businesses}) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.claim'));
+        post(route('yonetici.claim'));
     };
 
     return (
@@ -73,14 +73,14 @@ export default function Claim({ businesses}) {
 
                     <div className="flex items-center justify-between mt-4">
                         <Link
-                            href={route('admin.login')}
+                            href={route('yonetici.login')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Go to Login
                         </Link>
 
                         <Link
-                            href={route('admin.register')}
+                            href={route('yonetici.register')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Business not exist?

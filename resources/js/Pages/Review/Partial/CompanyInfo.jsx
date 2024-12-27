@@ -36,7 +36,7 @@ export default function CompanyInfo({id, company_name, website, company_email, f
                 </p>
 
                 {!company_email && (
-                    <Link href={route('admin.claim', website)} className='no-underline bg-blue-100 py-2 px-4 border rounded border-blue-400 group hover:bg-green-600 hover:border-blue-500'>
+                    <Link href={route('yonetici.claim', website)} className='no-underline bg-blue-100 py-2 px-4 border rounded border-blue-400 group hover:bg-green-600 hover:border-blue-500'>
                         <span className='text-sm font-bold text-gray-600 group-hover:text-gray-100'>Claim This Company</span>
                     </Link>
                 )}

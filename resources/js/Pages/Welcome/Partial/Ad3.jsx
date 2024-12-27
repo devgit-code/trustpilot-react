@@ -14,7 +14,7 @@ const AnimatedComponent = () => {
                 {/* Buttons */}
                 <div className="flex items-center gap-4">
                     <a className="btn btn-outline-light px-4 py-2 rounded-full hover:bg-emerald-600 transition duration-200"
-                        href={route('admin.register')}>
+                        href={route('yonetici.register')}>
                         Get started
                     </a>
                 </div>

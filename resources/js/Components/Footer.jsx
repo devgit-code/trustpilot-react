@@ -27,9 +27,9 @@ const Footer = () => {
                             <Link href={route('categories.index')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Categories</Link>
                             <Link href={route('reviews.write')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Write a Review</Link>
                             <Link href={route('register')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Sign Up</Link>
-                            <Link href={route('admin.login')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Business Login</Link>
-                            <Link href={route('admin.register')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Business Sign Up</Link>
-                            <Link href={route('admin.claim')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Claim Business</Link>
+                            <Link href={route('yonetici.login')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Business Login</Link>
+                            <Link href={route('yonetici.register')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Business Sign Up</Link>
+                            <Link href={route('yonetici.claim')} className="lg:inline-block sm:text-left block text-center py-2 no-underline text-white px-4 hover:underline" >Claim Business</Link>
                         </div>
                     </div>
                 </Container>

@@ -26,9 +26,9 @@ use App\Http\Controllers\Admin\BlogController;
 
 // admin auth
 Route::group([
-    'prefix' => 'admin',
+    'prefix' => 'yonetici',
     'middleware' => ['business.guest'],
-    'as' => 'admin.'
+    'as' => 'yonetici.'
 ], function () {
 
     Route::get('/kayit', [RegisteredUserController::class, 'admin_create']) ->name('register');
@@ -46,9 +46,9 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'admin',
+    'prefix' => 'yonetici',
     'middleware' => ['user-guest', 'business.authed'],
-    'as' => 'admin.'
+    'as' => 'yonetici.'
 ], function () {
 
     Route::get('verify-email', [EmailVerificationPromptController::class, 'admin_create'])->name('verification.notice');
@@ -70,12 +70,12 @@ Route::group([
 //business
 Route::group([
     'namespace' => 'App\Http\Controllers\Business',
-    'prefix' => 'business',
+    'prefix' => 'yonetici',
     'middleware' => ['user-guest', 'business.authed', 'business.verified'],
-    'as' => 'business.'
+    'as' => 'yonetici.'
 ], function () {
     Route::get('/', function(){
-        return redirect()->route('admin.login');
+        return redirect()->route('yonetici.login');
     });
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -104,7 +104,7 @@ Route::group([
     'as' => 'admin.'
 ], function () {
     Route::get('/', function(){
-        return redirect()->route('admin.login');
+        return redirect()->route('yonetici.login');
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);

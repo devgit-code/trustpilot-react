@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->is('admin/*')) { // If the request is for business-related routes
+        if (request()->is('yonetici/*')) { // If the request is for business-related routes
             return [
                 'company_email' => ['required', 'string', 'email'],
                 'password' => ['required', 'string'],

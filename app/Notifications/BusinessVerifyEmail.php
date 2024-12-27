@@ -17,7 +17,7 @@ class BusinessVerifyEmail extends BaseVerifyEmail
 
 // Generate the signed verification URL
         $verificationUrl = URL::temporarySignedRoute(
-            'admin.verification.verify',
+            'yonetici.verification.verify',
             now()->addMinutes(60),
             ['id' => $notifiable->id, 'hash' => sha1($notifiable->company_email)]
         );
