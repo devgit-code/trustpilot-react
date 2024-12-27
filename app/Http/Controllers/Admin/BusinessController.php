@@ -304,11 +304,15 @@ class BusinessController extends Controller
 
         $email = $request->input('email');
         $phone = $request->input('phone');
+        $country = $request->input('country');
+        $city = $request->input('city');
         $location = $request->input('location');
 
         if (
             $businessProfile->email !== $email ||
             $businessProfile->phone !== $phone ||
+            $businessProfile->country !== $country ||
+            $businessProfile->city !== $city ||
             $businessProfile->location !== $location
         ) {
             $existingBusinessProfile = BusinessProfile::where('business_id', $business->id)->first();
@@ -316,6 +320,8 @@ class BusinessController extends Controller
             if ($existingBusinessProfile) {
                 $existingBusinessProfile->email = $email;
                 $existingBusinessProfile->phone = $phone;
+                $existingBusinessProfile->country = $country;
+                $existingBusinessProfile->city = $city;
                 $existingBusinessProfile->location = $location;
 
                 if ($request->hasFile('image')) {
@@ -329,6 +335,8 @@ class BusinessController extends Controller
             } else {
                 $businessProfile->email = $email;
                 $businessProfile->phone = $phone;
+                $businessProfile->country = $country;
+                $businessProfile->city = $city;
                 $businessProfile->location = $location;
 
                 if ($request->hasFile('image')) {

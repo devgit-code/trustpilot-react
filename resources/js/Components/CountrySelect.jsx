@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export default function CustomDropdown({ value, onChange }) {
+export default function CustomDropdown({ value, onChange, disabled }) {
     const countries = [
         'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola',
         'Anguilla', 'Antarctica', 'Argentina', 'Armenia', 'Aruba', 'Australia',
@@ -69,6 +69,7 @@ export default function CustomDropdown({ value, onChange }) {
     return (
         <div className="relative w-full max-w-xs">
         <button
+            disabled={disabled}
             onClick={(e)=>toggleDropdown(e)}
             className="block w-full px-4 py-2 text-left text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
         >

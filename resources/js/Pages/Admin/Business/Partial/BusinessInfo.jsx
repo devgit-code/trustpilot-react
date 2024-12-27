@@ -5,6 +5,7 @@ import RatingAverage from '@/Components/RatingAverage';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
+import CountrySelect from '@/Components/CountrySelect';
 
 import profileNotLogo from '@/../images/company-logo.png';
 import { BsFillExclamationOctagonFill } from "react-icons/bs"
@@ -21,6 +22,8 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
         image:null,
         email: business.profile?.email || '',
         phone: business.profile?.phone || '',
+        country: business.profile?.country || 'Turkey',
+        city: business.profile?.city || '',
         location: business.profile?.location || '',
     });
 
@@ -54,7 +57,9 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
             image:null,
             description: business.profile?.description || '',
             email: business.profile?.email || '',
-            phone: business.profile?.phone || '',
+            phone: business.profile?.phone || 'Turkey',
+            country: business.profile?.country || '',
+            city: business.profile?.city || '',
             location: business.profile?.location || '',
         })
         // previewImageRef.current.setAttribute("src", userProfile?.image ? `/storage/images/profile/${userProfile.image}` : profileNotPreviewImg);
@@ -362,6 +367,29 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                             />
 
                             <InputError className="mt-2" message={errors.phone} />
+                        </div>
+
+                        <div>
+                            <p className='text-gray-700 mb-0'>Country</p>
+
+                            <CountrySelect disabled={!isEdit} value={data.country} onChange={setData}/>
+                        </div>
+
+                        <div>
+                            <InputLabel htmlFor="city" value="City" />
+
+                            <TextInput
+                                id="city"
+                                name="city"
+                                type="text"
+                                className="mt-1 block w-full"
+                                disabled={!isEdit}
+                                value={data.city}
+                                onChange={(e)=>setData('city', e.target.value)}
+                                autoComplete="name"
+                            />
+
+                            <InputError className="mt-2" message={errors.city} />
                         </div>
 
                         <div>
