@@ -84,7 +84,13 @@ export default function CompanyInfo({id, company_name, website, company_email, f
                     <li className="flex">
                         <span className="text-gray-500 text-lg mr-2"><CiLocationOn /></span>
                         <address className="not-italic capitalize">
-                        {profile?.location ?? 'No address'}
+                        {profile?.country ? (
+                            <>
+                                <p className='mb-0 text-gray-700'>{profile?.location}</p>
+                                <p className='mb-0 mt-1 text-gray-700'>{profile?.city}</p>
+                                <p className='mb-0 mt-1 text-gray-700'>{profile?.country}</p>
+                            </>
+                        ) :('No address')}
                         </address>
                     </li>
                 </ul>

@@ -9,6 +9,7 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import ContactPopup from './ContactPopup';
 
 export default function CompanyItem({index, company}){
+    console.log('x---------', company)
     const [expandedReview, setExpandedReview] = useState(null);
 
     // Toggle review expansion
@@ -34,7 +35,7 @@ export default function CompanyItem({index, company}){
                             <Rating className="inline-flex" rating={Number(company.avg_rating)}/>
                             <span className="text-sm ml-1"> {Number(company.avg_rating).toFixed(1)} ({company.count_reviews} reviews)</span>
                         </div>
-                        {/* <p className="text-sm text-gray-500 pt-2 m-0 no-underline">{company.profile_location} </p> */}
+                        <p className="text-sm text-gray-500 pt-2 m-0 no-underline">{company.profile_city && (company.profile_city + ', ')}{company.profile_country} </p>
                     </div>
                 </div>
             </Link>
@@ -42,7 +43,7 @@ export default function CompanyItem({index, company}){
                 <div className='flex'>
                     <ContactPopup company={company}/>
                     <span className='ml-2 text-sm border-l text-gray-800 pl-3'>
-                    {company.profile_location?.length > 60 ? `${company.profile_location.slice(0, 60)}...` : company.profile_location}
+                    {company.categories}
                     </span>
                 </div>
 

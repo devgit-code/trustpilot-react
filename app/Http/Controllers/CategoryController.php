@@ -106,14 +106,17 @@ class CategoryController extends Controller
                 'business_profiles.logo as logo',
                 'business_profiles.email as profile_email',
                 'business_profiles.phone as profile_phone',
-                'business_profiles.location as profile_location',
+                'business_profiles.country as profile_country',
+                'business_profiles.city as profile_city',
                 DB::raw('COALESCE(AVG(reviews.rating), 0) AS avg_rating'),
                 DB::raw('COUNT(reviews.id) AS count_reviews'),
                 DB::raw('MAX(reviews.created_at) AS latest_review_timestamp'),
+                DB::raw('GROUP_CONCAT(DISTINCT sub_categories.name ORDER BY sub_categories.name ASC) AS categories') // Get category names
             )
             // Only join business_categories if sub_category_id is used
             ->leftJoin('business_categories', 'business_categories.business_id', '=', 'businesses.id')
             // Join reviews for the average rating
+            ->leftJoin('sub_categories', 'sub_categories.id', '=', 'business_categories.sub_category_id') // Join categories table to fetch category names
             ->leftJoin('reviews', 'reviews.business_id', '=', 'businesses.id')
             ->leftJoin('business_profiles', 'business_profiles.business_id', '=', 'businesses.id')
             ->groupBy(
@@ -125,7 +128,8 @@ class CategoryController extends Controller
                 'business_profiles.logo',
                 'business_profiles.email',
                 'business_profiles.phone',
-                'business_profiles.location',
+                'business_profiles.country',
+                'business_profiles.city',
             );
 
         $subCategory_ids = $subCategories->subcategories->pluck('id')->toArray();
@@ -162,6 +166,11 @@ class CategoryController extends Controller
         }
 
         $businesses = $query->paginate(10, ['*'], 'page', $page);
+
+        // $maps = collect($businesses->items())->map(function ($business, $index) {
+        //     $business['categories'] = $business->businessCategories;
+        //     return $business;
+        // });
 
         return Inertia::render('Category/Detail', [
             'data' => [
@@ -228,14 +237,15 @@ class CategoryController extends Controller
                 'business_profiles.logo as logo',
                 'business_profiles.email as profile_email',
                 'business_profiles.phone as profile_phone',
-                'business_profiles.location as profile_location',
+                'business_profiles.country as profile_country',
+                'business_profiles.city as profile_location',
                 DB::raw('COALESCE(AVG(reviews.rating), 0) AS avg_rating'),
                 DB::raw('COUNT(reviews.id) AS count_reviews'),
                 DB::raw('MAX(reviews.created_at) AS latest_review_timestamp'),
+                DB::raw('GROUP_CONCAT(DISTINCT sub_categories.name ORDER BY sub_categories.name ASC) AS categories') // Get category names
             )
-            // Only join business_categories if sub_category_id is used
             ->leftJoin('business_categories', 'business_categories.business_id', '=', 'businesses.id')
-            // Join reviews for the average rating
+            ->leftJoin('sub_categories', 'sub_categories.id', '=', 'business_categories.sub_category_id') // Join categories table to fetch category names
             ->leftJoin('reviews', 'reviews.business_id', '=', 'businesses.id')
             ->leftJoin('business_profiles', 'business_profiles.business_id', '=', 'businesses.id')
             ->groupBy(
@@ -247,7 +257,8 @@ class CategoryController extends Controller
                 'business_profiles.logo',
                 'business_profiles.email',
                 'business_profiles.phone',
-                'business_profiles.location',
+                'business_profiles.country',
+                'business_profiles.city',
             );
 
         $query->where('business_categories.sub_category_id', $subCategory->id);
@@ -281,13 +292,6 @@ class CategoryController extends Controller
         }
 
         $businesses = $query->paginate(10, ['*'], 'page', $page);
-
-        // $businesses = $businesses->map(function ($business, $index) {
-
-        //     // $business['trustscore'] = number_format($business->avg_rating, 1);
-        //     $business['profile'] = $business->avg_rating;
-        //     return $business;
-        // });
 
         return Inertia::render('Category/Detail', [
             'data' => [
