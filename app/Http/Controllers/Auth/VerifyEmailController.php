@@ -34,7 +34,7 @@ class VerifyEmailController extends Controller
             return redirect()->route('admin.dashboard');
         }
         if (Auth::guard('business')->user()->markEmailAsVerified()) {
-            return redirect()->route('admin.verification.notice');
+            return redirect()->route('yonetici.verification.notice');
         }
 
         return redirect()->route('admin.dashboard');

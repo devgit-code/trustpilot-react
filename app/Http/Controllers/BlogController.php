@@ -17,8 +17,9 @@ class BlogController extends Controller
     }
 
 
-    public function show(Blog $blog)
+    public function show(String $blog)
     {
+        $blog = Blog::where('slug', $blog)->first();
         $other_blogs = Blog::where('id', '<>', $blog->id)->take(4)->get();
         return Inertia::render('About/Show', compact('blog', 'other_blogs'));
     }

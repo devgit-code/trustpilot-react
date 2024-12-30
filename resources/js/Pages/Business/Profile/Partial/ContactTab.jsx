@@ -7,12 +7,15 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import profileNotLogo from '@/../images/company-logo.png';
+import CountrySelect from '@/Components/CountrySelect';
 
 export default function ContactTab({businessProfile}){
     const [preview, setPreview] = useState(null); // Preview URL
     const { data, setData, post, errors, clearErrors, processing, recentlySuccessful } = useForm({
         email: businessProfile?.email || '',
         phone: businessProfile?.phone || '',
+        country: businessProfile?.country || 'Turkey',
+        city: businessProfile?.city || '',
         location: businessProfile?.location || '',
         description: businessProfile?.description || '',
         image:null
@@ -45,7 +48,7 @@ export default function ContactTab({businessProfile}){
         e.preventDefault();
 
         clearErrors();
-        post(route("business.profile.update.contact"), data, { forceFormData: true });
+        post(route("yonetici.profile.update.contact"), data, { forceFormData: true });
     };
 
     return (
@@ -132,7 +135,29 @@ export default function ContactTab({businessProfile}){
             </div>
 
             <div>
-                <InputLabel htmlFor="location" value="Location" />
+                <p className='text-gray-700 mb-0'>Country</p>
+
+                <CountrySelect value={data.country} onChange={setData}/>
+            </div>
+
+            <div>
+                <InputLabel htmlFor="city" value="City" />
+
+                <TextInput
+                    id="city"
+                    name="city"
+                    type="text"
+                    className="mt-1 block w-full"
+                    value={data.city}
+                    onChange={(e)=>setData('city', e.target.value)}
+                    autoComplete="name"
+                />
+
+                <InputError className="mt-2" message={errors.city} />
+            </div>
+
+            <div>
+                <InputLabel htmlFor="location" value="Address" />
 
                 <TextInput
                     id="location"

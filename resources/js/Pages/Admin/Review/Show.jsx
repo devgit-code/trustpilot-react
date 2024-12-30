@@ -43,7 +43,7 @@ const Show = ({ review, userTotalReviews, count_reviews, trustscore }) => {
                             <div className=''>
                                 <h5 className="card-title">Review For
                                     <Link
-                                        href={route('admin.businesses.show', review.business.id)}
+                                        href={route('admin.businesses.show', review.business.website)}
                                         className='ml-3 text-gray-800 italic font-semibold uppercase hover:text-blue-600'>
                                         {review.business.company_name}
                                     </Link>

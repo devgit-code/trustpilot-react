@@ -88,7 +88,7 @@ export default function Header({ auth }) {
                 Visit Homepage
               </Dropdown.Link> */}
               <Dropdown.Link
-                href={route("admin.logout")}
+                href={route("yonetici.logout")}
                 method="post"
                 as="button"
               >

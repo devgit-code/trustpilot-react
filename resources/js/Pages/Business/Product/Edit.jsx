@@ -36,7 +36,7 @@ const Edit = ({ product }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('business.products.update', product.id), {
+        post(route('yonetici.products.update', product.id), {
             onSuccess: () => {
                 // onClose();
             },
@@ -118,7 +118,7 @@ const Edit = ({ product }) => {
                                     <button type="submit" className="btn btn-primary mr-3">
                                         Update
                                     </button>
-                                    <Link href={route('business.products.index')} className="btn btn-danger" type="button">
+                                    <Link href={route('yonetici.products.index')} className="btn btn-danger" type="button">
                                         Back
                                     </Link>
                                 </div>

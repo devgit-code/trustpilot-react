@@ -23,9 +23,9 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function logo()
+    public function profile()
     {
-        return redirect()->route('business.profile.index')->with('activeTab', 'logo');
+        return redirect()->route('yonetici.profile.index')->with('activeTab', 'profile');
     }
 
     public function logo_update(Request $request)
@@ -57,7 +57,7 @@ class ProfileController extends Controller
             $businessProfile->save();
         }
 
-        return redirect()->route('business.profile.index')->with('acctiveTab', 'logo');
+        return redirect()->route('yonetici.profile.index')->with('acctiveTab', 'logo');
     }
 
     public function update(Request $request)
@@ -103,7 +103,7 @@ class ProfileController extends Controller
         //     }
         // }
 
-        return to_route('business.profile.index');
+        return to_route('yonetici.profile.index');
     }
 
     public function home(Request $request)
@@ -134,7 +134,7 @@ class ProfileController extends Controller
 
         }
 
-        return redirect()->route('business.profile.index');
+        return redirect()->route('yonetici.profile.index');
     }
 
     public function account(Request $request)
@@ -163,7 +163,7 @@ class ProfileController extends Controller
             $business->save();
         }
 
-        return redirect()->route('business.profile.index')->with('activeTab', 'account');
+        return redirect()->route('yonetici.profile.index')->with('activeTab', 'account');
     }
 
     public function contact(Request $request)
@@ -171,6 +171,8 @@ class ProfileController extends Controller
         $request->validate([
             "email" => "nullable|email|max:255",
             "phone" => 'nullable|regex:/^\+?[0-9]{10,15}$/',
+            "country" => "nullable|string|max:255",
+            "city" => "nullable|string|max:255",
             "location" => "nullable|string|max:255",
             "description" => "nullable|string",
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
@@ -197,23 +199,29 @@ class ProfileController extends Controller
 
         $email = $request->input('email');
         $phone = $request->input('phone');
+        $country = $request->input('country');
+        $city = $request->input('city');
         $location = $request->input('location');
         $description = $request->input('description');
 
         if (
             $businessProfile->email !== $email ||
             $businessProfile->phone !== $phone ||
+            $businessProfile->country !== $country ||
+            $businessProfile->city !== $city ||
             $businessProfile->location !== $location ||
             $businessProfile->description !== $description
         ) {
             $businessProfile->email = $email;
             $businessProfile->phone = $phone;
+            $businessProfile->country = $country;
+            $businessProfile->city = $city;
             $businessProfile->location = $location;
             $businessProfile->description = $description;
 
             $businessProfile->save();
         }
 
-        return redirect()->route('business.profile.index');
+        return redirect()->route('yonetici.profile.index');
     }
 }

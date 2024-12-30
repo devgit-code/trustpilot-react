@@ -42,12 +42,6 @@ export default function Login({ status, canResetPassword }) {
                             Not Register yet?
                         </Link>
                     </div>
-                    {/* <Link
-                        href={route('admin.login')}
-                        className="py-2 px-4 no-underline bg-green-500 text-sm text-gray-100 hover:bg-green-600 hover:text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        For Business
-                    </Link> */}
                 </div>
             </div>
 

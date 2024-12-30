@@ -19,7 +19,7 @@ export default function HomeTab({business, businessProfile}){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("business.profile.update.home"), data);
+        post(route("yonetici.profile.update.home"), data);
     };
 
     return (
@@ -81,7 +81,6 @@ export default function HomeTab({business, businessProfile}){
                     value={data.first_name}
                     onChange={(e)=>setData('first_name', e.target.value)}
                     required
-                    isFocused
                     autoComplete="first_name"
                 />
 

@@ -19,7 +19,7 @@ class BindBusinessMiddleware
         if(!Auth::guard('business')->user()->email_verified_at){
             $email = Auth::guard('business')->user()->company_email;
 
-            return redirect()->route('admin.verification.notice')->with('email', $email);
+            return redirect()->route('yonetici.verification.notice')->with('email', $email);
         }
 
         return $next($request);

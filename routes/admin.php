@@ -19,38 +19,36 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
 use App\Http\Controllers\Admin\AdminReviewController;
-use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Admin\BlogController;
 
 
 // admin auth
 Route::group([
-    'prefix' => 'admin',
+    'prefix' => 'yonetici',
     'middleware' => ['business.guest'],
-    'as' => 'admin.'
+    'as' => 'yonetici.'
 ], function () {
 
-    Route::get('/register', [RegisteredUserController::class, 'admin_create']) ->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'admin_store']);
+    Route::get('/kayit', [RegisteredUserController::class, 'admin_create']) ->name('register');
+    Route::post('/kayit', [RegisteredUserController::class, 'admin_store']);
 
-    Route::get('/login', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'admin_store']);
+    Route::get('/giris', [AuthenticatedSessionController::class, 'admin_create'])->name('login');
+    Route::post('/giris', [AuthenticatedSessionController::class, 'admin_store']);
 
     // Route::get('/claim', [RegisteredUserController::class, 'admin_claim'])->name('claim');
-    Route::get('/claim/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
-    Route::post('/claim', [RegisteredUserController::class, 'admin_claim_store']);
+    Route::get('/sahibi/{website?}', [RegisteredUserController::class, 'admin_claim'])->name('claim');
+    Route::post('/sahibi', [RegisteredUserController::class, 'admin_claim_store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'admin_create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'admin_store'])->name('password.email');
 });
 
 Route::group([
-    'prefix' => 'admin',
+    'prefix' => 'yonetici',
     'middleware' => ['user-guest', 'business.authed'],
-    'as' => 'admin.'
+    'as' => 'yonetici.'
 ], function () {
 
     Route::get('verify-email', [EmailVerificationPromptController::class, 'admin_create'])->name('verification.notice');
@@ -72,12 +70,12 @@ Route::group([
 //business
 Route::group([
     'namespace' => 'App\Http\Controllers\Business',
-    'prefix' => 'business',
+    'prefix' => 'yonetici',
     'middleware' => ['user-guest', 'business.authed', 'business.verified'],
-    'as' => 'business.'
+    'as' => 'yonetici.'
 ], function () {
     Route::get('/', function(){
-        return redirect()->route('admin.login');
+        return redirect()->route('yonetici.login');
     });
     //for owner
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -88,7 +86,7 @@ Route::group([
     Route::resource('reviews', ReviewController::class);
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/logo', [ProfileController::class, 'logo'])->name('profile.logo');
+    Route::get('/profile/edit', [ProfileController::class, 'profile'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/update/home', [ProfileController::class, 'home'])->name('profile.update.home');
     Route::put('/profile/update/account', [ProfileController::class, 'account'])->name('profile.update.account');
@@ -106,13 +104,15 @@ Route::group([
     'as' => 'admin.'
 ], function () {
     Route::get('/', function(){
-        return redirect()->route('admin.login');
+        return redirect()->route('yonetici.login');
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('businesses', BusinessController::class);
     Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
+    Route::post('/businesses/create', [BusinessController::class, 'store'])->name('businesses.store');
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::post('/businesses/{business}/verify', [BusinessController::class, 'verify'])->name('businesses.verify');
+    Route::post('/businesses/{business}/approve', [BusinessController::class, 'approve'])->name('businesses.approve');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
     Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');
@@ -126,13 +126,6 @@ Route::group([
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
-    Route::get('/sponsors/sort', [SponsorController::class, 'sort'])->name('sponsors.sort');
-    Route::post('/sponsors/updateOrder', [SponsorController::class, 'updateOrder'])->name('sponsors.updateOrder');
-    Route::resource('/sponsors', SponsorController::class);
-
-    Route::get('/user/profile/show', [UserProfileController::class, 'show'])->name('user_profile.show');
-    Route::patch('/user/profile/update', [UserProfileController::class, 'update'])->name('user_profile.update');
 
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');

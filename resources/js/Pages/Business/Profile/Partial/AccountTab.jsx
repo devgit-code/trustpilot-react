@@ -17,7 +17,7 @@ export default function AccountTab({business}){
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("business.profile.update.account"), data, { forceFormData: true });
+        put(route("yonetici.profile.update.account"), data, { forceFormData: true });
     };
 
     return (

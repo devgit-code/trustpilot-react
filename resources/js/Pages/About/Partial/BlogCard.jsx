@@ -4,11 +4,11 @@ import { Head, Link } from '@inertiajs/react';
 import moment from 'moment';
 import Rating from '@/Components/Ratings';
 
-function BlogCard({ id, title, image, created_at}) {
+function BlogCard({ id, slug, title, image, created_at}) {
     return (
         <div className="bg-white rounded-lg" style={{minWidth: '200px'}}>
             <div className="">
-                <Link href={route('blogs.show', id)} className="no-underline">
+                <Link href={route('blogs.show', slug)} className="no-underline">
                     <img src={`/storage/${image}`}
                         alt="blog-logo"
                         className='w-full aspect-[1/1] object-cover'
@@ -19,7 +19,7 @@ function BlogCard({ id, title, image, created_at}) {
             </div>
 
             <div className="mt-1">
-                <Link href={route('blogs.show', id)} className="no-underline text-blue-500 text-xl font-extrabold ">
+                <Link href={route('blogs.show', slug)} className="no-underline text-blue-500 text-xl font-extrabold ">
                     {title}
                 </Link>
             </div>

@@ -34,7 +34,7 @@ export default function LogoTab({businessProfile}){
         e.preventDefault();
 
         clearErrors();
-        post(route("business.profile.update.logo"), data, { forceFormData: true });
+        post(route("yonetici.profile.update.logo"), data, { forceFormData: true });
     };
 
     return (

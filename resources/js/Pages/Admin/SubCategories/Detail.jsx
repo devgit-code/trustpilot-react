@@ -80,7 +80,7 @@ const Index = ({ subCategory }) => {
                                                         </td>
                                                         <td>
                                                             <Link
-                                                                href={route('admin.businesses.show', business.id)}
+                                                                href={route('admin.businesses.show', business.website)}
                                                                 className='text-gray-700 font-bold capitalize'>
                                                                 {business.company_name}
                                                             </Link>

@@ -29,7 +29,7 @@ class CheckSessionExpiration
             // Redirect based on the URL
             if ($request->is('admin/*')) {
                 // Redirect to admin login
-                return redirect()->route('admin.login');
+                return redirect()->route('yonetici.login');
             }
 
             return redirect()->route('login');

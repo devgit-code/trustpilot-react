@@ -7,6 +7,7 @@ use App\Models\Business;
 use App\Models\BusinessProfile;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class BusinessController extends Controller
@@ -70,9 +71,88 @@ class BusinessController extends Controller
         return Inertia::render('Admin/Business/Create');
     }
 
+    public function extractCompanyName($url) {
+        // Parse the URL to get the host
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (!$host) {
+            return 'Example'; // Return null if the URL is invalid
+        }
+
+        // Remove 'www.' or other common subdomains
+        $host = preg_replace('/^www\./', '', $host);
+
+        // Split the host into parts
+        $parts = explode('.', $host);
+
+        // Handle domains with multi-segment TLDs (e.g., '.com.tr', '.co.uk')
+        if (count($parts) > 2) {
+            $companyName = $parts[count($parts) - 3]; // Get the second-to-last segment
+        } else {
+            $companyName = $parts[0]; // Get the first part of the domain
+        }
+
+        return $companyName;
+    }
+
+    public function checkDomain(String $domain)
+    {
+        $pattern = '/^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/';
+
+        if (!preg_match($pattern, $domain)) {
+            return 'wrong domain input';
+        }
+
+        $businesses = Business::where('role', 'owner')
+            ->where('website', 'like', '%' . $domain)
+            ->get();
+
+        if(count($businesses))
+        {
+            return 'already exist domain';
+        }
+
+        try {
+            $response = Http::timeout(10)->get('http://' . $domain);
+
+            if($response->successful()){
+                $company_name = $this->extractCompanyName('http://' . $domain);
+
+                $businesss = Business::create([
+                    'website' => $domain,
+                    'company_name' => ucfirst($company_name),
+                ]);
+
+                return 'success';
+            }else{
+                return "can't reach to this site";
+            }
+        } catch (\Exception $e) {
+            return "can't reach to this site";
+        }
+
+    }
+
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'companies' => 'required',
+        ]);
 
+        $companiesArray = explode("\n", $validated['companies']);
+        $companiesArray = array_map('trim', $companiesArray);
+        $companiesArray = array_filter($companiesArray);
+
+        $results = array_map(function($domain) {
+            return [
+                'domain' => $domain,
+                'status' => $this->checkDomain($domain)
+            ];
+        }, $companiesArray);
+
+        return Inertia::render('Admin/Business/Create', [
+            'results' => $results
+        ]);
     }
 
 
@@ -166,7 +246,23 @@ class BusinessController extends Controller
         $business = Business::findOrFail($business);
         $business->markEmailAsVerified();
 
-        return redirect()->route('admin.businesses.show', $business);
+        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+        if ($emailDomain == $companyDomain) {
+            $business->is_approved = 1;
+            $business->save();
+        }
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function approve(Request $request, string $business)
+    {
+        $business = Business::findOrFail($business);
+        $business->is_approved = 1;
+        $business->save();
+
+        return redirect()->route('admin.businesses.show', $business->website);
     }
 
     public function change(Request $request, string $business)
@@ -195,6 +291,7 @@ class BusinessController extends Controller
 
             if ($business->isDirty('company_email')) {
                 $business->email_verified_at = null;
+                $business->is_approved = 0;
             }
 
             $business->save();
@@ -207,11 +304,15 @@ class BusinessController extends Controller
 
         $email = $request->input('email');
         $phone = $request->input('phone');
+        $country = $request->input('country');
+        $city = $request->input('city');
         $location = $request->input('location');
 
         if (
             $businessProfile->email !== $email ||
             $businessProfile->phone !== $phone ||
+            $businessProfile->country !== $country ||
+            $businessProfile->city !== $city ||
             $businessProfile->location !== $location
         ) {
             $existingBusinessProfile = BusinessProfile::where('business_id', $business->id)->first();
@@ -219,6 +320,8 @@ class BusinessController extends Controller
             if ($existingBusinessProfile) {
                 $existingBusinessProfile->email = $email;
                 $existingBusinessProfile->phone = $phone;
+                $existingBusinessProfile->country = $country;
+                $existingBusinessProfile->city = $city;
                 $existingBusinessProfile->location = $location;
 
                 if ($request->hasFile('image')) {
@@ -232,6 +335,8 @@ class BusinessController extends Controller
             } else {
                 $businessProfile->email = $email;
                 $businessProfile->phone = $phone;
+                $businessProfile->country = $country;
+                $businessProfile->city = $city;
                 $businessProfile->location = $location;
 
                 if ($request->hasFile('image')) {
@@ -243,10 +348,10 @@ class BusinessController extends Controller
 
                 $businessProfile->save();
             }
-            return redirect()->route('admin.businesses.show', $business)->with('status', 'Profile information updated successfully');
+            return redirect()->route('admin.businesses.show', $business->website)->with('status', 'Profile information updated successfully');
         }
 
-        return redirect()->route('admin.businesses.show', $business);
+        return redirect()->route('admin.businesses.show', $business->website);
 
     }
 

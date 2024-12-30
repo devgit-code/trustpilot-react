@@ -34,13 +34,13 @@ export default function ProductHeader({company, product}) {
                         company.primary_business_category && (
                             <div>
                                 <div className='inline-flex items-center'>
-                                    <Link href={route('categories.show', company.primary_business_category.sub_category.category.name)}
+                                    <Link href={route('categories.show', company.primary_business_category.sub_category.category.slug)}
                                         className='text-gray-800 text-sm capitalize no-underline hover:underline mr-3'>
                                         {company.primary_business_category.sub_category.category.name}
                                     </Link>
                                     &gt;
                                 </div>
-                                <Link href={route('categories.detail', {name:company.primary_business_category.sub_category.name, id:company.primary_business_category.sub_category.id})}
+                                <Link href={route('categories.detail', {category:company.primary_business_category.sub_category.category.slug, sub_category:company.primary_business_category.sub_category.slug})}
                                     className='inline text-gray-700 text-sm capitalize no-underline hover:underline mx-2'>
                                     {company.primary_business_category.sub_category.name}
                                 </Link>
@@ -64,7 +64,7 @@ export default function ProductHeader({company, product}) {
                                     style={{ maxWidth: '142px', maxHeight: '142px' }} />
                             </div>
                             <div className="mt-2 flex-1">
-                                <p className='text-3xl text-gray-800 font-black mb-0'>{company.company_name}</p>
+                                <p className='text-xl text-gray-800 font-bold mb-0'>{company.company_name}</p>
                                 <div className='flex items-center mt-2'>
                                     <p className='text-gray-600 mb-0'>Reviews
                                         <span className='mx-3 text-gray-700'>{company.rating_statistic.total}</span>
@@ -132,7 +132,8 @@ export default function ProductHeader({company, product}) {
                                     style={{ maxWidth: '140px', maxHeight: '140px' }} />
                             </div>
                             <div className="mt-2 flex-1">
-                                <p className='text-3xl text-gray-800 font-black mb-0 capitalize'>{product.name}</p>
+                                <h3 className='text-2xl font-black'>Product</h3>
+                                <p className='text-xl text-gray-800 font-black mb-0 capitalize'>{product.name}</p>
                                 <div className='flex flex-col sm:flex-row mt-4'>
                                     <Rating rating={Number(product.rating_statistic.avg)} width='w-8' height='w-8'/>
                                     <span className='ml-4 text-gray-500'>{product.rating_statistic.avg} / {product.rating_statistic.total} reviews</span>

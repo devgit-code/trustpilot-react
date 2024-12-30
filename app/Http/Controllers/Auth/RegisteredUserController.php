@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Role;
@@ -44,6 +45,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'slug' => Str::slug($request->name)
         ]);
 
         event(new Registered($user));
@@ -121,6 +123,13 @@ class RegisteredUserController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
 
+                $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+                $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+                if ($emailDomain == $companyDomain) {
+                    $business->is_approved = 1;
+                    $business->save();
+                }
+
                 Auth::guard('web')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
@@ -132,7 +141,7 @@ class RegisteredUserController extends Controller
                 $business->sendEmailVerificationNotification();
 
                 // return redirect(RouteServiceProvider::HOME);
-                return redirect()->route('admin.verification.notice');
+                return redirect()->route('yonetici.verification.notice');
             }else{
                 return redirect()->back()->withErrors(['website'=>"Can't reach the website."])->withInput();
             }
@@ -143,7 +152,10 @@ class RegisteredUserController extends Controller
 
     public function admin_claim(Request $request, String $website = null): Response
     {
-        $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
+        if($website){
+            $businesses = Business::where('website', $request->website)->get();
+        }else
+            $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
 
         $selected_business = null;
         if($website){
@@ -157,7 +169,7 @@ class RegisteredUserController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required',
-            'company_name' => 'required|string|max:255',
+            // 'company_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
@@ -170,15 +182,25 @@ class RegisteredUserController extends Controller
         // $business->name = $request->input('name');
         $business->save();
 
+        // approve
+        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+        if ($emailDomain == $companyDomain) {
+            $business->is_approved = 1;
+            $business->markEmailAsVerified();
+            $business->save();
+        }
+
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         Auth::guard('business')->login($business);
-        $business->sendEmailVerificationNotification();
+        if(!$business->email_verified_at)
+            $business->sendEmailVerificationNotification();
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('admin.verification.notice');
+        return redirect()->route('yonetici.verification.notice');
 
     }
 }

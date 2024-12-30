@@ -29,7 +29,7 @@ export default function Claim({ businesses}) {
     const { data, setData, post, processing, errors, reset } = useForm({
         id: '',
         website: '',
-        company_name: '',
+        // company_name: '',
         first_name: '',
         last_name: '',
         job_title: '',
@@ -62,7 +62,7 @@ export default function Claim({ businesses}) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.claim'));
+        post(route('yonetici.claim'));
     };
 
     return (
@@ -73,14 +73,14 @@ export default function Claim({ businesses}) {
 
                     <div className="flex items-center justify-between mt-4">
                         <Link
-                            href={route('admin.login')}
+                            href={route('yonetici.login')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Go to Login
                         </Link>
 
                         <Link
-                            href={route('admin.register')}
+                            href={route('yonetici.register')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Business not exist?
@@ -99,12 +99,13 @@ export default function Claim({ businesses}) {
                                 onChange={handleSelectChange}
                                 placeholder="Select unclaimed Business..."
                                 isClearable
+                                disabled
                                 className="w-64 inline"
                             />
                             <InputError message={errors.id} className="mt-2" />
                         </div>
 
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <TextInput
                                 id="company_name"
                                 type="text"
@@ -118,7 +119,7 @@ export default function Claim({ businesses}) {
                             />
 
                             <InputError message={errors.company_name} className="mt-2" />
-                        </div>
+                        </div> */}
 
                         <div className='grid grid-cols-2 gap-3'>
                             <div className="">

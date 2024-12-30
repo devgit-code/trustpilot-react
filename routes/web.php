@@ -9,7 +9,6 @@ use App\Http\Controllers\WebReviewController;
 use App\Http\Controllers\BlogController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +22,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/test', function (Request $request) {
-    return Inertia::render('Auth/Test');
+    return 'ok';
 })->name('test');
+
 
 Route::get('/clear-cache', function () {
 	Artisan::call('cache:clear');
@@ -35,6 +35,9 @@ Route::get('/clear-cache', function () {
 	return "Cache is cleared";
 });
 
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+
 Route::group([
     'middleware' => ['business.guest'],
 ], function(){
@@ -42,17 +45,17 @@ Route::group([
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
 
-    Route::get('/search', [HomeController::class, 'search'])
-        ->name('search');
+    // Route::get('/search', [HomeController::class, 'search'])
+    //     ->name('search');
 
     // category
-    Route::get('/kategory', [CategoryController::class, 'index'])
+    Route::get('/kategori', [CategoryController::class, 'index'])
         ->name('categories.index');
 
-    Route::get('/kategory/{category}', [CategoryController::class, 'show'])
+    Route::get('/kategori/{category}', [CategoryController::class, 'show'])
         ->name('categories.show');
 
-    Route::get('/kategory/{name}/{id}/detail', [CategoryController::class, 'detail'])
+    Route::get('/kategori/{category}/{sub_category}', [CategoryController::class, 'detail'])
         ->name('categories.detail');
 
     // blogs
@@ -60,23 +63,23 @@ Route::group([
     Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
     // reviews
-    Route::get('/writeareview', [WebReviewController::class, 'write'])
+    Route::get('/firma/yorumyaz', [WebReviewController::class, 'write'])
         ->name('reviews.write');
 
-    Route::middleware('auth')->get('/evaluate/{website}', [WebReviewController::class, 'evaluate'])
+    Route::middleware('auth')->get('/firma/yorumyaz/{website}', [WebReviewController::class, 'evaluate'])
         ->name('reviews.evaluate');
 
     Route::get('/{website}', [WebReviewController::class, 'company'])
         ->name('reviews.company');
 
-    Route::get('/reviews/user/{id}', [WebReviewController::class, 'user'])
-        ->name('reviews.user');
-
-    Route::get('/yorum/{website}/{id}', [WebReviewController::class, 'detail'])
-        ->name('reviews.detail');
-
     Route::get('/{website}/{name}', [WebReviewController::class, 'product'])
         ->name('reviews.product');
+
+    Route::get('/yorum/uye/{name}', [WebReviewController::class, 'user'])
+        ->name('reviews.user');
+
+    Route::get('/{website}/yorum/{title}', [WebReviewController::class, 'detail'])
+        ->name('reviews.detail');
 
     Route::middleware('auth')->get('/evaluate/{website}/{name}/', [WebReviewController::class, 'evaluateProduct'])
         ->name('reviews.evaluate.product');
@@ -90,5 +93,5 @@ Route::group([
     Route::post('/reviews', [WebReviewController::class, 'store'])
         ->name('reviews.store');
 });
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
+
+

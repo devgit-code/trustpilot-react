@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('website');
             $table->string('company_name');
+            $table->boolean('is_approved')->default(false);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('job_title')->nullable();

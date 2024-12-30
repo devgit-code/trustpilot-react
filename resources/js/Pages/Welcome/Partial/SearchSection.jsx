@@ -89,6 +89,7 @@ function SearchSection() {
             const queryString = new URLSearchParams(filters).toString();
             const response = await fetch(`/api/home?${queryString}`);
             const data = await response.json();
+
             setResults(data.companies);
             setResults2(data.categories);
         } catch (error) {
@@ -151,7 +152,7 @@ function SearchSection() {
                                         className="p-2"
                                     >
                                         <div className='flex items-center gap-4'>
-                                            <p className="text-lg w-full text-gray-800 font-bold mb-1 text-center">No match results</p>
+                                            <p className="text-lg w-full text-gray-800 font-bold mb-1 text-center">Press Search Icon to add domain</p>
 
                                             {/* <div className="flex-1 ml-4 text-left">
                                                 <p className="text-lg text-gray-800 font-bold mb-1">Can't find a company?</p>
@@ -224,7 +225,7 @@ function SearchSection() {
                                                             // onClick={() => handleResultClick(category.name)}
                                                             className="p-2 cursor-pointer hover:bg-blue-100"
                                                         >
-                                                            <Link href={category.is_category ? route('categories.show', category.name) : route('categories.detail', {name:category.name, id:category.id})} className='ml-2 text-gray-900 no-underline flex items-center justify-beetween'>
+                                                            <Link href={category.is_category ? route('categories.show', category.slug) : route('categories.detail', {category:category.parent_category.slug, sub_category:category.slug})} className='ml-2 text-gray-900 no-underline flex items-center justify-beetween'>
                                                                 <div className='flex items-center'>
                                                                     <div className="relative inline-flex items-center w-10 h-10 rounded">
                                                                         <img src={`/storage/${category.image}`}
@@ -252,12 +253,12 @@ function SearchSection() {
                                             )
                                         }
                                     </ul>
-                                    <div className='px-4'>
+                                    {/* <div className='px-4'>
                                     <button onClick={handleClickSearch}
                                         className='w-full p-2 text-lg no-underline rounded-full group bg-blue-500 text-gray-50 hover:bg-blue-200 hover:text-gray-700'>
                                     Show all results<span className='ml-2 text-gray-50 group-hover:text-gray-700'><BsArrowRight className='inline'/></span>
                                     </button>
-                                    </div>
+                                    </div> */}
                                 </div>
                             )
                         )}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Business;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
@@ -38,6 +39,7 @@ class ProductController extends Controller
 
         $business = auth('business')->user();
         $validated['business_id'] = $business->id;
+        $validated['slug'] = Str::slug($validated['name']);
 
         // Handle the avatar upload if it exists
         if ($request->hasFile('image')) {
@@ -49,7 +51,7 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
 
-        return redirect()->route('business.products.index');
+        return redirect()->route('yonetici.products.index');
     }
 
 
@@ -77,6 +79,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->name = $request->input('name');
+        $product->slug = Str::slug($request->input('name'));
 
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
@@ -87,7 +90,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('business.products.index');
+        return redirect()->route('yonetici.products.index');
     }
 
     public function destroy(Product $product)
@@ -96,6 +99,6 @@ class ProductController extends Controller
         Review::where('is_product', $product->id)->delete();
 
         $product->delete();
-        return redirect()->route('business.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('yonetici.products.index')->with('success', 'Product deleted successfully.');
     }
 }

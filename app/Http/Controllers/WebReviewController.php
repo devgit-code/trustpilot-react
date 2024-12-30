@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Review;
 use App\Models\ReviewThumb;
 use App\Models\Business;
@@ -75,6 +76,7 @@ class WebReviewController extends Controller
 
         $creationData = [
             "title" => $request->input('title'),
+            "slug" => Str::slug($request->input('title')),
             "description" => $request->input('description'),
             "business_id" => $request->input('business_id'),
             "user_id" => auth()->user()->id,
@@ -94,6 +96,9 @@ class WebReviewController extends Controller
     {
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->where('website', $website)->first();
 
+        $page = $request->input('page', 1); // Default to page 1
+
+        //for statistic
         $reviews = Review::where('business_id', $business->id);
         $totalCount = $reviews->count();
         $averageRating = $reviews->average('rating');
@@ -110,20 +115,24 @@ class WebReviewController extends Controller
             $stars[$rating - 1]['count'] = $count;
         }
 
-        $reviews = Review::where('business_id', $business->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+        $reviews = Review::query()
+            ->where('business_id', $business->id)
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
-            ->get();
+            ->paginate(10, ['*'], 'page', $page);
 
-        $reviews = $reviews->map(function ($review, $index) {
+        $maps = collect($reviews->items())->map(function ($review, $index) {
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
             ];
+            if($review->is_product !== 0){
+                $review['product'] = Product::findOrFail($review->is_product);
+            }
             return $review;
         });
 
@@ -156,19 +165,34 @@ class WebReviewController extends Controller
 
         return Inertia::render('Review/Company', [
             'data' =>[
-                'reviews' => $reviews,
+                'reviews' => $maps,
                 'company' => $business,
                 'related_companies' => $recent_businesses,
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'links' => [
+                        'first' => $reviews->url(1),
+                        'last' => $reviews->url($reviews->lastPage()),
+                        'next' => $reviews->nextPageUrl(),
+                        'prev' => $reviews->previousPageUrl(),
+                    ],
+                ],
             ]
         ]);
     }
 
-    public function detail(Request $request, String $website, String $id)
+    public function detail(Request $request, String $website, String $title)
     {
-        $review = Review::with(['reply'])->findOrFail($id);
+        $business = Business::where('website', $website)->first();
+
+        $review = Review::with(['reply'])->where('business_id', $business->id)->where('slug', $title)->first();
         $review['userinfo'] = [
             'id' => $review->user->id,
             'name' => $review->user->name,
+            'slug' => $review->user->slug,
             'avatar' => $review->user->profile?->image,
         ];
         $review['business'] = $review->business;
@@ -178,37 +202,55 @@ class WebReviewController extends Controller
         ]);
     }
 
-    public function user(Request $request, String $id)
+    public function user(Request $request, String $name)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('slug', $name)->first();
 
-        $reviews = Review::where('user_id', $user->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+        $page = $request->input('page', 1); // Default to page 1
+
+        $reviews = Review::query()
+            ->where('user_id', $user->id)
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
-            ->get();
+            ->paginate(10, ['*'], 'page', $page);
 
-        $reviews = $reviews->map(function ($review, $index) {
+        $maps = collect($reviews->items())->map(function ($review, $index) {
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
             ];
             $review['business_name'] = $review->business->company_name;
             $review['website'] = $review->business->website;
+            if($review->is_product !== 0){
+                $review['product'] = Product::findOrFail($review->is_product);
+            }
             return $review;
         });
 
         return Inertia::render('Review/User', [
             'data'=>[
-                'reviews'=>$reviews,
+                'reviews'=>$maps,
                 'user'=>$user,
                 'userinfo'=>[
                     'avatar'=>$user->profile?->img,
                     'location'=>$user->profile?->address,
-                ]
+                ],
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'links' => [
+                        'first' => $reviews->url(1),
+                        'last' => $reviews->url($reviews->lastPage()),
+                        'next' => $reviews->nextPageUrl(),
+                        'prev' => $reviews->previousPageUrl(),
+                    ],
+                ],
             ]
         ]);
     }
@@ -306,7 +348,9 @@ class WebReviewController extends Controller
     public function product(Request $request, String $website, String $name)
     {
         $business = Business::with(['profile', 'primaryBusinessCategory', 'primaryBusinessCategory.subCategory.category', 'products'])->where('website', $website)->first();
-        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
+        $product = Product::where('business_id', $business->id)->where('slug', $name)->first();
+
+        $page = $request->input('page', 1); // Default to page 1
 
         //product statistic
         $product_reviews = Review::where('is_product', $product->id);
@@ -368,20 +412,24 @@ class WebReviewController extends Controller
         ];
 
         //reviews
-        $reviews = Review::where('is_product', $product->id)
-            ->whereNotNull('user_id') // Optional: To ensure there is a linked user
+        $reviews = Review::query()
+            ->where('is_product', $product->id)
             ->orderBy('date_experience', 'desc')
             ->with(['reply', 'business'])
-            ->get();
+            ->paginate(10, ['*'], 'page', $page);
 
-        $reviews = $reviews->map(function ($review, $index) {
+        $maps = collect($reviews->items())->map(function ($review, $index) {
             $review['userinfo'] = [
                 'id'=>$review->user->id,
                 'name'=>$review->user->name,
+                'slug'=>$review->user->slug,
                 'avatar'=>$review->user->profile?->image,
                 'count_reviews'=>count($review->user->reviews),
                 'location'=>$review->user->profile?->address,
             ];
+            if($review->is_product !== 0){
+                $review['product'] = Product::findOrFail($review->is_product);
+            }
             return $review;
         });
 
@@ -389,15 +437,28 @@ class WebReviewController extends Controller
         $recent_products = $recent_products->map(function ($product, $index) {
             $product['trustscore'] = number_format(Review::where('is_product', $product->id)->get()->avg('rating'), 1);
             $product['count_reviews'] = count(Review::where('is_product', $product->id)->get());
+            $product['company'] = Business::findOrFail($product->business_id);
             return $product;
         });
 
         return Inertia::render('Review/Product', [
             'data' =>[
                 'product' => $product,
-                'reviews' => $reviews,
+                'reviews' => $maps,
                 'company' => $business,
                 'recent_products' => $recent_products,
+                'pagination' => [
+                    'current_page' => $reviews->currentPage(),
+                    'last_page' => $reviews->lastPage(),
+                    'per_page' => $reviews->perPage(),
+                    'total' => $reviews->total(),
+                    'links' => [
+                        'first' => $reviews->url(1),
+                        'last' => $reviews->url($reviews->lastPage()),
+                        'next' => $reviews->nextPageUrl(),
+                        'prev' => $reviews->previousPageUrl(),
+                    ],
+                ],
             ]
         ]);
     }
@@ -405,7 +466,7 @@ class WebReviewController extends Controller
     public function evaluateProduct(Request $request, String $website, String $name)
     {
         $business = Business::with('profile')->where('website', $website)->first();
-        $product = Product::where('business_id', $business->id)->where('name', $name)->first();
+        $product = Product::where('business_id', $business->id)->where('slug', $name)->first();
 
         return Inertia::render('Review/Evaluate', [
             'product' => $product,

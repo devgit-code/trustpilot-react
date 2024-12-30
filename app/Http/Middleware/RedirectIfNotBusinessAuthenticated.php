@@ -18,7 +18,7 @@ class RedirectIfNotBusinessAuthenticated
     {
         if(!Auth::guard('business')->check())
         {
-            return redirect()->route('admin.login'); // Redirect admins to the admin dashboard
+            return redirect()->route('yonetici.login'); // Redirect admins to the admin dashboard
         }
 
         return $next($request);

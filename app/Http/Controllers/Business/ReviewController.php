@@ -94,7 +94,7 @@ class ReviewController extends Controller
 
         Review::create($creationData);
 
-        return redirect()->route('business.reviews.index');
+        return redirect()->route('yonetici.reviews.index');
     }
 
 
@@ -142,12 +142,12 @@ class ReviewController extends Controller
         $reply['comment'] = $request->input('reply');
         $reply->save();
 
-        return redirect()->route('business.reviews.edit', $id)->with('status', 'Update reply successfully');
+        return redirect()->route('yonetici.reviews.edit', $id)->with('status', 'Update reply successfully');
     }
 
     public function destroy(Review $review)
     {
         $review->delete();
-        return redirect()->route('business.reviews.index')->with('success', 'Review deleted successfully.');
+        return redirect()->route('yonetici.reviews.index')->with('success', 'Review deleted successfully.');
     }
 }

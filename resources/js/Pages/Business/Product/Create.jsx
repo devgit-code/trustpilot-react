@@ -36,7 +36,7 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        post(route('business.products.store'), {
+        post(route('yonetici.products.store'), {
             onSuccess: () => {
             },
         });
@@ -110,7 +110,7 @@ const Create = () => {
                                     <button type="submit" className="btn btn-primary m-2" disabled={processing}>
                                         Add
                                     </button>
-                                    <Link href={route('business.products.index')} className="btn btn-danger" type="button">
+                                    <Link href={route('yonetici.products.index')} className="btn btn-danger" type="button">
                                         Back
                                     </Link>
                                 </div>

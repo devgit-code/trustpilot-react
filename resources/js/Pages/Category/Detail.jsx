@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Head, Link } from '@inertiajs/react';
+import React, { useState, useEffect, useRef  } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 import FrontendLayout from '@/Layouts/FrontendLayoout/Index';
 import Header from './Partial/Header.jsx'
@@ -8,9 +8,51 @@ import Status from './Partial/CompanyStatus.jsx'
 import RelatedCategory from './Partial/RelatedCategory.jsx'
 import RecentlyReviewedCompany from './Partial/RecentCompanyReviews.jsx'
 import PaginationList from './Partial/PaginationList.jsx'
+import Pagination from './Partial/Pagination.jsx';
 
-export default function Detail({data, current_page=1}) {
-    const [sortBy, setSortBy] = useState("relevant");
+export default function Detail({ data }) {
+    const { get } = useForm();
+
+    const basePath = data.sub_category ?
+        route('categories.detail', {category:data.sub_category.category.slug, sub_category:data.sub_category.slug})
+        :
+        route('categories.show', data.category.slug) ;
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const pageValue = queryParams.get("page") || '1';
+    const sortValue = queryParams.get("sort") || 'trustscore';
+    const scoreValue = queryParams.get("score") || 'any';
+    const verifiedValue = queryParams.get("verified");
+    const claimedValue = queryParams.get("claimed");
+
+    const [page, setPage] = useState(pageValue);
+    const [sort, setSort] = useState(sortValue);
+    const [score, setScore] = useState(scoreValue);
+    const [verified, setVerified] = useState(verifiedValue, false);
+    const [claimed, setClaimed] = useState(claimedValue, false);
+
+    const isFirstRender = useRef(true);
+
+    // Update the full URL whenever role or primary changes
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false; // Set to false after the first render
+            return;
+        }
+
+        const queryParams = new URLSearchParams();
+        if (sort) queryParams.append("sort", sort);
+        if (score) queryParams.append("score", score);
+        if (verified) queryParams.append("verified", verified);
+        if (claimed) queryParams.append("claimed", claimed);
+        if (page) queryParams.append("page", page);
+
+        get(`${basePath}?${queryParams.toString()}`, {
+            onSuccess: () => {
+                // onClose();
+            },
+        });
+    }, [sort, score, verified, claimed, page]);
 
     return (
         <>
@@ -23,11 +65,9 @@ export default function Detail({data, current_page=1}) {
                     <div className='container-lg mx-auto row'>
                         <div className="col-lg-4 px-3 mb-5">
                             <div className='bg-white border rounded mb-4 p-4'>
-                                <Rating />
+                                <Rating score={score} onChange={setScore}/>
 
-                                <Status />
-
-                                {/* subcategories */}
+                                <Status verified={verified} onVerifyChange={setVerified} claimed={claimed} onClaimChange={setClaimed}/>
                             </div>
                             <div className='bg-white border rounded p-4 mb-4'>
                                 <RelatedCategory category={data.sub_category ? data.sub_category : data.category} categories={data.related_categoreies}/>
@@ -38,23 +78,31 @@ export default function Detail({data, current_page=1}) {
 
                                 <div className='mb-4 ml-2 flex flex-col sm:flex-row items-center justify-between'>
                                     <div className='flex items-center'>
-                                        <p className='text-black text-sm'>{((current_page-1)*20+1)} - {current_page*20} of {2} results</p>
+                                        <p className='text-black text-sm'>Total {data.pagination.total} results</p>
                                     </div>
                                     <div className='flex items-center p-2'>
-                                        <label className=''>Sort</label>
+                                        <label className='mr-2' htmlFor="sort">Sort</label>
                                         <select
-                                            // value={sortBy}
-                                            // onChange={(e) => setData('category_id', e.target.value)}
-                                            className="form-control ml-2"
+                                            id="sort"
+                                            value={sort}
+                                            onChange={(e) => setSort(e.target.value)}
+                                            className="form-control px-5 ps-2"
                                             style={{display:'inline-block'}}
                                         >
-                                            <option value="relevant">Most relevant</option>
+                                            <option value="trustscore">Most relevant</option>
                                             <option value="highest">Highest number of reviews</option>
-                                            <option value="recent">Most recent reviews</option>
+                                            <option value="latest">Most recent reviews</option>
                                         </select>
                                     </div>
                                 </div>
-                                <PaginationList pagination={data.pagination} companies={data.companies}/>
+
+                                <PaginationList companies={data.companies}/>
+
+                                <Pagination
+                                    pagination={data.pagination}
+                                    onPageChange={setPage}
+                                    className='mb-2 flex justify-center itmes-center'
+                                    />
                             </div>
                             <div className='mb-4'>
                                 {/* Popular searches */}

@@ -15,6 +15,7 @@ function CategoryList({categories}) {
             id={category.id}
             title={category.name}
             icon={category.image}
+            slug={category.slug}
             color={colors[Math.floor(Math.random()*4)]}
             items={category.subcategories}
         />

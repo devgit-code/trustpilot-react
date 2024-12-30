@@ -119,7 +119,12 @@ const Index = () => {
                             <div className="">
                                 <h3 className="m-0 text-center text-lg-start">Businesses</h3>
                             </div>
-                            <div className="">
+                            <div className="flex items-center">
+                                <Link href={route('admin.businesses.create')}
+                                    className="btn btn-success d-flex align-items-center border-0 mr-3"
+                                >
+                                    <span className="ms-2 text-white">Add Business</span>
+                                </Link>
                                 <input
                                     className="search border rounded"
                                     id="myInput"
@@ -155,13 +160,13 @@ const Index = () => {
                                         <tr className="border-bottom-secondary align-middle" key={item.id}>
                                             <td>
                                                 <div className="relative inline-flex">
-                                                    <p className={`mb-0 text-gray-700 px-3 aspect-[1/1] ${!item.email_verified_at && 'bg-red-100 flex items-center rounded text-gray-100'}`}>{index+1}</p>
+                                                    <p className={`mb-0 text-gray-700 px-3 aspect-[1/1] ${(!item.email_verified_at || item.is_approved === 0) && 'bg-red-100 flex items-center rounded text-gray-100'}`}>{index+1}</p>
                                                     {/* <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                                         className="absolute -top-2 -right-2">
                                                         <path fill={`${item.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
                                                         <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
                                                     </svg> */}
-                                                    {!item.email_verified_at && (
+                                                    {(!item.email_verified_at || item.is_approved === 0) && (
                                                         <MdOutlineUnpublished className='text-lg text-danger absolute -top-1 -right-1' />
                                                     )}
                                                 </div>

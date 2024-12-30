@@ -24,7 +24,7 @@ export default function Login({ status, canResetPassword  }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('admin.login'));
+        post(route('yonetici.login'));
     };
 
     return (
@@ -85,7 +85,7 @@ export default function Login({ status, canResetPassword  }) {
                     <div className="flex items-center justify-between mt-4">
                         {canResetPassword && (
                             <Link
-                                href={route('admin.register')}
+                                href={route('yonetici.register')}
                                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Not Register yet?

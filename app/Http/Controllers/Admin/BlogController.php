@@ -32,12 +32,13 @@ class BlogController extends Controller
             'content' => 'required|string',
         ]);
 
+        $validated['slug'] = Str::slug($validated['title']);
+
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
             $imageName = "blog-" . now()->timestamp . "." . $extension;
             $path = $request->file('image')->storeAs('images/blog', $imageName, 'public');
             $validated['image'] = $path; // Add the avatar path to the validated data
-            // $validated['slug'] = Str::slug($validated['title']);
         }
 
         $category = Blog::create($validated);
@@ -67,6 +68,7 @@ class BlogController extends Controller
         ]);
 
         $blog->title = $request->input('title');
+        $blog->slug = Str::slug($request->input('title'));
         $blog->content = $request->input('content');
 
         if ($request->hasFile('image')) {

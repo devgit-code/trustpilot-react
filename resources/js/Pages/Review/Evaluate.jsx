@@ -109,7 +109,7 @@ export default function Evaluate({ company, product }) {
                                     {company.company_name}
                                 </Link>
                                 {product?(
-                                    <Link href={route('reviews.product', {website:company.website, name:product.name})} className='block no-underline hover:underline mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</Link>
+                                    <Link href={route('reviews.product', {website:company.website, name:product.slug})} className='block no-underline hover:underline mt-2 mb-0 text-xl capitalize text-gray-700'>{product.name}</Link>
                                 ):(
                                     <p className='mt-2 mb-0 text-gray-700'>{company.website}</p>
                                 )}

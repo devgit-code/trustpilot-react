@@ -14,7 +14,7 @@ export default function Sidebar({auth}) {
             <div className="px-4" style={{ maxWidth: "100%" }}>
                 <div className="profile text-center mb-5 position-relative">
                     {(auth.user.role == 'owner' && !auth.userProfileImage) && (
-                        <Link href={route("business.profile.logo")} className="no-underline text-blue-300 hover:underline hover:text-blue-500">Set your profile logo</Link>
+                        <Link href={route("yonetici.profile.edit")} className="no-underline text-blue-300 hover:underline hover:text-blue-500">Set your profile logo</Link>
                     )}
                     <div className="mt-2 flex items-center mx-auto border border-gray-100 bg-white" style={{width:'102px', height:'102px'}}>
                     {
@@ -49,7 +49,7 @@ export default function Sidebar({auth}) {
                         <div className="ps-3">
                             <NavLink style={{ borderBottom: 'none', }}
                                 className="no-underline"
-                                href={route('business.dashboard')} active={route().current('business.dashboard')}
+                                href={route('yonetici.dashboard')} active={route().current('yonetici.dashboard')}
                             >
                                 <span className="text-info fs-4">
                                 BUSINESS</span>
@@ -123,7 +123,7 @@ export default function Sidebar({auth}) {
                             <>
                                 <li>
                                     <NavLink
-                                        href={route('business.reviews.index')} active={route().current('business.reviews.index')}
+                                        href={route('yonetici.reviews.index')} active={route().current('yonetici.reviews.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -132,7 +132,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('business.products.index')} active={route().current('business.products.index')}
+                                        href={route('yonetici.products.index')} active={route().current('yonetici.products.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -141,7 +141,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('business.categories.index')} active={route().current('business.categories.index')}
+                                        href={route('yonetici.categories.index')} active={route().current('yonetici.categories.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>
@@ -150,7 +150,7 @@ export default function Sidebar({auth}) {
                                 </li>
                                 <li>
                                     <NavLink
-                                        href={route('business.profile.index')} active={route().current('business.profile.index')}
+                                        href={route('yonetici.profile.index')} active={route().current('yonetici.profile.index')}
                                         className="rounded-3 py-2 px-3 mb-1 d-flex text-decoration-none text-white"
                                     >
                                         <i className="bi bi-kanban fs-5"></i>

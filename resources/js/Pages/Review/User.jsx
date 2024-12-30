@@ -47,9 +47,7 @@ export default function Detail({data}) {
 
                             <Pagination
                                 className='mb-2 flex justify-center itmes-center'
-                                totalPages={1}
-                                currentPage={1}
-                                onPageChange={(page) => setCurrentPage(page)}
+                                pagination={data.pagination}
                                 />
                         </div>
                     </div>

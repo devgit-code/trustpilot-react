@@ -16,6 +16,8 @@ class BusinessProfile extends Model
         'email',
         'phone',
         'location',
+        'country',
+        'city',
     ];
 
     public function business()

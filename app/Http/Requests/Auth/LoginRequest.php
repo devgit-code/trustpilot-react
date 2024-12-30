@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->is('admin/*')) { // If the request is for business-related routes
+        if (request()->is('yonetici/*')) { // If the request is for business-related routes
             return [
                 'company_email' => ['required', 'string', 'email'],
                 'password' => ['required', 'string'],
@@ -58,6 +58,15 @@ class LoginRequest extends FormRequest
                 throw ValidationException::withMessages([
                     'email' => trans('auth.failed'),
                 ]);
+            }else{//in success login after if not approved for gmail business user
+                if(Auth::guard('business')->user()->is_approved === 0){
+                    Auth::guard('business')->logout();
+
+                    throw ValidationException::withMessages([
+                        'email' => 'This Email is not approved for This Company.',
+                    ]);
+                }
+
             }
         }else {
             if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {

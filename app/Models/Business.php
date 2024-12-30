@@ -32,6 +32,7 @@ class Business extends Authenticatable implements MustVerifyEmail
         'job_title',
         'company_email',
         'password',
+        'is_approved',
     ];
 
     /**
@@ -62,10 +63,11 @@ class Business extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $verificationUrl = URL::temporarySignedRoute(
-            'admin.verification.verify',
+            'yonetici.verification.verify',
             now()->addMinutes(60),
             ['id' => $this->id, 'hash' => sha1($this->company_email)]
         );
+        // logger($verificationUrl);
 // Mail::raw('Test email', function ($message) {
 //     $message->to('admin@eniyi.co')
 //             ->subject('Test Email');

@@ -17,7 +17,7 @@ const Edit = ({ review, userTotalReviews, status, useful, flag }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        put(route('business.reviews.update', review.id), data);
+        put(route('yonetici.reviews.update', review.id), data);
     };
 
     return (
@@ -89,7 +89,7 @@ const Edit = ({ review, userTotalReviews, status, useful, flag }) => {
                                 <button type="submit" className="btn btn-primary">
                                     Write Reply
                                 </button>
-                                <Link href={route('business.reviews.index')} className="btn btn-danger" type="button">
+                                <Link href={route('yonetici.reviews.index')} className="btn btn-danger" type="button">
                                     Back
                                 </Link>
                             </div>
