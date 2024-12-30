@@ -152,7 +152,10 @@ class RegisteredUserController extends Controller
 
     public function admin_claim(Request $request, String $website = null): Response
     {
-        $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
+        if($website){
+            $businesses = Business::where('website', $request->website)->get();
+        }else
+            $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
 
         $selected_business = null;
         if($website){
@@ -166,7 +169,7 @@ class RegisteredUserController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required',
-            'company_name' => 'required|string|max:255',
+            // 'company_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
@@ -184,6 +187,7 @@ class RegisteredUserController extends Controller
         $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
         if ($emailDomain == $companyDomain) {
             $business->is_approved = 1;
+            $business->markEmailAsVerified();
             $business->save();
         }
 
@@ -192,7 +196,8 @@ class RegisteredUserController extends Controller
         $request->session()->regenerateToken();
 
         Auth::guard('business')->login($business);
-        $business->sendEmailVerificationNotification();
+        if(!$business->email_verified_at)
+            $business->sendEmailVerificationNotification();
 
         // return redirect(RouteServiceProvider::HOME);
         return redirect()->route('yonetici.verification.notice');

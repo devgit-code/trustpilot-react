@@ -5,7 +5,7 @@ import { CiAt } from "react-icons/ci";
 import { HiOutlinePhone } from "react-icons/hi2";
 import { CiLocationOn } from "react-icons/ci";
 
-export default function CompanyInfo({id, company_name, website, company_email, first_name, last_name, job_title, profile, primary_business_category}) {
+export default function CompanyInfo({id, company_name, website, company_email, email_verified_at, first_name, last_name, job_title, profile, primary_business_category}) {
 
     return (
         <div className="p-4 border rounded bg-white">
@@ -27,18 +27,21 @@ export default function CompanyInfo({id, company_name, website, company_email, f
             {/* Company Info */}
             <div className="mb-4 ">
                 <h3 className="text-lg font-semibold">Company</h3>
-                <p className='text-gray-800 text-sm font-medium mb-1'>
-                {company_email && `Mail: ${company_email}`}
-                </p>
-                <p className='text-gray-800 text-sm font-medium'>
-                {(first_name || last_name) && `${first_name} ${last_name}`}
-                {(job_title) && ` (${job_title})`}
-                </p>
 
-                {!company_email && (
+                {!email_verified_at ? (
                     <Link href={route('yonetici.claim', website)} className='no-underline bg-blue-100 py-2 px-4 border rounded border-blue-400 group hover:bg-green-600 hover:border-blue-500'>
                         <span className='text-sm font-bold text-gray-600 group-hover:text-gray-100'>Claim This Company</span>
                     </Link>
+                ):(
+                    <>
+                        <p className='text-gray-800 text-sm font-medium mb-1'>
+                        {company_email && `Mail: ${company_email}`}
+                        </p>
+                        <p className='text-gray-800 text-sm font-medium'>
+                        {(first_name || last_name) && `${first_name} ${last_name}`}
+                        {(job_title) && ` (${job_title})`}
+                        </p>
+                    </>
                 )}
             </div>
 
