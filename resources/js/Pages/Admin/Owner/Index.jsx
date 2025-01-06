@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, router, usePage } from '@inertiajs/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, router, usePage, useForm } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
 
@@ -7,10 +7,23 @@ import logo from "@/../images/company-logo.png"
 import Swal from 'sweetalert2';
 import { CgMenuBoxed } from "react-icons/cg";
 import { MdOutlineUnpublished } from "react-icons/md"
+import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
+import { SiVerizon } from "react-icons/si";
 
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import TextInput from '@/Components/TextInput';
 import Edit from './Partial/Edit'
 
 const Index = () => {
+    const { data, setData, patch, errors, clearErrors } = useForm({
+        company_email: '',
+        first_name: '',
+        last_name: '',
+        job_title: '',
+        verified: false,
+    })
+
     const [filters, setFilters] = useState({ search:"", page:1 });
     const [businesses, setBusinesses] = useState([]);
     const [pagination, setPagination] = useState({});
@@ -18,6 +31,7 @@ const Index = () => {
     const [gotoPage, setGotoPage] = useState(""); // Input for "Go to Page"
     const [editData, setEditData] = useState(null);
     const [dialogVisible, setDialogVisible] = useState(false);
+    const dialogRef = useRef(null);  // Reference for the dialog
 
     const fetchBusinesses = async () => {
         setLoading(true);
@@ -90,17 +104,17 @@ const Index = () => {
         }
     };
 
-    const handleDelete = (event, id) => {
+    const handleFormat = (event, id) => {
         event.preventDefault();
 
         Swal.fire({
-            title: 'Are you sure?',
+            title: 'Clear owner info?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, clear owner!',
+            confirmButtonText: 'Yes',
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const response = router.delete(route('admin.owners.destroy', id));
@@ -109,9 +123,69 @@ const Index = () => {
         });
     };
 
-    const handleOpenDialog = (item = null) => {
+    const handleApprove = (event, id) => {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Approve this owner?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = router.post(route('admin.owners.approve', id));
+                fetchBusinesses();
+            }
+        });
+    };
+
+    const handleOpenDialog = (e, item = null) => {
+        e.preventDefault();
+
+        setData({
+            company_email: item.company_email || '',
+            first_name: item.first_name || '',
+            last_name: item.last_name || '',
+            job_title: item.job_title || '',
+            verified: item.email_verified_at !== null,
+        });
         setEditData(item);
         setDialogVisible(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogVisible(false);
+        setEditData(null);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+                handleCloseDialog();
+            }
+        };
+
+        if (dialogVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dialogVisible]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        patch(route('admin.owners.update', editData.id), {
+            onSuccess: () => {
+                handleCloseDialog(); // Close dialog after successful submission
+                fetchBusinesses();
+            },
+        });
     };
 
     return (
@@ -225,17 +299,26 @@ const Index = () => {
                                             }
                                             </td>
                                             <td>
-                                                <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
+                                                <ul className="action d-flex align-items-center list-unstyled m-0 justify-end">
+                                                    {
+                                                        (item.email_verified_at && item.is_approved === 0) && (
+                                                            <li className="edit">
+                                                                <Link onClick={(e) => handleApprove(e, item.id )}>
+                                                                    <SiVerizon className='text-info fs-5 me-2' />
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                    }
                                                     <li className="edit">
-                                                        <button onClick={()=>handleOpenDialog(item)}>
-                                                            <CgMenuBoxed className='text-primary fs-4 me-2' />
-                                                        </button>
+                                                        <Link onClick={(e) => handleOpenDialog(e, item)}>
+                                                            <CgMenuBoxed className='fs-4 me-2' />
+                                                        </Link>
                                                     </li>
-                                                    {/* <li className="delete">
-                                                        <Link onClick={(e) => handleDelete(e, item.id)}>
+                                                    <li className="delete">
+                                                        <Link onClick={(e) => handleFormat(e, item.id)}>
                                                             <BsTrashFill className='text-danger fs-5 me-2' />
                                                         </Link>
-                                                    </li> */}
+                                                    </li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -280,52 +363,119 @@ const Index = () => {
                         </div>
                     </div>
 
-                </div>{/* Dialog for Add/Edit Product */}
+                </div>
+            </div>
+            {/* Dialog for Add/Edit Product */}
             {dialogVisible && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                        <h3 className="text-xl font-bold mb-4">Edit</h3>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Title</label>
-                            <input
-                                type="text"
-                                value={productData.title}
-                                onChange={(e) =>
-                                    setProductData({ ...productData, title: e.target.value })
-                                }
-                                className="w-full px-3 py-2 border rounded"
-                                placeholder="Enter product title"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) =>
-                                    setProductData({ ...productData, image: e.target.files[0] })
-                                }
-                                className="w-full px-3 py-2 border rounded"
-                            />
-                        </div>
-                        <div className="flex justify-end">
-                            <button
-                                onClick={handleCloseDialog}
-                                className="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleSaveProduct}
-                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                            >
-                                Save
-                            </button>
-                        </div>
+                    <div
+                        ref={dialogRef}
+                        className="bg-white p-6 rounded-lg shadow-lg w-1/2"
+                    >
+                        <h3 className="text-xl font-bold mb-4">Owner for <span className='underline italic text-gray-500'>{editData.website}</span></h3>
+                        <form onSubmit={handleSubmit} className='space-y-2'>
+                            <div>
+                                <InputLabel htmlFor="company_email" value="Company Email" />
+
+                                <TextInput
+                                    id="company_email"
+                                    name="company_email"
+                                    className="mt-1 block w-full"
+                                    value={data.company_email}
+                                    onChange={(e)=>setData('company_email', e.target.value)}
+                                    autoComplete="company email"
+                                />
+
+                                <InputError className="mt-2" message={errors.company_email} />
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="first_name" value="First Name" />
+
+                                <TextInput
+                                    id="first_name"
+                                    name="first_name"
+                                    className="mt-1 block w-full"
+                                    value={data.first_name}
+                                    onChange={(e)=>setData('first_name', e.target.value)}
+                                    autoComplete="first_name"
+                                />
+
+                                <InputError className="mt-2" message={errors.first_name} />
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="last_name" value="Last Name" />
+
+                                <TextInput
+                                    id="last_name"
+                                    name="last_name"
+                                    className="mt-1 block w-full"
+                                    value={data.last_name}
+                                    onChange={(e)=>setData('last_name', e.target.value)}
+                                    autoComplete="last name"
+                                />
+
+                                <InputError className="mt-2" message={errors.last_name} />
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="job_title" value="Job Title" />
+
+                                <TextInput
+                                    id="job_title"
+                                    name="job_title"
+                                    className="mt-1 block w-full"
+                                    value={data.job_title}
+                                    onChange={(e)=>setData('job_title', e.target.value)}
+                                    autoComplete="job_title"
+                                />
+
+                                <InputError className="mt-2" message={errors.job_title} />
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="verified" value="Email Verified" className='inline'/>
+
+                                <TextInput
+                                    id="verified"
+                                    type="checkbox"
+                                    className="mt-1 ml-2"
+                                    checked={data.verified}
+                                    onChange={()=>setData('verified', !data.verified)}
+                                />
+
+                                <InputError className="mt-2" message={errors.verified} />
+                            </div>
+
+                            <div className="flex justify-between mt-4">
+                                <div>
+                                    {/* {(editData.company_email && !editData.email_verified_at) && (
+                                        <Link href={route('admin.businesses.verify', editData.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
+                                    )}
+                                    {(editData.email_verified_at && editData.is_approved === 0) && (
+                                        <Link href={route('admin.businesses.approve', editData.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Approve This Email</Link>
+                                    )} */}
+                                </div>
+                                <div>
+                                    <button
+                                        onClick={handleCloseDialog}
+                                        className="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                                    >
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}
-            </div>
         </div>
     );
 };

@@ -186,7 +186,7 @@ class RegisteredUserController extends Controller
         $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
         $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
         if ($emailDomain == $companyDomain) {
-            $business->is_approved = 1;
+            // $business->is_approved = 1;
             $business->markEmailAsVerified();
             $business->save();
         }

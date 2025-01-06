@@ -73,4 +73,47 @@ class OwnerController extends Controller
         return redirect()->route('admin.owners.index')->with('success', 'Owner info cleared successfully.');
     }
 
+    public function approve(String $id)
+    {
+        $business = Business::findOrFail($id);
+
+        $business->is_approved=1;
+        $business->save();
+
+        return redirect()->route('admin.owners.index')->with('success', 'Owner info cleared successfully.');
+    }
+
+    public function update(Request $request, String $business)
+    {
+        $business = Business::findOrFail($business);
+
+        $company_email = $request->input('company_email');
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $job_title = $request->input('job_title');
+        $verified = $request->input('verified');
+
+        $business->company_email = $company_email;
+        $business->first_name = $first_name;
+        $business->last_name = $last_name;
+        $business->job_title = $job_title;
+
+        if ($business->isDirty('company_email')) {
+            $business->email_verified_at = null;
+            $business->is_approved = 0;
+
+            $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+            $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+            if ($emailDomain == $companyDomain) {
+                $business->markEmailAsVerified();
+            }
+        }
+
+        if($verified == 'true')
+            $business->markEmailAsVerified();
+        $business->save();
+
+        return redirect()->route('admin.owners.index');
+    }
+
 }
