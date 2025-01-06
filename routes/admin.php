@@ -18,6 +18,7 @@ use App\Http\Controllers\Business\CategoryController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\BusinessController;
+use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
@@ -107,6 +108,7 @@ Route::group([
         return redirect()->route('yonetici.login');
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('owners', OwnerController::class);
     Route::resource('businesses', BusinessController::class);
     Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
     Route::post('/businesses/create', [BusinessController::class, 'store'])->name('businesses.store');

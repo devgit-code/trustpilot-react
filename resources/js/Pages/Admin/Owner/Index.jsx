@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 
 import AdminLayout from '@/Layouts/adminLayout';
-import Rating from '@/Components/RatingAverage';
 
 import logo from "@/../images/company-logo.png"
 import Swal from 'sweetalert2';
-import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
-import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
 import { MdOutlineUnpublished } from "react-icons/md"
+
+import Edit from './Partial/Edit'
 
 const Index = () => {
     const [filters, setFilters] = useState({ search:"", page:1 });
@@ -17,12 +16,14 @@ const Index = () => {
     const [pagination, setPagination] = useState({});
     const [loading, setLoading] = useState(false);
     const [gotoPage, setGotoPage] = useState(""); // Input for "Go to Page"
+    const [editData, setEditData] = useState(null);
+    const [dialogVisible, setDialogVisible] = useState(false);
 
     const fetchBusinesses = async () => {
         setLoading(true);
         try {
             const queryString = new URLSearchParams(filters).toString();
-            const response = await fetch(`/api/admin/businesses?${queryString}`);
+            const response = await fetch(`/api/admin/owners?${queryString}`);
             const data = await response.json();
             setBusinesses(data.businesses);
             setPagination(data.pagination);
@@ -99,13 +100,18 @@ const Index = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Yes, clear owner!',
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = router.delete(route('admin.businesses.destroy', id));
+                const response = router.delete(route('admin.owners.destroy', id));
                 fetchBusinesses();
             }
         });
+    };
+
+    const handleOpenDialog = (item = null) => {
+        setEditData(item);
+        setDialogVisible(true);
     };
 
     return (
@@ -115,14 +121,14 @@ const Index = () => {
                     <div className="card">
                         <div className="m-3 flex items-center justify-between">
                             <div className="">
-                                <h3 className="m-0 text-center text-lg-start">Businesses</h3>
+                                <h3 className="m-0 text-center text-lg-start">Owners</h3>
                             </div>
                             <div className="flex items-center">
-                                <Link href={route('admin.businesses.create')}
+                                {/* <Link href={route('admin.businesses.create')}
                                     className="btn btn-success d-flex align-items-center border-0 mr-3"
                                 >
                                     <span className="ms-2 text-white">Add Business</span>
-                                </Link>
+                                </Link> */}
                                 <input
                                     className="search border rounded"
                                     id="myInput"
@@ -140,10 +146,10 @@ const Index = () => {
                                     <tr className="border-bottom-primary">
                                         <th>No</th>
                                         <th>Logo</th>
-                                        <th>Name</th>
+                                        <th>Company</th>
                                         {/* <th>Products</th> */}
-                                        <th>Categories</th>
-                                        <th>Score</th>
+                                        <th>Owner Info</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -189,57 +195,47 @@ const Index = () => {
                                                 )}
                                                 </div>
                                             </td>
-                                            <td>{
-                                                item.company_name //length > 20 ? `${item.company_name.slice(0, 20)}...` : item.company_name
-                                            }</td>
+                                            <td>
+                                                <div>
+                                                    <p className='mb-0 text-gray-700'>{item.company_name}</p>
+                                                    <p className='mb-0 text-gray-700'>{item.website}</p>
+                                                </div>
+                                            </td>
                                             {/* <td>{item.count_products}</td> */}
                                             <td>
                                                 <div>
-                                                    {
-                                                        item.categories.length === 0 ? (
-                                                            <span className='text-gray-700 text-sm'>No category</span>
-                                                        ):(
-                                                            <ul className='list-styled m-0 p-0' style={{listStyle:'disc'}}>
-                                                                {
-                                                                    item.categories.map((category, index) => (
-                                                                        <li key={index} className='text-left p-0'>
-                                                                            <span className={`text-xs capitalize ${category.is_primary === 1 ? 'bg-primary p-1 rounded text-gray-100':'text-gray-500'} `}>
-                                                                            {category.sub_category.name}
-                                                                            </span>
-                                                                        </li>
-                                                                    ))
-                                                                }
-                                                            </ul>
-                                                        )
-                                                    }
+                                                    <p className='mb-0 text-gray-700'>{item.company_email || ''}</p>
+                                                    <p className='mb-0 text-gray-700'>{(item.first_name || '') + ' ' + (item.last_name || '')}</p>
+                                                    <p className='mb-0 text-gray-700'>{item.job_title || ''}</p>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div>
-                                                    <div className='inline-flex items-center'>
-                                                        <Rating className="inline-flex px-2" width="w-6" height="w-6" rating={item.trustscore}/>
-                                                        <span className='ml-2 text-gray-800'>({item.reviews_count})</span>
-                                                    </div>
-                                                    {/* <p className='mb-0 mt-1 text-gray-700'>Products: {item.count_products}</p> */}
-                                                </div>
+                                            {
+                                                item.is_approved === 1 ?
+                                                <p className='mb-0 badge bg-green-500 py-1 rounded text-gray-100'>Complete</p>
+                                                :
+                                                item.email_verified_at ?
+                                                <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not approved</p>
+                                                :
+                                                item.company_email ?
+                                                <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not verified</p>
+                                                :
+                                                <p className='mb-0 badge bg-danger py-1 rounded text-gray-100'>Not claimed</p>
+
+                                            }
                                             </td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-content-center">
                                                     <li className="edit">
-                                                        <a href={item.website} target="_blank">
-                                                            <FaExternalLinkAlt className='text-success fs-6 me-2' />
-                                                        </a>
-                                                    </li>
-                                                    <li className="edit">
-                                                        <Link href={route('admin.businesses.show', item.website)}>
+                                                        <button onClick={()=>handleOpenDialog(item)}>
                                                             <CgMenuBoxed className='text-primary fs-4 me-2' />
-                                                        </Link>
+                                                        </button>
                                                     </li>
-                                                    <li className="delete">
+                                                    {/* <li className="delete">
                                                         <Link onClick={(e) => handleDelete(e, item.id)}>
                                                             <BsTrashFill className='text-danger fs-5 me-2' />
                                                         </Link>
-                                                    </li>
+                                                    </li> */}
                                                 </ul>
                                             </td>
                                         </tr>
@@ -283,7 +279,52 @@ const Index = () => {
                             </div>
                         </div>
                     </div>
+
+                </div>{/* Dialog for Add/Edit Product */}
+            {dialogVisible && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h3 className="text-xl font-bold mb-4">Edit</h3>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Title</label>
+                            <input
+                                type="text"
+                                value={productData.title}
+                                onChange={(e) =>
+                                    setProductData({ ...productData, title: e.target.value })
+                                }
+                                className="w-full px-3 py-2 border rounded"
+                                placeholder="Enter product title"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Image</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) =>
+                                    setProductData({ ...productData, image: e.target.files[0] })
+                                }
+                                className="w-full px-3 py-2 border rounded"
+                            />
+                        </div>
+                        <div className="flex justify-end">
+                            <button
+                                onClick={handleCloseDialog}
+                                className="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSaveProduct}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            )}
             </div>
         </div>
     );

@@ -119,7 +119,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     {
                         !isEdit && (
                             <button onClick={()=>setIsEdit(true)} className={`btn btn-success`} type="button">
-                                Edit Business
+                                Edit Profile
                             </button>
                         )
                     }
@@ -130,9 +130,9 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
             </div>
             <div className='flex items-center mt-3'>
                 <div className='flex space-x-3'>
-                    {(!isEdit && business.company_email && !business.email_verified_at) && (
+                    {/* {(!isEdit && business.company_email && !business.email_verified_at) && (
                         <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
-                    )}
+                    )} */}
                     {/* {(!isEdit && business.email_verified_at && business.is_approved === 0) && (
                         <Link href={route('admin.businesses.approve', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Approve This Email</Link>
                     )} */}
@@ -190,7 +190,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     onChange={(e)=>setData('company_name', e.target.value)}
                                     required
                                     isFocused
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="company name"
                                 />
 
@@ -207,7 +207,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.company_email : ''}
                                     onChange={(e)=>setData('company_email', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="company_email"
                                 />
                             </div>
@@ -221,7 +221,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.first_name : ''}
                                     onChange={(e)=>setData('first_name', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="first_name"
                                 />
 
@@ -237,7 +237,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.last_name : ''}
                                     onChange={(e)=>setData('last_name', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="last name"
                                 />
 
@@ -253,7 +253,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.job_title : ''}
                                     onChange={(e)=>setData('job_title', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="job_title"
                                 />
 
@@ -413,7 +413,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
 
                 {
                     isEdit && (
-                        <div className='mt-3'>
+                        <div className='mt-3 flex justify-end'>
                             <button type="submit" className="btn btn-danger">
                                 Save
                             </button>

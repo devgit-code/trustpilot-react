@@ -65,6 +65,7 @@ const ProductList = ({ products }) => {
                                     className='max-h-12 max-w-12 object-cover broder-1 rounded'
                                     style={{ maxWidth: '48px', maxHeight: '48px' }} />
                             </div>
+                            {/* <Link className='mt-2 text-xs no-underline p-1 border radius-lg' as='button' href={'admin.'}>Remove</Link> */}
                             {/* <p className='mt-2 mb-0 text-gray-700 text-sm'>{product.count_reviews} reviews</p> */}
                         </div>
                     ))}

@@ -34,6 +34,7 @@ class UserController extends Controller
             });
         }
 
+        $query->orderByDesc('updated_at');
         // Paginate the results
         $data = $query->paginate(10, ['*'], 'page', $page);
         $users = collect($data->items())->map(function ($user, $index) {
