@@ -159,6 +159,7 @@ const Index = () => {
     const handleCloseDialog = () => {
         setDialogVisible(false);
         setEditData(null);
+        clearErrors();
     };
 
     useEffect(() => {

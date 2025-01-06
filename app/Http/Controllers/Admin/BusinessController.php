@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Business;
 use App\Models\BusinessProfile;
 use App\Models\Review;
+use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -360,5 +362,60 @@ class BusinessController extends Controller
     {
         $business->delete();
         return redirect()->route('admin.businesses.index')->with('success', 'Business deleted successfully.');
+    }
+
+    public function productAdd(Request $request, String $business)
+    {
+        $validated = $request->validate([
+            "name" => "required|string|max:255",
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+        ]);
+
+        $business = Business::findOrFail($business);
+        $validated['business_id'] = $business->id;
+        $validated['slug'] = Str::slug($validated['name']);
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $validated['image'] = $path; // Add the avatar path to the validated data
+        }
+
+        $product = Product::create($validated);
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function productUpdate(Request $request, String $business, String $product)
+    {
+        $validated = $request->validate([
+            "name" => "required|string|max:255",
+        ]);
+
+        $business = Business::findOrFail($business);
+        $product = Product::findOrFail($product);
+
+        $product->name = $request->input('name');
+        $product->slug = Str::slug($request->input('name'));
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $product->image = $path; // Add the avatar path to the validated data
+        }
+
+        $product->save();
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function productDelete(Request $request, String $business, Product $product)
+    {
+        $product->delete();
+        $business = Business::findOrFail($business);
+
+        return redirect()->route('admin.businesses.show', $business->website);
     }
 }

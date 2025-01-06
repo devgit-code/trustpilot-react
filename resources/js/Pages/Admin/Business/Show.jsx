@@ -31,7 +31,7 @@ const Show = ({ business, has_reviews, trustscore, products }) => {
                         </div>
                     </div>
 
-                    <ProductList products={products} className='mt-5'/>
+                    <ProductList products={products} business_id={business.id} className='mt-5'/>
 
                     {
                         has_reviews !== 0 && (

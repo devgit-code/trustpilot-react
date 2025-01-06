@@ -116,6 +116,9 @@ Route::group([
     Route::post('/businesses/{business}/change', [BusinessController::class, 'change'])->name('businesses.change');
     Route::post('/businesses/{business}/verify', [BusinessController::class, 'verify'])->name('businesses.verify');
     Route::post('/businesses/{business}/approve', [BusinessController::class, 'approve'])->name('businesses.approve');
+    Route::post('/businesses/{business}/product', [BusinessController::class, 'productAdd'])->name('businesses.product.add');
+    Route::post('/businesses/{business}/product/update/{product}', [BusinessController::class, 'productUpdate'])->name('businesses.product.update');
+    Route::post('/businesses/{business}/product/delete/{product}', [BusinessController::class, 'productDelete'])->name('businesses.product.delete');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
     Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');
