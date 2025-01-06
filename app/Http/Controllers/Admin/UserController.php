@@ -12,7 +12,8 @@ use App\Models\Review;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 class UserController extends Controller
 {
     public function index()
@@ -60,18 +61,48 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Admin/Users/Create');
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        User::create($validatedData);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'slug' => Str::slug($request->name)
+        ]);
+
+        if($request->verified == 'true')
+            $user->markEmailAsVerified();
+
+        //user profile
+        $userProfile = new UserProfile();
+        $userProfile->user_id = $user->id;
+
+        $address = $request->input('address');
+        $phone = $request->input('phone');
+
+        $userProfile->address = $address;
+        $userProfile->phone = $phone;
+
+        if ($request->filled('croppedImage')) {
+            $extension = explode('/', mime_content_type($request->croppedImage))[1];
+            $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
+            Storage::disk('public')->put(
+                'images/profile/' . $imageName,
+                file_get_contents($request->croppedImage)
+            );
+            $userProfile["image"] = $imageName;
+        }
+
+        $userProfile->save();
 
         return redirect()->route('admin.users.index');
     }

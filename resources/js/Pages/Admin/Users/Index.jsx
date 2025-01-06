@@ -151,7 +151,12 @@ const Index = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className=''>
+                        <div className='flex items-center   '>
+                            <Link href={route('admin.users.create')}
+                                className="btn btn-success d-flex align-items-center border-0 mr-3"
+                            >
+                                <span className="ms-2 text-white">Add User</span>
+                            </Link>
                             <input
                                 className="search border rounded"
                                 id="myInput"

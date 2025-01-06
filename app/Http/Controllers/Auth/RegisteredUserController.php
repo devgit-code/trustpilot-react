@@ -155,7 +155,7 @@ class RegisteredUserController extends Controller
         if($website){
             $businesses = Business::where('website', $request->website)->get();
         }else
-            $businesses = Business::where('email_verified_at', null)->select('id', 'website')->get();
+            $businesses = Business::where('is_approved', 0)->select('id', 'website')->get();
 
         $selected_business = null;
         if($website){

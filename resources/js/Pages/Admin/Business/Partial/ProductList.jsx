@@ -28,6 +28,10 @@ const ProductList = ({ products }) => {
                 <div className="flex items-center justify-center">
                     <div className="flex items-center justify-center">
                         <button
+                            className="btn btn-success mr-2" type="button"
+                            >Add Product
+                        </button>
+                        <button
                             onClick={scrollLeft}
                             className="inline-flex items-center justify-center mr-2 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 z-10">
                             <FiArrowLeft size={20}

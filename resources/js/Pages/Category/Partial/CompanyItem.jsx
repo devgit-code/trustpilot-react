@@ -9,7 +9,6 @@ import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import ContactPopup from './ContactPopup';
 
 export default function CompanyItem({index, company}){
-    console.log('x---------', company)
     const [expandedReview, setExpandedReview] = useState(null);
 
     // Toggle review expansion
