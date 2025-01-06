@@ -6,7 +6,6 @@ import { FaCheckCircle } from "react-icons/fa";
 import { BsFillExclamationOctagonFill } from "react-icons/bs"
 
 export default function ProductRecent({products}) {
-    console.log('x---------------', products)
     return (
         <div className="p-3 bg-white border rounded">
             <h2 className="text-xl font-semibold">Recent Products</h2>

@@ -25,7 +25,7 @@ function Status({className, rating, total}) {
     )
 }
 
-export default function Header({company_name, company_email, profile, primary_business_category, website, email_verified_at, rating_statistic}) {
+export default function Header({company_name, company_email, is_approved, profile, primary_business_category, website, email_verified_at, rating_statistic}) {
     return (
         <div className='p-2 bg-whtie border-b'>
             <div className='container-lg'>
@@ -73,7 +73,7 @@ export default function Header({company_name, company_email, profile, primary_bu
                                 </div>
                                 <div className='mt-2 flex items-center'>
                                     {
-                                        !company_email && (
+                                        is_approved === 0 && (
                                             <p className={`bg-red-100 py-2 px-3 rounded-sm bg-gray-100 inline-flex text-sm items-center mr-3 mb-0`}>
                                                 <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed</span>

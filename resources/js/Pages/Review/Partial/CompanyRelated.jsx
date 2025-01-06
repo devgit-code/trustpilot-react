@@ -35,7 +35,7 @@ export default function CompanyRelated({companies}) {
                                 </div>
                                 <div className="mt-2 flex flex-col sm:flex-row gap-2">
                                     {
-                                        !company.company_email && (
+                                        company.is_approved === 0 && (
                                             <p className={`inline-flex text-sm items-center mb-0 mr-3`}>
                                                 <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                 <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>

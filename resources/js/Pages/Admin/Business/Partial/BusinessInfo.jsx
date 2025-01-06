@@ -15,10 +15,10 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         company_name: business.company_name,
         company_email: business.company_email,
-        description: business.profile?.description || '',
         first_name: business.first_name || '',
         last_name: business.last_name || '',
         job_title: business.job_title || '',
+        description: business.profile?.description || '',
         image:null,
         email: business.profile?.email || '',
         phone: business.profile?.phone || '',
@@ -133,14 +133,14 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     {(!isEdit && business.company_email && !business.email_verified_at) && (
                         <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
                     )}
-                    {(!isEdit && business.email_verified_at && business.is_approved === 0) && (
+                    {/* {(!isEdit && business.email_verified_at && business.is_approved === 0) && (
                         <Link href={route('admin.businesses.approve', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Approve This Email</Link>
-                    )}
+                    )} */}
                     {
-                        !business.company_email && (
+                        business.is_approved === 0 && (
                             <p className={`bg-red-200 mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                                 <BsFillExclamationOctagonFill className='text-danger text-lg'/>
-                                <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed Company</span>
+                                <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed</span>
                             </p>
                         )
                     }
@@ -150,7 +150,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                             <path fill={`${business.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
                             <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
                         </svg>
-                        <span className='text-gray-700 uppercase text-xs font-bold'>{business.email_verified_at ? 'Verified Company' : 'Unverified Company'}</span>
+                        <span className='text-gray-700 uppercase text-xs font-bold'>{business.email_verified_at ? 'Verified' : 'Unverified'}</span>
                     </p>
                 </div>
                 <div className='ml-4 flex items-center'>
@@ -205,7 +205,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     id="company_email"
                                     name="company_email"
                                     className="mt-1 block w-full"
-                                    value={data.company_email}
+                                    value={business.is_approved === 1 ? data.company_email : ''}
                                     onChange={(e)=>setData('company_email', e.target.value)}
                                     disabled={!isEdit}
                                     autoComplete="company_email"
@@ -219,7 +219,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     id="first_name"
                                     name="first_name"
                                     className="mt-1 block w-full"
-                                    value={data.first_name}
+                                    value={business.is_approved === 1 ? data.first_name : ''}
                                     onChange={(e)=>setData('first_name', e.target.value)}
                                     disabled={!isEdit}
                                     autoComplete="first_name"
@@ -235,7 +235,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     id="last_name"
                                     name="last_name"
                                     className="mt-1 block w-full"
-                                    value={data.last_name}
+                                    value={business.is_approved === 1 ? data.last_name : ''}
                                     onChange={(e)=>setData('last_name', e.target.value)}
                                     disabled={!isEdit}
                                     autoComplete="last name"
@@ -251,7 +251,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     id="job_title"
                                     name="job_title"
                                     className="mt-1 block w-full"
-                                    value={data.job_title}
+                                    value={business.is_approved === 1 ? data.job_title : ''}
                                     onChange={(e)=>setData('job_title', e.target.value)}
                                     disabled={!isEdit}
                                     autoComplete="job_title"

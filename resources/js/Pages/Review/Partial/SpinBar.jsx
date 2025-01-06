@@ -7,9 +7,8 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { BsFillExclamationOctagonFill } from "react-icons/bs"
 import { LuMessagesSquare } from "react-icons/lu";
 
-export default function SpinBar({id, profile, company_email, company_name, website, email_verified_at, rating_statistic }) {
+export default function SpinBar({id, profile, company_email, is_approved, company_name, website, email_verified_at, rating_statistic }) {
     const [isVisible, setIsVisible] = useState(false);
-
     useEffect(() => {
         // Function to handle scroll position
         const handleScroll = () => {
@@ -44,7 +43,7 @@ export default function SpinBar({id, profile, company_email, company_name, websi
                                     <div className='text-2xl text-gray-800 font-extrabold mb-0'>
                                         {company_name}
                                         {
-                                            !company_email && (
+                                            (is_approved === 0) && (
                                                 <p className={`ml-3 bg-red-100 py-1 px-2 rounded inline-flex text-sm items-center mb-0`}>
                                                     <BsFillExclamationOctagonFill className='text-danger text-base'/>
                                                     <span className='ml-1 text-gray-700 text-xs font-bold'>Unclaimed</span>

@@ -34,6 +34,7 @@ class BusinessController extends Controller
             });
         }
 
+        $query->orderByDesc('updated_at');
         // Paginate the results
         $data = $query->paginate(10, ['*'], 'page', $page);
         $businesses = collect($data->items())->map(function ($business, $index) {
@@ -250,8 +251,8 @@ class BusinessController extends Controller
         $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
         if ($emailDomain == $companyDomain) {
             $business->is_approved = 1;
-            $business->save();
         }
+        $business->save();
 
         return redirect()->route('admin.businesses.show', $business->website);
     }
