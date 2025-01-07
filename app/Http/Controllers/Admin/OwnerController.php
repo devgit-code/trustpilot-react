@@ -110,7 +110,12 @@ class OwnerController extends Controller
         }
 
         if($verified == 'true')
-            $business->markEmailAsVerified();
+        {
+            if($business->company_email)
+                $business->markEmailAsVerified();
+        }
+        else
+            $business->email_verified_at = null;
         $business->save();
 
         return redirect()->route('admin.owners.index');

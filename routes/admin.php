@@ -119,6 +119,9 @@ Route::group([
     Route::post('/businesses/{business}/product', [BusinessController::class, 'productAdd'])->name('businesses.product.add');
     Route::post('/businesses/{business}/product/update/{product}', [BusinessController::class, 'productUpdate'])->name('businesses.product.update');
     Route::post('/businesses/{business}/product/delete/{product}', [BusinessController::class, 'productDelete'])->name('businesses.product.delete');
+    Route::post('/businesses/{business}/category', [BusinessController::class, 'categoryAdd'])->name('businesses.category.add');
+    Route::delete('/businesses/{business}/category/{category}', [BusinessController::class, 'categoryRemove'])->name('businesses.category.remove');
+    Route::post('/businesses/{business}/category/{category}', [BusinessController::class, 'categoryPrimary'])->name('businesses.category.primary');
     Route::resource('reviews', AdminReviewController::class);
     Route::resource('blogs', BlogController::class);
     Route::post('/blogs/{blog}/update', [BlogController::class, 'update'])->name('blogs.update');

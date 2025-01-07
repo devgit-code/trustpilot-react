@@ -178,9 +178,7 @@ const Index = () => {
         };
     }, [dialogVisible]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    const handleSubmit = () => {
         patch(route('admin.owners.update', editData.id), {
             onSuccess: () => {
                 handleCloseDialog(); // Close dialog after successful submission
@@ -290,7 +288,7 @@ const Index = () => {
                                                 <p className='mb-0 badge bg-green-500 py-1 rounded text-gray-100'>Complete</p>
                                                 :
                                                 item.email_verified_at ?
-                                                <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not approved</p>
+                                                <p className='mb-0 badge bg-info py-1 rounded text-gray-100'>Not approved</p>
                                                 :
                                                 item.company_email ?
                                                 <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not verified</p>
@@ -374,7 +372,7 @@ const Index = () => {
                         className="bg-white p-6 rounded-lg shadow-lg w-1/2"
                     >
                         <h3 className="text-xl font-bold mb-4">Owner for <span className='underline italic text-gray-500'>{editData.website}</span></h3>
-                        <form onSubmit={handleSubmit} className='space-y-2'>
+                        <div className='space-y-2'>
                             <div>
                                 <InputLabel htmlFor="company_email" value="Company Email" />
 
@@ -466,14 +464,14 @@ const Index = () => {
                                         Cancel
                                     </button>
                                     <button
-                                        type="submit"
+                                        onClick={handleSubmit}
                                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                     >
                                         Save
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             )}

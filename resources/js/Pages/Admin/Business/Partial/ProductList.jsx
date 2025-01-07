@@ -116,8 +116,8 @@ const ProductList = ({ business_id, products }) => {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+        // e.preventDefault();
 
         if(!editMode){
             post(route('admin.businesses.product.add', business_id), {
@@ -138,7 +138,7 @@ const ProductList = ({ business_id, products }) => {
         <div className="card py-6 bg-white container-md">
             {/* Title */}
             <div className="relative flex justify-between px-3">
-                <h2 className="text-center text-xl font-bold mb-6">Products</h2>
+                <h2 className="text-center text-2xl mb-6">Products</h2>
                 {/* See More Button */}
                 <div className="flex items-center justify-center">
                     <div className="flex items-center justify-center">
@@ -199,7 +199,7 @@ const ProductList = ({ business_id, products }) => {
                         className="bg-white p-6 rounded-lg shadow-lg w-1/2"
                     >
                         <h3 className="text-xl font-bold mb-4">{editMode ? 'Edit Product' : 'New Product'}</h3>
-                        <form onSubmit={handleSubmit}>
+                        <div>
                             <div>
                                 <InputLabel htmlFor="name" value="Name" />
 
@@ -238,7 +238,7 @@ const ProductList = ({ business_id, products }) => {
                                 </div>
                             ):(
                                 <>
-                                {productData.image ? (
+                                {productData?.image ? (
                                     <img src={`/storage/${productData.image}`}
                                         alt="product-logo"
                                         className='inline'
@@ -257,13 +257,14 @@ const ProductList = ({ business_id, products }) => {
                                     Cancel
                                 </button>
                                 <button
+                                    onClick={handleSubmit}
                                     type="submit"
                                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                 >
                                     Save
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             )}
