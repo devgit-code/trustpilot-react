@@ -43,7 +43,7 @@ function SearchSection() {
         const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,}$/;
         if(!domainRegex.test(search)){
             toast.warning(
-                "Input Domain is not valid!", {
+                "Wrong Domain Input!", {
                     transition: Slide,
                     hideProgressBar: true,
                 }

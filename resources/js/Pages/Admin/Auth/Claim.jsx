@@ -37,6 +37,7 @@ export default function Claim({ businesses}) {
         company_email: '',
         password: '',
         password_confirmation: '',
+        message: '',
         remember: false,
     });
 
@@ -155,73 +156,91 @@ export default function Claim({ businesses}) {
                             </div>
                         </div>
 
-                        <div className="">
-                            <TextInput
-                                id="job_title"
-                                type="text"
-                                name="job_title"
-                                value={data.job_title}
-                                placeholder="Job Title"
-                                className="mt-1 block w-full"
-                                autoComplete="job title"
-                                onChange={(e) => setData('job_title', e.target.value)}
-                                required
-                            />
+                        <div className='grid grid-cols-2 gap-3'>
+                            <div className="">
+                                <div className='flex items-center'>
+                                    <TextInput
+                                        id="email"
+                                        type="email"
+                                        name="company_email"
+                                        value={data.company_email}
+                                        placeholder="Work Email"
+                                        className="mt-1 block w-full"
+                                        autoComplete="work email"
+                                        onChange={(e) => setData('company_email', e.target.value)}
+                                        required
+                                    />
 
-                            <InputError message={errors.job_title} className="mt-2" />
-                        </div>
+                                    {/* <span className="text-gray-500 px-2">
+                                        {data.domain}
+                                    </span> */}
+                                </div>
 
-                        <div className="">
-                            <div className='flex items-center'>
+                                <InputError message={errors.company_email} className="mt-2" />
+                            </div>
+
+                            <div className="">
                                 <TextInput
-                                    id="email"
-                                    type="email"
-                                    name="company_email"
-                                    value={data.company_email}
-                                    placeholder="Work Email"
+                                    id="job_title"
+                                    type="text"
+                                    name="job_title"
+                                    value={data.job_title}
+                                    placeholder="Job Title"
                                     className="mt-1 block w-full"
-                                    autoComplete="work email"
-                                    onChange={(e) => setData('company_email', e.target.value)}
+                                    autoComplete="job title"
+                                    onChange={(e) => setData('job_title', e.target.value)}
                                     required
                                 />
 
-                                {/* <span className="text-gray-500 px-2">
-                                    {data.domain}
-                                </span> */}
+                                <InputError message={errors.job_title} className="mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div className='grid grid-cols-2 gap-3'>
+                            <div className="">
+                                <TextInput
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    placeholder="Password"
+                                    className="mt-1 block w-full"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    required
+                                />
+
+                                <InputError message={errors.password} className="mt-2" />
                             </div>
 
-                            <InputError message={errors.company_email} className="mt-2" />
+                            <div className="">
+                                <TextInput
+                                    id="password_confirmation"
+                                    type="password"
+                                    name="password_confirmation"
+                                    value={data.password_confirmation}
+                                    className="mt-1 block w-full"
+                                    placeholder="Confirm Password"
+                                    autoComplete="new-password"
+                                    onChange={(e) => setData('password_confirmation', e.target.value)}
+                                    required
+                                />
+
+                                <InputError message={errors.password_confirmation} className="mt-2" />
+                            </div>
                         </div>
 
-                        <div className="">
-                            <TextInput
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={data.password}
-                                placeholder="Password"
-                                className="mt-1 block w-full"
-                                onChange={(e) => setData('password', e.target.value)}
-                                required
-                            />
-
-                            <InputError message={errors.password} className="mt-2" />
-                        </div>
-
-                        <div className="">
-                            <TextInput
-                                id="password_confirmation"
-                                type="password"
-                                name="password_confirmation"
-                                value={data.password_confirmation}
-                                className="mt-1 block w-full"
-                                placeholder="Confirm Password"
-                                autoComplete="new-password"
-                                onChange={(e) => setData('password_confirmation', e.target.value)}
-                                required
-                            />
-
-                            <InputError message={errors.password_confirmation} className="mt-2" />
+                        <div>
+                            <textarea
+                                className="form-control mt-2"
+                                name="message"
+                                id="message"
+                                rows="2"
+                                style={{ height: "auto" }}
+                                value={data.message}
+                                placeholder={`If your work email is same as domain you will be the owner.\nIf it is not, Please prove you are the owner of company.`}
+                                onChange={(e) => setData('message', e.target.value)}
+                            ></textarea>
                         </div>
 
                         <button disabled={processing} type="submit" className="w-full mt-4 p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-600">Submit</button>

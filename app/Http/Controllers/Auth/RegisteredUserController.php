@@ -175,6 +175,7 @@ class RegisteredUserController extends Controller
             'job_title' => 'required|string|max:255',
             'company_email' => 'required|string|email|max:255',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'message' => 'nullable'
         ]);
         $business = Business::findOrFail($request->input('id'));
 

@@ -67,6 +67,7 @@ class OwnerController extends Controller
         $business->last_name=null;
         $business->job_title=null;
         $business->email_verified_at=null;
+        $business->message=null;
         $business->is_approved=0;
         $business->save();
 

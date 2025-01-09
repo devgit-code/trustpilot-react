@@ -13,7 +13,6 @@ import { SiVerizon } from "react-icons/si";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import Edit from './Partial/Edit'
 
 const Index = () => {
     const { data, setData, patch, errors, clearErrors } = useForm({
@@ -432,6 +431,15 @@ const Index = () => {
 
                                 <InputError className="mt-2" message={errors.job_title} />
                             </div>
+
+                            {
+                                editData?.message && (
+                                    <div class="bg-transparent">
+                                        <p className="mb-0 text-gray-700">Message</p>
+                                        <p className="mb-0 mt-2 p-2 text-lg rounded border shadow-sm text-gray-700 bg-gray-100">{editData.message || ''}</p>
+                                    </div>
+                                )
+                            }
 
                             <div>
                                 <InputLabel htmlFor="verified" value="Email Verified" className='inline'/>

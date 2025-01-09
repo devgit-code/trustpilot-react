@@ -32,6 +32,7 @@ class Business extends Authenticatable implements MustVerifyEmail
         'job_title',
         'company_email',
         'password',
+        'message',
         'is_approved',
     ];
 
