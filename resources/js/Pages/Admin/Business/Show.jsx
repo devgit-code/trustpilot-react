@@ -6,12 +6,9 @@ import BusinessInfo from './Partial/BusinessInfo';
 import ReviewTable from '@/Components/ReviewTable';
 import SearchBar from '@/Components/SearchBar';
 import ProductList from './Partial/ProductList';
-import Swal from 'sweetalert2';
-import { BsTrashFill } from "react-icons/bs"
-import { FaEdit } from "react-icons/fa"
-import { CgMenuBoxed } from "react-icons/cg";
+import CategoryList from './Partial/Category';
 
-const Show = ({ business, has_reviews, trustscore, products }) => {
+const Show = ({ business, has_reviews, trustscore, products, categories, sub_categories }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const table_setting = {
@@ -31,7 +28,9 @@ const Show = ({ business, has_reviews, trustscore, products }) => {
                         </div>
                     </div>
 
-                    <ProductList products={products} className='mt-5'/>
+                    <ProductList products={products} business_id={business.id}/>
+
+                    <CategoryList categories={categories} sub_categories={sub_categories} business_id={business.id}/>
 
                     {
                         has_reviews !== 0 && (

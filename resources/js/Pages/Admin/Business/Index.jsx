@@ -10,8 +10,6 @@ import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { CgMenuBoxed } from "react-icons/cg";
 import { MdOutlineUnpublished } from "react-icons/md"
-import { VscWorkspaceUntrusted } from "react-icons/vsc"
-
 
 const Index = () => {
     const [filters, setFilters] = useState({ search:"", page:1 });
@@ -184,9 +182,9 @@ const Index = () => {
                                                             alt="category-logo"
                                                             className=''
                                                             style={{ maxWidth: '64px', maxHeight: '64px' }} />
-                                                        {!item.company_email && (
+                                                        {/* {!item.company_email && (
                                                             <BsFillExclamationOctagonFill className='text-danger absolute -top-1 -right-1' />
-                                                        )}
+                                                        )} */}
                                                     </div>
                                                 )}
                                                 </div>

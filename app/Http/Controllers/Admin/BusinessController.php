@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\BusinessCategory;
 use App\Models\BusinessProfile;
 use App\Models\Review;
+use App\Models\Product;
+use App\Models\SubCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -171,11 +175,16 @@ class BusinessController extends Controller
             return $product;
         });
 
+        $sub_categories = SubCategory::all();
+        $categories = $business->businessCategories;    //primaryBusinessCategory
+
         return Inertia::render('Admin/Business/Show', [
             'business' => $business,
             'has_reviews' => count($business->reviews),
             'trustscore' => number_format($business->reviews->avg('rating'), 1),
             'products' => $products,
+            'sub_categories' => $sub_categories,
+            'categories' => $categories,
         ]);
     }
 
@@ -360,5 +369,117 @@ class BusinessController extends Controller
     {
         $business->delete();
         return redirect()->route('admin.businesses.index')->with('success', 'Business deleted successfully.');
+    }
+
+    public function productAdd(Request $request, String $business)
+    {
+        $validated = $request->validate([
+            "name" => "required|string|max:255",
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+        ]);
+
+        $business = Business::findOrFail($business);
+        $validated['business_id'] = $business->id;
+        $validated['slug'] = Str::slug($validated['name']);
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $validated['image'] = $path; // Add the avatar path to the validated data
+        }
+
+        $product = Product::create($validated);
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function productUpdate(Request $request, String $business, String $product)
+    {
+        $validated = $request->validate([
+            "name" => "required|string|max:255",
+        ]);
+
+        $business = Business::findOrFail($business);
+        $product = Product::findOrFail($product);
+
+        $product->name = $request->input('name');
+        $product->slug = Str::slug($request->input('name'));
+
+        if ($request->hasFile('image')) {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = "product-" . now()->timestamp . "." . $extension;
+            $path = $request->file('image')->storeAs('images/product', $imageName, 'public');
+            $product->image = $path; // Add the avatar path to the validated data
+        }
+
+        $product->save();
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function productDelete(Request $request, String $business, Product $product)
+    {
+        $product->delete();
+        $business = Business::findOrFail($business);
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function categoryAdd(Request $request, String $business)
+    {
+        $business = Business::findOrFail($business);
+
+        $creationData = [
+            "sub_category_id" => $request->input('id'),
+            "business_id" => $business->id,
+        ];
+
+        $businessCat = BusinessCategory::create($creationData);
+        if(count($business->businessCategories) === 1) //only one
+        {
+            $businessCat->is_primary = true;
+            $businessCat->save();
+        }
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function categoryRemove(Request $request, String $business, BusinessCategory $category)
+    {
+        $business = Business::findOrFail($business);
+
+        $category->delete();
+
+        $primaryCategory = $business->primaryBusinessCategory;
+        if(!$primaryCategory){
+            $firstCategory = $business->businessCategories->first();
+
+            if ($firstCategory) {
+                $firstCategory->is_primary = true;
+                $firstCategory->save();
+            }
+        }
+
+        return redirect()->route('admin.businesses.show', $business->website);
+    }
+
+    public function categoryPrimary(Request $request, String $business, String $category)
+    {
+        $business = Business::findOrFail($business);
+
+        $primaryCategory = $business->primaryBusinessCategory;
+
+        if($primaryCategory)
+        {
+            $primaryCategory->is_primary = false;
+            $primaryCategory->save();
+        }
+
+        $category = BusinessCategory::findOrFail($category);
+        $category->is_primary = true;
+        $category->save();
+
+        return redirect()->route('admin.businesses.show', $business->website);
     }
 }

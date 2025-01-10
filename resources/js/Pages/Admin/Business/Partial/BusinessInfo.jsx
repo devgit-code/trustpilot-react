@@ -119,7 +119,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                     {
                         !isEdit && (
                             <button onClick={()=>setIsEdit(true)} className={`btn btn-success`} type="button">
-                                Edit Business
+                                Edit Profile
                             </button>
                         )
                     }
@@ -130,27 +130,27 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
             </div>
             <div className='flex items-center mt-3'>
                 <div className='flex space-x-3'>
-                    {(!isEdit && business.company_email && !business.email_verified_at) && (
+                    {/* {(!isEdit && business.company_email && !business.email_verified_at) && (
                         <Link href={route('admin.businesses.verify', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Verify This Company</Link>
-                    )}
+                    )} */}
                     {/* {(!isEdit && business.email_verified_at && business.is_approved === 0) && (
                         <Link href={route('admin.businesses.approve', business.id)} as="button" method="post" className='ml-6 btn btn-outline-info'>Approve This Email</Link>
                     )} */}
-                    {
+                    {/* {
                         business.is_approved === 0 && (
                             <p className={`bg-red-200 mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                                 <BsFillExclamationOctagonFill className='text-danger text-lg'/>
                                 <span className='ml-3 text-gray-700 uppercase text-xs font-bold'>Unclaimed</span>
                             </p>
                         )
-                    }
-                    <p className={`${business.email_verified_at ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
+                    } */}
+                    <p className={`${business.is_approved === 1 ? 'bg-green-200' : 'bg-red-300'} mb-0 py-1 px-3 rounded-sm  inline-flex text-sm items-center`}>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             className="inline mr-1">
-                            <path fill={`${business.email_verified_at ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
+                            <path fill={`${business.is_approved === 1 ? "#4CAF50" : "#6e6b6a"}`} d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3z"/>
                             <path fill="#fff" d="M10 15.5l6-6-1.5-1.5L10 12.5 8.5 11l-1.5 1.5 3 3z"/>
                         </svg>
-                        <span className='text-gray-700 uppercase text-xs font-bold'>{business.email_verified_at ? 'Verified' : 'Unverified'}</span>
+                        <span className='text-gray-700 uppercase text-xs font-bold'>{business.is_approved === 1 ? 'Verified' : 'Not approved'}</span>
                     </p>
                 </div>
                 <div className='ml-4 flex items-center'>
@@ -190,7 +190,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     onChange={(e)=>setData('company_name', e.target.value)}
                                     required
                                     isFocused
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="company name"
                                 />
 
@@ -207,7 +207,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.company_email : ''}
                                     onChange={(e)=>setData('company_email', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="company_email"
                                 />
                             </div>
@@ -221,7 +221,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.first_name : ''}
                                     onChange={(e)=>setData('first_name', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="first_name"
                                 />
 
@@ -237,7 +237,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.last_name : ''}
                                     onChange={(e)=>setData('last_name', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="last name"
                                 />
 
@@ -253,7 +253,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
                                     className="mt-1 block w-full"
                                     value={business.is_approved === 1 ? data.job_title : ''}
                                     onChange={(e)=>setData('job_title', e.target.value)}
-                                    disabled={!isEdit}
+                                    disabled
                                     autoComplete="job_title"
                                 />
 
@@ -413,7 +413,7 @@ export default function BusinessInfo({ business, trustscore, has_reviews }){
 
                 {
                     isEdit && (
-                        <div className='mt-3'>
+                        <div className='mt-3 flex justify-end'>
                             <button type="submit" className="btn btn-danger">
                                 Save
                             </button>
