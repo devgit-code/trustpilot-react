@@ -7,7 +7,6 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import BlogEditor from './Partial/BlogEditor';
-import Editor from './Partial/Editor';
 
 const Create = ({ }) => {
     const [value, setValue] = useState('');
@@ -109,9 +108,8 @@ const Create = ({ }) => {
                         </div>
 
                         <div className='mt-2'>
-                            <InputLabel htmlFor="content" value="Content" />
-                            {/* <Editor /> */}
-                            <BlogEditor name="content" theme="snow" value={value} onChange={setValue} className='mt-1'/>
+                            <p className='text-gray-700 mb-0'>Content</p>
+                            <BlogEditor value={value} onChange={setValue} className='mt-1'/>
 
                             <InputError className="mt-16" message={errors.content} />
                         </div>

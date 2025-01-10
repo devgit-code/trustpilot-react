@@ -112,9 +112,8 @@ const Edit = ({ blog }) => {
                         </div>
 
                         <div className='mt-2'>
-                            <InputLabel htmlFor="content" value="Content" />
-
-                            <BlogEditor id="content" theme="snow" value={value} onChange={setValue} className='mt-2'/>
+                            <p className='text-gray-700 mb-0'>Content</p>
+                            <BlogEditor value={value} onChange={setValue} className='mt-2'/>
 
                             <InputError className="mt-2" message={errors.content} />
                         </div>
