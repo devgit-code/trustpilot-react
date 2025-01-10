@@ -232,14 +232,14 @@ class UserController extends Controller
 
         if (
             $userProfile->address !== $address ||
-            $userProfile->phone !== $phone
+            $userProfile->phone !== $phone ||
+            $request->filled('croppedImage')
         ) {
             $existingUserProfile = UserProfile::where('user_id', $user->id)->first();
 
             if ($existingUserProfile) {
                 $existingUserProfile->address = $address;
                 $existingUserProfile->phone = $phone;
-
                 if ($request->filled('croppedImage')) {
                     $extension = explode('/', mime_content_type($request->croppedImage))[1];
                     $imageName = "UserProfile-" . now()->timestamp . "." . $extension;
