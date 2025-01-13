@@ -10,6 +10,7 @@ import RatingAverage from '@/Components/RatingAverage';
 import RatingTotal from '@/Components/RatingTotal';
 import AnimateBack from '@/Components/Frontend/AnimateBack';
 import company_logo from "@/../images/company-logo.png"
+import backImg from "@/../images/secondbanner.jpg"
 
 
 function SearchSection() {
@@ -111,17 +112,23 @@ function SearchSection() {
     }
 
     return (
-        <div className="relative w-full h-[70vh] min-h-[516px] bg-[#FCFBF3] z-20">
-            <div className='absolute inset-0 overflow-hidden'>
+        <div className="relative w-full h-[70vh] min-h-[516px] bg-[#FCFBF3]">
+            {/* <div className='absolute inset-0 overflow-hidden h-full'>
                 <AnimateBack />
+            </div> */}
+
+            <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+                <div className="absolute w-full h-[200%] bg-cover bg-center animate-background" style={{ backgroundImage: `url(${backImg})` }}>
+                    <div className="h-full bg-green-300 opacity-15"></div>
+                </div>
             </div>
 
-            <div className="relative flex justify-center items-center h-full">
+            <div className="relative flex justify-center z-10 items-center h-full">
                 <div className='text-center px-8'>
                     <h2 className="text-4xl font-bold text-gray-900 md:px-24 select-none">Find a company you can trust</h2>
-                    <p className="text-lg text-gray-600 mt-2 select-none">Real reviews by real people.</p>
+                    <p className="text-lg text-gray-700 mt-2 select-none">Real reviews by real people.</p>
 
-                    {/* Modal-like Overlay */}
+                    {/* Modal-like Ovrlay */}
                     {isDropdownVisible && (
                         <div
                             className="fixed inset-0 bg-black opacity-25 z-10"

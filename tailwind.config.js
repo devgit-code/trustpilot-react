@@ -20,14 +20,15 @@ export default {
             animation: {
                 'spin-slow': 'spin 50s linear infinite',
                 'spin-reverse': 'spin-reverse 60s linear infinite',
-                blob: "blob 7s infinite",
+                'blob': "blob 7s infinite",
+                'background': 'background-flow 40s linear infinite',
             },
             keyframes: {
                 'spin-reverse': {
                     '0%': { transform: 'rotate(0deg)' },
                     '100%': { transform: 'rotate(-360deg)' },
                 },
-                blob: {
+                'blob': {
                     "0%": {
                         transform: "translate(0px, 0px) scale(1)",
                     },
@@ -40,6 +41,11 @@ export default {
                     "100%": {
                         transform: "tranlate(0px, 0px) scale(1)",
                     },
+                },
+                'background-flow': {
+                    '0%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-50%)' },  // Moves up
+                    '100%': { transform: 'translateY(0)' },  // Moves back down
                 },
             },
         },

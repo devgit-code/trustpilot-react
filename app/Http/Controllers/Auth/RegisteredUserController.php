@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Business;
+use App\Models\BusinessOwner;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -157,19 +158,22 @@ class RegisteredUserController extends Controller
         }else
             $businesses = Business::where('is_approved', 0)->select('id', 'website')->get();
 
-        $selected_business = null;
-        if($website){
-            $selected_business = Business::where('website', $request->website)->first();
-        }
+        // $selected_business = null;
+        // if($website){
+        //     $selected_business = Business::where('website', $request->website)->first();
+        // }
 
-        return Inertia::render('Admin/Auth/Claim', compact('businesses'))->with('selected_option', $selected_business);
+        return Inertia::render('Admin/Auth/Claim', compact('businesses'))->with('selected_option', $website);
     }
 
     public function admin_claim_store(Request $request)
     {
         $validated = $request->validate([
-            'id' => 'required',
-            // 'company_name' => 'required|string|max:255',
+            // 'id' => 'required',
+            'website' => [
+                'required',
+                'regex:/^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,6}$/'
+            ],
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'job_title' => 'required|string|max:255',
@@ -177,31 +181,51 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'message' => 'nullable'
         ]);
-        $business = Business::findOrFail($request->input('id'));
+        $business = Business::where('website', $request->website)->first();
 
-        $business->fill($validated);
-        // $business->name = $request->input('name');
-        $business->save();
-
-        // approve
-        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
-        $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
-        if ($emailDomain == $companyDomain) {
-            // $business->is_approved = 1;
-            $business->markEmailAsVerified();
-            $business->save();
+        if(!$business)
+        {
+            return redirect()->back()->withErrors(['website'=>'Not registered Domain.'])->withInput();
         }
 
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        if($business->is_approved === 1)
+        {
+            return redirect()->back()->withErrors(['website'=>"It's already claimed company."])->withInput();
+        }
 
-        Auth::guard('business')->login($business);
-        if(!$business->email_verified_at)
-            $business->sendEmailVerificationNotification();
+        $owner = BusinessOwner::where('business_id', $business->id)->where('company_email', $request->company_email)->first();
+        if($owner)
+        {
+            return redirect()->back()->withErrors(['company_email'=>'You already claimed this site.'])->withInput();
+        }
 
-        // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('yonetici.verification.notice');
+        $business = BusinessOwner::create([
+            'business_id' => $business->id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'job_title' => $request->job_title,
+            'company_email' => $request->company_email,
+            'message' => $request->message,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Wait until Admin approve.');
+
+        // $business->fill($validated);
+        // $business->name = $request->input('name');
+        // $business->save();
+
+        // approve
+        // $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        // $emailDomain = substr(strrchr($business->company_email, "@"), 1); // Extract part after '@'
+        // if ($emailDomain == $companyDomain) {
+        //     // $business->is_approved = 1;
+        //     $business->markEmailAsVerified();
+        //     $business->save();
+        // }
+
+        // // return redirect(RouteServiceProvider::HOME);
+        // return redirect()->route('yonetici.verification.notice');
 
     }
 }
