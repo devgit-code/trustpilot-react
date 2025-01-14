@@ -9,13 +9,14 @@ import { CgMenuBoxed } from "react-icons/cg";
 import { MdOutlineUnpublished } from "react-icons/md"
 import { BsTrashFill, BsFillExclamationOctagonFill } from "react-icons/bs"
 import { SiVerizon } from "react-icons/si";
+import { IoIosCloseCircle } from "react-icons/io";
 
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 
 const Index = () => {
-    const { data, setData, patch, errors, clearErrors } = useForm({
+    const { data, setData, patch, post, errors, clearErrors } = useForm({
         company_email: '',
         first_name: '',
         last_name: '',
@@ -116,7 +117,26 @@ const Index = () => {
             confirmButtonText: 'Yes',
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = router.delete(route('admin.owners.destroy', id));
+                const response = router.post(route('admin.owners.clear', id));
+                fetchBusinesses();
+            }
+        });
+    };
+
+    const handleRemove = (event, id) => {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Delete this owner?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const response = router.post(route('admin.owners.delete', id));
                 fetchBusinesses();
             }
         });
@@ -178,12 +198,22 @@ const Index = () => {
     }, [dialogVisible]);
 
     const handleSubmit = () => {
-        patch(route('admin.owners.update', editData.id), {
-            onSuccess: () => {
-                handleCloseDialog(); // Close dialog after successful submission
-                fetchBusinesses();
-            },
-        });
+        if(editData?.website)
+        {//action for verify business
+            patch(route('admin.owners.update', editData.id), {
+                onSuccess: () => {
+                    handleCloseDialog(); // Close dialog after successful submission
+                    fetchBusinesses();
+                },
+            });
+        }else{//action for approve businessowner
+            post(route('admin.owners.approve', {'business':editData.business_id, 'owner':editData.id}), {
+                onSuccess: () => {
+                    handleCloseDialog(); // Close dialog after successful submission
+                    fetchBusinesses();
+                },
+            });
+        }
     };
 
     return (
@@ -275,30 +305,50 @@ const Index = () => {
                                             </td>
                                             {/* <td>{item.count_products}</td> */}
                                             <td>
-                                                <div>
-                                                    <p className='mb-0 text-gray-700'>{item.company_email || ''}</p>
-                                                    <p className='mb-0 text-gray-700'>{(item.first_name || '') + ' ' + (item.last_name || '')}</p>
-                                                    <p className='mb-0 text-gray-700'>{item.job_title || ''}</p>
-                                                </div>
+                                            {
+                                                item.is_approved === 1 ? (
+                                                    <div>
+                                                        <p className='mb-0 text-gray-700'>{item.company_email || ''}</p>
+                                                        <p className='mb-0 text-gray-700'>{(item.first_name || '') + ' ' + (item.last_name || '')}</p>
+                                                        <p className='mb-0 text-gray-700'>{item.job_title || ''}</p>
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <ul>
+                                                        {
+                                                            item?.candidates.map((owner, index) => (
+                                                                <li key={index} className='flex justify-between'>
+                                                                    <Link onClick={(e) => handleOpenDialog(e, owner)}>
+                                                                        {owner.company_email}
+                                                                    </Link>
+                                                                    <button onClick={(e)=>handleRemove(e, owner.id)}><IoIosCloseCircle className='text-gray-600 w-4 h-4'/></button>
+                                                                </li>
+                                                            ))
+                                                        }
+                                                        </ul>
+
+                                                    </div>
+                                                )
+                                            }
                                             </td>
                                             <td>
                                             {
+                                                !item.company_email ?
+                                                <p className='mb-0 badge bg-danger py-1 rounded text-gray-100'>Not claimed</p>
+                                                :
+                                                !item.email_verified_at ?
+                                                <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not verified</p>
+                                                :
                                                 item.is_approved === 1 ?
                                                 <p className='mb-0 badge bg-green-500 py-1 rounded text-gray-100'>Complete</p>
                                                 :
-                                                item.email_verified_at ?
                                                 <p className='mb-0 badge bg-info py-1 rounded text-gray-100'>Not approved</p>
-                                                :
-                                                item.company_email ?
-                                                <p className='mb-0 badge bg-warning py-1 rounded text-gray-100'>Not verified</p>
-                                                :
-                                                <p className='mb-0 badge bg-danger py-1 rounded text-gray-100'>Not claimed</p>
 
                                             }
                                             </td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-end">
-                                                    {
+                                                    {/* {
                                                         (item.email_verified_at && item.is_approved === 0) && (
                                                             <li className="edit">
                                                                 <Link onClick={(e) => handleApprove(e, item.id )}>
@@ -306,7 +356,7 @@ const Index = () => {
                                                                 </Link>
                                                             </li>
                                                         )
-                                                    }
+                                                    } */}
                                                     <li className="edit">
                                                         <Link onClick={(e) => handleOpenDialog(e, item)}>
                                                             <CgMenuBoxed className='fs-4 me-2' />
@@ -370,7 +420,18 @@ const Index = () => {
                         ref={dialogRef}
                         className="bg-white p-6 rounded-lg shadow-lg w-1/2"
                     >
-                        <h3 className="text-xl font-bold mb-4">Owner for <span className='underline italic text-gray-500'>{editData.website}</span></h3>
+                        <h3 className="text-xl font-bold mb-4">
+                        {
+                            editData?.website ? (
+                                <>
+                                    Owner for <span className='underline italic text-gray-500'>{editData.website}</span>
+                                </>
+                            ):(
+                                'Approve This Owner'
+                            )
+                        }
+
+                        </h3>
                         <div className='space-y-2'>
                             <div>
                                 <InputLabel htmlFor="company_email" value="Company Email" />
@@ -433,27 +494,32 @@ const Index = () => {
                             </div>
 
                             {
-                                editData?.message && (
-                                    <div class="bg-transparent">
+                                (!editData?.website && editData?.message) && (
+                                    <div className="bg-transparent">
                                         <p className="mb-0 text-gray-700">Message</p>
                                         <p className="mb-0 mt-2 p-2 text-lg rounded border shadow-sm text-gray-700 bg-gray-100">{editData.message || ''}</p>
                                     </div>
                                 )
                             }
 
-                            <div>
-                                <InputLabel htmlFor="verified" value="Email Verified" className='inline'/>
+                            {
+                                editData?.website && (
+                                    <div>
+                                        <InputLabel htmlFor="verified" value="Email Verified" className='inline'/>
 
-                                <TextInput
-                                    id="verified"
-                                    type="checkbox"
-                                    className="mt-1 ml-2"
-                                    checked={data.verified}
-                                    onChange={()=>setData('verified', !data.verified)}
-                                />
+                                        <TextInput
+                                            id="verified"
+                                            type="checkbox"
+                                            className="mt-1 ml-2"
+                                            checked={data.verified}
+                                            onChange={()=>setData('verified', !data.verified)}
+                                        />
 
-                                <InputError className="mt-2" message={errors.verified} />
-                            </div>
+                                        <InputError className="mt-2" message={errors.verified} />
+                                    </div>
+
+                                )
+                            }
 
                             <div className="flex justify-between mt-4">
                                 <div>
@@ -475,7 +541,9 @@ const Index = () => {
                                         onClick={handleSubmit}
                                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                     >
-                                        Save
+                                    {
+                                        editData?.website ? 'Save' : 'Approve'
+                                    }
                                     </button>
                                 </div>
                             </div>

@@ -109,7 +109,9 @@ Route::group([
     });
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('owners', OwnerController::class);
-    Route::post('/owners/approve/{business}', [OwnerController::class, 'approve'])->name('owners.approve');
+    Route::post('/owners/approve/{business}/{owner}', [OwnerController::class, 'approve'])->name('owners.approve');
+    Route::post('/owners/clear/{business}', [OwnerController::class, 'clear'])->name('owners.clear');
+    Route::post('/owners/remove/{owner}', [OwnerController::class, 'removeOwner'])->name('owners.delete');
     Route::resource('businesses', BusinessController::class);
     Route::get('/businesses/{website}', [BusinessController::class, 'show'])->name('businesses.show');
     Route::post('/businesses/create', [BusinessController::class, 'store'])->name('businesses.store');

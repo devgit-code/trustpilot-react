@@ -17,18 +17,18 @@ const customStyles = {
   }),
 };
 
-export default function Claim({ businesses}) {
-    const {selected_option } = usePage().props
-    const [selectedOption, setSelectedOption] = useState(null);
+export default function Claim({ businesses, website}) {
+    // const {website } = usePage().props
+    // const [selectedOption, setSelectedOption] = useState(null);
 
-    const formattedData = businesses.map((business) => ({
-        value: business.id, // Map the ID to the "value" field
-        label: business.website, // Map the name to the "label" field
-    }));
+    // const formattedData = businesses.map((business) => ({
+    //     value: business.id, // Map the ID to the "value" field
+    //     label: business.website, // Map the name to the "label" field
+    // }));
 
     const { data, setData, post, processing, errors, reset } = useForm({
         id: '',
-        website: '',
+        website: website || '',
         // company_name: '',
         first_name: '',
         last_name: '',
@@ -47,13 +47,13 @@ export default function Claim({ businesses}) {
     };
 
     useEffect(() => {
-        if(selected_option){
-            setSelectedOption({
-                value: selected_option.id,
-                label: selected_option.website,
-            });
-            setData('id', selected_option.id)
-        }
+        // if(selected_option){
+        //     setSelectedOption({
+        //         value: selected_option.id,
+        //         label: selected_option.website,
+        //     });
+        //     setData('id', selected_option.id)
+        // }
 
         return () => {
             reset('password', 'password_confirmation');
@@ -93,7 +93,7 @@ export default function Claim({ businesses}) {
                     <form onSubmit={submit} className="space-y-4 mt-4">
                         <div>
 
-                            <Select
+                            {/* <Select
                                 options={formattedData}
                                 value={selectedOption}
                                 styles={customStyles}
@@ -103,24 +103,24 @@ export default function Claim({ businesses}) {
                                 disabled
                                 className="w-64 inline"
                             />
-                            <InputError message={errors.id} className="mt-2" />
+                            <InputError message={errors.id} className="mt-2" /> */}
                         </div>
 
-                        {/* <div className="mt-4">
+                        <div className="mt-4">
                             <TextInput
-                                id="company_name"
+                                id="website"
                                 type="text"
-                                name="company_name"
-                                value={data.company_name}
-                                placeholder="Company Name"
+                                name="website"
+                                value={data.website}
+                                placeholder="Website Domain"
                                 className="mt-1 block w-full"
-                                autoComplete="company name"
-                                onChange={(e) => setData('company_name', e.target.value)}
+                                autoComplete="website"
+                                onChange={(e) => setData('website', e.target.value)}
                                 required
                             />
 
-                            <InputError message={errors.company_name} className="mt-2" />
-                        </div> */}
+                            <InputError message={errors.website} className="mt-2" />
+                        </div>
 
                         <div className='grid grid-cols-2 gap-3'>
                             <div className="">

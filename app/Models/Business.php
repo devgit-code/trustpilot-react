@@ -108,4 +108,9 @@ class Business extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Product::class);
     }
+
+    public function businessOwners()
+    {
+        return $this->hasMany(BusinessOwner::class);
+    }
 }

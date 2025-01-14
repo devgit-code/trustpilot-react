@@ -99,7 +99,7 @@ export default function Header({company_name, company_email, is_approved, profil
                                     <div className=''>
                                         <p className='text-blue-600 mb-1'>
                                             <FaExternalLinkAlt className='inline mr-2 text-sm group-hover:text-gray-600'/>
-                                            <span className='text-sm font-bold text-blue-600 group-hover:text-gray-700'>{company_name}</span>
+                                            <span className='text-sm font-bold text-blue-600 group-hover:text-gray-700'>{website}</span>
                                         </p>
                                         <p className='text-sm text-gray-400 mb-0'>Visit this website</p>
                                     </div>

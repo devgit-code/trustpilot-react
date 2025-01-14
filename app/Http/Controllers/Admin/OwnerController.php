@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Business;
+use App\Models\BusinessOwner;
 
 class OwnerController extends Controller
 {
@@ -37,6 +38,8 @@ class OwnerController extends Controller
             // $business['reviews_count'] = count($business->reviews);
             // $business['count_products'] = count($business->products);
             // $business['categories'] = $business->businessCategories;
+            if($business->is_approved === 0)
+                $business['candidates'] = $business->businessOwners;
             return $business;
         });
 
@@ -58,7 +61,14 @@ class OwnerController extends Controller
         ]);
     }
 
-    public function destroy(String $business)
+    public function removeOwner(BusinessOwner $owner)
+    {
+        $owner->delete();
+
+        return redirect()->route('admin.owners.index');
+    }
+
+    public function clear(String $business)
     {
         $business = Business::findOrFail($business);
 
@@ -71,17 +81,34 @@ class OwnerController extends Controller
         $business->is_approved=0;
         $business->save();
 
-        return redirect()->route('admin.owners.index')->with('success', 'Owner info cleared successfully.');
+        return redirect()->route('admin.owners.index');
     }
 
-    public function approve(String $id)
+    public function approve(Request $request, String $business, String $owner)
     {
-        $business = Business::findOrFail($id);
+        $business = Business::findOrFail($business);
+
+        $company_email = $request->input('company_email');
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $job_title = $request->input('job_title');
+
+        $business->company_email = $company_email;
+        $business->first_name = $first_name;
+        $business->last_name = $last_name;
+        $business->job_title = $job_title;
+
+        $companyDomain = preg_replace('/^www\./', '', $business->website);  // Remove 'www.' prefix from the domain if present
+        $emailDomain = substr(strrchr($company_email, "@"), 1); // Extract part after '@'
+        if ($emailDomain == $companyDomain) {
+            // $business->is_approved = 1;
+            $business->markEmailAsVerified();
+        }
 
         $business->is_approved=1;
         $business->save();
 
-        return redirect()->route('admin.owners.index')->with('success', 'Owner info cleared successfully.');
+        return redirect()->route('admin.owners.index');
     }
 
     public function update(Request $request, String $business)
