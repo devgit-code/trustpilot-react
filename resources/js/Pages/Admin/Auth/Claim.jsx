@@ -17,7 +17,7 @@ const customStyles = {
   }),
 };
 
-export default function Claim({ businesses, website}) {
+export default function Claim({ businesses, selected_option}) {
     // const {website } = usePage().props
     // const [selectedOption, setSelectedOption] = useState(null);
 
@@ -28,7 +28,7 @@ export default function Claim({ businesses, website}) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         id: '',
-        website: website || '',
+        website: selected_option || '',
         // company_name: '',
         first_name: '',
         last_name: '',
@@ -88,7 +88,7 @@ export default function Claim({ businesses, website}) {
                         </Link>
                     </div>
 
-                    <h3 className='text-center my-4'>Claim Business</h3>
+                    <h3 className='text-center my-4'>Claim {selected_option ? (<a className="no-underline" href={`https://${selected_option}`} target="_blank">{selected_option}</a>) : 'Business'}</h3>
 
                     <form onSubmit={submit} className="space-y-4 mt-4">
                         <div>
@@ -105,22 +105,26 @@ export default function Claim({ businesses, website}) {
                             />
                             <InputError message={errors.id} className="mt-2" /> */}
                         </div>
+                        {
+                            !selected_option && (
+                                <div className="mt-4">
+                                    <TextInput
+                                        id="website"
+                                        type="text"
+                                        name="website"
+                                        value={data.website}
+                                        placeholder="Website Domain"
+                                        className="mt-1 block w-full"
+                                        autoComplete="website"
+                                        onChange={(e) => setData('website', e.target.value)}
+                                        required
+                                    />
 
-                        <div className="mt-4">
-                            <TextInput
-                                id="website"
-                                type="text"
-                                name="website"
-                                value={data.website}
-                                placeholder="Website Domain"
-                                className="mt-1 block w-full"
-                                autoComplete="website"
-                                onChange={(e) => setData('website', e.target.value)}
-                                required
-                            />
+                                    <InputError message={errors.website} className="mt-2" />
+                                </div>
 
-                            <InputError message={errors.website} className="mt-2" />
-                        </div>
+                            )
+                        }
 
                         <div className='grid grid-cols-2 gap-3'>
                             <div className="">

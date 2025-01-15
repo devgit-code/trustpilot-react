@@ -199,7 +199,7 @@ class RegisteredUserController extends Controller
             return redirect()->back()->withErrors(['company_email'=>'You already claimed this site.'])->withInput();
         }
 
-        $business = BusinessOwner::create([
+        $ownere = BusinessOwner::create([
             'business_id' => $business->id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -209,7 +209,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->back()->with('success', 'Wait until Admin approve.');
+        return redirect()->route('reviews.company', $business->website)->with('success', 'Wait until admin will approve.');
 
         // $business->fill($validated);
         // $business->name = $request->input('name');
