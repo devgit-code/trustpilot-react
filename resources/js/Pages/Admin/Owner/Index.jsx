@@ -348,7 +348,7 @@ const Index = () => {
                                             </td>
                                             <td>
                                                 <ul className="action d-flex align-items-center list-unstyled m-0 justify-end">
-                                                    {/* {
+                                                    {
                                                         (item.email_verified_at && item.is_approved === 0) && (
                                                             <li className="edit">
                                                                 <Link onClick={(e) => handleApprove(e, item.id )}>
@@ -356,7 +356,7 @@ const Index = () => {
                                                                 </Link>
                                                             </li>
                                                         )
-                                                    } */}
+                                                    }
                                                     <li className="edit">
                                                         <Link onClick={(e) => handleOpenDialog(e, item)}>
                                                             <CgMenuBoxed className='fs-4 me-2' />
