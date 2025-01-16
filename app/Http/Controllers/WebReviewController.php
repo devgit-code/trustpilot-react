@@ -17,7 +17,7 @@ class WebReviewController extends Controller
 {
     public function write()
     {
-        $businesses = Business::latest()->take(4)->get();
+        $businesses = Business::latest()->where('id', '!=', 1)->take(4)->get();
         $businesses = $businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
@@ -35,9 +35,11 @@ class WebReviewController extends Controller
     {
         $searchTerm = $request->input('query', '');
 
-        $businesses = Business::where('role', 'owner')
-            ->where('company_name', 'like', '%' . $searchTerm . '%')
-            ->orWhere('website', 'like', '%' . $searchTerm . '%')
+        $businesses = Business::where('id', '!=', 1)
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('company_name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('website', 'like', '%' . $searchTerm . '%');
+            })
             ->orderBy('created_at', 'desc') // Order by creation date, optional
             ->limit(5) // Limit to 5 results
             ->get();
@@ -155,7 +157,7 @@ class WebReviewController extends Controller
             ]
         ];
 
-        $recent_businesses = Business::latest()->take(4)->where('id', '<>', $business->id)->take(3)->get();
+        $recent_businesses = Business::latest()->where('id', '!=', 1)->take(4)->where('id', '<>', $business->id)->take(3)->get();
         $recent_businesses = $recent_businesses->map(function ($business, $index) {
             $business['logo'] = $business->profile?->logo;
             $business['trustscore'] = number_format($business->reviews->avg('rating'), 1);
